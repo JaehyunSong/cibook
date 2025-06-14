@@ -1001,94 +1001,13 @@
 
 <aside><div>
 <p>Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “<a href="https://doi.org/10.1093/irap/lcy024">38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea</a>,” <em>International Relations of the Asia-Pacific</em>, 20(2): 253-273.</p>
-</div></aside></section>
-<section id="実験デザイン時の注意点" class="slide level2">
-<h2>実験デザイン時の注意点</h2>
-<ul>
-<li>実験が出来ないケース</li>
-<li>SUTVA</li>
-<li>二重盲検法</li>
-<li>バランスチェック</li>
-<li>本の紹介</li>
-<li>サーベイ実験の場合、SUTVAと二重盲検法はあまり気にしなくても良い</li>
-</ul>
+</div></aside></section></section>
+<section>
+<section id="処置効果の推定" class="title-slide slide level1 center">
+<h1><strong>4</strong> 処置効果の推定</h1>
+
 </section>
-<section id="sutva" class="slide level2">
-<h2>SUTVA</h2>
-<p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
-<blockquote>
-<p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
-</blockquote>
-<ul>
-<li>相互干渉がないこと
-<ul>
-<li>にゃん！</li>
-</ul></li>
-<li>処置の隠れた変動がないこと
-<ul>
-<li>にゃん！</li>
-</ul></li>
-</ul>
-
-<aside><div>
-<ul>
-<li>Rubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” <em>The Journal of the American Statistical Association</em>, 75 (371): 591-593.</li>
-<li>G.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店</li>
-</ul>
-</div></aside></section>
-<section id="バランスチェック" class="slide level2">
-<h2>バランスチェック</h2>
-<p>グループ間に平均独立が不成立しているかを確認する手法</p>
-<ul>
-<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span></li>
-<li><span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
-<ul>
-<li><span class="alert"><strong>平均値の差分が大きい = グループ間に平均独立が不成立</strong></span></li>
-<li>バランスの閾値は研究者が任意で決める<span class="small">（主に<span class="alert"><strong>0.1</strong></span>）</span>
-<ul>
-<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span></li>
-</ul></li>
-<li>グループが3つ以上ならペアごとに<span class="small">（標準化した）</span>平均値の差分を計算</li>
-</ul></li>
-<li>実験データであってもバランスしていない<span class="small">（imbalanced）</span>可能性がある</li>
-<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span></li>
-</ul>
-
-<aside><div>
-<ul>
-<li>Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “<a href="https://doi.org/10.1111/j.1467-985X.2007.00527.x">Misunderstandings between experimentalists and observationalists about causal inference</a>.” <em>Journal of the Royal Statistical Society: Series A,</em> 171(2): 481-502.</li>
-<li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
-<li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
-</ul>
-</div><ol class="aside-footnotes"><li id="fn7"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{\frac{1}{2} (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
-<section id="バランスチェックの例" class="slide level2">
-<h2>バランスチェックの例</h2>
-<p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
-<ul>
-<li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span></li>
-</ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" width="1500"></p>
-<figcaption>例1</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-2.png" width="1500"></p>
-<figcaption>例2</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section>
-<section id="処置効果の推定" class="slide level2">
+<section id="処置効果の推定-1" class="slide level2">
 <h2>処置効果の推定</h2>
 <p>結果変数の平均値をグループ間で比較</p>
 <ul>
@@ -1192,9 +1111,101 @@
 <li><span class="math inline">\(p\)</span>値が0.01（= 0.05 / 5）を下回る場合、「5%水準で統計的に有意」と解釈する</li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section>
 <section id="不均一な処置効果の推定" class="slide level2">
 <h2>不均一な処置効果の推定</h2>
+</section></section>
+<section>
+<section id="実装時の注意点" class="title-slide slide level1 center">
+<h1><strong>5</strong> 実装時の注意点</h1>
+
+</section>
+<section id="実験デザイン時の注意点" class="slide level2">
+<h2>実験デザイン時の注意点</h2>
+</section>
+<section id="実験と研究倫理" class="slide level2">
+<h2>実験と研究倫理</h2>
+</section>
+<section id="sutva" class="slide level2">
+<h2>SUTVA</h2>
+<p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
+<blockquote>
+<p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
+</blockquote>
+<ul>
+<li>相互干渉がないこと
+<ul>
+<li>にゃん！</li>
+</ul></li>
+<li>処置の隠れた変動がないこと
+<ul>
+<li>にゃん！</li>
+</ul></li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Rubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” <em>The Journal of the American Statistical Association</em>, 75 (371): 591-593.</li>
+<li>G.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店</li>
+</ul>
+</div></aside></section>
+<section id="二重盲検法" class="slide level2">
+<h2>二重盲検法</h2>
+</section>
+<section id="バランスチェック" class="slide level2">
+<h2>バランスチェック</h2>
+<p>グループ間に平均独立が不成立しているかを確認する手法</p>
+<ul>
+<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span></li>
+<li><span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
+<ul>
+<li><span class="alert"><strong>平均値の差分が大きい = グループ間に平均独立が不成立</strong></span></li>
+<li>バランスの閾値は研究者が任意で決める<span class="small">（主に<span class="alert"><strong>0.1</strong></span>）</span>
+<ul>
+<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span></li>
+</ul></li>
+<li>グループが3つ以上ならペアごとに<span class="small">（標準化した）</span>平均値の差分を計算</li>
+</ul></li>
+<li>実験データであってもバランスしていない<span class="small">（imbalanced）</span>可能性がある</li>
+<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span></li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “<a href="https://doi.org/10.1111/j.1467-985X.2007.00527.x">Misunderstandings between experimentalists and observationalists about causal inference</a>.” <em>Journal of the Royal Statistical Society: Series A,</em> 171(2): 481-502.</li>
+<li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
+<li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
+</ul>
+</div><ol class="aside-footnotes"><li id="fn8"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{\frac{1}{2} (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
+<section id="バランスチェックの例" class="slide level2">
+<h2>バランスチェックの例</h2>
+<p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
+<ul>
+<li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span></li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" width="1500"></p>
+<figcaption>例1</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-2.png" width="1500"></p>
+<figcaption>例2</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section>
+<section id="参考書" class="slide level2">
+<h2>参考書</h2>
 
 
 </section></section>

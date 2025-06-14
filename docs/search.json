@@ -914,7 +914,7 @@
     "href": "rct_slide.html#実験デザイン時の注意点",
     "title": "社会科学における因果推論",
     "section": "実験デザイン時の注意点",
-    "text": "実験デザイン時の注意点\n\n実験が出来ないケース\nSUTVA\n二重盲検法\nバランスチェック\n本の紹介\nサーベイ実験の場合、SUTVAと二重盲検法はあまり気にしなくても良い"
+    "text": "実験デザイン時の注意点"
   },
   {
     "objectID": "rct_slide.html#sutva",
@@ -1735,5 +1735,33 @@
     "title": "社会科学における因果推論",
     "section": "バランスチェックの例",
     "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
+  },
+  {
+    "objectID": "rct_slide.html#処置効果の推定-1",
+    "href": "rct_slide.html#処置効果の推定-1",
+    "title": "社会科学における因果推論",
+    "section": "処置効果の推定",
+    "text": "処置効果の推定\n結果変数の平均値をグループ間で比較\n\nATE = \\(\\mathbb{E}[Y|D = 1] - \\mathbb{E}[Y|D = 0]\\)\n\nATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値\n\n\n使用可能な手法\n\n平均値/比率の差の検定（\\(t\\)検定、\\(z\\)検定）\n\nグループが3つ以上の場合、ペアごと（pairwise）の検定を実施\n\n分散分析（ANOVA、MANCOVAなど）\n線形回帰分析"
+  },
+  {
+    "objectID": "rct_slide.html#実験と研究倫理",
+    "href": "rct_slide.html#実験と研究倫理",
+    "title": "社会科学における因果推論",
+    "section": "実験と研究倫理",
+    "text": "実験と研究倫理"
+  },
+  {
+    "objectID": "rct_slide.html#二重盲検法",
+    "href": "rct_slide.html#二重盲検法",
+    "title": "社会科学における因果推論",
+    "section": "二重盲検法",
+    "text": "二重盲検法"
+  },
+  {
+    "objectID": "rct_slide.html#参考書",
+    "href": "rct_slide.html#参考書",
+    "title": "社会科学における因果推論",
+    "section": "参考書",
+    "text": "参考書"
   }
 ]
