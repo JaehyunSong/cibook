@@ -39,7 +39,7 @@
     "href": "sb_slide.html#内生性の発生メカニズム",
     "title": "社会科学における因果推論",
     "section": "内生性の発生メカニズム",
-    "text": "内生性の発生メカニズム\n\n例1）割当メカニズム上に存在する変数（XとZ）が応答変数にも影響を与えている（ここではXのみ）\n例2）割当メカニズム上に存在する変数が観察されず、これらの変数が誤差項（\\(\\varepsilon\\)）の一部を占めている1\n\nXが誤差項に含まれることによって誤差項と処置変数間の相関が発生\n\n\n\n\n\n\n\n\n例1のみを満たす例\n\n\n\n\n\n\n\n例1と2両方を満たす例\n\n\n\n\n\nもし割当メカニズム上に存在する変数が観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。"
+    "text": "内生性の発生メカニズム\n\n例1）割当メカニズム上に存在する変数（XとZ）が結果変数にも影響を与えている（ここではXのみ）\n例2）割当メカニズム上に存在する変数が観察されず、これらの変数が誤差項（\\(\\varepsilon\\)）の一部を占めている1\n\nXが誤差項に含まれることによって誤差項と処置変数間の相関が発生\n\n\n\n\n\n\n\n\n例1のみを満たす例\n\n\n\n\n\n\n\n例1と2両方を満たす例\n\n\n\n\n\nもし割当メカニズム上に存在する変数が観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。"
   },
   {
     "objectID": "sb_slide.html#内生性の原因",
@@ -403,7 +403,7 @@
     "href": "reg_slide.html#効果量",
     "title": "社会科学における因果推論",
     "section": "効果量",
-    "text": "効果量\n処置効果の大きさを数値化し、評価する（ドメイン知識が必要）\n\n統制群と処置群間の応答変数の差\n\n差はいくらか、または何SD分かなど\n\n処置変数が連続の場合は、最小値 \\(\\rightarrow\\) 最大値、平均を中心とした \\(\\pm\\) 1 or 2SDなど\n\n心理学を中心とした効果量の議論\n\nStandardized mean difference\nCohen’s d"
+    "text": "効果量\n処置効果の大きさを数値化し、評価する（ドメイン知識が必要）\n\n統制群と処置群間の結果変数の差\n\n差はいくらか、または何SD分かなど\n\n処置変数が連続の場合は、最小値 \\(\\rightarrow\\) 最大値、平均を中心とした \\(\\pm\\) 1 or 2SDなど\n\n心理学を中心とした効果量の議論\n\nStandardized mean difference\nCohen’s d"
   },
   {
     "objectID": "reg_slide.html#効果量の例cohens-d",
@@ -812,11 +812,11 @@
     "text": "平均独立・交換可能性の確認\n結論：平均独立・交換可能性の成立有無は確認できない（因果推論の根本問題）\n\n「内生性が存在しない」ことは確認できない1\nそれでも信頼できる処置効果の推定のためには内生性の確認が必要\n解決策\n\n既存のデータに内生性がないことを確認する（不可能）\n理論的に内生性をなくす（条件付け）\n理論的に内生性が（ほぼ）存在しないはずのデータを見つける（自然実験・疑似実験）\n内生性が存在しないデータを作り上げる（実験）\n\n\n後述するバランスチェックを行えば、平均独立・交換可能性が満たされていない・・・ことは確認できるが、平均独立・交換可能性が満たされていることは示せない。"
   },
   {
-    "objectID": "rct_slide.html#無作為割り当て-1",
-    "href": "rct_slide.html#無作為割り当て-1",
+    "objectID": "rct_slide.html#無作為割り当てrandom-assignment",
+    "href": "rct_slide.html#無作為割り当てrandom-assignment",
     "title": "社会科学における因果推論",
-    "section": "無作為割り当て",
-    "text": "無作為割り当て\n無作為割り当て（Random assignment）\n\n被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法\n各個体がどのグループに割り当てられるかは等しい確率\n\nグループが2つ（\\(D\\) = {0, 1}）なら…\nPr(\\(D_i\\) = 1) = Pr(\\(D_{j \\neq i}\\) = 1) & Pr(\\(D_i\\) = 0) = Pr(\\(D_{j \\neq i}\\) = 0)\n\nグループ間の事前の差異を最小限に抑えることが可能"
+    "section": "無作為割り当て（Random assignment）",
+    "text": "無作為割り当て（Random assignment）\n\n被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法\n各個体がどのグループに割り当てられるかは等しい確率\n\nグループが2つ（\\(D\\) = {0, 1}）なら…\nPr(\\(D_i\\) = 1) = Pr(\\(D_{j \\neq i}\\) = 1) & Pr(\\(D_i\\) = 0) = Pr(\\(D_{j \\neq i}\\) = 0)\n\nグループ間の事前の差異を最小限に抑えることが可能"
   },
   {
     "objectID": "rct_slide.html#無作為抽出random-samplingとの違い",
@@ -910,29 +910,8 @@
     "text": "サーベイ実験の例\n\n問い：日米韓軍事同盟は日韓協力への支持を高めるか（Asaba et al. 2020）\n統制群：米豪合同軍事演習の動画を視聴\n処置群：日米韓同軍事演習の動画を視聴\n動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度\n\n\n\n\n\n\n\n\n\n\n\n\nAsaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea,” International Relations of the Asia-Pacific, 20(2): 253-273."
   },
   {
-    "objectID": "rct_slide.html#実験デザイン時の注意点",
-    "href": "rct_slide.html#実験デザイン時の注意点",
-    "title": "社会科学における因果推論",
-    "section": "実験デザイン時の注意点",
-    "text": "実験デザイン時の注意点"
-  },
-  {
-    "objectID": "rct_slide.html#sutva",
-    "href": "rct_slide.html#sutva",
-    "title": "社会科学における因果推論",
-    "section": "SUTVA",
-    "text": "SUTVA\nStable Unit Treatment Value Assumption（Rubin 1980）\n\n　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）\n\n\n相互干渉がないこと\n\nにゃん！\n\n処置の隠れた変動がないこと\n\nにゃん！\n\n\n\n\n\nRubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” The Journal of the American Statistical Association, 75 (371): 591-593.\nG.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店"
-  },
-  {
-    "objectID": "rct_slide.html#バランスチェック",
-    "href": "rct_slide.html#バランスチェック",
-    "title": "社会科学における因果推論",
-    "section": "バランスチェック",
-    "text": "バランスチェック\nグループ間に平均独立が不成立しているかを確認する手法\n\n統計的有意性検定（\\(t\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が大きい = グループ間に平均独立が不成立\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n実験データであってもバランスしていない（imbalanced）可能性がある\nバランスしていないデータでも共変量調整でバイアスの補正が可能（Lin 2013）\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{\\frac{1}{2} (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
-  },
-  {
-    "objectID": "rct_slide.html#処置効果の推定",
-    "href": "rct_slide.html#処置効果の推定",
+    "objectID": "rct_slide.html#処置効果の推定-1",
+    "href": "rct_slide.html#処置効果の推定-1",
     "title": "社会科学における因果推論",
     "section": "処置効果の推定",
     "text": "処置効果の推定\n結果変数の平均値をグループ間で比較\n\nATE = \\(\\mathbb{E}[Y|D = 1] - \\mathbb{E}[Y|D = 0]\\)\n\nATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値\n\n\n使用可能な手法\n\n平均値/比率の差の検定（\\(t\\)検定、\\(z\\)検定）\n\nグループが3つ以上の場合、ペアごと（pairwise）の検定を実施\n\n分散分析（ANOVA、MANCOVAなど）\n線形回帰分析"
@@ -957,6 +936,55 @@
     "title": "社会科学における因果推論",
     "section": "不均一な処置効果の推定",
     "text": "不均一な処置効果の推定"
+  },
+  {
+    "objectID": "rct_slide.html#実験デザイン時の注意点",
+    "href": "rct_slide.html#実験デザイン時の注意点",
+    "title": "社会科学における因果推論",
+    "section": "実験デザイン時の注意点",
+    "text": "実験デザイン時の注意点"
+  },
+  {
+    "objectID": "rct_slide.html#実験と研究倫理",
+    "href": "rct_slide.html#実験と研究倫理",
+    "title": "社会科学における因果推論",
+    "section": "実験と研究倫理",
+    "text": "実験と研究倫理"
+  },
+  {
+    "objectID": "rct_slide.html#sutva",
+    "href": "rct_slide.html#sutva",
+    "title": "社会科学における因果推論",
+    "section": "SUTVA",
+    "text": "SUTVA\nStable Unit Treatment Value Assumption（Rubin 1980）\n\n　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）\n\n\n相互干渉がないこと\n\nにゃん！\n\n処置の隠れた変動がないこと\n\nにゃん！\n\n\n\n\n\nRubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” The Journal of the American Statistical Association, 75 (371): 591-593.\nG.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店"
+  },
+  {
+    "objectID": "rct_slide.html#二重盲検法",
+    "href": "rct_slide.html#二重盲検法",
+    "title": "社会科学における因果推論",
+    "section": "二重盲検法",
+    "text": "二重盲検法"
+  },
+  {
+    "objectID": "rct_slide.html#バランスチェック",
+    "href": "rct_slide.html#バランスチェック",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェック",
+    "text": "バランスチェック\nグループ間に平均独立が不成立しているかを確認する手法\n\n統計的有意性検定（\\(t\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が大きい = グループ間に平均独立が不成立\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n実験データであってもバランスしていない（imbalanced）可能性がある\nバランスしていないデータでも共変量調整でバイアスの補正が可能（Lin 2013）\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{\\frac{1}{2} (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
+  },
+  {
+    "objectID": "rct_slide.html#バランスチェックの例",
+    "href": "rct_slide.html#バランスチェックの例",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェックの例",
+    "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
+  },
+  {
+    "objectID": "rct_slide.html#参考書",
+    "href": "rct_slide.html#参考書",
+    "title": "社会科学における因果推論",
+    "section": "参考書",
+    "text": "参考書"
   },
   {
     "objectID": "r_slide.html#本日の内容-1",
@@ -1445,7 +1473,7 @@
     "href": "did_slide.html#回帰分析と差分の差分法",
     "title": "社会科学における因果推論",
     "section": "回帰分析と差分の差分法",
-    "text": "回帰分析と差分の差分法\n2つの個体、2期の場合\n\\[\ny_{it} = \\alpha + \\delta (D_i \\times P_t) + \\beta D_{i} + \\gamma P_{t} + \\varepsilon_{it}\n\\]\n\n\\(y_{it}\\)：結果変数（応答変数）\n\n\\(i\\)：個体（今回の例だと京都の行政区）\n\\(t\\)：時間（1996年、2000年、2004年、…）\n\n\\(D_{i}\\)：個体\\(i\\)が処置群に属するかを示すダミー変数\n\\(P_{t}\\)：時間\\(t\\)が処置後であることを示すダミー変数"
+    "text": "回帰分析と差分の差分法\n2つの個体、2期の場合\n\\[\ny_{it} = \\alpha + \\delta (D_i \\times P_t) + \\beta D_{i} + \\gamma P_{t} + \\varepsilon_{it}\n\\]\n\n\\(y_{it}\\)：結果変数\n\n\\(i\\)：個体（今回の例だと京都の行政区）\n\\(t\\)：時間（1996年、2000年、2004年、…）\n\n\\(D_{i}\\)：個体\\(i\\)が処置群に属するかを示すダミー変数\n\\(P_{t}\\)：時間\\(t\\)が処置後であることを示すダミー変数"
   },
   {
     "objectID": "did_slide.html#実装例",
@@ -1707,7 +1735,7 @@
     "href": "reg.html",
     "title": "回帰分析",
     "section": "",
-    "text": "新しいタブ\n     \n      \n    \n  \n\nmy_dag &lt;- dagify(\n  Y ~ D + X1 + X2,\n  X1 ~ Z1 + Z2,\n  D ~ Z1 + Z3,\n  X2 ~ Z2 + Z3,\n  Z1 ~ W,\n  Z2 ~ W,\n  Z3 ~ W,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \n                      \"X1\" = 1, \"D\" = 2, \"X2\" = 3,\n                      \"Z1\" = 1, \"Z2\" = 2, \"Z3\" = 3,\n                      \"W\" = 2),\n                y = c(\"Y\" = 4, \n                      \"X1\" = 3, \"D\" = 3, \"X2\" = 3,\n                      \"Z1\" = 2, \"Z2\" = 2, \"Z3\" = 2,\n                      \"W\" = 1))\n)\n\nggdag(my_dag) + theme_dag()\n\n\n\n\n\n\n\n\n\nmy_dag |&gt;\n  adjustmentSets()\n\n{ X1, X2 }\n{ X1, Z2, Z3 }\n{ X2, Z1, Z2 }\n{ Z1, Z3 }\n\n\n\nmy_dag |&gt;\n  ggdag_adjustment_set(shadow = TRUE) +\n  theme_dag()",
+    "text": "View slides in full screen\n       \n      \n    \n  \n\nmy_dag &lt;- dagify(\n  Y ~ D + X1 + X2,\n  X1 ~ Z1 + Z2,\n  D ~ Z1 + Z3,\n  X2 ~ Z2 + Z3,\n  Z1 ~ W,\n  Z2 ~ W,\n  Z3 ~ W,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \n                      \"X1\" = 1, \"D\" = 2, \"X2\" = 3,\n                      \"Z1\" = 1, \"Z2\" = 2, \"Z3\" = 3,\n                      \"W\" = 2),\n                y = c(\"Y\" = 4, \n                      \"X1\" = 3, \"D\" = 3, \"X2\" = 3,\n                      \"Z1\" = 2, \"Z2\" = 2, \"Z3\" = 2,\n                      \"W\" = 1))\n)\n\nggdag(my_dag) + theme_dag()\n\n\n\n\n\n\n\n\n\nmy_dag |&gt;\n  adjustmentSets()\n\n{ X1, X2 }\n{ X1, Z2, Z3 }\n{ X2, Z1, Z2 }\n{ Z1, Z3 }\n\n\n\nmy_dag |&gt;\n  ggdag_adjustment_set(shadow = TRUE) +\n  theme_dag()",
     "crumbs": [
       "5/ 回帰分析"
     ]
@@ -1721,47 +1749,5 @@
     "crumbs": [
       "3/ 内生性"
     ]
-  },
-  {
-    "objectID": "rct_slide.html#無作為割り当てrandom-assignment",
-    "href": "rct_slide.html#無作為割り当てrandom-assignment",
-    "title": "社会科学における因果推論",
-    "section": "無作為割り当て（Random assignment）",
-    "text": "無作為割り当て（Random assignment）\n\n被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法\n各個体がどのグループに割り当てられるかは等しい確率\n\nグループが2つ（\\(D\\) = {0, 1}）なら…\nPr(\\(D_i\\) = 1) = Pr(\\(D_{j \\neq i}\\) = 1) & Pr(\\(D_i\\) = 0) = Pr(\\(D_{j \\neq i}\\) = 0)\n\nグループ間の事前の差異を最小限に抑えることが可能"
-  },
-  {
-    "objectID": "rct_slide.html#バランスチェックの例",
-    "href": "rct_slide.html#バランスチェックの例",
-    "title": "社会科学における因果推論",
-    "section": "バランスチェックの例",
-    "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
-  },
-  {
-    "objectID": "rct_slide.html#処置効果の推定-1",
-    "href": "rct_slide.html#処置効果の推定-1",
-    "title": "社会科学における因果推論",
-    "section": "処置効果の推定",
-    "text": "処置効果の推定\n結果変数の平均値をグループ間で比較\n\nATE = \\(\\mathbb{E}[Y|D = 1] - \\mathbb{E}[Y|D = 0]\\)\n\nATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値\n\n\n使用可能な手法\n\n平均値/比率の差の検定（\\(t\\)検定、\\(z\\)検定）\n\nグループが3つ以上の場合、ペアごと（pairwise）の検定を実施\n\n分散分析（ANOVA、MANCOVAなど）\n線形回帰分析"
-  },
-  {
-    "objectID": "rct_slide.html#実験と研究倫理",
-    "href": "rct_slide.html#実験と研究倫理",
-    "title": "社会科学における因果推論",
-    "section": "実験と研究倫理",
-    "text": "実験と研究倫理"
-  },
-  {
-    "objectID": "rct_slide.html#二重盲検法",
-    "href": "rct_slide.html#二重盲検法",
-    "title": "社会科学における因果推論",
-    "section": "二重盲検法",
-    "text": "二重盲検法"
-  },
-  {
-    "objectID": "rct_slide.html#参考書",
-    "href": "rct_slide.html#参考書",
-    "title": "社会科学における因果推論",
-    "section": "参考書",
-    "text": "参考書"
   }
 ]
