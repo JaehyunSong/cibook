@@ -1,0 +1,1739 @@
+[
+  {
+    "objectID": "sb_slide.html#割当メカニズム",
+    "href": "sb_slide.html#割当メカニズム",
+    "title": "社会科学における因果推論",
+    "section": "割当メカニズム",
+    "text": "割当メカニズム\n割当メカニズム（assignment mechanism）：個体\\(i\\)が処置を受けるメカニズム\n\n以下は処置有無（D）が3つの変数（X、Z）から規定される例\n\n例）GPAが高い学生が宋さんの授業を履修する\n例）単位がやばい学生が宋さんの授業を履修する\n例）やる気がある学生が宋さんの授業を履修するなど"
+  },
+  {
+    "objectID": "sb_slide.html#内生性-1",
+    "href": "sb_slide.html#内生性-1",
+    "title": "社会科学における因果推論",
+    "section": "内生性",
+    "text": "内生性\n内生性（endogeneity）：処置変数と誤差項間に相関が存在する状態（\\(\\Leftrightarrow\\)外生性）\n\n内生性が存在する場合、処置変数は内生変数（\\(\\Leftrightarrow\\)外生変数）と呼ばれる\n処置変数が内生変数なら…\n\n処置効果の推定量は一致（consistent）推定量でも、不偏（unbiased）推定量でもなくなる\n\n\n\n\n\n\n\n\nDは外生変数\n\n\n\n\n\n\n\nDは内生変数"
+  },
+  {
+    "objectID": "sb_slide.html#参考誤差",
+    "href": "sb_slide.html#参考誤差",
+    "title": "社会科学における因果推論",
+    "section": "参考：誤差",
+    "text": "参考：誤差\n例）2024年衆院選の投票率：53.8%（真の値; パラメーター）\n\n\n\n調査\n\\(n\\)\n投票率\n誤差\n\n\n\n\n調査A\n100\n0.490\n0.048\n\n\n調査B\n500\n0.568\n0.030\n\n\n調査C\n1,000\n0.561\n0.023\n\n\n調査D\n2,000\n0.543\n0.005\n\n\n\n\n観測値 = 真の値 + 誤差 \n\n\n誤差（error）：観測された値と真の値（母数; パラメーター）間のズレ\n\n誤差がぴったり0になることはほぼない\nサンプルが母集団から無作為抽出されているのであれば、\\(n\\)が大きくなるほど誤差は0へ収斂する \\(\\Rightarrow\\) 大数の法則1（Law of large numbers; LLM）\nある統計量が一致推定量であれば、\\(n\\)を大きくすることでよりパラメーターに近い値が得られる\n\n\n厳密にいえば、大数の弱法則"
+  },
+  {
+    "objectID": "sb_slide.html#参考バイアス",
+    "href": "sb_slide.html#参考バイアス",
+    "title": "社会科学における因果推論",
+    "section": "参考：バイアス",
+    "text": "参考：バイアス\nバイアス（偏り; bias）：統計量の期待値とパラメーター間のずれ\n\n\\(\\mathbb{E}[\\hat{\\theta}] - \\theta = 0\\)の場合、\\(\\hat{\\theta}\\)は\\(\\theta\\)の不偏推定量（unbiased estimator）\n\n\n\n\nバイアスなしの例\n\n\n調査\n\\(n\\)\n投票率\n誤差\n\n\n\n\n調査A\n3,000\n0.518\n-0.020\n\n\n調査B\n1,000\n0.514\n-0.024\n\n\n調査C\n1,500\n0.599\n0.061\n\n\n調査D\n2,000\n0.547\n0.009\n\n\n…\n…\n…\n…\n\n\n調査\\(\\infty\\)\n2,400\n0.567\n0.029\n\n\n平均\n\n\n0.000\n\n\n\n\n\nバイアスありの例\n\n\n調査\n\\(n\\)\n投票率\n誤差\n\n\n\n\n調査A\n3,000\n0.635\n0.097\n\n\n調査B\n1,000\n0.530\n-0.008\n\n\n調査C\n1,500\n0.594\n0.056\n\n\n調査D\n2,000\n0.603\n0.065\n\n\n…\n…\n…\n…\n\n\n調査\\(\\infty\\)\n2,400\n0.585\n0.047\n\n\n平均\n\n\n0.050"
+  },
+  {
+    "objectID": "sb_slide.html#参考バイアス-neq-誤差",
+    "href": "sb_slide.html#参考バイアス-neq-誤差",
+    "title": "社会科学における因果推論",
+    "section": "参考：バイアス \\(\\neq\\) 誤差",
+    "text": "参考：バイアス \\(\\neq\\) 誤差\n\n誤差は観測値とパラメーター間のズレだから、一つひとつの個体が持つ\n\n誤差項は特定の確率分布に従うと仮定するケースが多い（平均0の正規分布など）\n\nバイアスは個体でなく、特定の統計量が持つ性質\n\nバイアスが大きい統計量でもそれを構成する一部の個体の誤差は小さい可能性もある\n\n\n\n\n\n\n\n\nバイアス小\n\n\n\n\n\n\n\nバイアス大\n\n\n\n\n\n\n\nバイアス小"
+  },
+  {
+    "objectID": "sb_slide.html#内生性の発生メカニズム",
+    "href": "sb_slide.html#内生性の発生メカニズム",
+    "title": "社会科学における因果推論",
+    "section": "内生性の発生メカニズム",
+    "text": "内生性の発生メカニズム\n\n例1）割当メカニズム上に存在する変数（XとZ）が応答変数にも影響を与えている（ここではXのみ）\n例2）割当メカニズム上に存在する変数が観察されず、これらの変数が誤差項（\\(\\varepsilon\\)）の一部を占めている1\n\nXが誤差項に含まれることによって誤差項と処置変数間の相関が発生\n\n\n\n\n\n\n\n\n例1のみを満たす例\n\n\n\n\n\n\n\n例1と2両方を満たす例\n\n\n\n\n\nもし割当メカニズム上に存在する変数が観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。"
+  },
+  {
+    "objectID": "sb_slide.html#内生性の原因",
+    "href": "sb_slide.html#内生性の原因",
+    "title": "社会科学における因果推論",
+    "section": "内生性の原因",
+    "text": "内生性の原因\n処置変数と誤差項間の相関関係（内生性）は様々な理由から発生する\n\nセレクション・バイアス\n\nセルフセレクション・バイアス、サンプルセレクション・バイアスなど\n\n欠落変数バイアス\n逆の因果\n同時性\n測定誤差など\n\n社会科学における因果推論上に存在する内生性はセレクション・バイアスが原因1であるケースが多い\n処置変数と誤差項間の相関という意味では同じであるが、その相関が生じる原因には様々な理由がある。"
+  },
+  {
+    "objectID": "sb_slide.html#セレクションバイアスの定式化",
+    "href": "sb_slide.html#セレクションバイアスの定式化",
+    "title": "社会科学における因果推論",
+    "section": "セレクション・バイアスの定式化",
+    "text": "セレクション・バイアスの定式化\n\nセレクション・バイアスが存在する場合、推定された因果効果（処置効果）にはセレクションによりバイアスを含む\n\n推定された処置効果 = 真の処置効果 + セレクション・バイアス\n\n推定対象がATTかATCかによって想定されるセレクション・バイアスが異なる\n\nATT：処置群のおける処置効果（\\(\\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\\)）\nATC：統制群のおける処置効果（\\(\\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]\\)）"
+  },
+  {
+    "objectID": "sb_slide.html#attとセレクションバイアス",
+    "href": "sb_slide.html#attとセレクションバイアス",
+    "title": "社会科学における因果推論",
+    "section": "ATTとセレクション・バイアス",
+    "text": "ATTとセレクション・バイアス\nもともと優秀な人が宋さんの授業を取る（自己選択）\n\n\\(\\mathbb{E}[Y_i(0) | D_i = 1]\\)：処置群がもし処置を受けなかった場合の結果変数の期待値\n\\(\\mathbb{E}[Y_i(0) | D_i = 0]\\)：統制群における結果変数の期待値（観察可能）\n\n\\[\n\\begin{align}\n& \\mathbb{E}[Y_i | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] \\textcolor{red}{- \\mathbb{E}[Y_i(0) | D_i = 1] + \\mathbb{E}[Y_i(0) | D_i = 1]} - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\underbrace{\\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\\textsf{ATT}} + \\underbrace{\\mathbb{E}[Y_i(0) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0]}_{\\textsf{selection bias}}\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "sb_slide.html#atcとセレクションバイアス",
+    "href": "sb_slide.html#atcとセレクションバイアス",
+    "title": "社会科学における因果推論",
+    "section": "ATCとセレクション・バイアス",
+    "text": "ATCとセレクション・バイアス\n授業の効果が高そうな人が宋さんの授業を取る（最適化選択）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 1]\\)：処置群における結果変数の期待値（観察可能）\n\\(\\mathbb{E}[Y_i(1) | D_i = 0]\\)：統制群がもし処置を受けたら場合の結果変数の期待値\n\n\\[\n\\begin{align}\n& \\mathbb{E}[Y_i | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] \\textcolor{red}{- \\mathbb{E}[Y_i(1) | D_i = 0] + \\mathbb{E}[Y_i(1) | D_i = 0]} - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\underbrace{\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(1) | D_i = 0]}_{\\textsf{selection bias}} + \\underbrace{\\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]}_{\\textsf{ATC}}\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "sb_slide.html#attatcの識別条件",
+    "href": "sb_slide.html#attatcの識別条件",
+    "title": "社会科学における因果推論",
+    "section": "ATT、ATCの識別条件",
+    "text": "ATT、ATCの識別条件\n以下の2つの条件がすべて満たされる場合、ATEが推定可能\n\nATTの識別条件\n\n\\(\\mathbb{E}[Y_i(0) | D_i = 1] = \\mathbb{E}[Y_i(0) | D_i = 0]\\)\nこの場合、ATT = \\(\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0]\\)\n\nATCの識別条件\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 1] = \\mathbb{E}[Y_i(1) | D_i = 0]\\)\nこの場合、ATC = \\(\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0]\\)\n\nこれらは経験的に観察できず、理論的に説得する必要がある\n\n前者の方が説得しやすいケースが多いので、ATTを推定するケースが多い\n「もともと優秀な人が宋さんの授業を取る」と「授業の効果が高そうな人が宋さんの授業を取る」"
+  },
+  {
+    "objectID": "sb_slide.html#その他のセレクションの例",
+    "href": "sb_slide.html#その他のセレクションの例",
+    "title": "社会科学における因果推論",
+    "section": "その他のセレクションの例",
+    "text": "その他のセレクションの例\n手元のサンプルが「授業効果が高そうな学生（\\(i \\in \\{1, 2, 4, 7, 8\\}\\)）」だけなら…?\n\n真の処置効果は0だが、この場合、処置効果は必ず正になる\n\\(\\Rightarrow\\) 偏ったサンプリングによるバイアス（サンプルセレクション・バイアス）\n\n\n\n\n\\(i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\nITE\n\n\n\n\n1\n500\n550\n50\n\n\n2\n200\n300\n100\n\n\n3\n800\n750\n-50\n\n\n4\n300\n400\n100\n\n\n5\n300\n200\n-100\n\n\n6\n550\n450\n-100\n\n\n7\n700\n750\n50\n\n\n8\n400\n600\n200\n\n\n9\n500\n300\n-200\n\n\n10\n600\n550\n-50\n\n\n平均\n\n\n0"
+  },
+  {
+    "objectID": "sb_slide.html#セレクションへの対処",
+    "href": "sb_slide.html#セレクションへの対処",
+    "title": "社会科学における因果推論",
+    "section": "セレクションへの対処",
+    "text": "セレクションへの対処\n\n無作為抽出（random sampling）\n\nサンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合\n\nランダム割り当て（無作為割当; random assignment）\n\nあらゆる内生性を（理論上）完全に除去できる因果推論の王道\n\n統計的因果推論（statistical causal inference）\n\n共変量調整\n自然実験、疑似実験など"
+  },
+  {
+    "objectID": "reg_slide.html#単回帰分析",
+    "href": "reg_slide.html#単回帰分析",
+    "title": "社会科学における因果推論",
+    "section": "単回帰分析",
+    "text": "単回帰分析\n単回帰分析（simple regression）：説明変数が1つのみの線形回帰分析\n\n\\(Y\\)を\\(D\\)に回帰する（regress \\(Y\\) on \\(D\\)）\n\n\\[\nY_i = \\mathbb{E}[Y_i|D_i] + \\varepsilon_i = \\alpha + \\tau D_i + \\varepsilon_i\n\\]\n最小二乗法（ordinary least squares; OLS）\n\n残差の二乗和を最小とする\\(\\hat{\\alpha}\\)と\\(\\hat{\\tau}\\)を推定\n\n残差（residuals）：\\(u_i = Y_i - \\hat{\\alpha} - \\hat{\\tau} D_i\\)\n\\(\\bar{u_i}\\)の平方根：RMSE（Root mean square error）\n\n\n\\[\n(\\hat{\\alpha}, \\hat{\\tau}) = \\mathop{\\arg \\min}_{\\alpha, \\tau} \\sum_{i}^{n}(Y_i - \\alpha - \\tau D_i)^2\n\\]"
+  },
+  {
+    "objectID": "reg_slide.html#最小二乗法",
+    "href": "reg_slide.html#最小二乗法",
+    "title": "社会科学における因果推論",
+    "section": "最小二乗法",
+    "text": "最小二乗法\n\n残差の二乗和は141.13（左）、58.82（中）、66.55（右）\n\nRMSEはそれぞれ3.76、2.43、2.58"
+  },
+  {
+    "objectID": "reg_slide.html#単回帰分析と因果推論",
+    "href": "reg_slide.html#単回帰分析と因果推論",
+    "title": "社会科学における因果推論",
+    "section": "単回帰分析と因果推論",
+    "text": "単回帰分析と因果推論\n処置変数が外生変数、かつ二値変数なら\\(D_i\\)の係数の推定値はATEの推定値\n\n処置変数\\(D\\)が二値変数の場合、\\(\\hat{\\tau}\\)は二群間の平均値の差分\n\n\\(\\hat{\\tau}\\) = ATT + セレクションバイアス\n\n\n\\[\n\\small\n\\begin{align}\n\\hat{\\tau} & = \\mathbb{E}[Y_i(1)|D_i = 1] - \\mathbb{E}[Y_i(0)|D_i = 0] \\\\\n& = \\underbrace{\\mathbb{E}[Y_i(1)|D_i = 1] - \\mathbb{E}[Y_i(0)|D_i = 1]}_{\\textsf{ATT}} + \\underbrace{\\mathbb{E}[Y_i(0)|D_i = 1] - \\mathbb{E}[Y_i(0)|D_i = 0]}_{\\textsf{selection bias}}\n\\end{align}\n\\]\n\n処置変数が外生変数（=交換可能性/平均独立が成立）なら…12\n\n\\[\n\\hat{\\tau} = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)] = \\textsf{ATE}\n\\]\n交換可能性、または平均独立が成立する場合、\\(\\mathbb{E}[Y_i(1)|D_i = 1] = \\mathbb{E}[Y_i(1)|D_i = 0]\\)、かつ\\(\\mathbb{E}[Y_i(0)|D_i = 1] = \\mathbb{E}[Y_i(0)|D_i = 0]\\)だからセレクションバイアスが0なら（\\(\\mathbb{E}[Y_i(0)|D_i = 1] = \\mathbb{E}[Y_i(0)|D_i = 0]\\)）、\\(\\hat{\\tau}\\)はATEでなく、ATT"
+  },
+  {
+    "objectID": "reg_slide.html#誤差に関する仮定",
+    "href": "reg_slide.html#誤差に関する仮定",
+    "title": "社会科学における因果推論",
+    "section": "誤差に関する仮定",
+    "text": "誤差に関する仮定\n\n回帰分析における誤差の仮定\n\n誤差の期待値は0（\\(\\mathbb{E}[\\varepsilon_i]\\) = 0）\n誤差と説明変数は独立（\\(\\textsf{Cov}(D, \\varepsilon)\\) = \\(\\mathbb{E}[D \\times \\varepsilon]\\) = 0）"
+  },
+  {
+    "objectID": "reg_slide.html#処置変数が内生変数の場合",
+    "href": "reg_slide.html#処置変数が内生変数の場合",
+    "title": "社会科学における因果推論",
+    "section": "処置変数が内生変数の場合",
+    "text": "処置変数が内生変数の場合\n\n誤差と説明変数は独立しない場合、\\(\\hat{\\tau}\\)はバイアス付きのATT\n\n\\(\\textsf{Cov}(D, \\varepsilon) \\neq\\) 0\n\\(\\mathbb{E}[D \\times \\varepsilon] \\neq\\) 0"
+  },
+  {
+    "objectID": "reg_slide.html#交絡要因が既知の場合",
+    "href": "reg_slide.html#交絡要因が既知の場合",
+    "title": "社会科学における因果推論",
+    "section": "交絡要因が既知の場合",
+    "text": "交絡要因が既知の場合\n\n観察済みの変数\\(X\\)が唯一の交絡要因ある場合\n\n単回帰分析では\\(X\\)は\\(\\varepsilon\\)の一部だったが、\\(X\\)が観察済みなら\\(\\varepsilon \\rightarrow X\\)のパスを消せる\nそのためには、内生性の原因である\\(X\\)を考慮したモデリングが必要"
+  },
+  {
+    "objectID": "reg_slide.html#重回帰分析",
+    "href": "reg_slide.html#重回帰分析",
+    "title": "社会科学における因果推論",
+    "section": "重回帰分析",
+    "text": "重回帰分析\n統制変数\\(X\\)を追加した回帰モデル\n\\[\n\\begin{align}\nY_i & = \\mathbb{E}[Y_i|D_i, X_i] + \\varepsilon_i \\\\\n& = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\n\\end{align}\n\\]\n\n残差の二乗和を最小とする\\(\\hat{\\alpha}\\)と\\(\\hat{\\tau}\\)、\\(\\hat{\\beta}\\)を推定\n\n残差（residuals）：\\(Y_i - \\alpha - \\tau D_i - \\beta X_i\\)\n\n\n\\[\n(\\hat{\\alpha}, \\hat{\\tau}, \\hat{\\beta}) = \\mathop{\\arg \\min}_{\\alpha, \\tau, \\beta} \\sum_{i}^{n}(Y_i - \\alpha - \\tau D_i - \\beta X_i)^2\n\\]"
+  },
+  {
+    "objectID": "reg_slide.html#統制変数の役割",
+    "href": "reg_slide.html#統制変数の役割",
+    "title": "社会科学における因果推論",
+    "section": "統制変数の役割",
+    "text": "統制変数の役割\n\\(X_i = x\\)における傾き（\\(\\tau\\)）の推定\n\n\\(X_i = x\\)における傾きと\\(X_i = x^{\\prime}\\)における傾きは同値だと仮定（\\(x \\neq x^{\\prime}\\)）\nこの仮定を緩和するためには交差項が必要"
+  },
+  {
+    "objectID": "reg_slide.html#統制変数とブロッキング",
+    "href": "reg_slide.html#統制変数とブロッキング",
+    "title": "社会科学における因果推論",
+    "section": "統制変数とブロッキング",
+    "text": "統制変数とブロッキング\n重回帰分析における係数は通常、「他の変数が一定であれば…」と解釈される。\n\n\\(\\Rightarrow\\) 重回帰分析の推定値 = ブロック内処置効果の加重平均\n\n手順\n\nブロックごとに処置効果（A）を推定する\n（A）の加重平均を計算する。各ブロックの重みは、\n\n\\(Pr(X_i = x)\\)（ATEを推定する場合）\n\\(Pr(X_i = x, D_i = 1)\\)（ATTを推定する場合）\n\\(Pr(X_i = x, D_i = 0)\\)（ATCを推定する場合）\n\n\n\n\\(\\Rightarrow\\) 統制変数をうまく使えば因果推論ができそう\n\nどうすれば回帰分析で信頼できる処置効果が推定できるか\n\\(\\Rightarrow\\) [ブロック内で処置群と統制群が交換可能（or 平均独立）]{.alertであれば…?}"
+  },
+  {
+    "objectID": "reg_slide.html#条件付き独立の仮定",
+    "href": "reg_slide.html#条件付き独立の仮定",
+    "title": "社会科学における因果推論",
+    "section": "条件付き独立の仮定",
+    "text": "条件付き独立の仮定\n条件付き独立の仮定（conditional independence assumption; CIA）\n\n統制変数（X）で条件づけた場合、処置変数（D）と結果変数（Y）の潜在的結果は独立する\n条件付き独立 = 条件付き交換可能性 = 条件付き無視可能性\n\n\\[\n\\{Y(0), Y(1)\\} \\mathop{\\perp\\!\\!\\!\\!\\perp} D | X\n\\]\n\n全体では交換可能性が成立しないものの、統制変数Xで条件づけた下位グループ内では交換可能性が成立\n観察データを用いた回帰分析で因果推論を行うための仮定"
+  },
+  {
+    "objectID": "reg_slide.html#条件付き平均独立性",
+    "href": "reg_slide.html#条件付き平均独立性",
+    "title": "社会科学における因果推論",
+    "section": "条件付き平均独立性",
+    "text": "条件付き平均独立性\nCIAが成立すると条件付き平均独立性が成り立つ\n\n平均独立性が成り立つとATEが推定可能となる\n\n\\[\n\\mathbb{E}[Y_i(1)|D_i = 1, X_i = x] = \\mathbb{E}[Y_i(1)|D_i = 0, X_i = x] = \\mathbb{E}[Y_i(1)|X_i = x]\n\\]\n\nかつ\n\n\\[\n\\mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \\mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \\mathbb{E}[Y_i(0)|X_i = x]\n\\]"
+  },
+  {
+    "objectID": "reg_slide.html#条件付き平均独立の例",
+    "href": "reg_slide.html#条件付き平均独立の例",
+    "title": "社会科学における因果推論",
+    "section": "条件付き平均独立の例",
+    "text": "条件付き平均独立の例\n\n\n\n\n\n\n\n  \n    \n      ID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n  \n  \n    1\n0\n0\n0\n0\n2\n    2\n0\n0\n-1\n-1\n1\n    3\n0\n0\n1\n1\n3\n    4\n1\n0\n4\n2\n4\n    5\n1\n0\n5\n3\n5\n    6\n1\n0\n-1\n-3\n-1\n    7\n1\n0\n0\n-2\n0\n    8\n1\n0\n1\n-1\n1\n    9\n1\n0\n2\n0\n2\n    10\n1\n0\n3\n1\n3\n    11\n0\n1\n4\n4\n6\n    12\n0\n1\n5\n5\n7\n    13\n0\n1\n1\n1\n3\n    14\n0\n1\n0\n0\n2\n    15\n0\n1\n2\n2\n4\n    16\n0\n1\n3\n3\n5\n    17\n0\n1\n6\n6\n8\n    18\n1\n1\n4\n2\n4\n    19\n1\n1\n5\n3\n5\n    20\n1\n1\n6\n4\n6\n  \n  \n  \n\n\n\n\n\n真のATE\n\\[\n\\underbrace{\\mathbb{E}[Y_i(1)]}_{\\textsf{3.5}} - \\underbrace{\\mathbb{E}[Y_i(0)]}_{\\textsf{1.5}} = 2\n\\]\n\nATEの推定値\nDifference-in-means（DiM）推定量\n\\[\n\\underbrace{\\mathbb{E}[Y_i|D_i = 1]}_{\\textsf{2.9}} - \\underbrace{\\mathbb{E}[Y_i|D_i = 0]}_{\\textsf{2.1}} = 0.8\n\\]"
+  },
+  {
+    "objectID": "reg_slide.html#平均独立性は成立するか",
+    "href": "reg_slide.html#平均独立性は成立するか",
+    "title": "社会科学における因果推論",
+    "section": "平均独立性は成立するか",
+    "text": "平均独立性は成立するか\n\n\n\n\n\n\n\n  \n    \n      ID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n  \n  \n    1\n0\n0\n0\n0\n2\n    2\n0\n0\n-1\n-1\n1\n    3\n0\n0\n1\n1\n3\n    4\n1\n0\n4\n2\n4\n    5\n1\n0\n5\n3\n5\n    6\n1\n0\n-1\n-3\n-1\n    7\n1\n0\n0\n-2\n0\n    8\n1\n0\n1\n-1\n1\n    9\n1\n0\n2\n0\n2\n    10\n1\n0\n3\n1\n3\n    11\n0\n1\n4\n4\n6\n    12\n0\n1\n5\n5\n7\n    13\n0\n1\n1\n1\n3\n    14\n0\n1\n0\n0\n2\n    15\n0\n1\n2\n2\n4\n    16\n0\n1\n3\n3\n5\n    17\n0\n1\n6\n6\n8\n    18\n1\n1\n4\n2\n4\n    19\n1\n1\n5\n3\n5\n    20\n1\n1\n6\n4\n6\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i]\\)\n\n\n\n\n\\(D_i = 0\\)\n2.1\n4.1\n\n\n\\(D_i = 1\\)\n0.9\n2.9\n\n\n\nケース1：平均独立性\\(\\times\\)\n\nもし、現在の処置群が統制群になったら…\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 0.9\n\nもし、現在の統制群が統制群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 2.1\n\n\nケース2：平均独立性\\(\\times\\)\n\nもし、現在の処置群が処置群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 2.9\n\nもし、現在の統制群が処置群になったら…\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 4.1"
+  },
+  {
+    "objectID": "reg_slide.html#x_i-0の場合",
+    "href": "reg_slide.html#x_i-0の場合",
+    "title": "社会科学における因果推論",
+    "section": "\\(X_i = 0\\)の場合",
+    "text": "\\(X_i = 0\\)の場合\n\n\n\n\n\n\n\n  \n    \n      ID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n  \n  \n    1\n0\n0\n0\n0\n2\n    2\n0\n0\n-1\n-1\n1\n    3\n0\n0\n1\n1\n3\n    4\n1\n0\n4\n2\n4\n    5\n1\n0\n5\n3\n5\n    6\n1\n0\n-1\n-3\n-1\n    7\n1\n0\n0\n-2\n0\n    8\n1\n0\n1\n-1\n1\n    9\n1\n0\n2\n0\n2\n    10\n1\n0\n3\n1\n3\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 0]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 0]\\)\n\n\n\n\n\\(D_i = 0\\)\n0.0\n2.0\n\n\n\\(D_i = 1\\)\n0.0\n2.0\n\n\n\nケース1：平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が統制群になったら…\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 0\n\nもし、現在の統制群が統制群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 0\n\n\nケース2：平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が処置群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 2\n\nもし、現在の統制群が処置群になったら…\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 2"
+  },
+  {
+    "objectID": "reg_slide.html#x_i-1の場合",
+    "href": "reg_slide.html#x_i-1の場合",
+    "title": "社会科学における因果推論",
+    "section": "\\(X_i = 1\\)の場合",
+    "text": "\\(X_i = 1\\)の場合\n\n\n\n\n\n\n\n  \n    \n      ID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n  \n  \n    11\n0\n1\n4\n4\n6\n    12\n0\n1\n5\n5\n7\n    13\n0\n1\n1\n1\n3\n    14\n0\n1\n0\n0\n2\n    15\n0\n1\n2\n2\n4\n    16\n0\n1\n3\n3\n5\n    17\n0\n1\n6\n6\n8\n    18\n1\n1\n4\n2\n4\n    19\n1\n1\n5\n3\n5\n    20\n1\n1\n6\n4\n6\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 1]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 1]\\)\n\n\n\n\n\\(D_i = 0\\)\n3.0\n5.0\n\n\n\\(D_i = 1\\)\n3.0\n5.0\n\n\n\nケース1：平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が統制群になったら…\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 3\n\nもし、現在の統制群が統制群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 3\n\n\nケース2：平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が処置群になったら…（観察済）\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 5\n\nもし、現在の統制群が処置群になったら…\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 5"
+  },
+  {
+    "objectID": "reg_slide.html#条件付き平均独立と回帰分析",
+    "href": "reg_slide.html#条件付き平均独立と回帰分析",
+    "title": "社会科学における因果推論",
+    "section": "条件付き平均独立と回帰分析",
+    "text": "条件付き平均独立と回帰分析\n条件付き平均独立が成立する場合、重回帰分析でバイアスのないATEが推定可能\n\nCIAが成り立ったらさらに良い\n\n\n\n\n\n    \n\n    \n    \n      \n        \n        \n              \n                 \n                統制変数なし\n                統制変数あり\n              \n        \n        注：カッコ内はHC2頑健標準誤差\n        \n                \n                  切片\n                  2.100 (0.737)\n                  -0.000 (0.560)\n                \n                \n                  D\n                  0.800 (1.042)\n                  2.000 (0.683)\n                \n                \n                  X\n                  \n                  3.000 (0.683)\n                \n                \n                  Num.Obs.\n                  20\n                  20\n                \n                \n                  R2\n                  0.032\n                  0.406\n                \n        \n      \n    \n\n\n\n\n統制変数なし（単回帰分析）のATEの推定値：0.8\n\n処置群と統制群を交換する場合、ATEの推定値は3.2\n\n統制変数あり（重回帰分析）のATEの推定値：2.0\n\n{\\(X_i = 0\\)におけるATE} = {\\(X_i = 1\\)におけるATE} = 2\n\\(X_i = x\\)で処置群と統制群を交換してもATEの推定値は2"
+  },
+  {
+    "objectID": "reg_slide.html#cia条件付き平均独立性は確認可能か",
+    "href": "reg_slide.html#cia条件付き平均独立性は確認可能か",
+    "title": "社会科学における因果推論",
+    "section": "CIA/条件付き平均独立性は確認可能か",
+    "text": "CIA/条件付き平均独立性は確認可能か\n条件付き平均独立性\n\\[\n\\mathbb{E}[Y_i(1)|D_i = 1, X_i = x] = \\mathbb{E}[Y_i(1)|D_i = 0, X_i = x] = \\mathbb{E}[Y_i(1)|X_i = x]\n\\]\n\nかつ\n\n\\[\n\\mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \\mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \\mathbb{E}[Y_i(0)|X_i = x]\n\\]\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0, X_i = x]\\)、\\(\\mathbb{E}[Y_i(0)|D_i = 1, X_i = x]\\)は観察不可\n\n\\(\\Rightarrow\\) 平均独立性が成り立っているかどうかは確認できない\n\n平均独立性よりも厳しいCIAの確認はさらに難しい\n\n「Xで条件付ければ平均独立性が成り立つだろう」と仮定するしかない\n非実験データであれば、変数選択&モデリングを慎重に行う必要がある\n\nもし、間違った条件付けをしてしまったら…?"
+  },
+  {
+    "objectID": "reg_slide.html#欠落変数バイアスの定式化",
+    "href": "reg_slide.html#欠落変数バイアスの定式化",
+    "title": "社会科学における因果推論",
+    "section": "欠落変数バイアスの定式化",
+    "text": "欠落変数バイアスの定式化\n\n3つのモデル（真の処置効果は\\(\\tau^l\\)）\n\n真のモデル（long regression）：\\(Y_i = \\alpha^l + \\tau^l D_i + \\beta^l X_i + \\varepsilon_i\\)\nバイアス付きのモデル（short regression）：\\(Y_i = \\alpha^s + \\tau^s D_i + \\zeta_i\\)\nXをDに回帰したモデル：\\(X_i = \\alpha_0 + \\lambda D_i + \\nu_i\\)\n\n\n真のモデルからXが消えたら…\n\\[\n\\begin{align}\nY_i & = \\alpha^l + \\tau^l D_i + \\beta^l X_i + \\varepsilon_i \\\\\n& = \\alpha^l + \\tau^l D_i + \\beta^l (\\alpha_0 + \\lambda D_i + \\nu_i) + \\varepsilon_i \\\\\n& = \\alpha^l + \\tau^l D_i + \\beta^l\\alpha_0 + \\beta^l \\lambda D_i + \\beta^l \\nu_i + \\varepsilon_i \\\\\n& = \\underbrace{(\\alpha^l + \\beta^l\\alpha_0)}_{\\alpha^s} + \\underbrace{(\\tau^l + \\beta^l \\lambda)}_{\\tau^s} D_i + \\underbrace{(\\varepsilon_i + \\beta^l \\nu_i)}_{\\varepsilon_i}\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "reg_slide.html#欠落変数バイアス-1",
+    "href": "reg_slide.html#欠落変数バイアス-1",
+    "title": "社会科学における因果推論",
+    "section": "欠落変数バイアス",
+    "text": "欠落変数バイアス\n欠落変数バイアス（omitted variable bias; OVB）\n\n\\(\\beta^l\\)：X \\(\\rightarrow\\) Yの係数\n\\(\\lambda\\)：D \\(\\rightarrow\\) Xの係数\n\n\\[\n\\underbrace{\\tau^s}_{\\textsf{バイアス付きの推定値}} = \\underbrace{\\tau^l}_{\\textsf{真の処置効果}} + \\underbrace{\\textcolor{red}{\\beta^l \\lambda}}_{\\textsf{欠落変数バイアス}}\n\\]\n\n\\(\\beta^l = 0\\)、または\\(\\lambda = 0\\)ならOVBは発生しない\n\\(\\beta^l \\neq 0\\)、かつ\\(\\lambda \\neq 0\\)の場合、Xは交絡要因（confounder）である。\n\n交絡要因を統制しないと、OVBが発生する"
+  },
+  {
+    "objectID": "reg_slide.html#欠落変数バイアスの可視化1",
+    "href": "reg_slide.html#欠落変数バイアスの可視化1",
+    "title": "社会科学における因果推論",
+    "section": "欠落変数バイアスの可視化（1）",
+    "text": "欠落変数バイアスの可視化（1）\n職業訓練（D）は将来の年収（Y）にどのような影響を与えるか\n\n負の効果?効果なし?内生性（自己選択）は?"
+  },
+  {
+    "objectID": "reg_slide.html#欠落変数バイアスの可視化2",
+    "href": "reg_slide.html#欠落変数バイアスの可視化2",
+    "title": "社会科学における因果推論",
+    "section": "欠落変数バイアスの可視化（2）",
+    "text": "欠落変数バイアスの可視化（2）\n交絡要因として職業訓練前の年収（X）\n\n職業訓練前の年収を考慮したモデル：実は正の効果があるかも?"
+  },
+  {
+    "objectID": "reg_slide.html#処置後変数とは",
+    "href": "reg_slide.html#処置後変数とは",
+    "title": "社会科学における因果推論",
+    "section": "処置後変数とは",
+    "text": "処置後変数とは\n処置後変数（post-treatment variable）\n\n\n\n\n\n\n\n\n\n\n\n\n\nXはDの処置後変数\n\nXがYに直接与える処置効果（直接効果）\nXはDを経由してYに与える処置効果（間接効果）\n総効果 = 直接効果 + 間接効果\n\n因果推論において主に注目するのは総効果\n\nこの場合、Xを統制してはいけない\n説明変数がDのみの単回帰分析を採用すべき\n\n\n\n\n\n参考）XがYに与える影響を推定したい場合、Dを統制すべきである。なぜならXを処置変数と考えると、Dは交絡要因になるからだ。"
+  },
+  {
+    "objectID": "reg_slide.html#処置後変数バイアス-1",
+    "href": "reg_slide.html#処置後変数バイアス-1",
+    "title": "社会科学における因果推論",
+    "section": "処置後変数バイアス",
+    "text": "処置後変数バイアス\n\n\\(Y_i = \\alpha^p + \\tau^p D_i + \\beta^p X_i + \\varepsilon_i^p\\)\n\\(X_i = \\alpha_0 + \\lambda D_i + \\nu_i\\)\n\n\\[\n\\begin{align}\nY_i & = \\alpha^p + \\tau^p D_i + \\beta^p X_i + \\varepsilon_i^p \\\\\n& = \\alpha^p + \\tau^p D_i + \\beta^p (\\alpha_0 + \\lambda D_i + \\nu_i) + \\varepsilon_i^p \\\\\n& = \\alpha^p + \\tau^p D_i + \\beta^p \\alpha_0 + \\beta^p \\lambda D_i + \\beta^p \\nu_i + \\varepsilon_i^p \\\\\n& = (\\alpha^p + \\beta^p \\alpha_0) + \\textcolor{red}{(\\tau^p + \\beta^p \\lambda)} D_i + (\\beta^p \\nu_i + \\varepsilon_i^p)\n\\end{align}\n\\]\n\nYをDのみに回帰した場合の処置効果：\\(\\tau^p + \\beta^p \\lambda\\)（=真の処置効果）\n\nXがモデル含まれている場合の処置効果の推定値：\\(\\tau^p\\)\n処置後変数バイアス：\\(-\\beta^p \\lambda\\)\n\n\\(\\lambda\\)か\\(\\beta^p\\)が0なら、処置後変数バイアスは発生しない\n\n\\(\\lambda\\) = 0なら、そもそもXはDの処置後変数ではない"
+  },
+  {
+    "objectID": "reg_slide.html#直接効果間接効果総効果",
+    "href": "reg_slide.html#直接効果間接効果総効果",
+    "title": "社会科学における因果推論",
+    "section": "直接効果、間接効果、総効果",
+    "text": "直接効果、間接効果、総効果\n\n\n\n\n\n\n\n\n\n\n\n\n\n直接効果：\\(\\tau^p\\)\n間接効果：\\(\\lambda \\times \\beta^p\\)\n\nDが1単位上がると、Xが\\(\\lambda\\)分増加するため\n\n総効果：\\(\\tau^p + \\lambda \\beta^p\\)\nYをDとXに回帰する場合、得られる推定量\n\n直接効果（\\(\\tau^p\\)）と間接効果の一部（\\(\\beta^p\\)）\n\nYをDのみに回帰する場合、得られる推定量\n\n総効果（\\(\\tau^p + \\lambda \\beta^p\\)）"
+  },
+  {
+    "objectID": "reg_slide.html#dag",
+    "href": "reg_slide.html#dag",
+    "title": "社会科学における因果推論",
+    "section": "DAG",
+    "text": "DAG\n有向非巡回グラフ（Directed acyclic graph, DAG）\n\nサイクルが存在しない有向グラフ（無向グラフは常にサイクルが存在）\n\n右グラフはサイクルが存在（D \\(\\rightarrow\\) Y \\(\\rightarrow\\) X \\(\\rightarrow\\) D \\(\\rightarrow\\) Y \\(\\rightarrow\\)…）\n\nノード（点; node or vertex）とエッジ（線; edge）で構成\n因果推論での活用（詳細はPearl et al. [2016=2019]などを参照）"
+  },
+  {
+    "objectID": "reg_slide.html#バックドア経路",
+    "href": "reg_slide.html#バックドア経路",
+    "title": "社会科学における因果推論",
+    "section": "バックドア経路",
+    "text": "バックドア経路\nバックドア経路（backdoor path）：原因と結果（DとY）両方にたどり着ける経路\n\n左：バックドア経路が存在（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が存在しない"
+  },
+  {
+    "objectID": "reg_slide.html#分岐点",
+    "href": "reg_slide.html#分岐点",
+    "title": "社会科学における因果推論",
+    "section": "分岐点",
+    "text": "分岐点\n分岐点（counfounder）：原因（D）と結果（Y）両方にたどり着ける変数\n\n左：Xが分岐点（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：分岐点が存在しない"
+  },
+  {
+    "objectID": "reg_slide.html#分岐点への対処",
+    "href": "reg_slide.html#分岐点への対処",
+    "title": "社会科学における因果推論",
+    "section": "分岐点への対処",
+    "text": "分岐点への対処\nバックドア経路が存在する場合、バックドア経路上の変数をモデルに投入\n\n\n\n\n\n\n\n\n\n\n\n\n\n経路上の全変数を統制する必要はない\n\nバックドア経路さえ無くせば良い\n経路上のすべての変数がなくても良い\n\nどのモデルでも\\(\\bigcirc\\)\n\nXのみ統制\nWのみ統制\nXとW両方統制\n\nバックドア経路が開いたままだと、欠落変数バイアスが発生"
+  },
+  {
+    "objectID": "reg_slide.html#合流点",
+    "href": "reg_slide.html#合流点",
+    "title": "社会科学における因果推論",
+    "section": "合流点",
+    "text": "合流点\n合流点（collider）：原因（D）と結果（Y）両方からたどり着ける変数\n\n左：合流点が存在しない（バックドアはある）\n右：Wが合流点（D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\leftarrow\\) Y）"
+  },
+  {
+    "objectID": "reg_slide.html#中間点",
+    "href": "reg_slide.html#中間点",
+    "title": "社会科学における因果推論",
+    "section": "中間点",
+    "text": "中間点\n中間点（mediator）：原因（D）から結果（Y）へ向かう経路上に存在する変数\n\n左：中間点が存在しない（バックドアはある）\n右：XとWが中間点（D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）"
+  },
+  {
+    "objectID": "reg_slide.html#合流点中間点への対処",
+    "href": "reg_slide.html#合流点中間点への対処",
+    "title": "社会科学における因果推論",
+    "section": "合流点・中間点への対処",
+    "text": "合流点・中間点への対処\n合流点、中間点はいずれも処置後変数（処置後変数バイアスの原因）\n\nモデルに投入すると新しいバックドア経路が開く（右はXを統制した例）\n\\(\\Rightarrow\\) 合流点と中間点はモデルに投入しない！"
+  },
+  {
+    "objectID": "reg_slide.html#応用",
+    "href": "reg_slide.html#応用",
+    "title": "社会科学における因果推論",
+    "section": "応用",
+    "text": "応用\n\n\n\n\n\n\n\n\n\n\n\n\nバックドア経路は計2つ\n\nD \\(\\leftarrow\\) W \\(\\rightarrow\\) V \\(\\rightarrow\\) Y\nD \\(\\leftarrow\\) X \\(\\rightarrow\\) Y\n2つの経路すべてを閉じる\n\n{W, X}か{V, X}、{W, V, X}を統制"
+  },
+  {
+    "objectID": "reg_slide.html#rパッケージ",
+    "href": "reg_slide.html#rパッケージ",
+    "title": "社会科学における因果推論",
+    "section": "Rパッケージ",
+    "text": "Rパッケージ\nDAGの作成および変数選択のためのRパッケージ\n\n{dagitty}\n{ggdag}"
+  },
+  {
+    "objectID": "reg_slide.html#dagの書き方",
+    "href": "reg_slide.html#dagの書き方",
+    "title": "社会科学における因果推論",
+    "section": "DAGの書き方",
+    "text": "DAGの書き方\n\nmy_dag &lt;- dagify(\n  Y ~ D + V + X + P + Q,\n  V ~ W,\n  D ~ W + X + Z,\n  U ~ D + Y,\n  Q ~ D,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \"D\" = 0, \"W\" = 0, \"V\" = 2, \"X\" = 1, \"Z\" = 0, \"P\" = 2, \"U\" = 1, \"Q\" = 1),\n                y = c(\"Y\" = 0, \"D\" = 0, \"W\" = 2, \"V\" = 2, \"X\" = 0.75, \"Z\" = -1, \"P\" = -1, \"U\" = -1, \"Q\" = 1.5))\n)\n\nggdag(my_dag) + theme_dag()"
+  },
+  {
+    "objectID": "reg_slide.html#統制変数の提案",
+    "href": "reg_slide.html#統制変数の提案",
+    "title": "社会科学における因果推論",
+    "section": "統制変数の提案",
+    "text": "統制変数の提案\n\nmy_dag |&gt;\n  ggdag_adjustment_set(shadow = TRUE) +\n  theme_dag()"
+  },
+  {
+    "objectID": "reg_slide.html#交互作用とは",
+    "href": "reg_slide.html#交互作用とは",
+    "title": "社会科学における因果推論",
+    "section": "交互作用とは",
+    "text": "交互作用とは\n交互作用（Interaction）：D \\(\\rightarrow\\) Yの影響がXの値に依存する\n\n左：Xが交絡要因・分岐点（confounder）\n右：Xが調整変数（mediator）1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。"
+  },
+  {
+    "objectID": "reg_slide.html#交互作用の例",
+    "href": "reg_slide.html#交互作用の例",
+    "title": "社会科学における因果推論",
+    "section": "交互作用の例",
+    "text": "交互作用の例\nDの処置効果がXに値によって異なる場合\n\n不均一な処置効果（heterogeneous treatment effect）\n\nまたは条件付きATE（conditional average treatment effect; CATE）\n\n\n\n\n\n例）薬の効き目が性別によって異なる\n\n直線は単回帰分析に基づく回帰直線"
+  },
+  {
+    "objectID": "reg_slide.html#交互作用のモデリング",
+    "href": "reg_slide.html#交互作用のモデリング",
+    "title": "社会科学における因果推論",
+    "section": "交互作用のモデリング",
+    "text": "交互作用のモデリング\n通常の重回帰モデルに交差項（interaction term）を投入\n\n交差項：2つ以上の変数の積（以下の\\(D_i X_i\\)）\nDとXの交互作用なし：\\(Y_i = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\\)\nDとXの交互作用あり：\\(Y_i = \\alpha + \\tau D_i + \\beta X_i~ +\\) \\(\\gamma D_i X_i\\) \\(+~ \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "reg_slide.html#重回帰分析との比較図",
+    "href": "reg_slide.html#重回帰分析との比較図",
+    "title": "社会科学における因果推論",
+    "section": "重回帰分析との比較（図）",
+    "text": "重回帰分析との比較（図）\n\n重回帰分析（左）：男女の傾きが同じ\n交互作用モデル（右）：男女の傾きが異なる"
+  },
+  {
+    "objectID": "reg_slide.html#重回帰分析との比較表",
+    "href": "reg_slide.html#重回帰分析との比較表",
+    "title": "社会科学における因果推論",
+    "section": "重回帰分析との比較（表）",
+    "text": "重回帰分析との比較（表）\n\n\n\n\n\n  \n    \n       \n      交互作用なし\n      交互作用あり\n    \n  \n  \n    切片\n35.835 (0.245)\n36.419 (0.329)\n    投薬量\n0.010 (0.004)\n-0.002 (0.006)\n    男性ダミー\n1.584 (0.221)\n0.442 (0.438)\n    投薬量:男性ダミー\n\n0.023 (0.007)\n    Num.Obs.\n100\n100\n    R2\n0.377\n0.436\n    R2 Adj.\n0.365\n0.418\n  \n  \n    \n      注：カッコ内はHC2頑健標準誤差\n    \n  \n  \n\n\n\n\n\n係数の解釈：他の条件が同じであれば投薬量が1単位（= 1mg）増えると体温の期待値は0.002単位（0.002℃）下がる\n\nこれで大丈夫?\n何か忘れていませんか?回帰式に処置変数（投薬量）は2回登場するはず"
+  },
+  {
+    "objectID": "reg_slide.html#交互作用の解釈",
+    "href": "reg_slide.html#交互作用の解釈",
+    "title": "社会科学における因果推論",
+    "section": "交互作用の解釈",
+    "text": "交互作用の解釈\n処置効果は\\(\\tau\\)でなく、\\(\\tau + \\gamma X_i\\)\n\\[\n\\begin{align}\nY_i & = \\alpha + \\tau D_i + \\beta X_i + \\gamma D_i X_i + \\varepsilon_i \\\\\n& = \\alpha + (\\tau + \\gamma X_i) D_i + \\beta X_i + \\varepsilon_i\n\\end{align}\n\\]\n\n\\(X_i = 0\\)の時の処置効果、\\(X_i = 1\\)の時の処置効果、\\(X_i = 3\\)の時の処置効果、…\n\n限界効果（marginal effect）\n\n交互作用は予測値と限界効果に基づいて解釈すべき（回帰係数にこだわらない）\n詳細はBrambor（2006）を参照\n\n\n\nBrambor, Thomas, William Roberts Clark, and Matt Golder. 2006. “Understanding Interaction Models: Improving Empirical Analyses.” Political Analysis, 14(1): 63–82."
+  },
+  {
+    "objectID": "reg_slide.html#予測値左と限界効果右",
+    "href": "reg_slide.html#予測値左と限界効果右",
+    "title": "社会科学における因果推論",
+    "section": "予測値（左）と限界効果（右）",
+    "text": "予測値（左）と限界効果（右）\n男性の場合、投薬量が1mg増えると体温は約0.02℃上がる。一方、女性の場合、統計的有意な処置効果は確認できない1。\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。"
+  },
+  {
+    "objectID": "reg_slide.html#推定",
+    "href": "reg_slide.html#推定",
+    "title": "社会科学における因果推論",
+    "section": "推定",
+    "text": "推定\n共通\n\n予測値、効果量を示すことで実質科学的な議論を\n交差項を含むモデルの場合、限界効果も示すこと\n\n実験データの場合\n\n処置変数は外生変数（の可能性が非常に高い）であるため、統制変数は不要\n\n実験でも処置の自己選択が生じるケースもあるため、統制変数が必要な場合も\n\n統制変数を入れても良い\n\n 標準誤差が小さくなる\n 処置後変数は投入しない!\n\n\n観察データの場合\n\n処置変数は内生変数（の可能性が非常に高い）であるため、統制変数が必要\n慎重な変数選択が必要"
+  },
+  {
+    "objectID": "reg_slide.html#実験データと重回帰分析",
+    "href": "reg_slide.html#実験データと重回帰分析",
+    "title": "社会科学における因果推論",
+    "section": "実験データと重回帰分析",
+    "text": "実験データと重回帰分析\n\nFreedman（2008a, 2008b）の問題提起\n\n内生性の問題が多く解決されているはずの実験データであっても、共変量調整は場合によって精度の低下、バイアスの導入、信頼できない標準誤差の原因になる\n\nLin（2013）の提案\n\nFreedmanの議論は正しいが、以下の2つを採用することで解決可能（大標本を前提とする）\n\n\n処置変数と共変量間の交差項を投入（共変量が複数ならすべての共変量との交差項を投入）\n頑健標準誤差（Huber–White sandwich standard error）を使用\n\n\n\n\n\nFreedman, David A. 2008a. “On Regression Adjustments in Experiments with Several Treatments.” The Annals of Applied Statistics. 2(1): 176-96.\nFreedman, David A. 2008b. “Randomization Does Not Justify Logistic Regression.” Statistical Science. 23(2): 237-249.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318."
+  },
+  {
+    "objectID": "reg_slide.html#効果量",
+    "href": "reg_slide.html#効果量",
+    "title": "社会科学における因果推論",
+    "section": "効果量",
+    "text": "効果量\n処置効果の大きさを数値化し、評価する（ドメイン知識が必要）\n\n統制群と処置群間の応答変数の差\n\n差はいくらか、または何SD分かなど\n\n処置変数が連続の場合は、最小値 \\(\\rightarrow\\) 最大値、平均を中心とした \\(\\pm\\) 1 or 2SDなど\n\n心理学を中心とした効果量の議論\n\nStandardized mean difference\nCohen’s d"
+  },
+  {
+    "objectID": "reg_slide.html#効果量の例cohens-d",
+    "href": "reg_slide.html#効果量の例cohens-d",
+    "title": "社会科学における因果推論",
+    "section": "効果量の例：Cohen’s d",
+    "text": "効果量の例：Cohen’s d\n幅広く使われる効果量（Cohen 1980）\n\n\\(s_{\\cdot}^2\\)は不偏分散\n\n\\[\n\\begin{align}\nd & = \\frac{\\bar{x}_1 - \\bar{x}_2}{s} \\\\\ns & = \\sqrt{\\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}\n\\end{align}\n\\]\nCohen（1980）の基準（すべての学問分野に適用される基準ではない）\n\n小さい効果量：d = 0.2\n中程度の効果量：d = 0.5\n大きい効果量：d = 0.8\n\n\n\n\nCohen, Jacob. 1988. Statistical Power Analysis for the Behavioral Sciences. Routledge."
+  },
+  {
+    "objectID": "reg_slide.html#統制変数の解釈について",
+    "href": "reg_slide.html#統制変数の解釈について",
+    "title": "社会科学における因果推論",
+    "section": "統制変数の解釈について",
+    "text": "統制変数の解釈について\n基本的に統制変数の係数は解釈しない\n\n\n\n\n\n\n\n\n\n\n\n\n信頼できる\\(\\tau\\)を推定するために、分岐点（交絡要因）であるXを統制\n\n\\(\\tau\\)：DがYに与える効果\n\\(\\beta\\)：XがYに与える効果?\n\nX \\(\\rightarrow\\) Yの関係においてDは中間点（媒介変数）\n中間点は統制しないのが原則\nXがYに与える効果を推定するためにはモデルからDを除外すべき\n\n\n\n\n\n\n\n\n「Dが同じ場合、XがYに与える効果」（= XからYへの直接効果）を推定する場合、DとX両方を投入したモデルは正しい。しかし、Xが変わるとDが必ず変わるため、「Dを固定したら…」という前提はそもそも現実的ではない。"
+  },
+  {
+    "objectID": "rdd_slide.html#比例性と投票参加",
+    "href": "rdd_slide.html#比例性と投票参加",
+    "title": "社会科学における因果推論",
+    "section": "比例性と投票参加",
+    "text": "比例性と投票参加\n\n合理的有権者の投票参加モデル（Riker and Ordeshook 1968）\n\n\\(R = P \\cdot B - C + D\\)（\\(R \\leq 0\\)の場合、棄権）\n有権者は自分の持つ一票の価値（\\(P\\)）が低いと、棄権しやすい。\n\n比例性が高い = 自分の一票が議席に変換される確率が高い = 死票が少ない\n\\(\\Rightarrow\\) 比例代表制は投票率を上げる？"
+  },
+  {
+    "objectID": "rdd_slide.html#群間単純比較",
+    "href": "rdd_slide.html#群間単純比較",
+    "title": "社会科学における因果推論",
+    "section": "群間単純比較",
+    "text": "群間単純比較\n\n多数代表制の国が比例代表制を採用すると投票率が2.8%p増加する?\n\n比例代表制を採用する国の平均投票率：65.3%\n多数代表制を採用する国の平均投票率：62.5%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n平均値の単純比較の限界\n\n誤差項には政治文化、歴史、経済状況、社会内の対立軸、周辺国の制度、支配国の制度等が含まれる。\nこれらの要因の一部は交絡要因と考えられるため、単純比較から得られた推定値はバイアスを含む。\n国固有の文脈（context）により単純比較は困難\n\\(\\Rightarrow\\) 一国内で異なる選挙制度があれば?"
+  },
+  {
+    "objectID": "rdd_slide.html#フランスの例",
+    "href": "rdd_slide.html#フランスの例",
+    "title": "社会科学における因果推論",
+    "section": "フランスの例",
+    "text": "フランスの例\n\nコミューン1（commune）議会選挙（1982〜20132）\n\n人口3500人未満のコミューン：多数代表制（大選挙区制）\n人口3500人以上のコミューン：比例代表制（プレミアム付）\n以下は架空のデータ（実際の研究成果はEggers[2014]等を参照）\n\n\n\n\n\n\n\n\n\n\n\n\n\nEggers, Andrew C.. 2014. “Proportionality and Turnout: Evidence From French Municipalities.” Comparative Political Studies, 48(2): 135-167.\nフランスにおける基礎自治体の最小単位であり、2025年現在、約35,000コミューンが存在する。2013年の法改正により閾値が1000人へ引き下げ（2014年選挙から適用）"
+  },
+  {
+    "objectID": "rdd_slide.html#内生性は",
+    "href": "rdd_slide.html#内生性は",
+    "title": "社会科学における因果推論",
+    "section": "内生性は?",
+    "text": "内生性は?\n交絡要因の存在により、群間の単純比較では信頼できる処置効果の推定が不可能\n\nバックドア経路が存在（D \\(\\leftarrow\\) R \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nY：投票率\nD：選挙制度\nR：人口\nW：都市化度"
+  },
+  {
+    "objectID": "rdd_slide.html#選挙制度がランダムに",
+    "href": "rdd_slide.html#選挙制度がランダムに",
+    "title": "社会科学における因果推論",
+    "section": "選挙制度がランダムに?",
+    "text": "選挙制度がランダムに?\n\n人口が3500人周辺であれば、都市化度はほぼ同じだと考えられる。\n\n人口3400人のコミューンと3600人のコミューンの都市化度は「ほぼ」同じであり、人口が3500人を超えるかどうかは「運」とも言える。\n\\(\\leadsto\\) 内生性の原因（の一つ）である「都市化度」がコントロールされる。\n\\(\\leadsto\\) 区間内において、選挙制度は「ほぼ」ランダムに決まる（\\(\\fallingdotseq\\)実験？）。"
+  },
+  {
+    "objectID": "rdd_slide.html#回帰不連続デザイン",
+    "href": "rdd_slide.html#回帰不連続デザイン",
+    "title": "社会科学における因果推論",
+    "section": "回帰不連続デザイン",
+    "text": "回帰不連続デザイン\n\nRegression Discontinuity Design（RDD）\n\n参考：Thistlethwaite and Campbell（1960）\n\n観測された共変量の値が（制度等によって決められた）閾値のいずれかの側にあるかによって、処置の割り当てが決まる。\n\n「観測された共変量」は割当変数（Running variable）、または強制変数（Forcing variable）と呼ばれる。\n割当変数（\\(R_i\\)）の値が閾値（\\(c\\)）を超えた個体を「処置群（\\(D_i = 1\\)）」と呼ぶケースが多い。\n\n\n\\[\nD_i = \\begin{cases}\n0 & \\textsf{if} & R_i &lt; c \\\\\n1 & \\textsf{if} & R_i \\geq c\n\\end{cases}\n\\]\n\n推定対象（estimand）はATEでなく、LATE（Local ATE; 局所平均処置効果）"
+  },
+  {
+    "objectID": "rdd_slide.html#なぜ不連続か",
+    "href": "rdd_slide.html#なぜ不連続か",
+    "title": "社会科学における因果推論",
+    "section": "なぜ「不連続」か",
+    "text": "なぜ「不連続」か\n\n回帰直線が上方向（または、下方向）にジャンプ\n\nジャンプの幅がLATE"
+  },
+  {
+    "objectID": "rdd_slide.html#つのrdd",
+    "href": "rdd_slide.html#つのrdd",
+    "title": "社会科学における因果推論",
+    "section": "2つのRDD",
+    "text": "2つのRDD\n異なる割当メカニズムを想定した2つのRDD（本講義ではSRDのみ解説）\n\nSharp Regression Discontinuity (SRD)\n\n割当変数の値が閾値を超えると必ず処置を受ける。\n例) 人口と選挙制度\n\nFuzzy Regression Discontinuity (FRD)\n\n割当変数の値が閾値を超えると処置を受ける確率がジャンプする。\n例) 入試"
+  },
+  {
+    "objectID": "rdd_slide.html#割当メカニズムの比較",
+    "href": "rdd_slide.html#割当メカニズムの比較",
+    "title": "社会科学における因果推論",
+    "section": "割当メカニズムの比較",
+    "text": "割当メカニズムの比較\n割当変数の値が閾値を超えると、処置を受ける確率がジャンプする。"
+  },
+  {
+    "objectID": "rdd_slide.html#rddの仮定識別条件",
+    "href": "rdd_slide.html#rddの仮定識別条件",
+    "title": "社会科学における因果推論",
+    "section": "RDDの仮定（識別条件）",
+    "text": "RDDの仮定（識別条件）\n\n閾値のルールが明確であり、既知であること\n\nRDDの場合、閾値は制度に起因するものが多いため、これが問題になるケースは少ない。\n\n\n\n閾値周辺において…\n\n潜在的結果が連続であること\n結果変数に影響を与える共変量（処置変数を除く）が連続すること\n割当変数が連続であること"
+  },
+  {
+    "objectID": "rdd_slide.html#潜在的結果の連続性",
+    "href": "rdd_slide.html#潜在的結果の連続性",
+    "title": "社会科学における因果推論",
+    "section": "潜在的結果の連続性",
+    "text": "潜在的結果の連続性"
+  },
+  {
+    "objectID": "rdd_slide.html#共変量の連続性",
+    "href": "rdd_slide.html#共変量の連続性",
+    "title": "社会科学における因果推論",
+    "section": "共変量の連続性",
+    "text": "共変量の連続性\n\n結果変数に影響を与える変数が閾値周辺で変化しないこと\n\n架空の例）21歳になれば…\n\n識別可能：飲酒ができるようになり、他は何も変わらない。\n識別不可：飲酒だけでなく、運転も、宜しくない薬も、結婚もできるようになる。\n\n\n共変量が揃っていれば（限定的ではあるが）バランスチェックで確認可能"
+  },
+  {
+    "objectID": "rdd_slide.html#割当変数の連続性",
+    "href": "rdd_slide.html#割当変数の連続性",
+    "title": "社会科学における因果推論",
+    "section": "割当変数の連続性",
+    "text": "割当変数の連続性\n\n閾値周辺において強制変数の操作が行われていないこと\nMcCrary（2008）の密度検定（density test）で仮定違反有無が確認可能"
+  },
+  {
+    "objectID": "rdd_slide.html#推定方法",
+    "href": "rdd_slide.html#推定方法",
+    "title": "社会科学における因果推論",
+    "section": "推定方法",
+    "text": "推定方法\n\nパラメトリック（parametric）推定\nノンパラメトリック（non-parametric）推定\n\n局所平均\n局所回帰"
+  },
+  {
+    "objectID": "rdd_slide.html#パラメトリック推定",
+    "href": "rdd_slide.html#パラメトリック推定",
+    "title": "社会科学における因果推論",
+    "section": "パラメトリック推定",
+    "text": "パラメトリック推定\n結果変数を処置変数と割当変数に回帰した（非）線形回帰モデル\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i\n\\]\n\n\\(Y_i\\)：結果変数\n\\(D_i\\)：処置変数（\\(D_i \\in \\{0, 1\\}\\)）\n\\(R_i\\)：割当変数\n\\(\\rho\\)：局所処置効果（LATE）"
+  },
+  {
+    "objectID": "rdd_slide.html#交互作用",
+    "href": "rdd_slide.html#交互作用",
+    "title": "社会科学における因果推論",
+    "section": "交互作用",
+    "text": "交互作用\n閾値を超えることによって回帰直線の傾きが変化すると考えられる場合\n\n処置変数と割当変数の交差項を投入"
+  },
+  {
+    "objectID": "rdd_slide.html#交互作用の注意点",
+    "href": "rdd_slide.html#交互作用の注意点",
+    "title": "社会科学における因果推論",
+    "section": "交互作用の注意点",
+    "text": "交互作用の注意点\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i + \\gamma D_i \\cdot R_i\n\\]\n\nこの場合、LATEは\\(\\rho\\)ではなく、\\(\\rho + \\gamma \\cdot c\\)\n\n処置効果は\\(R_i\\)の値に依存1（処置効果は\\(R_i = c\\)の箇所のみで観察されるため）\n\n閾値（\\(c\\)）が0になるように割当変数を調整（=割当変数を閾値で中心化する）することを推奨\n\n割当変数の値から閾値を値を引くだけで十分\n\n割当変数を\\(c\\)で中心化すると、新しい\\(c\\)は必ず0\n\nLATEは\\(\\rho + \\gamma \\cdot 0\\) = \\(\\rho\\)\n\n\nなぜこうなるのかが分からない場合は、本講義の履修よりも先に交互作用の解釈について勉強すること。交互作用の解釈に関する解説はBrambor（2006）が詳しい。まだ読んだことない人にもおすすめできる論文だ。"
+  },
+  {
+    "objectID": "rdd_slide.html#中心化の前後比較",
+    "href": "rdd_slide.html#中心化の前後比較",
+    "title": "社会科学における因果推論",
+    "section": "中心化の前後比較",
+    "text": "中心化の前後比較\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i + \\gamma D_i \\cdot R_i\n\\]"
+  },
+  {
+    "objectID": "rdd_slide.html#非線形の場合",
+    "href": "rdd_slide.html#非線形の場合",
+    "title": "社会科学における因果推論",
+    "section": "非線形の場合",
+    "text": "非線形の場合\n\n割当変数の2乗項、3乗項、…を投入（交互作用と組み合わせる場合）\n\n\\[\n\\begin{align}\n\\hat{Y_i} = & \\alpha + \\rho D_i + \\beta_1 R_i + \\beta_2 R_i^2 + ... + \\beta_k R_i^k \\textcolor{#E82825}{+} \\\\\n& \\textcolor{#E82825}{\\gamma_1 (D_i \\cdot R_i) + \\gamma_2 (D_i \\cdot R_i^2) + ... + \\gamma_k (D_i \\cdot R_i^k)}\n\\end{align}\n\\]\n\nモデル選択の基準の例：\\(F\\)検定、AIC、BIC、…\nしかし、高次多項式は推奨されない（Gelman and Imbens 2018）\n\n高次項を入れるとバイアスは小さくなるが、分散が大きくなる。\n\nそもそもRDDにおいてフィットの良さは重要ではない。\n\nGelman and Imbens（2018）は局所回帰、または二次多項式までを推奨\n\n\n\n\nGelman, Andrew and Guido Imbens. 2018. “Why High-Order Polynomials Should Not Be Used in Regression Discontinuity Designs.” Journal of Business & Economic Statistics, 37(3): 447-456."
+  },
+  {
+    "objectID": "rdd_slide.html#線形か非線形か",
+    "href": "rdd_slide.html#線形か非線形か",
+    "title": "社会科学における因果推論",
+    "section": "線形か非線形か",
+    "text": "線形か非線形か\n実は閾値周辺で連続する関数（\\(Y = \\frac{1}{1 + e^{-R}}\\)）だが…"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数の例",
+    "href": "rdd_slide.html#次関数の例",
+    "title": "社会科学における因果推論",
+    "section": "1次関数の例",
+    "text": "1次関数の例\n\\(Y_i = \\alpha + \\rho D_i + \\beta R_i + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数-交差項の例",
+    "href": "rdd_slide.html#次関数-交差項の例",
+    "title": "社会科学における因果推論",
+    "section": "1次関数 + 交差項の例",
+    "text": "1次関数 + 交差項の例\n\\(Y_i = \\alpha + \\rho D_i + \\beta R_i + \\gamma D_i \\cdot R_i + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数の例-1",
+    "href": "rdd_slide.html#次関数の例-1",
+    "title": "社会科学における因果推論",
+    "section": "2次関数の例",
+    "text": "2次関数の例\n\\(Y_i = \\alpha + \\rho D_i + \\beta_1 R_i + \\beta_1 R_i^2 + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数-交差項の例-1",
+    "href": "rdd_slide.html#次関数-交差項の例-1",
+    "title": "社会科学における因果推論",
+    "section": "2次関数 + 交差項の例",
+    "text": "2次関数 + 交差項の例\n\\(Y_i = \\alpha + \\rho D_i + \\beta_1 R_i + \\beta_1 R_i^2 + \\gamma_1 D_i \\cdot R_i + \\gamma_1 D_i \\cdot R_i^2 + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数の例-2",
+    "href": "rdd_slide.html#次関数の例-2",
+    "title": "社会科学における因果推論",
+    "section": "3次関数の例",
+    "text": "3次関数の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^3 \\beta_j R_i^j + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数-交差項の例-2",
+    "href": "rdd_slide.html#次関数-交差項の例-2",
+    "title": "社会科学における因果推論",
+    "section": "3次関数 + 交差項の例",
+    "text": "3次関数 + 交差項の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^3 \\beta_j R_i^j + \\sum_{k=1}^3 \\gamma_k D_i \\cdot R_i^k + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数の例-3",
+    "href": "rdd_slide.html#次関数の例-3",
+    "title": "社会科学における因果推論",
+    "section": "4次関数の例",
+    "text": "4次関数の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^4 \\beta_j R_i^j + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数-交差項の例-3",
+    "href": "rdd_slide.html#次関数-交差項の例-3",
+    "title": "社会科学における因果推論",
+    "section": "4次関数 + 交差項の例",
+    "text": "4次関数 + 交差項の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^4 \\beta_j R_i^j + \\sum_{k=1}^4 \\gamma_k D_i \\cdot R_i^k + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数の例-4",
+    "href": "rdd_slide.html#次関数の例-4",
+    "title": "社会科学における因果推論",
+    "section": "5次関数の例",
+    "text": "5次関数の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^5 \\beta_j R_i^j + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#次関数-交差項の例-4",
+    "href": "rdd_slide.html#次関数-交差項の例-4",
+    "title": "社会科学における因果推論",
+    "section": "5次関数 + 交差項の例",
+    "text": "5次関数 + 交差項の例\n\\(Y_i = \\alpha + \\rho D_i + \\sum_{j=1}^5 \\beta_j R_i^j + \\sum_{k=1}^5 \\gamma_k D_i \\cdot R_i^k + \\varepsilon_i\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#lateの推定値",
+    "href": "rdd_slide.html#lateの推定値",
+    "title": "社会科学における因果推論",
+    "section": "LATEの推定値",
+    "text": "LATEの推定値"
+  },
+  {
+    "objectID": "rdd_slide.html#モデルの適合度",
+    "href": "rdd_slide.html#モデルの適合度",
+    "title": "社会科学における因果推論",
+    "section": "モデルの適合度",
+    "text": "モデルの適合度"
+  },
+  {
+    "objectID": "rdd_slide.html#ノンパラメトリック推定",
+    "href": "rdd_slide.html#ノンパラメトリック推定",
+    "title": "社会科学における因果推論",
+    "section": "ノンパラメトリック推定",
+    "text": "ノンパラメトリック推定\nパラメトリックのデメリット\n\n結果変数と割当変数間の関数形の特定が重要\n\n線形? 非線形（2次? 3次? 4次?）? 交差項?\n\n関数形の誤設定（misspecification）はバイアスの原因\n\n\nノンパラメトリック推定\n\n閾値周辺の個体のみを対象とし、処置群と統制群間の結果変数の平均値の差を比較\n\n\\(c - h \\leq R \\leq c + h\\)の個体のみ使用（\\(h\\)はバンド幅（bandwidth）と呼ばれる）\n\n2つの推定方法\n\n局所平均（単純平均であるため、結果変数と割当変数間の関数形の特定が不要）\n局所線形回帰分析（local linear regression）\n\n現時点の主流であり、関数形の特定は必要だが、誤設定の影響が小さい。"
+  },
+  {
+    "objectID": "rdd_slide.html#局所平均",
+    "href": "rdd_slide.html#局所平均",
+    "title": "社会科学における因果推論",
+    "section": "局所平均",
+    "text": "局所平均\n\n全体平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R] - \\mathbb{E}[Y | R &lt; c]\\)\n局所平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R \\leq c + h] - \\mathbb{E}[Y | c - h \\leq R &lt; c]\\)"
+  },
+  {
+    "objectID": "rdd_slide.html#バンド幅",
+    "href": "rdd_slide.html#バンド幅",
+    "title": "社会科学における因果推論",
+    "section": "バンド幅",
+    "text": "バンド幅\n\n最適なバンド幅を決めるたった一つのルールは存在しない\n\nImbens and Kalyanaraman（2009）、Lee and Lemieux（2010）、Imbens and Kalyanaraman（2012）、Calonico et al.（2014）、Arai and Ichimura（2018）、Calonico et al.（2019）、Calonico et al.（2020）など\n\n多くはMSE（mean squared error）の最小化を目指している。\n\n現在、一般的に採用されているのはImbens and Kalyanaraman（2012）の方法\n\n\n\n\nバンド幅によってLATEの推定値は変わる。\n\n多少の変動は仕方ないが、バンド幅が少し変わっただけでLATEの推定値が大きく変化することは望ましくない。\n\\(\\Rightarrow\\) 感度分析（sensitivity analysis）を推奨\n\nバンド幅を最適バンド幅を中心に少しずつ（前後に）動かしながらLATEの推定値の変化を示す"
+  },
+  {
+    "objectID": "rdd_slide.html#局所回帰分析",
+    "href": "rdd_slide.html#局所回帰分析",
+    "title": "社会科学における因果推論",
+    "section": "局所回帰分析",
+    "text": "局所回帰分析\nハンド幅内の個体のみを用いたパラメトリック推定法（Hahn, Todd, and van der Klaauw 2001）\n\n「線形+交差項」か「二次多項式+交差項」で十分な場合が多い"
+  },
+  {
+    "objectID": "rdd_slide.html#局所平均と局所回帰",
+    "href": "rdd_slide.html#局所平均と局所回帰",
+    "title": "社会科学における因果推論",
+    "section": "局所平均と局所回帰",
+    "text": "局所平均と局所回帰\n\n境界問題によるバイアスの発生"
+  },
+  {
+    "objectID": "rdd_slide.html#カーネル関数",
+    "href": "rdd_slide.html#カーネル関数",
+    "title": "社会科学における因果推論",
+    "section": "カーネル関数",
+    "text": "カーネル関数\n閾値における処置効果に興味があるため、閾値に近い個体ほど高い重みを付ける\n\nバンド幅外の個体には重み0を付ける\n重み付けのルール：カーネル関数（kernel function）\n\n一様/長方形カーネル関数：すべての個体の重みが同じ（=重み付けなし）\n三角形カーネル関数：LATE推定に最適なカーネル関数（Fan and Gijbels 1996）\nほとんどのパッケージは三角形カーネル関数がデフォルト\n\nカーネル関数が推定値に与える影響は限定的（Lee and Lemieux 2010）"
+  },
+  {
+    "objectID": "rdd_slide.html#様々なカーネル関数",
+    "href": "rdd_slide.html#様々なカーネル関数",
+    "title": "社会科学における因果推論",
+    "section": "様々なカーネル関数",
+    "text": "様々なカーネル関数\n\n\n\n\n\n\n\n出典：Wikipedia"
+  },
+  {
+    "objectID": "rdd_slide.html#推定パッケージ",
+    "href": "rdd_slide.html#推定パッケージ",
+    "title": "社会科学における因果推論",
+    "section": "推定（パッケージ）",
+    "text": "推定（パッケージ）\nパッケージによってバンド幅、局所回帰分析の関数形、標準誤差の計算方法が異なるので、事前に確認しておくこと。\n\n推定用\n\n{rdd}\n{rdrobust}\n{rddapp}：推定 + ツールボックス\n{SpatialRDD}：地理的RDD\n\nツールボックス系\n\n{rddtools}\n{rddensity}"
+  },
+  {
+    "objectID": "rdd_slide.html#可視化散布図",
+    "href": "rdd_slide.html#可視化散布図",
+    "title": "社会科学における因果推論",
+    "section": "可視化（散布図）",
+    "text": "可視化（散布図）\n\n方法1：割当変数と結果変数の散布図（左）\n\n個体が多い場合、傾向が読み取りにくい。\n\n方法2：割当変数の区間と結果変数の平均値の散布図（右）"
+  },
+  {
+    "objectID": "rdd_slide.html#感度分析",
+    "href": "rdd_slide.html#感度分析",
+    "title": "社会科学における因果推論",
+    "section": "感度分析",
+    "text": "感度分析\nバンド幅（左）と高次多項式（右）の感度分析の例\n\n以下はAriga et al.（2016）の例（Figure 2の一部）\n\n\n\n\nAriga, Kenichi, Yusaku Horiuchi, Roland Mansilla, and Michio Umeda. 2016. “No sorting, no advantage: Regression discontinuity estimates of incumbency advantage in Japan.” Electoral Studies, 43: 21-31."
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定",
+    "href": "rdd_slide.html#プラセボ検定",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定",
+    "text": "プラセボ検定\nImbens and Lemieux（2008）のガイドライン\n\n閾値を基準とし、左右でサンプルを分割する。\nそれぞれのサブサンプルにおける\\(R\\)の\\(\\delta\\)分位数をを求める。\n\n閾値左側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, l}\\)\n閾値右側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, r}\\)\n中央値を\\(\\delta\\)とする場合、それぞれ\\(q_{R, 1/2, l}\\)と\\(q_{R, 1/2, r}\\)\n\n\\(q_{R, \\delta, l}\\)と\\(q_{R, \\delta, r}\\)をサブサンプルにおける閾値とする。\n各サブサンプル内でRDDを推定する。\n\n\\(\\delta=0.5\\)に加え、別の\\(\\delta\\)を採用しても良い。\n\n\n\n\n注：Imbens and Lemieux（2008）は割当変数を\\(X\\)と表記しているため、\\(q_{X, \\delta, l}\\)、\\(q_{X, \\delta, l}\\)と表記している。"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定の例",
+    "href": "rdd_slide.html#プラセボ検定の例",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定の例",
+    "text": "プラセボ検定の例\n新しい閾値周辺においてジャンプが生じない（=LATEの推定値が0）ことが望ましい。"
+  },
+  {
+    "objectID": "rdd_slide.html#バランスチェック",
+    "href": "rdd_slide.html#バランスチェック",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェック",
+    "text": "バランスチェック\n共変量（処置前変数）を結果変数とし、RDDを実行\n\nジャンプが生じないことが望ましい\n\n\n\n\n\n\n\n\n出典：Lee, Moretti, and Butler（2004）"
+  },
+  {
+    "objectID": "rdd_slide.html#密度検定",
+    "href": "rdd_slide.html#密度検定",
+    "title": "社会科学における因果推論",
+    "section": "密度検定",
+    "text": "密度検定\n\n\\(H_0\\)：閾値周辺において割当変数の操作が行われていない。"
+  },
+  {
+    "objectID": "rct_slide.html#内生性",
+    "href": "rct_slide.html#内生性",
+    "title": "社会科学における因果推論",
+    "section": "内生性",
+    "text": "内生性\n処置変数と誤差項間に相関が存在する場合\n\n処置変数は内生変数（\\(\\Leftrightarrow\\)外生変数）\n処置効果（因果効果）の推定値はバイアスを含む\n内生性は因果推論の敵\n\n\n\n\n\n\n\n内生性あり\n\n\n\n\n\n\n\n内生性なし"
+  },
+  {
+    "objectID": "rct_slide.html#内生性がない状態",
+    "href": "rct_slide.html#内生性がない状態",
+    "title": "社会科学における因果推論",
+    "section": "内生性がない状態",
+    "text": "内生性がない状態\n内生性が存在しない場合、処置群と統制群は集団として均質\n\n統制群と処置群を逆にしても問題ない（\\(\\Rightarrow\\)統制群と処置群は交換可能）\n\n\n\n\n\n\n\n例1）やる気のある学生が処置群に多い（内生性あり）\n\n\n\n\n\n\n\n例2）やる気のある学生の割合は処置群・統制群において均等（内生性なし）"
+  },
+  {
+    "objectID": "rct_slide.html#交換可能性",
+    "href": "rct_slide.html#交換可能性",
+    "title": "社会科学における因果推論",
+    "section": "交換可能性",
+    "text": "交換可能性\n交換可能性（exchangeability）：処置と潜在的結果が独立であること\n\n無視可能性（ignorability）、または独立性（independence）とも呼ばれる\n\n\\[\n(Y(0), Y(1)) \\mathop{\\perp\\!\\!\\!\\!\\perp} D\n\\]\n\n処置群と統制群の潜在的結果の分布が同じであること\n\n処置群と統制群が均質であるため、処置群を統制群に、統制群を処置群に交換可能\n\n交換可能性が成立する場合、ATEが推定可能"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立性",
+    "href": "rct_slide.html#平均独立性",
+    "title": "社会科学における因果推論",
+    "section": "平均独立性",
+    "text": "平均独立性\n平均独立性（mean independence）\n\\[\n\\begin{gathered}\n\\mathbb{E}[Y(0)|D = 1] = \\mathbb{E}[Y(0)|D = 0] \\\\\n\\& \\\\\n\\mathbb{E}[Y(1)|D = 1] = \\mathbb{E}[Y(1)|D = 0]\n\\end{gathered}\n\\]\n\n潜在的結果の分布・・でなく、期待値・・・に関する条件：交換可能性より緩い条件\n\n平均独立が成立していればATEは推定可能\nただし、不均一処置効果（HTE）を推定する場合、平均独立だけでは不十分1（交換可能性が必要）\n\n\n識別自体は可能だが、推定値が信頼できる推定値かは別の問題である。"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立と交換可能性間の関係",
+    "href": "rct_slide.html#平均独立と交換可能性間の関係",
+    "title": "社会科学における因果推論",
+    "section": "平均独立と交換可能性間の関係",
+    "text": "平均独立と交換可能性間の関係\n交換可能性は平均独立を内包するより強い仮定\n\nただし、平均独立が交換可能性を保証するわけではない\n\n\\[\n\\begin{gathered}\n(Y(0), Y(1)) \\mathop{\\perp\\!\\!\\!\\!\\perp} D \\\\\n\\Downarrow \\\\\n\\mathbb{E}[Y(0)|D = 1] = \\mathbb{E}[Y(0)|D = 0] \\\\\n\\& \\\\\n\\mathbb{E}[Y(1)|D = 1] = \\mathbb{E}[Y(1)|D = 0]\n\\end{gathered}\n\\]\n\n\n\nケース\n平均独立\n交換可能性\nATE\nHTE\n\n\n\n\n1\n成立\n成立\n識別可\n識別可\n\n\n2\n成立\n不成立\n識別可\n識別不可\n\n\n3\n不成立\n成立\nあり得ない\nあり得ない\n\n\n2\n不成立\n不成立\n識別不可\n識別不可"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立と交換可能性",
+    "href": "rct_slide.html#平均独立と交換可能性",
+    "title": "社会科学における因果推論",
+    "section": "平均独立と交換可能性",
+    "text": "平均独立と交換可能性"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立と交換可能性が成立する例",
+    "href": "rct_slide.html#平均独立と交換可能性が成立する例",
+    "title": "社会科学における因果推論",
+    "section": "平均独立と交換可能性が成立する例",
+    "text": "平均独立と交換可能性が成立する例\n真のATEが2の例\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(Y\\)\n\n\n\n\n1\n0\n3\n5\n3\n\n\n2\n0\n4\n6\n4\n\n\n3\n0\n5\n7\n5\n\n\n4\n0\n6\n8\n6\n\n\n5\n0\n7\n9\n7\n\n\n6\n1\n6\n8\n8\n\n\n7\n1\n4\n6\n6\n\n\n8\n1\n5\n7\n7\n\n\n9\n1\n7\n9\n9\n\n\n10\n1\n3\n5\n5\n\n\n\n\n\n平均独立：成立\n\n\\(\\mathbb{E}[Y(0)|D = 1] = \\mathbb{E}[Y(0)|D = 0] = 5\\)\n\\(\\mathbb{E}[Y(1)|D = 1] = \\mathbb{E}[Y(1)|D = 0] = 7\\)\n\n交換可能性：成立（潜在的結果の分布が同じ）\n\n\n\n\n\n\\(Y(0)\\)\n\\(Y(1)\\)\n\n\n\n\n統制群\n[3, 7]\n[5, 9]\n\n\n処置群\n[3, 7]\n[5, 9]\n\n\n\n\n観察データを用いたATEの推定値：2\n統制群と処置群が逆でもATEの推定値：2"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立と交換可能性が成立しない例",
+    "href": "rct_slide.html#平均独立と交換可能性が成立しない例",
+    "title": "社会科学における因果推論",
+    "section": "平均独立と交換可能性が成立しない例",
+    "text": "平均独立と交換可能性が成立しない例\n真のATEが2の例\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(Y\\)\n\n\n\n\n1\n0\n2\n4\n2\n\n\n2\n0\n3\n5\n3\n\n\n3\n0\n4\n6\n4\n\n\n4\n0\n3\n5\n3\n\n\n5\n0\n2\n4\n2\n\n\n6\n1\n6\n8\n8\n\n\n7\n1\n5\n7\n7\n\n\n8\n1\n7\n9\n9\n\n\n9\n1\n6\n8\n8\n\n\n10\n1\n5\n7\n7\n\n\n\n\n\n平均独立：不成立\n\n\\(\\mathbb{E}[Y(0)|D = 1] = 5.8 \\neq \\mathbb{E}[Y(0)|D = 0] = 2.8\\)\n\\(\\mathbb{E}[Y(1)|D = 1] = 7.8 \\neq \\mathbb{E}[Y(1)|D = 0] = 4.8\\)\n\n交換可能性：不成立（潜在的結果の分布が異なる）\n\n\n\n\n\n\\(Y(0)\\)\n\\(Y(1)\\)\n\n\n\n\n統制群\n[2, 4]\n[4, 6]\n\n\n処置群\n[5, 7]\n[7, 9]\n\n\n\n\n観察データを用いたATEの推定値：5\n統制群と処置群が逆でもATEの推定値：-1"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立のみ成立する例",
+    "href": "rct_slide.html#平均独立のみ成立する例",
+    "title": "社会科学における因果推論",
+    "section": "平均独立のみ成立する例",
+    "text": "平均独立のみ成立する例\n真のATEが0の例\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(Y\\)\n\n\n\n\n1\n0\n2\n10\n2\n\n\n2\n0\n3\n11\n3\n\n\n3\n0\n4\n12\n4\n\n\n4\n0\n5\n13\n5\n\n\n5\n0\n6\n14\n6\n\n\n6\n1\n10\n2\n2\n\n\n7\n1\n11\n3\n3\n\n\n8\n1\n12\n4\n4\n\n\n9\n1\n13\n5\n5\n\n\n10\n1\n14\n6\n6\n\n\n\n\n\n平均独立：成立\n\n\\(\\mathbb{E}[Y(0)|D = 1] = \\mathbb{E}[Y(0)|D = 0] = 4\\)\n\\(\\mathbb{E}[Y(1)|D = 1] = \\mathbb{E}[Y(1)|D = 0] = 12\\)\n\n交換可能性：不成立（潜在的結果の分布が異なる）\n\n\n\n\n\n\\(Y(0)\\)\n\\(Y(1)\\)\n\n\n\n\n統制群\n[2, 6]\n[10, 14]\n\n\n処置群\n[10, 14]\n[2, 6]\n\n\n\n\n観察データを用いたATEの推定値：0\n統制群と処置群が逆ならATEの推定値：0"
+  },
+  {
+    "objectID": "rct_slide.html#平均独立交換可能性の確認",
+    "href": "rct_slide.html#平均独立交換可能性の確認",
+    "title": "社会科学における因果推論",
+    "section": "平均独立・交換可能性の確認",
+    "text": "平均独立・交換可能性の確認\n結論：平均独立・交換可能性の成立有無は確認できない（因果推論の根本問題）\n\n「内生性が存在しない」ことは確認できない1\nそれでも信頼できる処置効果の推定のためには内生性の確認が必要\n解決策\n\n既存のデータに内生性がないことを確認する（不可能）\n理論的に内生性をなくす（条件付け）\n理論的に内生性が（ほぼ）存在しないはずのデータを見つける（自然実験・疑似実験）\n内生性が存在しないデータを作り上げる（実験）\n\n\n後述するバランスチェックを行えば、平均独立・交換可能性が満たされていない・・・ことは確認できるが、平均独立・交換可能性が満たされていることは示せない。"
+  },
+  {
+    "objectID": "rct_slide.html#無作為割り当て-1",
+    "href": "rct_slide.html#無作為割り当て-1",
+    "title": "社会科学における因果推論",
+    "section": "無作為割り当て",
+    "text": "無作為割り当て\n無作為割り当て（Random assignment）\n\n被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法\n各個体がどのグループに割り当てられるかは等しい確率\n\nグループが2つ（\\(D\\) = {0, 1}）なら…\nPr(\\(D_i\\) = 1) = Pr(\\(D_{j \\neq i}\\) = 1) & Pr(\\(D_i\\) = 0) = Pr(\\(D_{j \\neq i}\\) = 0)\n\nグループ間の事前の差異を最小限に抑えることが可能"
+  },
+  {
+    "objectID": "rct_slide.html#無作為抽出random-samplingとの違い",
+    "href": "rct_slide.html#無作為抽出random-samplingとの違い",
+    "title": "社会科学における因果推論",
+    "section": "無作為抽出（Random sampling）との違い",
+    "text": "無作為抽出（Random sampling）との違い\n\nサンプリング法の一つであり、主に母集団から標本（サンプル）を抽出する際に用いられる（とされている）\n\n単純無作為抽出1：母集団内の各個体が標本として選ばれる確率は等しい\n\n無作為抽出された標本は母集団を代表する\n\n無作為抽出された標本の分布は母集団の分布と同じ2（交換可能性が成立）\n\n\n\n\n\n\n\n\n\n\n\n無作為抽出にも様々なバリエーションがあり、単純無作為抽出、系統無作為抽出、層化無作為抽出などがある。詳細は社会調査法、サンプリングの教科書を参照することまた、標本の大きさが十分であれば、大数の法則（law of large number）により平均独立性も成り立つ。"
+  },
+  {
+    "objectID": "rct_slide.html#無作為割り当てと交換可能性",
+    "href": "rct_slide.html#無作為割り当てと交換可能性",
+    "title": "社会科学における因果推論",
+    "section": "無作為割り当てと交換可能性",
+    "text": "無作為割り当てと交換可能性\n交換可能性が成立するので、平均独立は当然ながら成立"
+  },
+  {
+    "objectID": "rct_slide.html#無作為抽出-無作為割り当て",
+    "href": "rct_slide.html#無作為抽出-無作為割り当て",
+    "title": "社会科学における因果推論",
+    "section": "無作為抽出 + 無作為割り当て",
+    "text": "無作為抽出 + 無作為割り当て\n無作為抽出 + 無作為割り当て：統制群と処置群と標本と母集団は交換可能\n\n「処置群の結果変数 = 母集団に処置を施した場合の結果変数」として解釈可能\n理想の話ではあり、標本が母集団を代表しない（交換不可能）ケースも多い"
+  },
+  {
+    "objectID": "rct_slide.html#無作為割り当ての方法",
+    "href": "rct_slide.html#無作為割り当ての方法",
+    "title": "社会科学における因果推論",
+    "section": "無作為割り当ての方法",
+    "text": "無作為割り当ての方法\n\nベルヌーイ実験（Bernoulli randomized experiment; コイン投げ）\n\n各個体は確率\\(p\\)で独立的に処置を受ける\n「望ましくない」ランダム化の可能性あり（例：すべての固体が処置群になる）\n\n完全ランダム化実験（completely randomized experiment）\n\n予め処置群の大きさ\\(n_1\\)を決め（\\(n_1 &lt; n\\)）、全個体の中から\\(n_1\\)個をランダムに選ぶ\n「望ましくない」ランダム化の可能性あり（例：処置群の全員が女性になる）\n\nブロック別（層別）ランダム化実験（block/stratified randomized experiment）\n\nサンプルを2つ以上のブロックに分け、ブロック内で完全無作為割り当てを行う\nブロックが2つのみの場合、「ペアごとのランダム化実験」（paired randomized experiment）と呼ばれる"
+  },
+  {
+    "objectID": "rct_slide.html#ブロッキング",
+    "href": "rct_slide.html#ブロッキング",
+    "title": "社会科学における因果推論",
+    "section": "ブロッキング",
+    "text": "ブロッキング\n\n完全ランダム化の場合、偏ったグループが出来上がる可能性がある1\nブロッキング（blocking）：ブロック内で完全ランダム化割り当てを実施\n\n例）男性と女性の中で完全ランダム化割り当てを実施\n\n推定の精度が上がるため、ブロッキングできる場合、ブロッキングをした方が良い\n\n\n\n\n\n\n\n完全ランダム化が失敗した例\n\n\n\n\n\n\n\nブロック別ランダム化の例\n\n\n\n\n\nサンプルサイズ（\\(n\\)）が十分大きい場合、この可能性は低い。"
+  },
+  {
+    "objectID": "rct_slide.html#ランダム化比較試験-1",
+    "href": "rct_slide.html#ランダム化比較試験-1",
+    "title": "社会科学における因果推論",
+    "section": "ランダム化比較試験",
+    "text": "ランダム化比較試験\nランダム化比較試験（randomized controlled trials; RCT）\n\n標本（サンプル）を無作為割り当てで2つ以上のグループに分割し、各グループに異なる処置1を施し、結果変数を比較する手法\n実験（experiment）とも呼ばれる因果推論の王道（best practice）\n\nグループを3つに分け👦🏻👧🏻👧🏽👦🏽👦🏿👧🏿、薬を与え💊（0〜2）、体温計🌡️\n\n\n厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。\nここには処置を施さないことも含まれる。"
+  },
+  {
+    "objectID": "rct_slide.html#実験の種類",
+    "href": "rct_slide.html#実験の種類",
+    "title": "社会科学における因果推論",
+    "section": "実験の種類",
+    "text": "実験の種類\nHyde（2015）による分類\n\nフィールド実験\n実験室実験\nサーベイ実験\n\nそれぞれの実験は長所と短所を持つ\n\n以下は目安であり、設計次第でいくらでも上下する\n\n\n\n\n種類\n内的妥当性\n外的妥当性\n実施コスト\nコントロール性\n対象\n\n\n\n\n実験室実験\n高\n低〜中\n低〜高\n高\n大学生など\n\n\nフィールド実験\n低〜中\n高\n高\n中\n一般市民など\n\n\nサーベイ実験\n中〜高\n中\n中〜高\n中\n全国・国際的\n\n\n\n\n\n\nHyde, Susan D.. 2015. “Experiments in International Relations: Lab, Survey, and Field.” Annual Review of Political Science, 18: 403-424."
+  },
+  {
+    "objectID": "rct_slide.html#フィールド実験field-experiment",
+    "href": "rct_slide.html#フィールド実験field-experiment",
+    "title": "社会科学における因果推論",
+    "section": "フィールド実験（field experiment）",
+    "text": "フィールド実験（field experiment）\n実生活（学校、地域、職場、選挙など）の場面で行われる実験。\n\nメリット\n\n外的妥当性（現実の行動に近い）\n自然な環境で被験者が行動するため、実験効果が出にくい\n政策介入の効果などを現場で検証できる\n\nデメリット\n\n内的妥当性（外的要因が混入しやすい）\n高い実施コスト（+ 許可や倫理的配慮も必要）\n研究者による統制が限定的"
+  },
+  {
+    "objectID": "rct_slide.html#フィールド実験の例",
+    "href": "rct_slide.html#フィールド実験の例",
+    "title": "社会科学における因果推論",
+    "section": "フィールド実験の例",
+    "text": "フィールド実験の例\n\n問い：啓発メッセージは投票参加を促すか（Gerber, Green, and Larimer 2008）\n統制群：処置なし\n処置群：投票参加を促すメッセージが記載されたハガキを発送\nメッセージの処置効果 = 処置群の投票率 - 統制群の投票率\n\n\n\n\n\n\n\n\n\n\n\n\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. “Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment.” American Political Science Review 102(1): 33–48.\nGerber, Alan S. and Donald P. Green. 2012. Field Experiments, Norton."
+  },
+  {
+    "objectID": "rct_slide.html#実験室実験labotary-experiment",
+    "href": "rct_slide.html#実験室実験labotary-experiment",
+    "title": "社会科学における因果推論",
+    "section": "実験室実験（labotary experiment）",
+    "text": "実験室実験（labotary experiment）\n研究者が完全にコントロールされた環境（例：大学の実験室）で行う実験\n\n主に心理学・経済学などで用いられる\nメリット\n\n高い内部妥当性（因果関係の識別が容易）\n外部のノイズを排除しやすい\n実験環境の精密なコントロールが可能\n\nデメリット\n\n外的妥当性\n観測者効果、ホーソン効果（被験者が「実験されている」と強く意識）\n限定されたサンプルになりがち（主に大学生）\n\n\n\nCollege sophomores may not be people（Hovland 1959）\n\n\n\nHovland, Carl. I. 1959. “Reconciling conflicting results derived from experimental and survey studies of attitude change.” American Psychologist, 14(1): 8–17."
+  },
+  {
+    "objectID": "rct_slide.html#実験室実験の例",
+    "href": "rct_slide.html#実験室実験の例",
+    "title": "社会科学における因果推論",
+    "section": "実験室実験の例",
+    "text": "実験室実験の例\n\n問い：討議は少数派への配慮が強めるか\nStep 1：全員を対象に不公平に対する嫌悪感（inequity aversion）を測定\nStep 2：公平な配分案 vs. 多数派優遇の不公平配分案の投票\n\n処置群のみグループ内のコミュニケーション（議論）を許可\n\nStep 3：全員を対象とした5つの配分案の投票\n議論の処置効果 = 公平な配分案への処置群の支持 - 公平な配分案への統制群の支持\n\n\n\n\n\n\n\n\n\n\n\n\n\nWoon, Jonathan, Minsu Jang, Kira Pronin and Jacob Schiller. 2023. “Discussion and Fairness in a Laboratory Voting Experiment,” Journal of Experimental Political Science, 11(2): 224-236."
+  },
+  {
+    "objectID": "rct_slide.html#サーベイ実験survey-experiment",
+    "href": "rct_slide.html#サーベイ実験survey-experiment",
+    "title": "社会科学における因果推論",
+    "section": "サーベイ実験（survey experiment）",
+    "text": "サーベイ実験（survey experiment）\nアンケート内に無作為割当の処置（例：文言の違い、シナリオの提示）を埋め込み、参加者の反応を比較する実験\n\nインターネットを用いたアンケートに処置を埋め込むのが一般的\nメリット\n\n実施コストが低く、大規模サンプルを得やすい\nインターネット調査での実施が可能（時系列や国際比較も容易）\nさまざまな認知的・態度的反応が測定可能\n\nデメリット\n\n行動ではなく意見や認識の測定が中心（行動的な結果の妥当性に限界）\n省力回答者（satisficer）の存在\n処置の「強さ」が限られ、効果量が小さくなることが多い\n\n\n\n\n\nSONG Jaehyun・秦正樹. 2020. 「オンライン・サーベイ実験の方法：理論編」『理論と方法』35(1): 92-108.\n秦正樹・SONG Jaehyun. 2020. 「オンライン・サーベイ実験の方法：実践編」『理論と方法』35(1): 109-127."
+  },
+  {
+    "objectID": "rct_slide.html#サーベイ実験の例",
+    "href": "rct_slide.html#サーベイ実験の例",
+    "title": "社会科学における因果推論",
+    "section": "サーベイ実験の例",
+    "text": "サーベイ実験の例\n\n問い：日米韓軍事同盟は日韓協力への支持を高めるか（Asaba et al. 2020）\n統制群：米豪合同軍事演習の動画を視聴\n処置群：日米韓同軍事演習の動画を視聴\n動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度\n\n\n\n\n\n\n\n\n\n\n\n\nAsaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea,” International Relations of the Asia-Pacific, 20(2): 253-273."
+  },
+  {
+    "objectID": "rct_slide.html#実験デザイン時の注意点",
+    "href": "rct_slide.html#実験デザイン時の注意点",
+    "title": "社会科学における因果推論",
+    "section": "実験デザイン時の注意点",
+    "text": "実験デザイン時の注意点\n\n実験が出来ないケース\nSUTVA\n二重盲検法\nバランスチェック\n本の紹介\nサーベイ実験の場合、SUTVAと二重盲検法はあまり気にしなくても良い"
+  },
+  {
+    "objectID": "rct_slide.html#sutva",
+    "href": "rct_slide.html#sutva",
+    "title": "社会科学における因果推論",
+    "section": "SUTVA",
+    "text": "SUTVA\nStable Unit Treatment Value Assumption（Rubin 1980）\n\n　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）\n\n\n相互干渉がないこと\n\nにゃん！\n\n処置の隠れた変動がないこと\n\nにゃん！\n\n\n\n\n\nRubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” The Journal of the American Statistical Association, 75 (371): 591-593.\nG.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店"
+  },
+  {
+    "objectID": "rct_slide.html#バランスチェック",
+    "href": "rct_slide.html#バランスチェック",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェック",
+    "text": "バランスチェック\nグループ間に平均独立が不成立しているかを確認する手法\n\n統計的有意性検定（\\(t\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が大きい = グループ間に平均独立が不成立\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n実験データであってもバランスしていない（imbalanced）可能性がある\nバランスしていないデータでも共変量調整でバイアスの補正が可能（Lin 2013）\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{\\frac{1}{2} (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
+  },
+  {
+    "objectID": "rct_slide.html#処置効果の推定",
+    "href": "rct_slide.html#処置効果の推定",
+    "title": "社会科学における因果推論",
+    "section": "処置効果の推定",
+    "text": "処置効果の推定\n結果変数の平均値をグループ間で比較\n\nATE = \\(\\mathbb{E}[Y|D = 1] - \\mathbb{E}[Y|D = 0]\\)\n\nATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値\n\n\n使用可能な手法\n\n平均値/比率の差の検定（\\(t\\)検定、\\(z\\)検定）\n\nグループが3つ以上の場合、ペアごと（pairwise）の検定を実施\n\n分散分析（ANOVA、MANCOVAなど）\n線形回帰分析"
+  },
+  {
+    "objectID": "rct_slide.html#多重比較の問題multiple-comparisons-problem",
+    "href": "rct_slide.html#多重比較の問題multiple-comparisons-problem",
+    "title": "社会科学における因果推論",
+    "section": "多重比較の問題（multiple comparisons problem）",
+    "text": "多重比較の問題（multiple comparisons problem）\n\n複数回の比較から処置効果を推定する際に発生する問題\n\n統制群と処置群1、処置群2がある場合、「統制群 vs. 処置群1」、「統制群 vs. 処置群2」計2回の比較が行われる\n\n\\(p\\) = 0.05を基準とした統計的有意性検定の限界\n\n処置効果が0でも、処置効果があると判定される可能性は約5%\n比較が複数回行われたら、処置効果があると判定される可能性が自然に上がる\n\n2回の比較のうち、1つでも\\(p\\) &lt; 0.05になったら「処置効果がある」と判定するから\n\n\n\n\n\n\n施行\n統制群 vs. 処置群1\n統制群 vs. 処置群2\n処置効果\n\n\n\n\n1\n0.975\n0.878\n留保\n\n\n2\n0.447\n0.048\nあり\n\n\n3\n0.693\n0.729\n留保\n\n\n4\n0.011\n0.899\nあり\n\n\n5\n0.205\n0.988\n留保\n\n\n6\n0.975\n0.878\n留保"
+  },
+  {
+    "objectID": "rct_slide.html#多重比較の問題の補正",
+    "href": "rct_slide.html#多重比較の問題の補正",
+    "title": "社会科学における因果推論",
+    "section": "多重比較の問題の補正",
+    "text": "多重比較の問題の補正\nボンフェローニ補正（Bonferroni correction）1の例\n\n真の処置効果が0でも、計2回の比較が行われる場合、それぞれの比較において\\(p\\) &lt; 0.05になる割合は5%\n\n1つでも\\(p\\) &lt; 0.05になったら「処置効果がある」と判定される\n計2回の比較が行われるため、「処置効果がある」と判定される割合は10%（2倍）\n\\(\\Rightarrow\\) 「処置効果がある」と判定される可能性は既存の\\(m\\)倍（\\(m\\)は比較回数）\n\\(\\Rightarrow\\) 解決策：統計的有意性の閾値（\\(\\alpha\\)）を\\(m\\)分の1に変更する\n\n例）\\(\\alpha = 0.05\\)、比較回数が2回の場合\n\n\\(p\\)値が0.025（= 0.05 / 2）を下回る場合、「5%水準で統計的に有意」と解釈する\n\n例）\\(\\alpha = 0.05\\)、比較回数が5回の場合\n\n\\(p\\)値が0.01（= 0.05 / 5）を下回る場合、「5%水準で統計的に有意」と解釈する\n\n\n他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。"
+  },
+  {
+    "objectID": "rct_slide.html#不均一な処置効果の推定",
+    "href": "rct_slide.html#不均一な処置効果の推定",
+    "title": "社会科学における因果推論",
+    "section": "不均一な処置効果の推定",
+    "text": "不均一な処置効果の推定"
+  },
+  {
+    "objectID": "r_slide.html#本日の内容-1",
+    "href": "r_slide.html#本日の内容-1",
+    "title": "社会科学における因果推論",
+    "section": "本日の内容",
+    "text": "本日の内容\n\nRの導入（省略）\nデータハンドリング\n記述統計量の計算\n平均処置効果の推定\n\n平均値の差の検定\n線形回帰分析\n多重比較\n\n推定結果の可視化"
+  },
+  {
+    "objectID": "r_slide.html#データ操作の手順",
+    "href": "r_slide.html#データ操作の手順",
+    "title": "社会科学における因果推論",
+    "section": "データ操作の手順",
+    "text": "データ操作の手順\n\nデータの読み込み\n欠損値処理"
+  },
+  {
+    "objectID": "r_slide.html#記述統計量",
+    "href": "r_slide.html#記述統計量",
+    "title": "社会科学における因果推論",
+    "section": "記述統計量",
+    "text": "記述統計量\n必ず分析に使用するデータの記述統計量を報告すること\n\n分析に使われるケース（個体）、変数のみで十分\n分析に使われないケース（個体）、クリーニング前の変数は載せない。\nよく使う記述統計量は平均値、標準偏差、最小値、最大値\n\n中央値も入れるとなおさら良い\n\n実験データの場合、グループごとに掲載する場合もあるが、別途バランスチェックを行うなら不要"
+  },
+  {
+    "objectID": "r_slide.html#記述統計表の例",
+    "href": "r_slide.html#記述統計表の例",
+    "title": "社会科学における因果推論",
+    "section": "記述統計表の例",
+    "text": "記述統計表の例\n\n\nError in if (grepl(\"^get\\\\(\", deparse(call[[.p$var]]))) {: the condition has length &gt; 1\n\n\n\n\n\n  \n    \n      \n      Mean\n      Median\n      Std.Dev\n      Min\n      Max\n    \n  \n  \n    treat\n0.301\n0.000\n0.459\n0.000\n1.000\n    educ\n10.269\n11.000\n2.628\n0.000\n18.000\n    black\n0.396\n0.000\n0.489\n0.000\n1.000\n    hispan\n0.117\n0.000\n0.322\n0.000\n1.000\n    white\n0.487\n0.000\n0.500\n0.000\n1.000\n    re74\n4,557.547\n1,042.330\n6,477.964\n0.000\n35,040.070\n    re75\n2,184.938\n601.548\n3,295.679\n0.000\n25,142.240\n    re78\n6,792.834\n4,759.019\n7,470.731\n0.000\n60,307.930\n  \n  \n  \n\n\n\n\n\n\n\n変数名\n平均値\n中央値\n標準偏差\n最小値\n最大値\n\n\n\n\n女性\n0.503\n1\n0.500\n0\n1\n\n\n年齢\n47.340\n47\n15.628\n18\n75\n\n\n投票有無\n\n\n\n\n\n\n\n　投票\n0.736\n1\n0.441\n0\n1\n\n\n　棄権\n0.229\n0\n0.420\n0\n1\n\n\n　参政権なし\n0.035\n0\n0.184\n0\n1\n\n\n感情温度\n\n\n\n\n\n\n\n　自民党\n41.130\n50\n28.015\n0\n100\n\n\n　立憲民主党\n34.248\n40\n25.947\n0\n100"
+  },
+  {
+    "objectID": "r_slide.html#記述統計量の計算方法",
+    "href": "r_slide.html#記述統計量の計算方法",
+    "title": "社会科学における因果推論",
+    "section": "記述統計量の計算方法",
+    "text": "記述統計量の計算方法\n\n方法1：R内蔵関数を利用する\n\nmean()、median()、sd()、min()、max()\n{dplyr}のsummarise()との組み合わせが効率的\n複数の変数の記述統計量を計算する場合、更にacross()と組み合わせるか、別途のパッケージ（{summarytools}など）を使った方が効率的\n\n方法2：{summarytools}のdescr()を利用する（推奨）\n\n\n\n注：名目変数の記述統計量（最頻値を除く）を計算する場合、if_else()や{fastDummies}パッケージ等を使って、予めダミー変数に変換しておくこと。"
+  },
+  {
+    "objectID": "r_slide.html#バランスチェック",
+    "href": "r_slide.html#バランスチェック",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェック",
+    "text": "バランスチェック\n{cobalt}パッケージのbal.tab()を利用した標準化平均差の計算\n\n\nBalance Measures\n               Type Diff.Un      M.Threshold.Un\nage         Contin. -0.2419     Balanced, &lt;0.25\neduc        Contin.  0.0448     Balanced, &lt;0.25\nrace_black   Binary  0.6404 Not Balanced, &gt;0.25\nrace_hispan  Binary -0.0827     Balanced, &lt;0.25\nrace_white   Binary -0.5577 Not Balanced, &gt;0.25\nmarried      Binary -0.3236 Not Balanced, &gt;0.25\nre74        Contin. -0.5958 Not Balanced, &gt;0.25\nre75        Contin. -0.2870 Not Balanced, &gt;0.25\n\nBalance tally for mean differences\n                    count\nBalanced, &lt;0.25         3\nNot Balanced, &gt;0.25     5\n\nVariable with the greatest mean difference\n   Variable Diff.Un      M.Threshold.Un\n race_black  0.6404 Not Balanced, &gt;0.25\n\nSample sizes\n    Control Treated\nAll     429     185"
+  },
+  {
+    "objectID": "r_slide.html#バランスチェックの可視化",
+    "href": "r_slide.html#バランスチェックの可視化",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェックの可視化",
+    "text": "バランスチェックの可視化\nbal.tab() + love.plot()を利用した可視化"
+  },
+  {
+    "objectID": "matching_slide.html#位置づけ",
+    "href": "matching_slide.html#位置づけ",
+    "title": "社会科学における因果推論",
+    "section": "位置づけ",
+    "text": "位置づけ\n本ページの構成上の位置づけとしては回帰分析と傾向スコアの間"
+  },
+  {
+    "objectID": "intro_slide.html#講義概要-1",
+    "href": "intro_slide.html#講義概要-1",
+    "title": "社会科学における因果推論",
+    "section": "講義概要",
+    "text": "講義概要\n\n\n\n\n\n講義名：社会科学における因果推論\n担当教員：宋そん財泫じぇひょん\n\n関西大学総合情報学部　准教授\n博士（政治学）\n\n https://www.jaysong.net/\n songkansai-u.ac.jp"
+  },
+  {
+    "objectID": "intro_slide.html#内容",
+    "href": "intro_slide.html#内容",
+    "title": "社会科学における因果推論",
+    "section": "内容",
+    "text": "内容\n以下の内容は進捗に応じて変更される可能性がある。\n\n実習がなくても、独習用のRコードが提供される場合もある\n\n\n\n\nトピック\n内容\n備考\n\n\n\n\n1\nイントロダクション\n-\n\n\n2\n因果関係と因果推論\n-\n\n\n3\n内生性\n-\n\n\n4\nランダム化比較試験\n-\n\n\n5\n回帰分析\n-\n\n\n6\nLab session\n実習\\(\\bigcirc\\)\n\n\n7\n傾向スコア\n実習\\(\\bigcirc\\)\n\n\n8\n差分の差分法\n実習\\(\\bigcirc\\)\n\n\n9\n回帰不連続デザイン\n実習\\(\\bigcirc\\)\n\n\n10\n操作変数法\n実習\\(\\bigcirc\\)"
+  },
+  {
+    "objectID": "intro_slide.html#前提知識",
+    "href": "intro_slide.html#前提知識",
+    "title": "社会科学における因果推論",
+    "section": "前提知識",
+    "text": "前提知識\n履修者は以下の内容を理解していると仮定する\n\nRについてはLab sessionを用意し、簡単な復習を行う\n目安：浅野正彦・矢内勇生. 2018.『Rによる計量政治学』オーム社\n\n\n\n統計学\n\n記述統計\n統計的仮説検定\n\n帰無仮説と対立仮説\n検定統計量、信頼区間、\\(p\\)値\n\n平均値の差の検定（t検定）\n線形回帰分析\n\n\nR\n\nデータの読み込み\nデータハンドリング\n\n{dplyr}とパイプ演算子（|&gt;）\n\n可視化\n\nとりあえず棒グラフ、散布図程度で十分\n\nt検定と線形回帰分析の推定と解釈"
+  },
+  {
+    "objectID": "intro_slide.html#教科書",
+    "href": "intro_slide.html#教科書",
+    "title": "社会科学における因果推論",
+    "section": "教科書",
+    "text": "教科書\n\n講義のサポートページの資料のみで対応\nサポートページ：https://www.jaysong.net"
+  },
+  {
+    "objectID": "intro_slide.html#参考書理論",
+    "href": "intro_slide.html#参考書理論",
+    "title": "社会科学における因果推論",
+    "section": "参考書（理論）",
+    "text": "参考書（理論）\n\n中室牧子・津川友介. 2017.『「原因と結果」の経済学』ダイヤモンド社.\n伊藤公一郎. 2017.『データ分析の力』光文社新書.\n松林哲也. 2021.『政治学と因果推論』岩波書店.\nAngrist, Joahua D., and Jorn-steffen Pischke. 2014. Mastering ’Metrics. Princeton University Press.\nAngrist, Joahua D., and Jorn-steffen Pischke. 2008. Mostly Harmless Econometrics. Princeton University Press.（邦訳）\nMorgan, Stephen L. and Christoper Winship. 2014. Counterfactuals and Causal Inference. Cambridge University Press.（邦訳）\nImbens, Guido W. and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press.（邦訳上/下）"
+  },
+  {
+    "objectID": "intro_slide.html#参考書r",
+    "href": "intro_slide.html#参考書r",
+    "title": "社会科学における因果推論",
+    "section": "参考書（R）",
+    "text": "参考書（R）\nRによる実装\n\n高橋将宜. 2022. 『統計的因果推論の理論と実装』共立出版.\nCunningham, Scott. 2021. Causal Inference: The Mixtape. Yale University Press.（邦訳）\n\nR言語の解説\n\n宋財泫・矢内勇生. 『私たちのR』Web-book\nWickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. R for Data Science (2nd Ed.). O’Reilly.（邦訳）\n松村優哉・湯谷啓明・紀ノ定保礼・前田和寛. 2021.『改訂2版 RユーザのためのRStudio[実践]入門』技術評論社."
+  },
+  {
+    "objectID": "intro_slide.html#評価-1",
+    "href": "intro_slide.html#評価-1",
+    "title": "社会科学における因果推論",
+    "section": "評価",
+    "text": "評価\n\n平常点：0%\n期末課題：0%"
+  },
+  {
+    "objectID": "intro_slide.html#実習",
+    "href": "intro_slide.html#実習",
+    "title": "社会科学における因果推論",
+    "section": "実習",
+    "text": "実習\n言語はR、総合開発環境（IDE）はRStudioを使用する\n\nRStudioでなく、Positronでも可だが、現時点ではRStudioが安定\nR + Pythonの二刀流ならPositronでも良い\n\nただ、RStudioでもR + Pythonは可能\n\n本講義の内容はRだけでなく、Python、Julia、Stata、SPSS、Excel等でも実装可能\n\n\n\n\n\n\n\nR\n\n\n\n\n\n\n\nRStudio\n\n\n\n\n\n\n\nPositron"
+  },
+  {
+    "objectID": "intro_slide.html#実習環境",
+    "href": "intro_slide.html#実習環境",
+    "title": "社会科学における因果推論",
+    "section": "実習環境",
+    "text": "実習環境\n基本的に最新のR、RStudioを使用していれば問題ない（R&gt;4.1を推奨）\n宋のR環境\n\nmacOS Sequoia 15.4.1\nR version 4.5.0 (2025-04-11)\nRStudio 2025.05.0+496\n\nその他（本資料の執筆環境）\n\nFirefox 138.0.1\nQuarto 1.7.31\nR package {quarto} 1.4.4"
+  },
+  {
+    "objectID": "intro_slide.html#rの導入",
+    "href": "intro_slide.html#rの導入",
+    "title": "社会科学における因果推論",
+    "section": "Rの導入",
+    "text": "Rの導入\n\n自分のPCにR&RStudioがインストールされている場合\n\nバージョン確認後、最新であればそのまま使用\n必要に応じて適宜アップデートすること\n\n自分のPCにR&RStudioがインストールされていない場合\n\nこれからもR&RStudioを使っていく予定の場合\n\n\\(\\Rightarrow\\) 自分のPCにR&RStudioをインストールする\n\n本講義のみにて使う予定/お試しの場合\n\n\\(\\Rightarrow\\) JDCat分析ツール（クラウド版のR&RStudio）を導入する"
+  },
+  {
+    "objectID": "intro_slide.html#使用パッケージ",
+    "href": "intro_slide.html#使用パッケージ",
+    "title": "社会科学における因果推論",
+    "section": "使用パッケージ",
+    "text": "使用パッケージ\n予め以下のパッケージの最新バージョンをインストールしておくこと（その他のパッケージは適宜紹介する）。\n\n{pacman}\n{tidyverse}"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "因果推論教材",
+    "section": "",
+    "text": "本資料は作成中のものです。\n\n\n\n　本講義は2026年度以降、関西大学総合情報学部「社会科学における因果推論」、神戸大学法学研究科「方法論特殊講義III」の教材として使用する予定の資料です。受講生からのフィードバックは歓迎しますが、本資料のURLおよびアカウント情報を外部に持ち込まないでください。\n\n\n\n\n\nトピック\n内容\n\n\n\n\n1\nイントロダクション\n\n\n2\n因果関係と因果推論\n\n\n3\n内生性\n\n\n4\nランダム化比較試験\n\n\n5\n回帰分析\n\n\n6\nLab session\n\n\n7\n傾向スコア\n\n\n8\n差分の差分法\n\n\n9\n回帰不連続デザイン\n\n\n10\n操作変数法"
+  },
+  {
+    "objectID": "did.html",
+    "href": "did.html",
+    "title": "差分の差分法",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "8/ 差分の差分法"
+    ]
+  },
+  {
+    "objectID": "ci.html",
+    "href": "ci.html",
+    "title": "因果関係と因果推論",
+    "section": "",
+    "text": "新しいタブで開く",
+    "crumbs": [
+      "2/ 因果関係と因果推論"
+    ]
+  },
+  {
+    "objectID": "ci_slide.html#因果関係",
+    "href": "ci_slide.html#因果関係",
+    "title": "社会科学における因果推論",
+    "section": "因果関係",
+    "text": "因果関係\n因果関係：原因（X）と結果（Y）の関係\n\nXがYを引き起こした\n\n例）\\(\\bigcirc \\bigcirc\\)の当選（X）が戦争（Y）を引き起こした\n\nXが増えたから、Yも増えた\n\n例）食事量（X）を増やしたから、体重（Y）も増えた\n\nXが小さくなったから、Yは大きくなった\n\n例）金利（X）が下がったから、株価（Y）が上がった\n\nXが高くなったから、Yは少なくなった\n\n例）ストレス（X）が溜まったから、髪の毛（Y）が減った"
+  },
+  {
+    "objectID": "ci_slide.html#果物消費量と鉄道会社の株価",
+    "href": "ci_slide.html#果物消費量と鉄道会社の株価",
+    "title": "社会科学における因果推論",
+    "section": "果物消費量と鉄道会社の株価",
+    "text": "果物消費量と鉄道会社の株価\nアメリカにおける1世帯当たりと年間果物消費量とカナダ国鉄の株価の関係\n\n\\(\\rho\\) = 0.986（\\(p\\) &lt; 0.001）"
+  },
+  {
+    "objectID": "ci_slide.html#政治学者とスーパーマーケット",
+    "href": "ci_slide.html#政治学者とスーパーマーケット",
+    "title": "社会科学における因果推論",
+    "section": "政治学者とスーパーマーケット",
+    "text": "政治学者とスーパーマーケット\nワシントンDC内の政治学者数とWhole Foodsに対する顧客満足度の関係\n\n\\(\\rho\\) = 0.856（\\(p\\) &lt; 0.001）"
+  },
+  {
+    "objectID": "ci_slide.html#政策的含意",
+    "href": "ci_slide.html#政策的含意",
+    "title": "社会科学における因果推論",
+    "section": "政策的含意",
+    "text": "政策的含意\n果物消費量と鉄道会社の株価\n\n例1：我が社（カナダ国鉄）の株価を上げたい\n\n解決策 \\(\\Rightarrow\\) アメリカ人に新鮮な果物を無料で提供する\n\n例2：USの肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい\n\n解決策 \\(\\Rightarrow\\) カナダ国鉄の株を爆買いする\n\n\n政治学者とスーパーマーケット\n\n例：我が社（Whole Foods）に対する顧客満足度を高めたい\n\n解決策 \\(\\Rightarrow\\) 政治学者をDCに送り込む\n\n\n\n\n本当にこれで良いのか"
+  },
+  {
+    "objectID": "ci_slide.html#様々な可能性",
+    "href": "ci_slide.html#様々な可能性",
+    "title": "社会科学における因果推論",
+    "section": "様々な可能性",
+    "text": "様々な可能性\nXがYの間に相関関係が存在する場合、XとYの間には因果関係が存在するのか\n\n\n\n\n\n\nXがYの原因\n\n\n\n\n\n\n\nYがXの原因\n\n\n\n\n\n\n\nXとYが互いに影響し合う（互恵関係）\n\n\n\n\n\n\n\n\n\n\n\nXがYの原因（Zを経由）\n\n\n\n\n\n\n\nXがYは無関係（共通要因からの影響）\n\n\n\n\n\n\n\nXがYは無関係（たまたまの相関）"
+  },
+  {
+    "objectID": "ci_slide.html#相関は因果の十分条件か",
+    "href": "ci_slide.html#相関は因果の十分条件か",
+    "title": "社会科学における因果推論",
+    "section": "相関は因果の十分条件か",
+    "text": "相関は因果の十分条件か\nゲームオタクほど身長が伸びる?"
+  },
+  {
+    "objectID": "ci_slide.html#相関は因果の十分条件かno",
+    "href": "ci_slide.html#相関は因果の十分条件かno",
+    "title": "社会科学における因果推論",
+    "section": "相関は因果の十分条件か：No!",
+    "text": "相関は因果の十分条件か：No!\n性別で条件付けると因果効果は確認されない"
+  },
+  {
+    "objectID": "ci_slide.html#相関は因果の必要条件か",
+    "href": "ci_slide.html#相関は因果の必要条件か",
+    "title": "社会科学における因果推論",
+    "section": "相関は因果の必要条件か",
+    "text": "相関は因果の必要条件か\n職業訓練を受けても年収は上がらない?"
+  },
+  {
+    "objectID": "ci_slide.html#相関は因果の必要条件かno",
+    "href": "ci_slide.html#相関は因果の必要条件かno",
+    "title": "社会科学における因果推論",
+    "section": "相関は因果の必要条件か：No!",
+    "text": "相関は因果の必要条件か：No!\n訓練前の年収で条件付けると正の効果が確認できる"
+  },
+  {
+    "objectID": "ci_slide.html#相関関係と因果関係",
+    "href": "ci_slide.html#相関関係と因果関係",
+    "title": "社会科学における因果推論",
+    "section": "相関関係と因果関係",
+    "text": "相関関係と因果関係\n相関は因果の必要条件でも、十分条件でも、必要十分条件でもない\n\n信頼できる因果推論のためには適切な条件付けに基づく比較が不可欠\n条件付け（conditioning）\n\n特定の変数の値が一致するケースに限定すること\n例）男性（女性）におけるゲームプレイ時間と身長の関係\n多変量解析における統制（control）と同じ意味\n\n\n\n“Conditioning is the soul of statistics”（Blitzstein and Hwang 2019, p.46）\n\n\n因果推論のための比較の方法\n\nA：1日ゲームプレイ時間が0分の男性の身長\nB：1日ゲームプレイ時間が300分の男性の身長\nAとBを比較する = 因果推論? \\(\\leftarrow\\) Yes! But, …"
+  },
+  {
+    "objectID": "ci_slide.html#因果推論スキルと年収",
+    "href": "ci_slide.html#因果推論スキルと年収",
+    "title": "社会科学における因果推論",
+    "section": "因果推論スキルと年収",
+    "text": "因果推論スキルと年収\n問い：因果推論スキルを身につければ年収が上がるか\n\n原因：因果推論スキルの有無\n\n例）宋さんの授業を履修したかどうか\n\n結果：年収\n\n例）卒業3年後の年収"
+  },
+  {
+    "objectID": "ci_slide.html#宋に任せてください",
+    "href": "ci_slide.html#宋に任せてください",
+    "title": "社会科学における因果推論",
+    "section": "宋に任せてください",
+    "text": "宋に任せてください\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったBの比較\n\n508 - 358 = 150\n宋さんの授業には150万円の価値がある?\n\\(\\Rightarrow\\) 宋さんの給与を2倍にすべき\n\\(\\Rightarrow\\) 宋さんにノーベル賞を授与すべき\n\n\n\n\n\n※ 個人の感想であり効果・効能を保証するものではありません。"
+  },
+  {
+    "objectID": "ci_slide.html#本当に任せても良いのか",
+    "href": "ci_slide.html#本当に任せても良いのか",
+    "title": "社会科学における因果推論",
+    "section": "本当に任せても良いのか",
+    "text": "本当に任せても良いのか\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったCの比較\n\n508 - 608 = -100\n宋さんの授業は邪悪な授業?\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんの給与を2倍にすべき\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんにノーベル賞を授与すべき\n\n\n\n\n\n\n宋さんは悪くない"
+  },
+  {
+    "objectID": "ci_slide.html#何と何を比較するか",
+    "href": "ci_slide.html#何と何を比較するか",
+    "title": "社会科学における因果推論",
+    "section": "何と何を比較するか",
+    "text": "何と何を比較するか\n比較対象によって因果効果の推定値が異なる\n\n\n\n\n\n\n\n\n\n\n\n\nどの比較が適切か1\n\n\n\n比較\n因果効果の推定値\n\n\n\n\nA vs. B\n150万円2\n\n\nA vs. C\n-100万円3\n\n\n\n\n平均を取って25万円?\n\n\nA vs. Bに違いない多分、この結果が正しいこんなはずがない"
+  },
+  {
+    "objectID": "ci_slide.html#なぜaさんは宋さんの授業を履修したか",
+    "href": "ci_slide.html#なぜaさんは宋さんの授業を履修したか",
+    "title": "社会科学における因果推論",
+    "section": "なぜAさんは宋さんの授業を履修したか",
+    "text": "なぜAさんは宋さんの授業を履修したか\nなぜAさんは宋さんの授業を履修しようと思ったのか\n\n理由1：宋さんのファンだから\n理由2：宋さんがイケメンだから目の保養のために\n理由3：この授業を履修すると年収が上がると思ったから\n理由4：この授業を履修するように指導教員に脅迫されたから\n理由5：気になる子が履修しているから\n理由6：ノーベル因果推論賞を狙っているから\n理由7：因果推論分からんやつにマウント取りたりから\n\n\n\n\\(\\Rightarrow\\) すべて正しいと思われるが1、ここでは年収に関連する理由3に注目\n\nただし、理由4を除く"
+  },
+  {
+    "objectID": "ci_slide.html#aさんの意思決定",
+    "href": "ci_slide.html#aさんの意思決定",
+    "title": "社会科学における因果推論",
+    "section": "Aさんの意思決定",
+    "text": "Aさんの意思決定\n理由3：この授業を履修すると年収が上がると思ったから\n\n宋さんの授業を履修したら…\n\n宋さんの授業を履修しなかった場合に比べ、年収が上がるはず!\n\n宋さんの授業を履修しなかったら…\n\n宋さんの授業を履修した場合に比べ、年収が下がるはず!\n\n\n\n\nAさんは「履修をした場合の自分」と「履修をしなかった場合の自分」を比較し、履修を決定\n\n\\(\\Rightarrow\\) Aさんはすでに履修してしまったので、Aさんの適切な比較対象は「履修をしなかった場合のAさん」"
+  },
+  {
+    "objectID": "ci_slide.html#例啓発活動と投票率",
+    "href": "ci_slide.html#例啓発活動と投票率",
+    "title": "社会科学における因果推論",
+    "section": "例）啓発活動と投票率",
+    "text": "例）啓発活動と投票率\n啓発活動は投票率を上げるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n啓発活動によって投票率が10%p\\(\\downarrow\\)?\nB市の適切な比較対象は?\n\nA市?\n啓発活動をしなかった場合のB市?"
+  },
+  {
+    "objectID": "ci_slide.html#b市の意思決定",
+    "href": "ci_slide.html#b市の意思決定",
+    "title": "社会科学における因果推論",
+    "section": "B市の意思決定",
+    "text": "B市の意思決定\nなぜB市は予算を使ってまで啓発活動をしようと思ったのか\n\n理由1：啓発活動をすれば投票率が上がると思ったから\n理由2：元々の投票率が低すぎて何かしようと思ったから\n\\(\\Rightarrow\\) 啓発活動をしたら何もしなかった場合に比べ、投票率が上がるはず!\n\n\n\nB市は「啓発活動をした場合のB市」と「啓発活動をしなかった場合のB市」を比較し、啓発活動の実施有無を決定\n\n\\(\\Rightarrow\\) B市の適切な比較対象は「啓発活動をしなかった場合のB市」"
+  },
+  {
+    "objectID": "ci_slide.html#例ゲームのプレイ時間と身長",
+    "href": "ci_slide.html#例ゲームのプレイ時間と身長",
+    "title": "社会科学における因果推論",
+    "section": "例）ゲームのプレイ時間と身長",
+    "text": "例）ゲームのプレイ時間と身長\n因果推論における理想の比較対象は「もし\\(\\bigcirc \\bigcirc\\)したら/しなかったら…」\n\n\n\n\n\n\n\n\n\n\n\n\n\n1日のゲームプレイ時間が3時間伸びると身長が9cm縮む?\n宋の弟は宋の適切な比較対象か\n\n幼少期の親の経済力\n健康志向の程度\n…\n\n宋の適切な比較対象は「ゲームを全くプレイしない宋1」\n\n\n宋の弟も宋だが、ここでの宋はあなたが知っているその宋だ。"
+  },
+  {
+    "objectID": "ci_slide.html#潜在的結果枠組み-1",
+    "href": "ci_slide.html#潜在的結果枠組み-1",
+    "title": "社会科学における因果推論",
+    "section": "潜在的結果枠組み",
+    "text": "潜在的結果枠組み\n潜在的結果枠組み（Potential outcome framework）\n\n因果効果を潜在的結果間の差分として捉える考え方\n\n観察（事実） vs. 反実仮想（反事実）\n\n\n表記法\n\n\\(i\\)：個体の固有番号（1, 2, 3, …, \\(n\\)）\n\\(D_i\\)：個体\\(i\\)の処置有無（0、または1）\n\n処置を受けた個体の集合を処置群1（treatment group）、受けなかった個体の集合を統制群2（control group）と呼ぶ\n\n\\(Y_i\\)：個体\\(i\\)の結果変数（応答変数）\n\n\\(Y_i（D_i = 1） = Y_i (1)\\)：個体\\(i\\)が処置を受けた場合の結果変数\n\\(Y_i（D_i = 0） = Y_i (0)\\)：個体\\(i\\)が処置を受けなかった場合の結果変数\n\n\n「処置」は介入、刺激、曝露（exposure）などとも呼ばれる。対照群とも呼ばれる。"
+  },
+  {
+    "objectID": "ci_slide.html#潜在的結果potential-outcome",
+    "href": "ci_slide.html#潜在的結果potential-outcome",
+    "title": "社会科学における因果推論",
+    "section": "潜在的結果（potential outcome）",
+    "text": "潜在的結果（potential outcome）\n特定の固定が処置を受けた/受けなかった場合の結果変数の値\n\n\\(D_i = 0\\)の場合：\\(Y_i (0)\\)は観察（事実）、\\(Y_i (1)\\)が反実仮想（反事実）\n\\(D_i = 1\\)の場合：\\(Y_i (0)\\)が反実仮想（反事実）、\\(Y_i (0)\\)は観察（事実）\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\n\n\n\n1\n0\n344\n444\n\n\n2\n0\n455\n505\n\n\n3\n0\n479\n379\n\n\n4\n1\n404\n554\n\n\n5\n1\n295\n395\n\n\n6\n1\n298\n248"
+  },
+  {
+    "objectID": "ci_slide.html#因果効果の定義",
+    "href": "ci_slide.html#因果効果の定義",
+    "title": "社会科学における因果推論",
+    "section": "因果効果の定義",
+    "text": "因果効果の定義\n個体レベルにおける処置効果（individual treatment effect; ITE）\n\n全く同じ時点、かつ同じ個体における観測値と潜在的結果の差分\n\n\\[\n\\textsf{ITE}_i = Y_i (1) - Y_i (0)\n\\]\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0"
+  },
+  {
+    "objectID": "ci_slide.html#平均処置効果",
+    "href": "ci_slide.html#平均処置効果",
+    "title": "社会科学における因果推論",
+    "section": "平均処置効果",
+    "text": "平均処置効果\n平均処置効果（average treatment effect; ATE）：ITEの平均\n\\[\n\\textsf{ATE} = \\frac{1}{n} \\sum_i^n \\bigl( \\underbrace{Y_i (1) - Y_i (0)}_{\\mathsf{ITE}} \\bigr) = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\n\\]\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n370.8\n420.8\n50"
+  },
+  {
+    "objectID": "ci_slide.html#因果推論の根本問題",
+    "href": "ci_slide.html#因果推論の根本問題",
+    "title": "社会科学における因果推論",
+    "section": "因果推論の根本問題",
+    "text": "因果推論の根本問題\n因果推論の根本問題（fundamental problem of causal inference）\n\n反実仮想（反事実）は観察できないため、ITEの推定は不可能である\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n\n\n?"
+  },
+  {
+    "objectID": "ci_slide.html#因果推論の根本問題とate",
+    "href": "ci_slide.html#因果推論の根本問題とate",
+    "title": "社会科学における因果推論",
+    "section": "因果推論の根本問題とATE",
+    "text": "因果推論の根本問題とATE\nITEの平均値としてのATEは推定不可能\n\nしかし、観測値の平均値の差分としてATEは推定可能1\n\n\\(\\Rightarrow\\) このATEは信頼可能なATEか\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n426\n399\n-27\n\n\n\nもし反実仮想が観察され、ITEが分かるのであれば「ITEの平均値としてのATE」と「観測値の平均値の差分としてATE」の値は等しくなる。"
+  },
+  {
+    "objectID": "ci_slide.html#参考attとatc",
+    "href": "ci_slide.html#参考attとatc",
+    "title": "社会科学における因果推論",
+    "section": "参考：ATTとATC",
+    "text": "参考：ATTとATC\n統計的因果推論ではATTが推定対象となるケースが多い1\n\nATT（Average Treatment Effect on the Treated）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 1] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\\)\n\nATC（Average Treatment Effect on the Controlled）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 0] - \\mathbb{E}[Y_i(0) | D_i = 0] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]\\)\n\nATEはATTとATCの加重平均\n\n\n\n\nATTの例\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n\n\n83.3\n\n\n\n\n\nATCの例\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n平均\n\n\n\n16.7\n\n\n\n\n詳細は割愛するが、今後必要に応じて適宜解説する。"
+  },
+  {
+    "objectID": "ci_slide.html#信頼できるateの条件",
+    "href": "ci_slide.html#信頼できるateの条件",
+    "title": "社会科学における因果推論",
+    "section": "信頼できるATEの条件",
+    "text": "信頼できるATEの条件\n私たちが本当に知りたいのはITE1\n\n 因果推論の根本問題により、ITEは推定不可能\n 観測値の平均値の差分としてのATEは推定可能\n\nただし、この推定値が信頼できるATEとは限らない\n\nどのような場合、観測値の平均値の差分は信頼できるATEになるか\n\n\\(\\Rightarrow\\) 内生性が存在しないこと\n\\(=\\) 処置変数が外生変数であること\n\\(=\\) 処置群と統制群が交換可能、または平均独立であること\n\\(=\\) …\n\n\n\n\n内生性/外生性とは何か?\n\n\n\nITEよりATEに興味があるかも知れないが、それでもITEの方が望ましいだろう。なぜならITEからATEは推定可能なものの、その逆は成立しないからだ。"
+  },
+  {
+    "objectID": "did_slide.html#電子投票の導入と投票率",
+    "href": "did_slide.html#電子投票の導入と投票率",
+    "title": "社会科学における因果推論",
+    "section": "電子投票の導入と投票率",
+    "text": "電子投票の導入と投票率\n2004年京都市長選挙における電子投票の導入1\n\n11の行政区の内、東山区のみ導入\nタッチパネル式投票（投票所に足を運ぶ必要はある）\n\n\n\n\n\n\n\n我々が考えている電子投票\n\n\n\n\n\n\n\n現在の電子投票\n\n\n\n\n\n日本における電子投票の初導入事例は2002年の岡山県新見市（首長・市議会選挙）"
+  },
+  {
+    "objectID": "did_slide.html#東山区の投票率経時的変化",
+    "href": "did_slide.html#東山区の投票率経時的変化",
+    "title": "社会科学における因果推論",
+    "section": "東山区の投票率（経時的変化）",
+    "text": "東山区の投票率（経時的変化）\n\n電子投票導入後、投票率が約2.1%p減少（45.6% \\(\\rightarrow\\) 43.5%）\n\n電子投票は投票率を下げる?"
+  },
+  {
+    "objectID": "did_slide.html#内生性",
+    "href": "did_slide.html#内生性",
+    "title": "社会科学における因果推論",
+    "section": "内生性",
+    "text": "内生性\n\n\n電子投票の導入は選管が決めるため、自己選択バイアスの可能性がある。\n\\(\\Rightarrow\\) 電子投票と投票率間の交絡要因は?\n\nどのような場合に選管は電子投票の導入を検討するか。"
+  },
+  {
+    "objectID": "did_slide.html#自己選択バイアスの例1",
+    "href": "did_slide.html#自己選択バイアスの例1",
+    "title": "社会科学における因果推論",
+    "section": "自己選択バイアスの例（1）",
+    "text": "自己選択バイアスの例（1）\n\n\n東山区の投票率は元々低く、選管が投票率向上のために電子投票を導入\n元々投票率の低い地域は次の選挙の投票率も低い傾向\n電子投票のおかげで2.1%p減で食い止められたかも\n\\(\\Rightarrow\\) 単純前後比較には限界があり、比較対象が必要"
+  },
+  {
+    "objectID": "did_slide.html#東山区の投票率群間比較",
+    "href": "did_slide.html#東山区の投票率群間比較",
+    "title": "社会科学における因果推論",
+    "section": "東山区の投票率（群間比較）",
+    "text": "東山区の投票率（群間比較）\n\n電子投票を導入した東山区の投票率は導入しなかった区に比べ、約4.5%p高い\n\n電子投票は投票率を上げる?"
+  },
+  {
+    "objectID": "did_slide.html#自己選択バイアスの例2",
+    "href": "did_slide.html#自己選択バイアスの例2",
+    "title": "社会科学における因果推論",
+    "section": "自己選択バイアスの例（2）",
+    "text": "自己選択バイアスの例（2）\n\n\n東山区の選管は投票参加の重要性を認識\n\n\\(\\Rightarrow\\) 東山区は元々投票率が高かった可能性 & 更に投票率を上げるための方法を導入\n\n電子投票がなくても東山区は投票率が高い可能性\n\\(\\Rightarrow\\) 単純群間比較には限界があり、比較対象が必要"
+  },
+  {
+    "objectID": "did_slide.html#何と何を比較するか",
+    "href": "did_slide.html#何と何を比較するか",
+    "title": "社会科学における因果推論",
+    "section": "何と何を比較するか",
+    "text": "何と何を比較するか\n「電子投票を導入しなかった2004年の東山区」が最適な比較対象\n\nしかし、観察できない（因果推論の根本問題）\n郡間比較も、前後比較も、適切な比較方法ではない（可能性が高い）\nある仮定が満たされれば、郡間比較、または前後比較で因果効果が推定可能\n\nその仮定とは?"
+  },
+  {
+    "objectID": "did_slide.html#つの推定方法",
+    "href": "did_slide.html#つの推定方法",
+    "title": "社会科学における因果推論",
+    "section": "2つの推定方法",
+    "text": "2つの推定方法\n\n\n\n\n\n\n\n\n\n処置前（Pre）\n処置後（Post）\n\n\n\n\n統制（\\(D_i = 0\\)）\n\\(\\mathbb{E}[Y_{i, pre}^0|D_i = 0]\\)\n\\(\\mathbb{E}[Y_{i, post}^0|D_i = 0]\\)\n\n\n処置（\\(D_i = 1\\)）\n\\(\\mathbb{E}[Y_{i, pre}^1|D_i = 1]\\)\n\\(\\mathbb{E}[Y_{i, post}^1|D_i = 1]\\)\n\n\n\n\\[\n\\textsf{ATT} = \\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\underbrace{\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 1]}_{\\scriptstyle \\textsf{counterfactual}}\n\\]\n群間比較（Cross-sectional design）\n\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1] = \\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\n前後比較（Before-and-after design）\n\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1] = \\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)"
+  },
+  {
+    "objectID": "did_slide.html#前後-群間比較",
+    "href": "did_slide.html#前後-群間比較",
+    "title": "社会科学における因果推論",
+    "section": "前後 + 群間比較",
+    "text": "前後 + 群間比較\n\n同時期における北区の投票率は約8.3%p減少（48.7% \\(\\rightarrow\\) 40.4%）\n\n電子投票は投票率を下げる? \\(\\rightarrow\\) そうじゃないかも知れない。"
+  },
+  {
+    "objectID": "did_slide.html#反実仮想を考える",
+    "href": "did_slide.html#反実仮想を考える",
+    "title": "社会科学における因果推論",
+    "section": "反実仮想を考える",
+    "text": "反実仮想を考える\n2004年に東山区が電子投票を導入しなかったら…\n\n北区同様、約8.3%p減少したかも知れない（破線）。\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n実際は約2.1%p減に留まった。\n\\(\\Rightarrow\\) 電子投票のおかげで投票率が6.2%p増"
+  },
+  {
+    "objectID": "did_slide.html#電子投票の因果効果の推定",
+    "href": "did_slide.html#電子投票の因果効果の推定",
+    "title": "社会科学における因果推論",
+    "section": "電子投票の因果効果の推定",
+    "text": "電子投票の因果効果の推定\n\n処置効果\\(\\delta\\)は処置群における変化量と統制群における変化量の差分\n\n\\(A\\)：処置群における差分 = 観測された処置群の変化量\n\\(B\\)：統制群における差分 = もし処置群が処置を受けなかった場合の処置群の変化量の推定値（反実仮想）\n\\(\\delta_{\\textsf{ATT}} = A - B\\)：因果効果・処置効果\n\n\n\\[\n\\begin{align}\n\\delta_{\\textsf{ATT}} & = (Y_{\\textsf{treat}, \\textsf{pre}} - Y_{\\textsf{treat}, \\textsf{post}}) - (Y_{\\textsf{control}, \\textsf{pre}} - Y_{\\textsf{control}, \\textsf{post}}) \\\\\n& = (0.435 - 0.456) - (0.404 - 0.487) \\\\\n& = (-0.021) - (-0.083) \\\\\n& = 0.062\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "did_slide.html#差分の差分法-1",
+    "href": "did_slide.html#差分の差分法-1",
+    "title": "社会科学における因果推論",
+    "section": "差分の差分法",
+    "text": "差分の差分法\nDifference-in-Differences（DD / DID / Diff-in-Diff / Dif-in-Dif）\n\n処置群と統制群の変化の差を比較することで、因果効果を推定する準実験的手法\n\n主に政策介入や制度変更などの因果効果を推定する際に使用\n\n時間を通じた結果変数の変化の差を、処置群と統制群の間で比較\n\n時系列データを使って対象の経時的変化のみを分析（\\(\\times\\)）\nある時点における介入群と対照群の差異のみを分析（\\(\\times\\)）\n\n推定量はATEでなく、ATT\nパネルデータ（panel data）が必要"
+  },
+  {
+    "objectID": "did_slide.html#パネルデータ",
+    "href": "did_slide.html#パネルデータ",
+    "title": "社会科学における因果推論",
+    "section": "パネルデータ",
+    "text": "パネルデータ\n同じ個体を複数回の観測したデータ\n\n個体は主に国、地域、企業、団体などの集団が多い\n\nDIDが主に政策介入、制度変更の因果効果に活用される理由\n個体自ら観測結果を発信することが多いので、収集コストが非常に低い\n人間のパネルデータも構築可能（収集コストが高い）\n\n以下は2つの個体（東山区と北区）を2回（2000年と2004年）観測したデータ\n\n観測単位は「区」でも、「年」でもなく、「区 \\(\\times\\) 年」\n\n\n\n\n\n区\n年\n投票方式\n投票率\n\n\n\n\n東山区\n2000\n自書\n45.6\n\n\n東山区\n2004\n電子\n43.5\n\n\n北区\n2000\n自書\n48.7\n\n\n北区\n2004\n自書\n40.4"
+  },
+  {
+    "objectID": "did_slide.html#クロスセクションデータ",
+    "href": "did_slide.html#クロスセクションデータ",
+    "title": "社会科学における因果推論",
+    "section": "クロスセクションデータ",
+    "text": "クロスセクションデータ\n一つ一つの個体は1回のみ登場する\n\nすべての個体は同じタイミングで観測されており、観測回数は1回のみ\n\\(\\Rightarrow\\)「個体1」が2回以上登場することはない\n\n\n\n\n個体\n変数1\n変数2\n\n\n\n\n個体1\n7.1\n54.0\n\n\n個体2\n8.1\n49.5\n\n\n個体3\n5.0\n55.4\n\n\n個体4\n6.1\n48.8\n\n\n個体5\n7.3\n55.6\n\n\n個体6\n6.5\n47.5\n\n\n個体7\n3.8\n48.6\n\n\n個体8\n5.5\n50.5"
+  },
+  {
+    "objectID": "did_slide.html#パネルデータの例",
+    "href": "did_slide.html#パネルデータの例",
+    "title": "社会科学における因果推論",
+    "section": "パネルデータの例",
+    "text": "パネルデータの例\n個体が4つ（個体1〜4）、時期が3期（2022年、2023年、2024年）の場合\n\n\n\n\n\n\n\n\n\n\n\n個体\n時期\n変数1\n変数2\n\n\n\n\n個体1\n2022年\n1305\n80\n\n\n個体1\n2023年\n1299\n79\n\n\n個体1\n2024年\n1266\n90\n\n\n個体2\n2022年\n1593\n20\n\n\n個体2\n2023年\n1620\n17\n\n\n個体2\n2024年\n1653\n15\n\n\n個体3\n2022年\n1539\n25\n\n\n個体3\n2023年\n1551\n23\n\n\n個体3\n2024年\n1585\n23\n\n\n個体4\n2022年\n1021\n157\n\n\n個体4\n2023年\n1024\n154\n\n\n個体4\n2024年\n991\n165\n\n\n\n\n\n個体2は3回登場する。\n\n個体2は計3回（2022年、2023年、2024年）測定されているから\n\n2023年は4回登場する。\n\n2023年において計4つの個体（個体1、個体2、個体3、個体4）を測定しているから\n\nパネルデータのサンプルサイズは個体数 \\(\\times\\) 観測回数\n\nパネル脱落による欠損等により、「個体数 \\(\\times\\) 観測回数」より少なくなることはあり得る（逆は成立しない）"
+  },
+  {
+    "objectID": "did_slide.html#並行トレンドの仮定",
+    "href": "did_slide.html#並行トレンドの仮定",
+    "title": "社会科学における因果推論",
+    "section": "並行トレンドの仮定",
+    "text": "並行トレンドの仮定\n平均トレンドの仮定（parallel trend assumption）\n\n処置が行われなかった場合の潜在的な結果の傾向は、処置群と統制群の間で同じであること\nこの仮定が満たされる場合、統制群のトレンドを処置群の反実仮想として使える。\n\n\\[\n\\underbrace{\\mathbb{E}[Y^0_{i, \\textsf{post}}|D_i = 1] - \\mathbb{E}[Y^0_{i, \\textsf{pre}}|D_i = 1]}_{\\textsf{(A)}} = \\underbrace{\\mathbb{E}[Y^0_{i, \\textsf{post}}|D_i = 0] - \\mathbb{E}[Y^0_{i, \\textsf{pre}}|D_i = 0]}_{\\textsf{(B)}}\n\\]\n\n（A）：処置群がもし処置を受けなかった場合の変化量（反実仮想）\n（B）：統制群における変化量（観察可能）\n\\(\\Rightarrow\\) 「統制群の変化量」=「処置群が処置を受けなかった場合の潜在的結果」"
+  },
+  {
+    "objectID": "did_slide.html#仮定が満たされる場合",
+    "href": "did_slide.html#仮定が満たされる場合",
+    "title": "社会科学における因果推論",
+    "section": "仮定が満たされる場合",
+    "text": "仮定が満たされる場合\n\n処置を受けるまでは東山区と北区の投票率のトレンドが平行\n\n北区が東山区の反実仮想として使える"
+  },
+  {
+    "objectID": "did_slide.html#仮定が満たされない場合",
+    "href": "did_slide.html#仮定が満たされない場合",
+    "title": "社会科学における因果推論",
+    "section": "仮定が満たされない場合",
+    "text": "仮定が満たされない場合\n\n処置を受けるまで東山区と北区の投票率のトレンドが平行でない\n\n北区を東山区の反実仮想として使うことは不適切"
+  },
+  {
+    "objectID": "did_slide.html#可視化による確認",
+    "href": "did_slide.html#可視化による確認",
+    "title": "社会科学における因果推論",
+    "section": "可視化による確認",
+    "text": "可視化による確認\n\n長期間であるほど、統制群の個体が多いほど確認しやすい\n人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠（suggestive evidence）に過ぎない\nプラセボテストで並行トレンドの仮定が満たされていないことは検知可能（後述）"
+  },
+  {
+    "objectID": "did_slide.html#回帰分析と差分の差分法",
+    "href": "did_slide.html#回帰分析と差分の差分法",
+    "title": "社会科学における因果推論",
+    "section": "回帰分析と差分の差分法",
+    "text": "回帰分析と差分の差分法\n2つの個体、2期の場合\n\\[\ny_{it} = \\alpha + \\delta (D_i \\times P_t) + \\beta D_{i} + \\gamma P_{t} + \\varepsilon_{it}\n\\]\n\n\\(y_{it}\\)：結果変数（応答変数）\n\n\\(i\\)：個体（今回の例だと京都の行政区）\n\\(t\\)：時間（1996年、2000年、2004年、…）\n\n\\(D_{i}\\)：個体\\(i\\)が処置群に属するかを示すダミー変数\n\\(P_{t}\\)：時間\\(t\\)が処置後であることを示すダミー変数"
+  },
+  {
+    "objectID": "did_slide.html#実装例",
+    "href": "did_slide.html#実装例",
+    "title": "社会科学における因果推論",
+    "section": "実装例",
+    "text": "実装例\n\\[\ny_{it} = 48.7 + 6.2 (D_i \\times P_t) - 3.1 D_{i} - 8.3 P_{t} + \\varepsilon_{it}\n\\]\n\n\n\n\n\nName\n\\(y_{it}\\)\n\\(D_{i}\\)\n\\(P_{t}\\)\n\\(D_i \\times P_t\\)\n\n\n\n\n東山区\n45.6\n1\n0\n0\n\n\n東山区\n43.5\n1\n1\n1\n\n\n北区\n48.7\n0\n0\n0\n\n\n北区\n40.4\n0\n1\n0\n\n\n\n\n\n\\(\\alpha\\) = 48.7\n\n処置前における統制群の結果変数\n\n\\(\\delta\\) = 6.2\n\n処置効果（ATT）\n\n\\(\\beta\\) = -3.1\n\n処置前における処置群と統制群と差\n\n\\(\\gamma\\) = -8.3\n\n統制群における結果変数の変化量"
+  },
+  {
+    "objectID": "did_slide.html#did回帰の仕組み",
+    "href": "did_slide.html#did回帰の仕組み",
+    "title": "社会科学における因果推論",
+    "section": "DID回帰の仕組み",
+    "text": "DID回帰の仕組み\n\\[\n\\hat{y}_{it} = \\alpha + \\delta (D_i \\times P_t) - \\beta D_{i} - \\gamma P_{t}\n\\]\n\n処置群の差分：\\(\\hat{y}_{it}(D_i = 1, P_t = 1) − \\hat{y}_{it}(D_i = 1, P_t = 0)\\)\n\n\\(\\delta + \\gamma = \\underbrace{(\\alpha + \\delta + \\beta + \\gamma)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)} - \\underbrace{(\\alpha + \\beta)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)}\\)\n\n統制群の差分：\\(\\hat{y}_{it}(D_i = 0, P_t = 1) − \\hat{y}_{it}(D_0 = 1, P_t = 0)\\)\n\n\\(\\gamma = \\underbrace{(\\alpha + \\gamma)}_{\\hat{y}_{it}(D_i = 0, P_t = 1)} - \\underbrace{(\\alpha)}_{\\hat{y}_{it}(D_i = 0, P_t = 0)}\\)\n\n差分の差分：\\(\\delta = (\\delta + \\gamma) - (\\gamma)\\)\n\n\\(\\Rightarrow \\delta\\)：処置効果"
+  },
+  {
+    "objectID": "did_slide.html#より一般化したdid回帰",
+    "href": "did_slide.html#より一般化したdid回帰",
+    "title": "社会科学における因果推論",
+    "section": "より一般化したDID回帰",
+    "text": "より一般化したDID回帰\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\varepsilon_{it}\n\\]\n\n個体と時間の固定効果モデル（二元配置固定効果モデル）\n\n\\(\\gamma_i\\)：個体のダミー変数\n\\(\\lambda_t\\)：時間のダミー変数\n\n注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。"
+  },
+  {
+    "objectID": "did_slide.html#系列相関と標準誤差",
+    "href": "did_slide.html#系列相関と標準誤差",
+    "title": "社会科学における因果推論",
+    "section": "系列相関と標準誤差",
+    "text": "系列相関と標準誤差\n\n2期間より長いパネルデータを分析する場合、結果変数は個体内で強い相関を持つ\n\n系列相関（serial correlation）が発生する\n\n例）2004年の東山区の投票率は、2000年の東山区の投票率と強い相関関係があり、2000年の東山区の投票率は、1996年の東山区の投票率と強い相関関係があり、…\n\n投票率が高いところは、これからも高い可能性が高い（逆も同じ）\n\n一つ一つのの観測値が独立とは言えなくなる\n\n似たような観測が多くなるため、有効なサンプルサイズ（Effective Sample Size[ESS]）は実際よりも小さい\n\n系列相関が存在する場合、従来の標準誤差（lm()等）は過小評価される\n\n\\(\\Rightarrow\\) 個体でクラスター化した頑健な標準誤差（cluster-robust standard error）\nその他）ブロック・ブートストラップ / データを処置前後の2期に集約\n\n\n\n\n参考）Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “How Much Should We Trust Differences-in-Differences Estimates?” The Quarterly Journal of Economics, 119 (1): 249–275."
+  },
+  {
+    "objectID": "did_slide.html#系列相関の例",
+    "href": "did_slide.html#系列相関の例",
+    "title": "社会科学における因果推論",
+    "section": "系列相関の例",
+    "text": "系列相関の例"
+  },
+  {
+    "objectID": "did_slide.html#トレンド変数",
+    "href": "did_slide.html#トレンド変数",
+    "title": "社会科学における因果推論",
+    "section": "トレンド変数",
+    "text": "トレンド変数\nトレンド変数と個体ダミー変数の交差項を投入\n\n結果変数と説明変数\nさらに、「北区 \\(\\times\\) トレンド」、「東山区 \\(\\times\\) トレンド」、「西京区 \\(\\times\\) トレンド」も投入\n\n\n\n\n\n\n  \n    \n      ID\n      区\n      年\n      北区\n      東山区\n      西京区\n      1996年\n      2000年\n      2004年\n      電子投票\n      投票率\n      トレンド\n    \n  \n  \n    1\n北区\n1996\n1\n0\n0\n1\n0\n0\n0\n0.447\n1\n    2\n東山区\n1996\n0\n1\n0\n1\n0\n0\n0\n0.430\n1\n    3\n西京区\n1996\n0\n0\n1\n1\n0\n0\n0\n0.407\n1\n    4\n北区\n2000\n1\n0\n0\n0\n1\n0\n0\n0.487\n2\n    5\n東山区\n2000\n0\n1\n0\n0\n1\n0\n0\n0.456\n2\n    6\n西京区\n2000\n0\n0\n1\n0\n1\n0\n0\n0.460\n2\n    7\n北区\n2004\n1\n0\n0\n0\n0\n1\n0\n0.404\n3\n    8\n東山区\n2004\n0\n1\n0\n0\n0\n1\n1\n0.435\n3\n    9\n西京区\n2004\n0\n0\n1\n0\n0\n1\n0\n0.381\n3"
+  },
+  {
+    "objectID": "did_slide.html#トレンド変数の必要性",
+    "href": "did_slide.html#トレンド変数の必要性",
+    "title": "社会科学における因果推論",
+    "section": "トレンド変数の必要性",
+    "text": "トレンド変数の必要性\n\n左：トレンド変数がなくてもOK\n右：トレンド変数を投入することである程度バイアスが小さくなる\n\n\\(\\Rightarrow\\) 並行トレンドの仮定の緩和"
+  },
+  {
+    "objectID": "did_slide.html#トレンド変数と反実仮想",
+    "href": "did_slide.html#トレンド変数と反実仮想",
+    "title": "社会科学における因果推論",
+    "section": "トレンド変数と反実仮想",
+    "text": "トレンド変数と反実仮想\n\n左：トレンド変数を投入していないモデル\n右：トレンド変数を投入したモデル"
+  },
+  {
+    "objectID": "did_slide.html#共変量が必要な時",
+    "href": "did_slide.html#共変量が必要な時",
+    "title": "社会科学における因果推論",
+    "section": "共変量が必要な時",
+    "text": "共変量が必要な時\n\n3期以上のパネルデータを使用したDIDの場合、未観察の交絡要因が時間不変（no time-varying confounders）であることが前提\n\nこの仮定が満たされない場合、共変量を投入することが推奨される"
+  },
+  {
+    "objectID": "did_slide.html#共変量の投入",
+    "href": "did_slide.html#共変量の投入",
+    "title": "社会科学における因果推論",
+    "section": "共変量の投入",
+    "text": "共変量の投入\n\n時間と共に変化する交絡要因（time-varying confounder）の投入\n\n適切な共変量を投入すると条件付き並行トレンドの仮定が成立\n\nトレンド変数と共変量、両方投入しても良い"
+  },
+  {
+    "objectID": "did_slide.html#パネルデータの確認",
+    "href": "did_slide.html#パネルデータの確認",
+    "title": "社会科学における因果推論",
+    "section": "パネルデータの確認",
+    "text": "パネルデータの確認\n\n個体 \\(\\times\\) 時間 \\(\\times\\) 処置有無の可視化（以下は{panelView}パッケージを使用した例）"
+  },
+  {
+    "objectID": "did_slide.html#推定-1",
+    "href": "did_slide.html#推定-1",
+    "title": "社会科学における因果推論",
+    "section": "推定",
+    "text": "推定\n線形回帰モデル（二元配置固定効果モデル）\n\n投入する変数\n\n処置変数\n個体と時間の固定効果\nトレンド変数\n共変量\n\n2期以上のデータである場合、個体でクラスター化した標準誤差を使用\n\n例）{estimatr}のlm_robust()\n\n一般的に処置変数の係数のみ報告\n\n固定効果はデータによっては数百個の変数にもなるため\nトレンド変数や共変量の係数は付録などに"
+  },
+  {
+    "objectID": "did_slide.html#garcía-montoya-et-al.-2022",
+    "href": "did_slide.html#garcía-montoya-et-al.-2022",
+    "title": "社会科学における因果推論",
+    "section": "García-Montoya et al. (2022)",
+    "text": "García-Montoya et al. (2022)\n\n3種類の処置変数 \\(\\times\\) 4つのモデル \n\n\n\n\n\n\n\n\nGarcía-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. “Violence and Voting in the United States: How School Shootings Affect Elections.” American Political Science Review, 116(3): 807–826."
+  },
+  {
+    "objectID": "did_slide.html#プラセボテスト",
+    "href": "did_slide.html#プラセボテスト",
+    "title": "社会科学における因果推論",
+    "section": "プラセボテスト",
+    "text": "プラセボテスト\n並行トレンドの仮定が満たされていないことは検知可能（逆は不可能）\n手順\n\n処置前のデータのみ抽出する\n任意の時期に処置が行われたと仮定し、再コーディングする\n\n例）東山区が2000年に電子投票を導入したかのように修正する（実際は2004年）\n\nDID推定\n処置効果が統計的有意に0でない場合、並行トレンドが満たされていないと判断\n\n\n\n\n\n    \n\n    \n    \n      \n        \n        \n              \n                 \n                通常のデータ\n                プラセボ\n              \n        \n        注：カッコ内は標準誤差\n        \n                \n                  eVote\n                  0.047(0.005)\n                  -0.009(0.006)\n                \n                \n                  Num.Obs.\n                  55\n                  44\n                \n                \n                  区固定効果\n                  Yes\n                  Yes\n                \n                \n                  年固定効果\n                  Yes\n                  Yes"
+  },
+  {
+    "objectID": "did_slide.html#合成コントロール法",
+    "href": "did_slide.html#合成コントロール法",
+    "title": "社会科学における因果推論",
+    "section": "合成コントロール法",
+    "text": "合成コントロール法\nSynthetic Control Method（SCM）\n\n合成コントロール法、または合成制御法と訳される（SCMともよく呼ばれる）\n統制群を合成することで処置群の潜在的結果を作り上げる手法\n\n処置群と並行トレンドを満たす架空の統制群を作り上げる\nAbadie, Diamond, and Hainmueller（2010, 2015）によって提案され、Xu（2017）が一般化SCMを提案\n\n\n\n\n\nAbadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2010. “Synthetic control methods for comparative case studies: Estimating the effect of California’s tobacco control program.” Journal of the American Statistical Association, 105(490): 493–505.\nAbadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2015. “Comparative politics and the synthetic control method.” American Journal of Political Science, 59(2): 495–510.\nXu, Yiqing. 2017. “Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models.” Political Analysis, 25 (1): 57–76."
+  },
+  {
+    "objectID": "did_slide.html#並行トレンドは",
+    "href": "did_slide.html#並行トレンドは",
+    "title": "社会科学における因果推論",
+    "section": "並行トレンドは?",
+    "text": "並行トレンドは?\n\nどうみても平行トレンドの仮定が満たされているとは言い難い。"
+  },
+  {
+    "objectID": "did_slide.html#たくさんの統制群を用意する",
+    "href": "did_slide.html#たくさんの統制群を用意する",
+    "title": "社会科学における因果推論",
+    "section": "たくさんの統制群を用意する",
+    "text": "たくさんの統制群を用意する\n\n一つ一つの線は西ドイツと平行でないかも知れないが、重み付けで合成すれば西ドイツのトレンドを追従するトレンドが作れそう。"
+  },
+  {
+    "objectID": "did_slide.html#統制群の合成",
+    "href": "did_slide.html#統制群の合成",
+    "title": "社会科学における因果推論",
+    "section": "統制群の合成",
+    "text": "統制群の合成\n統制群に重みを付けて合成する\n\n通常のSCMの場合、重みは必ず正であるが、一般化SCM（Xu 2017）の場合、負もあり得る。"
+  },
+  {
+    "objectID": "did_slide.html#合成された架空の西ドイツ",
+    "href": "did_slide.html#合成された架空の西ドイツ",
+    "title": "社会科学における因果推論",
+    "section": "合成された架空の西ドイツ",
+    "text": "合成された架空の西ドイツ\n統一（1990年）までのトレンドが類似（しているように見える）"
+  },
+  {
+    "objectID": "did_slide.html#比較",
+    "href": "did_slide.html#比較",
+    "title": "社会科学における因果推論",
+    "section": "比較",
+    "text": "比較\n統一するまでのトレンドがほぼ一致\n\n架空の西ドイツは西ドイツの反実仮想（統一しなかった西ドイツ）として適切"
+  },
+  {
+    "objectID": "did_slide.html#因果効果は",
+    "href": "did_slide.html#因果効果は",
+    "title": "社会科学における因果推論",
+    "section": "因果効果は?",
+    "text": "因果効果は?\n\n\n\n\n\n\n\n  \n    \n      年\n      西ドイツ\n      反実仮想\n      差分\n      累積\n    \n  \n  \n    1960\n2,284\n2,275\n9\n\n    1961\n2,388\n2,397\n−9\n\n    1962\n2,527\n2,526\n1\n\n    1963\n2,610\n2,621\n−11\n\n    ...\n...\n...\n...\n...\n    1988\n17,786\n17,769\n17\n\n    1989\n18,994\n19,005\n−11\n-11\n    1990\n20,465\n20,394\n71\n60\n    1991\n21,602\n21,574\n28\n88\n    1992\n22,154\n22,326\n−172\n-84\n    1993\n21,878\n22,697\n−819\n-903\n    1994\n22,371\n23,700\n−1,329\n-2233\n    ...\n...\n...\n...\n...\n    2001\n27,449\n33,659\n−6,210\n-27295\n    2002\n28,348\n34,348\n−6,000\n-33295\n    2003\n28,855\n35,041\n−6,186\n-39481\n  \n  \n  \n\n\n\n\n\n\n推定される処置効果はATT\n\n1993年におけるATT：-819ドル\n1993年におけるATT：-1,329ドル\n\n代表値で報告する場合\n\n平均ATT：-2,819ドル\n累積ATT（CATT）：-39,481ドル\n\nどの推定値（特定時点におけるATT、平均ATT、CATT）を報告するかを決めるのは分析者の仕事"
+  },
+  {
+    "objectID": "did_slide.html#attの可視化",
+    "href": "did_slide.html#attの可視化",
+    "title": "社会科学における因果推論",
+    "section": "ATTの可視化",
+    "text": "ATTの可視化\n\n左：各時点ごとのATT\n右：各時点における累積ATT（処置後のみ）"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "イントロダクション",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "1/ イントロダクション"
+    ]
+  },
+  {
+    "objectID": "iv.html",
+    "href": "iv.html",
+    "title": "操作変数法",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "10/ 操作変数法"
+    ]
+  },
+  {
+    "objectID": "matching.html",
+    "href": "matching.html",
+    "title": "マッチング",
+    "section": "",
+    "text": "新しいタブ",
+    "crumbs": [
+      "資料",
+      "11/マッチング"
+    ]
+  },
+  {
+    "objectID": "ps.html",
+    "href": "ps.html",
+    "title": "傾向スコア",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "7/ 傾向スコア"
+    ]
+  },
+  {
+    "objectID": "r.html",
+    "href": "r.html",
+    "title": "Rの復習",
+    "section": "",
+    "text": "新しいタブ\n     \n      \n    \n  \n\n1 データハンドリング\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n2 記述統計量の計算\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n3 平均処置効果の推定\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n4 推定結果の可視化\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1",
+    "crumbs": [
+      "6/ Rの復習"
+    ]
+  },
+  {
+    "objectID": "rct.html",
+    "href": "rct.html",
+    "title": "無作為化比較試験",
+    "section": "",
+    "text": "Slide（閲覧用）\n     \n      \n    \n  \n\n1 多重比較\n回帰分析から得られた推定値のp値を比較回数でかける\npairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")\nもしtreatmentが5グループなら比較回数は10通りであり、回帰分析のp値はpairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")の10分の1\n\nmc_df &lt;- tibble(treatment = rep(LETTERS[1:5], each = 100),\n                y         = rep(1:100, 5))\n\nmc_df |&gt; \n  reframe(mean   = mean(y),\n          median = median(y),\n          sd     = sd(y),\n          min    = min(y),\n          max    = max(y),\n          .by    = treatment)\n\nmc_sim &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"none\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result &lt;- replicate(10000, mc_sim())\n\ntable(mc_result)\n\nmc_result |&gt; sum()\n\nmc_sim_bf &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"bonferroni\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result_bf &lt;- replicate(10000, mc_sim_bf())\n\ntable(mc_result_bf)\n\nmc_result_bf |&gt; sum()\n\n\n母集団pからサンプルsを抽出\nsを3つのグループに分割（a、b、c）\nグループ間の差は理論上0\nグループ間の差を回帰分析で推定（ベースラインはa）\na vs. b、a vs. cの計2回の比較が行われる\n以上の作業を複数回繰り返す\n一つでもp値が0.05を下回るケースは全施行の中、約1割\n閾値を比較回数である2で割ったら0.25となり、0.25を基準とすると約0.5割が統計的有意に\n\n\nset.seed(19861008)\np &lt;- rnorm(10000, 0, 1)\nresult &lt;- data.frame(id = NA, b = NA, c = NA)\n\nfor (i in 1:10000) {\n  s &lt;- sample(p, 1000)\n  names(s) &lt;- sample(letters[1:3], 1000, replace = TRUE)\n  pvalue &lt;- enframe(s) |&gt; \n    lm(value ~ name, data = _) |&gt; \n    broom::tidy() |&gt; \n    filter(term != \"(Intercept)\") |&gt; \n    pull(p.value)\n  \n  result[i, ] &lt;- c(1, pvalue)\n  \n}\n\ntable(result$b &lt; 0.05)\ntable(result$c &lt; 0.05)\n\nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05, 1, 0),\n         c2 = if_else(c &lt; 0.05, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()\n  \nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05 / 2, 1, 0),\n         c2 = if_else(c &lt; 0.05 / 2, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()",
+    "crumbs": [
+      "4/ ランダム化比較試験"
+    ]
+  },
+  {
+    "objectID": "rdd.html",
+    "href": "rdd.html",
+    "title": "回帰不連続デザイン",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "9/ 回帰不連続デザイン"
+    ]
+  },
+  {
+    "objectID": "rdd.html#プラセボ検定",
+    "href": "rdd.html#プラセボ検定",
+    "title": "回帰不連続デザイン",
+    "section": "3.1 プラセボ検定",
+    "text": "3.1 プラセボ検定",
+    "crumbs": [
+      "9/ 回帰不連続デザイン"
+    ]
+  },
+  {
+    "objectID": "rdd.html#バランスチェック",
+    "href": "rdd.html#バランスチェック",
+    "title": "回帰不連続デザイン",
+    "section": "3.2 バランスチェック",
+    "text": "3.2 バランスチェック",
+    "crumbs": [
+      "9/ 回帰不連続デザイン"
+    ]
+  },
+  {
+    "objectID": "rdd.html#密度検定",
+    "href": "rdd.html#密度検定",
+    "title": "回帰不連続デザイン",
+    "section": "3.3 密度検定",
+    "text": "3.3 密度検定",
+    "crumbs": [
+      "9/ 回帰不連続デザイン"
+    ]
+  },
+  {
+    "objectID": "reg.html",
+    "href": "reg.html",
+    "title": "回帰分析",
+    "section": "",
+    "text": "新しいタブ\n     \n      \n    \n  \n\nmy_dag &lt;- dagify(\n  Y ~ D + X1 + X2,\n  X1 ~ Z1 + Z2,\n  D ~ Z1 + Z3,\n  X2 ~ Z2 + Z3,\n  Z1 ~ W,\n  Z2 ~ W,\n  Z3 ~ W,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \n                      \"X1\" = 1, \"D\" = 2, \"X2\" = 3,\n                      \"Z1\" = 1, \"Z2\" = 2, \"Z3\" = 3,\n                      \"W\" = 2),\n                y = c(\"Y\" = 4, \n                      \"X1\" = 3, \"D\" = 3, \"X2\" = 3,\n                      \"Z1\" = 2, \"Z2\" = 2, \"Z3\" = 2,\n                      \"W\" = 1))\n)\n\nggdag(my_dag) + theme_dag()\n\n\n\n\n\n\n\n\n\nmy_dag |&gt;\n  adjustmentSets()\n\n{ X1, X2 }\n{ X1, Z2, Z3 }\n{ X2, Z1, Z2 }\n{ Z1, Z3 }\n\n\n\nmy_dag |&gt;\n  ggdag_adjustment_set(shadow = TRUE) +\n  theme_dag()",
+    "crumbs": [
+      "5/ 回帰分析"
+    ]
+  },
+  {
+    "objectID": "sb.html",
+    "href": "sb.html",
+    "title": "内生性",
+    "section": "",
+    "text": "Slide（閲覧用）",
+    "crumbs": [
+      "3/ 内生性"
+    ]
+  },
+  {
+    "objectID": "rct_slide.html#無作為割り当てrandom-assignment",
+    "href": "rct_slide.html#無作為割り当てrandom-assignment",
+    "title": "社会科学における因果推論",
+    "section": "無作為割り当て（Random assignment）",
+    "text": "無作為割り当て（Random assignment）\n\n被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法\n各個体がどのグループに割り当てられるかは等しい確率\n\nグループが2つ（\\(D\\) = {0, 1}）なら…\nPr(\\(D_i\\) = 1) = Pr(\\(D_{j \\neq i}\\) = 1) & Pr(\\(D_i\\) = 0) = Pr(\\(D_{j \\neq i}\\) = 0)\n\nグループ間の事前の差異を最小限に抑えることが可能"
+  },
+  {
+    "objectID": "rct_slide.html#バランスチェックの例",
+    "href": "rct_slide.html#バランスチェックの例",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェックの例",
+    "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
+  }
+]
