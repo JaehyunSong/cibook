@@ -854,11 +854,11 @@
     "text": "ブロッキング\n\n完全ランダム化の場合、偏ったグループが出来上がる可能性がある1\nブロッキング（blocking）：ブロック内で完全ランダム化割り当てを実施\n\n例）男性と女性の中で完全ランダム化割り当てを実施\n\n推定の精度が上がるため、ブロッキングできる場合、ブロッキングをした方が良い\n\n\n\n\n\n\n\n完全ランダム化が失敗した例\n\n\n\n\n\n\n\nブロック別ランダム化の例\n\n\n\n\n\nサンプルサイズ（\\(n\\)）が十分大きい場合、この可能性は低い。"
   },
   {
-    "objectID": "rct_slide.html#ランダム化比較試験-1",
-    "href": "rct_slide.html#ランダム化比較試験-1",
+    "objectID": "rct_slide.html#ランダム化比較試験randomized-controlled-trials-rct",
+    "href": "rct_slide.html#ランダム化比較試験randomized-controlled-trials-rct",
     "title": "社会科学における因果推論",
-    "section": "ランダム化比較試験",
-    "text": "ランダム化比較試験\nランダム化比較試験（randomized controlled trials; RCT）\n\n標本（サンプル）を無作為割り当てで複数（2つ以上）のグループに分割し、各グループに異なる処置1を施し、結果変数を比較する手法\n実験（experiment）とも呼ばれる因果推論の王道（best practice）\n\n\n\n\n\n\n\n\n\n\n\n\n厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。\nここには処置を施さないことも含まれる。"
+    "section": "ランダム化比較試験（randomized controlled trials; RCT）",
+    "text": "ランダム化比較試験（randomized controlled trials; RCT）\n\n標本（サンプル）を無作為割り当てで複数（2つ以上）のグループに分割し、各グループに異なる処置1を施し、結果変数を比較する手法\n実験（experiment）とも呼ばれる因果推論の王道（best practice）\n\n\n\n\n\n\n\n\n\n\n\n\n厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。\nここには処置を施さないことも含まれる。"
   },
   {
     "objectID": "rct_slide.html#実験の種類",
@@ -931,18 +931,18 @@
     "text": "多重比較の問題の補正\nボンフェローニ補正（Bonferroni correction）1の例\n\n真の処置効果が0でも、計2回の比較が行われる場合、それぞれの比較において\\(p\\) &lt; 0.05になる割合は5%\n\n1つでも\\(p\\) &lt; 0.05になったら「処置効果がある」と判定される\n計2回の比較が行われるため、「処置効果がある」と判定される割合は10%（2倍）\n\\(\\Rightarrow\\) 「処置効果がある」と判定される可能性は既存の\\(m\\)倍（\\(m\\)は比較回数）\n\\(\\Rightarrow\\) 解決策：統計的有意性の閾値（\\(\\alpha\\)）を\\(m\\)分の1に変更する\n\n例）\\(\\alpha = 0.05\\)、比較回数が2回の場合\n\n\\(p\\)値が0.025（= 0.05 / 2）を下回る場合、「5%水準で統計的に有意」と解釈する\n\n例）\\(\\alpha = 0.05\\)、比較回数が5回の場合\n\n\\(p\\)値が0.01（= 0.05 / 5）を下回る場合、「5%水準で統計的に有意」と解釈する\n\n\n他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。"
   },
   {
-    "objectID": "rct_slide.html#不均一な処置効果の推定",
-    "href": "rct_slide.html#不均一な処置効果の推定",
+    "objectID": "rct_slide.html#不均一な処置効果heterogeneous-treatment-effect-hte",
+    "href": "rct_slide.html#不均一な処置効果heterogeneous-treatment-effect-hte",
     "title": "社会科学における因果推論",
-    "section": "不均一な処置効果の推定",
-    "text": "不均一な処置効果の推定\n\n交互作用項による推定\n\n例：\\(Y_i = \\alpha + \\tau T_i + \\beta X_i + \\delta (T_i \\cdot X_i) + \\varepsilon_i\\)\n\n\\(\\tau + \\delta X_i\\)：\\(X_i = x\\)における処置効果（限界効果 [marginal effect]）\n\n\nサブグループごとの推定（conditional average treatment efffect; CATE）\n\n年齢・性別・所得などで層別化してATEを推定\n\\(\\mathbb{E}[Y(1)−Y(0)|X=x]\\)：\\(X = x\\)における平均処置効果\n\n機械学習\n\nCausal Forest（Athey and Imbens 2016; Jawadekar et al. 2023）、X-learner（Künzel et al. 2019）など\n\n\n\n注意点：多重検定の問題、予め設定した仮説に基いて分割すること\n\n\n\n\nAthey, Susan and Guido Imbens. 2016. “Recursive partitioning for heterogeneous causal effects.” Proceedings of the National Academy of Sciences of the United States of America, 113(27): 7353-7360.\nJawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects.” American Journal of Epidemiology, 192(7): 1155–1165.\nKünzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “Metalearners for estimating heterogeneous treatment effects using machine learning.” Proceedings of the National Academy of Sciences of the United States of America, 116(10): 4156-4165."
+    "section": "不均一な処置効果（heterogeneous treatment effect; HTE）",
+    "text": "不均一な処置効果（heterogeneous treatment effect; HTE）\n\n処置効果は人によって異なる\n\n平均処置効果（ATE）はあくまで「平均値」\n現実には個人や集団によって処置効果が異なる可能性が高い（処置効果の異質性）\n\n問いの例\n\n処置効果が最も大きいのは誰か\nどの条件下で処置効果が最大・最小か\n\n\n不均一な処置効果が考えられる例\n\n例1）1万円給付金の処置効果\n\n高所得者：少額（?!）の給付金で消費にあまり影響なし\n低所得者：生活必需品の購入が可能に \\(\\rightarrow\\) 実質的な効果大\n\n例2）新しい教授法の効果\n\nすでに成績の良い生徒 vs 学習機会がなかった生徒"
   },
   {
-    "objectID": "rct_slide.html#実験デザイン時の注意点",
-    "href": "rct_slide.html#実験デザイン時の注意点",
+    "objectID": "rct_slide.html#hteの推定",
+    "href": "rct_slide.html#hteの推定",
     "title": "社会科学における因果推論",
-    "section": "実験デザイン時の注意点",
-    "text": "実験デザイン時の注意点"
+    "section": "HTEの推定",
+    "text": "HTEの推定\n\n交互作用項による推定\n\n例：\\(Y_i = \\alpha + \\tau T_i + \\beta X_i + \\delta (T_i \\cdot X_i) + \\varepsilon_i\\)\n\n\\(\\tau + \\delta X_i\\)：\\(X_i = x\\)における処置効果（限界効果 [marginal effect]）\n\n\nサブグループごとの推定（conditional average treatment efffect; CATE）\n\n年齢・性別・所得などで層別化してATEを推定\n\\(\\mathbb{E}[Y(1)−Y(0)|X=x]\\)：\\(X = x\\)における平均処置効果\n\n機械学習\n\nCausal Forest（Athey and Imbens 2016; Jawadekar et al. 2023）、X-learner（Künzel et al. 2019）など\n\n\n\n注意点：多重検定の問題、予め設定した仮説に基いて分割すること\n\n\n\n\nAthey, Susan and Guido Imbens. 2016. “Recursive partitioning for heterogeneous causal effects.” Proceedings of the National Academy of Sciences of the United States of America, 113(27): 7353-7360.\nJawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects.” American Journal of Epidemiology, 192(7): 1155–1165.\nKünzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “Metalearners for estimating heterogeneous treatment effects using machine learning.” Proceedings of the National Academy of Sciences of the United States of America, 116(10): 4156-4165."
   },
   {
     "objectID": "rct_slide.html#実験と研究倫理",
@@ -952,11 +952,32 @@
     "text": "実験と研究倫理\n\nRCTにおける倫理的配慮の必要性\n\nRCTは介入（処置）を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在\n\n喫煙（原因）と健康（結果）をRCTで検証しようとしたら…?\n統制群に有効な処置を与えないことで、公正性や人道性に反するケースも\n\n\nRCT実施における倫理的対策\n\nインフォームド・コンセント（説明と同意）の取得は必須\n\n説明責任、理解、自由意志の保障、途中中止基準の明示など\n\n研究開始前に審査を必ず受ける\n\nIRB（Institutional Review Board／倫理審査委員会）"
   },
   {
+    "objectID": "rct_slide.html#研究倫理違反の例",
+    "href": "rct_slide.html#研究倫理違反の例",
+    "title": "社会科学における因果推論",
+    "section": "研究倫理違反の例",
+    "text": "研究倫理違反の例\nスタンフォード監獄実験（Haney et al. 2018）\n\n被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察\n\n当初2週間予定した実験だが6日間で中止\n\n被験者が心理的苦痛や屈辱を実際に体験（実験後も続く）\nインフォームド・コンセントの問題（被験者が途中退出できないと誤認）\n研究者自身（Zimbardo）が刑務所長役として実験に介入\n\nFacebook感情操作実験（Kramer et al. 2014）\n\nFacebookが約69万人のユーザーのニュースフィードを操作\n\nポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ\n表示される投稿の感情傾向が、ユーザー自身の感情表現に影響\n\nインフォームド・コンセントの不在、研究倫理審査（IRB）の管轄外で行われた実験\n\n\n\n\nHaney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “A Study of Prisoners and Guards in a Simulated Prison.” Naval Research Reviews, 9(1): 1–17.\nKramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “Experimental evidence of massive-scale emotional contagion through social networks.” Proceedings of the National Academy of Sciences of the United States of America, 111(24): 8788–8790."
+  },
+  {
     "objectID": "rct_slide.html#sutva",
     "href": "rct_slide.html#sutva",
     "title": "社会科学における因果推論",
     "section": "SUTVA",
     "text": "SUTVA\nStable Unit Treatment Value Assumption（Rubin 1980）\n\n　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）\n\n\n以下の2つの仮定で構成\n\n干渉なし\n処置の一意性\n\nサーベイ実験では意識しなくても満たされるケースが多い（例外あり）\n\n\n\n\nRubin, Donald B. 1980. “Discussion of ”Randomization Analysis of Experimental Data in the Fisher Randomization Test.” The Journal of the American Statistical Association, 75 (371): 591-593.\nG.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店"
+  },
+  {
+    "objectID": "rct_slide.html#sutva1",
+    "href": "rct_slide.html#sutva1",
+    "title": "社会科学における因果推論",
+    "section": "SUTVA（1）",
+    "text": "SUTVA（1）\n干渉なし（no interference）\n\nある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと\n例）ワクチン接種の効果\n\n\\(D\\)：ワクチン接種の有無（0, 1）\n\\(Y\\)：感染の確率（0〜1）\n\nAの潜在的結果（\\(Y_A\\)）はBのワクチン接種有無によって異なる（集団免疫）\n\n\n\n\n\n仮定が満たされない例\n\n\n\n\\(D_B = 0\\)\n\\(D_B = 1\\)\n\n\n\n\n\\(D_A = 0\\)\n\\(Y_A = 0.8\\)\n\\(Y_A = 0.3\\)\n\n\n\\(D_A = 1\\)\n\\(Y_A = 0.3\\)\n\\(Y_A = 0.1\\)\n\n\n\n\n\n\n仮定が満たされる例\n\n\n\n\\(D_B = 0\\)\n\\(D_B = 1\\)\n\n\n\n\n\\(D_A = 0\\)\n\\(Y_A = 0.8\\)\n\\(Y_A = 0.8\\)\n\n\n\\(D_A = 1\\)\n\\(Y_A = 0.3\\)\n\\(Y_A = 0.3\\)"
+  },
+  {
+    "objectID": "rct_slide.html#sutva2",
+    "href": "rct_slide.html#sutva2",
+    "title": "社会科学における因果推論",
+    "section": "SUTVA（2）",
+    "text": "SUTVA（2）\n処置の一意性（no hidden variations of treatment）\n\n同じ処置はすべての個体に対して同じ方法で適用されること\n満たされる例：\n\n医療実験で標準化された薬剤を同量・同時点で投与\n\n満たされない例：\n\n教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在\n給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う1\n給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など\n\n\n2003年消費者物価地域差指数を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。"
   },
   {
     "objectID": "rct_slide.html#二重盲検法",
@@ -978,13 +999,6 @@
     "title": "社会科学における因果推論",
     "section": "バランスチェックの例",
     "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
-  },
-  {
-    "objectID": "rct_slide.html#参考書",
-    "href": "rct_slide.html#参考書",
-    "title": "社会科学における因果推論",
-    "section": "参考書",
-    "text": "参考書"
   },
   {
     "objectID": "r_slide.html#本日の内容-1",
@@ -1122,16 +1136,30 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "因果推論教材",
+    "title": "困菓唯倫 with R",
     "section": "",
-    "text": "本資料は作成中のものです。\n\n\n\n　本講義は2026年度以降、関西大学総合情報学部「社会科学における因果推論」、神戸大学法学研究科「方法論特殊講義III」の教材として使用する予定の資料です。受講生からのフィードバックは歓迎しますが、本資料のURLおよびアカウント情報を外部に持ち込まないでください。\n\n\n\n\n\nトピック\n内容\n\n\n\n\n1\nイントロダクション\n\n\n2\n因果関係と因果推論\n\n\n3\n内生性\n\n\n4\nランダム化比較試験\n\n\n5\n回帰分析\n\n\n6\nLab session\n\n\n7\n傾向スコア\n\n\n8\n差分の差分法\n\n\n9\n回帰不連続デザイン\n\n\n10\n操作変数法"
+    "text": "本資料は作成中のものです。\n\n\n\n　本資料は、以下の3講義の教材として執筆中のものであり、2026年度中の公開を予定しております。\n\n関西大学総合情報学研究科「社会科学における因果推論」\n神戸大学法学研究科「方法論特殊講義III」\n神戸大学法学部「プログラム講義計量政治学方法論I」\n\n　現時点では\\(\\alpha\\)版に相当する段階であり、内容に不備や誤りが含まれている可能性が非常に高いです。したがって、本資料の内容に起因するいかなる問題についても、著者（宋）は一切の責任を負いかねます。"
+  },
+  {
+    "objectID": "index.html#構成",
+    "href": "index.html#構成",
+    "title": "困菓唯倫 with R",
+    "section": "構成",
+    "text": "構成\n\nイントロダクション\n因果関係と因果推論\n内生性\nランダム化比較試験\n回帰分析1\nLab session2\n傾向スコア\n差分の差分法\n回帰不連続デザイン\n操作変数法"
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "困菓唯倫 with R",
+    "section": "脚注",
+    "text": "脚注\n\n\n順番入れ替えの可能性あり↩︎\n順番入れ替えの可能性あり↩︎"
   },
   {
     "objectID": "did.html",
     "href": "did.html",
     "title": "差分の差分法",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "8/ 差分の差分法"
     ]
@@ -1141,7 +1169,7 @@
     "href": "ci.html",
     "title": "因果関係と因果推論",
     "section": "",
-    "text": "新しいタブで開く",
+    "text": "View slides in full screen",
     "crumbs": [
       "2/ 因果関係と因果推論"
     ]
@@ -1634,7 +1662,7 @@
     "href": "intro.html",
     "title": "イントロダクション",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "1/ イントロダクション"
     ]
@@ -1644,7 +1672,7 @@
     "href": "iv.html",
     "title": "操作変数法",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "10/ 操作変数法"
     ]
@@ -1654,7 +1682,7 @@
     "href": "matching.html",
     "title": "マッチング",
     "section": "",
-    "text": "新しいタブ",
+    "text": "View slides in full screen",
     "crumbs": [
       "資料",
       "11/マッチング"
@@ -1665,7 +1693,7 @@
     "href": "ps.html",
     "title": "傾向スコア",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "7/ 傾向スコア"
     ]
@@ -1675,7 +1703,7 @@
     "href": "r.html",
     "title": "Rの復習",
     "section": "",
-    "text": "新しいタブ\n     \n      \n    \n  \n\n1 データハンドリング\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n2 記述統計量の計算\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n3 平均処置効果の推定\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n4 推定結果の可視化\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1",
+    "text": "View slides in full screen\n       \n      \n    \n  \n\n1 データハンドリング\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n2 記述統計量の計算\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n3 平均処置効果の推定\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n\n\n\n4 推定結果の可視化\n\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1\n1 + 1",
     "crumbs": [
       "6/ Rの復習"
     ]
@@ -1683,9 +1711,9 @@
   {
     "objectID": "rct.html",
     "href": "rct.html",
-    "title": "無作為化比較試験",
+    "title": "ランダム化比較試験",
     "section": "",
-    "text": "Slide（閲覧用）\n     \n      \n    \n  \n\n1 多重比較\n回帰分析から得られた推定値のp値を比較回数でかける\npairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")\nもしtreatmentが5グループなら比較回数は10通りであり、回帰分析のp値はpairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")の10分の1\n\nmc_df &lt;- tibble(treatment = rep(LETTERS[1:5], each = 100),\n                y         = rep(1:100, 5))\n\nmc_df |&gt; \n  reframe(mean   = mean(y),\n          median = median(y),\n          sd     = sd(y),\n          min    = min(y),\n          max    = max(y),\n          .by    = treatment)\n\nmc_sim &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"none\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result &lt;- replicate(10000, mc_sim())\n\ntable(mc_result)\n\nmc_result |&gt; sum()\n\nmc_sim_bf &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"bonferroni\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result_bf &lt;- replicate(10000, mc_sim_bf())\n\ntable(mc_result_bf)\n\nmc_result_bf |&gt; sum()\n\n\n母集団pからサンプルsを抽出\nsを3つのグループに分割（a、b、c）\nグループ間の差は理論上0\nグループ間の差を回帰分析で推定（ベースラインはa）\na vs. b、a vs. cの計2回の比較が行われる\n以上の作業を複数回繰り返す\n一つでもp値が0.05を下回るケースは全施行の中、約1割\n閾値を比較回数である2で割ったら0.25となり、0.25を基準とすると約0.5割が統計的有意に\n\n\nset.seed(19861008)\np &lt;- rnorm(10000, 0, 1)\nresult &lt;- data.frame(id = NA, b = NA, c = NA)\n\nfor (i in 1:10000) {\n  s &lt;- sample(p, 1000)\n  names(s) &lt;- sample(letters[1:3], 1000, replace = TRUE)\n  pvalue &lt;- enframe(s) |&gt; \n    lm(value ~ name, data = _) |&gt; \n    broom::tidy() |&gt; \n    filter(term != \"(Intercept)\") |&gt; \n    pull(p.value)\n  \n  result[i, ] &lt;- c(1, pvalue)\n  \n}\n\ntable(result$b &lt; 0.05)\ntable(result$c &lt; 0.05)\n\nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05, 1, 0),\n         c2 = if_else(c &lt; 0.05, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()\n  \nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05 / 2, 1, 0),\n         c2 = if_else(c &lt; 0.05 / 2, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()",
+    "text": "View slides in full screen\n       \n      \n    \n  \n\n1 多重比較\n回帰分析から得られた推定値のp値を比較回数でかける\npairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")\nもしtreatmentが5グループなら比較回数は10通りであり、回帰分析のp値はpairwise.t.test(y, treatment, p.adjust.method = \"bonferroni\")の10分の1\n\nmc_df &lt;- tibble(treatment = rep(LETTERS[1:5], each = 100),\n                y         = rep(1:100, 5))\n\nmc_df |&gt; \n  reframe(mean   = mean(y),\n          median = median(y),\n          sd     = sd(y),\n          min    = min(y),\n          max    = max(y),\n          .by    = treatment)\n\nmc_sim &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"none\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result &lt;- replicate(10000, mc_sim())\n\ntable(mc_result)\n\nmc_result |&gt; sum()\n\nmc_sim_bf &lt;- function(n = 100) {\n  temp_df &lt;- mc_df |&gt; \n    slice_sample(n = n)\n  \n  temp_t &lt;- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = \"bonferroni\")\n  temp_p &lt;- temp_t$p.value\n  temp_p &lt;- as.vector(temp_p)\n  \n  sum(temp_p &lt; 0.05, na.rm = TRUE)\n}\n\nmc_result_bf &lt;- replicate(10000, mc_sim_bf())\n\ntable(mc_result_bf)\n\nmc_result_bf |&gt; sum()\n\n\n母集団pからサンプルsを抽出\nsを3つのグループに分割（a、b、c）\nグループ間の差は理論上0\nグループ間の差を回帰分析で推定（ベースラインはa）\na vs. b、a vs. cの計2回の比較が行われる\n以上の作業を複数回繰り返す\n一つでもp値が0.05を下回るケースは全施行の中、約1割\n閾値を比較回数である2で割ったら0.25となり、0.25を基準とすると約0.5割が統計的有意に\n\n\nset.seed(19861008)\np &lt;- rnorm(10000, 0, 1)\nresult &lt;- data.frame(id = NA, b = NA, c = NA)\n\nfor (i in 1:10000) {\n  s &lt;- sample(p, 1000)\n  names(s) &lt;- sample(letters[1:3], 1000, replace = TRUE)\n  pvalue &lt;- enframe(s) |&gt; \n    lm(value ~ name, data = _) |&gt; \n    broom::tidy() |&gt; \n    filter(term != \"(Intercept)\") |&gt; \n    pull(p.value)\n  \n  result[i, ] &lt;- c(1, pvalue)\n  \n}\n\ntable(result$b &lt; 0.05)\ntable(result$c &lt; 0.05)\n\nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05, 1, 0),\n         c2 = if_else(c &lt; 0.05, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()\n  \nresult |&gt; \n  mutate(b2 = if_else(b &lt; 0.05 / 2, 1, 0),\n         c2 = if_else(c &lt; 0.05 / 2, 1, 0)) |&gt; \n  mutate(p = if_else(b2 + c2 &gt;= 1, 1, 0)) |&gt; \n  pull(p) |&gt; table()",
     "crumbs": [
       "4/ ランダム化比較試験"
     ]
@@ -1695,7 +1723,7 @@
     "href": "rdd.html",
     "title": "回帰不連続デザイン",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "9/ 回帰不連続デザイン"
     ]
@@ -1745,58 +1773,9 @@
     "href": "sb.html",
     "title": "内生性",
     "section": "",
-    "text": "Slide（閲覧用）",
+    "text": "View slides in full screen",
     "crumbs": [
       "3/ 内生性"
     ]
-  },
-  {
-    "objectID": "rct_slide.html#sutva1",
-    "href": "rct_slide.html#sutva1",
-    "title": "社会科学における因果推論",
-    "section": "SUTVA（1）",
-    "text": "SUTVA（1）\n干渉なし（no interference）\n\nある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと\n例）ワクチン接種の効果\n\n\\(D\\)：ワクチン接種の有無（0, 1）\n\\(Y\\)：感染の確率（0〜1）\n\nAの潜在的結果（\\(Y_A\\)）はBのワクチン接種有無によって異なる（集団免疫）\n\n\n\n\n\n仮定が満たされない例\n\n\n\n\\(D_B = 0\\)\n\\(D_B = 1\\)\n\n\n\n\n\\(D_A = 0\\)\n\\(Y_A = 0.8\\)\n\\(Y_A = 0.3\\)\n\n\n\\(D_A = 1\\)\n\\(Y_A = 0.3\\)\n\\(Y_A = 0.1\\)\n\n\n\n\n\n\n仮定が満たされる例\n\n\n\n\\(D_B = 0\\)\n\\(D_B = 1\\)\n\n\n\n\n\\(D_A = 0\\)\n\\(Y_A = 0.8\\)\n\\(Y_A = 0.8\\)\n\n\n\\(D_A = 1\\)\n\\(Y_A = 0.3\\)\n\\(Y_A = 0.3\\)"
-  },
-  {
-    "objectID": "rct_slide.html#sutva2",
-    "href": "rct_slide.html#sutva2",
-    "title": "社会科学における因果推論",
-    "section": "SUTVA（2）",
-    "text": "SUTVA（2）\n処置の一意性（no hidden variations of treatment）\n\n同じ処置はすべての個体に対して同じ方法で適用されること\n満たされる例：\n\n医療実験で標準化された薬剤を同量・同時点で投与\n\n満たされない例：\n\n教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在\n給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う1\n給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など\n\n\n2003年消費者物価地域差指数を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。"
-  },
-  {
-    "objectID": "rct_slide.html#研究倫理",
-    "href": "rct_slide.html#研究倫理",
-    "title": "社会科学における因果推論",
-    "section": "研究倫理",
-    "text": "研究倫理\n\nRCTにおける倫理的配慮の必要性\n\nRCTは介入（処置）を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在\n\n喫煙（原因）と健康（結果）をRCTで検証しようとしたら…?\n統制群に有効な処置を与えないことで、公正性や人道性に反するケースも\n\n\nRCT実施における倫理的対策\n\nインフォームド・コンセント（説明と同意）の取得は必須\n\n説明責任、理解、自由意志の保障、途中中止基準の明示など\n\n研究開始前に審査を必ず受ける\n\nIRB（Institutional Review Board／倫理審査委員会）\n\n\n\nスタンフォード監獄実験（Haney et al. 2018）\n\n被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察\n\n当初2週間予定した実験だが6日間で中止\n\n被験者が心理的苦痛や屈辱を実際に体験（実験後も続く）\nインフォームド・コンセントの問題（被験者が途中退出できないと誤認）\n研究者自身（Zimbardo）が「刑務所長役」として実験に介入\n\nFacebook感情操作実験（Kramer et al. 2014）\n\nFacebookが約69万人のユーザーのニュースフィードを操作\n\nポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ\n表示される投稿の感情傾向が、ユーザー自身の感情表現に影響\n\nインフォームド・コンセントの不在\n研究倫理審査（IRB）の管轄外で行われた実験\n\n\n\n\nHaney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “A Study of Prisoners and Guards in a Simulated Prison.” Naval Research Reviews, 9(1): 1–17.\nKramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “Experimental evidence of massive-scale emotional contagion through social networks.” Proceedings of the National Academy of Sciences of the United States of America, 111(24): 8788–8790."
-  },
-  {
-    "objectID": "rct_slide.html#研究倫理違反の例",
-    "href": "rct_slide.html#研究倫理違反の例",
-    "title": "社会科学における因果推論",
-    "section": "研究倫理違反の例",
-    "text": "研究倫理違反の例\nスタンフォード監獄実験（Haney et al. 2018）\n\n被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察\n\n当初2週間予定した実験だが6日間で中止\n\n被験者が心理的苦痛や屈辱を実際に体験（実験後も続く）\nインフォームド・コンセントの問題（被験者が途中退出できないと誤認）\n研究者自身（Zimbardo）が刑務所長役として実験に介入\n\nFacebook感情操作実験（Kramer et al. 2014）\n\nFacebookが約69万人のユーザーのニュースフィードを操作\n\nポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ\n表示される投稿の感情傾向が、ユーザー自身の感情表現に影響\n\nインフォームド・コンセントの不在、研究倫理審査（IRB）の管轄外で行われた実験\n\n\n\n\nHaney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “A Study of Prisoners and Guards in a Simulated Prison.” Naval Research Reviews, 9(1): 1–17.\nKramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “Experimental evidence of massive-scale emotional contagion through social networks.” Proceedings of the National Academy of Sciences of the United States of America, 111(24): 8788–8790."
-  },
-  {
-    "objectID": "rct_slide.html#ランダム化比較試験randomized-controlled-trials-rct",
-    "href": "rct_slide.html#ランダム化比較試験randomized-controlled-trials-rct",
-    "title": "社会科学における因果推論",
-    "section": "ランダム化比較試験（randomized controlled trials; RCT）",
-    "text": "ランダム化比較試験（randomized controlled trials; RCT）\n\n標本（サンプル）を無作為割り当てで複数（2つ以上）のグループに分割し、各グループに異なる処置1を施し、結果変数を比較する手法\n実験（experiment）とも呼ばれる因果推論の王道（best practice）\n\n\n\n\n\n\n\n\n\n\n\n\n厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。\nここには処置を施さないことも含まれる。"
-  },
-  {
-    "objectID": "rct_slide.html#不均一な処置効果heterogeneous-treatment-effect-hte",
-    "href": "rct_slide.html#不均一な処置効果heterogeneous-treatment-effect-hte",
-    "title": "社会科学における因果推論",
-    "section": "不均一な処置効果（heterogeneous treatment effect; HTE）",
-    "text": "不均一な処置効果（heterogeneous treatment effect; HTE）\n\n処置効果は人によって異なる\n\n平均処置効果（ATE）はあくまで「平均値」\n現実には個人や集団によって処置効果が異なる可能性が高い（処置効果の異質性）\n\n問いの例\n\n処置効果が最も大きいのは誰か\nどの条件下で処置効果が最大・最小か\n\n\n不均一な処置効果が考えられる例\n\n例1）1万円給付金の処置効果\n\n高所得者：少額（?!）の給付金で消費にあまり影響なし\n低所得者：生活必需品の購入が可能に \\(\\rightarrow\\) 実質的な効果大\n\n例2）新しい教授法の効果\n\nすでに成績の良い生徒 vs 学習機会がなかった生徒"
-  },
-  {
-    "objectID": "rct_slide.html#hteの推定",
-    "href": "rct_slide.html#hteの推定",
-    "title": "社会科学における因果推論",
-    "section": "HTEの推定",
-    "text": "HTEの推定\n\n交互作用項による推定\n\n例：\\(Y_i = \\alpha + \\tau T_i + \\beta X_i + \\delta (T_i \\cdot X_i) + \\varepsilon_i\\)\n\n\\(\\tau + \\delta X_i\\)：\\(X_i = x\\)における処置効果（限界効果 [marginal effect]）\n\n\nサブグループごとの推定（conditional average treatment efffect; CATE）\n\n年齢・性別・所得などで層別化してATEを推定\n\\(\\mathbb{E}[Y(1)−Y(0)|X=x]\\)：\\(X = x\\)における平均処置効果\n\n機械学習\n\nCausal Forest（Athey and Imbens 2016; Jawadekar et al. 2023）、X-learner（Künzel et al. 2019）など\n\n\n\n注意点：多重検定の問題、予め設定した仮説に基いて分割すること\n\n\n\n\nAthey, Susan and Guido Imbens. 2016. “Recursive partitioning for heterogeneous causal effects.” Proceedings of the National Academy of Sciences of the United States of America, 113(27): 7353-7360.\nJawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects.” American Journal of Epidemiology, 192(7): 1155–1165.\nKünzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “Metalearners for estimating heterogeneous treatment effects using machine learning.” Proceedings of the National Academy of Sciences of the United States of America, 116(10): 4156-4165."
   }
 ]

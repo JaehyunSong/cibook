@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="宋財泫（関西大学）">
 
-<title>無作為化比較試験 – 困菓唯倫</title>
+<title>ランダム化比較試験 – 困菓唯倫 with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">困菓唯倫</a> 
+      <a href="./">困菓唯倫 with R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -237,6 +238,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">本講義について</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./#" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">シラバス（関大）</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./#" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">シラバス（神大）</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./#" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">実習環境の構築</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./#" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">セッション情報</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -248,13 +284,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">無作為化比較試験</h1>
+<h1 class="title">ランダム化比較試験</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">作者</div>
+    <div class="quarto-title-meta-contents">
+             <p>宋財泫（関西大学） </p>
+          </div>
+  </div>
     
   
     
@@ -265,8 +307,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="rct_slide.html" class="btn btn-outline-primary" target="_blank" role="button"><i class="bi bi-display"></i>&nbsp;&nbsp;&nbsp;Slide（閲覧用）</a></p>
-     <div class="ratio ratio-4x3">
+    <p><a href="rct_slide.html" target="_blank">View slides in full screen</a></p>
+       <div class="ratio ratio-4x3">
       <iframe class="slide-deck" src="rct_slide.html" height="900px"></iframe>
     </div>
   
@@ -275,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>回帰分析から得られた推定値のp値を比較回数でかける</p>
 <p><code>pairwise.t.test(y, treatment, p.adjust.method = "bonferroni")</code></p>
 <p>もし<code>treatment</code>が5グループなら比較回数は10通りであり、回帰分析のp値は<code>pairwise.t.test(y, treatment, p.adjust.method = "bonferroni")</code>の10分の1</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mc_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">treatment =</span> <span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">each =</span> <span class="dv">100</span>),</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">y         =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">5</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -331,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>一つでもp値が0.05を下回るケースは全施行の中、約1割</li>
 <li>閾値を比較回数である2で割ったら0.25となり、0.25を基準とすると約0.5割が統計的有意に</li>
 </ol>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19861008</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="cn">NA</span>, <span class="at">b =</span> <span class="cn">NA</span>, <span class="at">c =</span> <span class="cn">NA</span>)</span>
