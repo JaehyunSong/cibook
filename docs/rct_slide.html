@@ -152,7 +152,7 @@
 <li>処置効果（因果効果）の推定値はバイアスを含む</li>
 <li><span class="alert"><strong>内生性は因果推論の敵</strong></span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -179,7 +179,7 @@
 <ul>
 <li>統制群と処置群を逆にしても問題ない（<span class="math inline">\(\Rightarrow\)</span>統制群と処置群は<strong>交換可能</strong>）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -768,7 +768,7 @@
 </ul></li>
 <li><span class="alert">推定の精度が上がる</span>ため、ブロッキングできる場合、ブロッキングをした方が良い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -794,14 +794,21 @@
 <h1><strong>3</strong> ランダム化比較試験</h1>
 
 </section>
-<section id="ランダム化比較試験-1" class="slide level2">
-<h2>ランダム化比較試験</h2>
-<p><span class="alert"><strong>ランダム化比較試験</strong></span>（randomized controlled trials; <strong>RCT</strong>）</p>
+<section id="ランダム化比較試験randomized-controlled-trials-rct" class="slide level2">
+<h2>ランダム化比較試験<span class="small">（randomized controlled trials; <strong>RCT</strong>）</span></h2>
 <ul>
-<li>標本<span class="small">（サンプル）</span>を無作為割り当てで2つ以上のグループに分割し、各グループに異なる処置<sup>1</sup>を施し、結果変数を比較する手法</li>
-<li><span class="alert"><strong>実験</strong></span><span class="small">（experiment）</span>とも呼ばれる因果推論の王道<span class="small">（best practice）</span></li>
+<li>標本<span class="small">（サンプル）</span>を無作為割り当てで複数<span class="small">（2つ以上）</span>のグループに分割し、各グループに異なる処置<sup>1</sup>を施し、結果変数を比較する手法</li>
+<li><span class="alert"><strong>実験</strong></span><span class="small">（experiment）</span>とも呼ばれる<span class="alert">因果推論の王道</span><span class="small">（best practice）</span></li>
 </ul>
-<p>グループを3つに分け👦🏻👧🏻👧🏽👦🏽👦🏿👧🏿、薬を与え💊（0〜2）、体温計🌡️</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
 
 <aside><div>
 <p>厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。</p>
@@ -810,9 +817,9 @@
 <h2>実験の種類</h2>
 <p>Hyde<span class="small">（2015）</span>による分類</p>
 <ul>
-<li>フィールド実験</li>
-<li>実験室実験</li>
-<li>サーベイ実験</li>
+<li>フィールド実験<span class="small">（field experiment）</span></li>
+<li>実験室実験<span class="small">（laboratory experiment）</span></li>
+<li>サーベイ実験<span class="small">（survey experiment）</span></li>
 </ul>
 <p>それぞれの実験は長所と短所を持つ</p>
 <ul>
@@ -892,7 +899,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
 </figure>
 </div>
 </div>
@@ -945,7 +952,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="2250"></p>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="2250"></p>
 </figure>
 </div>
 </div>
@@ -993,7 +1000,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
 </figure>
 </div>
 </div>
@@ -1112,9 +1119,64 @@
 </ul></li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn7"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section>
-<section id="不均一な処置効果の推定" class="slide level2">
-<h2>不均一な処置効果の推定</h2>
-</section></section>
+<section id="不均一な処置効果heterogeneous-treatment-effect-hte" class="slide level2">
+<h2>不均一な処置効果<span class="small">（heterogeneous treatment effect; HTE）</span></h2>
+<ul>
+<li>処置効果は人によって異なる
+<ul>
+<li>平均処置効果<span class="small">（ATE）</span>はあくまで「平均値」</li>
+<li>現実には<span class="alert"><strong>個人や集団によって処置効果が異なる</strong></span>可能性が高い<span class="small">（処置効果の異質性）</span></li>
+</ul></li>
+<li>問いの例
+<ul>
+<li>処置効果が最も大きいのは誰か</li>
+<li>どの条件下で処置効果が最大・最小か</li>
+</ul></li>
+</ul>
+<h4 id="不均一な処置効果が考えられる例">不均一な処置効果が考えられる例</h4>
+<ul>
+<li>例1）1万円給付金の処置効果
+<ul>
+<li>高所得者：少額<span class="small">（?!）</span>の給付金で消費にあまり影響なし</li>
+<li>低所得者：生活必需品の購入が可能に <span class="math inline">\(\rightarrow\)</span> 実質的な効果大</li>
+</ul></li>
+<li>例2）新しい教授法の効果
+<ul>
+<li>すでに成績の良い生徒 vs 学習機会がなかった生徒</li>
+</ul></li>
+</ul>
+</section>
+<section id="hteの推定" class="slide level2">
+<h2>HTEの推定</h2>
+<ol type="1">
+<li><span class="alert"><strong>交互作用項</strong></span>による推定
+<ul>
+<li>例：<span class="math inline">\(Y_i = \alpha + \tau T_i + \beta X_i + \delta (T_i \cdot X_i) + \varepsilon_i\)</span>
+<ul>
+<li><span class="math inline">\(\tau + \delta X_i\)</span>：<span class="math inline">\(X_i = x\)</span>における処置効果<span class="small">（限界効果 [marginal effect]）</span></li>
+</ul></li>
+</ul></li>
+<li><span class="alert"><strong>サブグループごと</strong></span>の推定<span class="small">（conditional average treatment efffect; <strong>CATE</strong>）</span>
+<ul>
+<li>年齢・性別・所得などで層別化してATEを推定</li>
+<li><span class="math inline">\(\mathbb{E}[Y(1)−Y(0)|X=x]\)</span>：<span class="math inline">\(X = x\)</span>における平均処置効果</li>
+</ul></li>
+<li>機械学習
+<ul>
+<li>Causal Forest<span class="small">（Athey and Imbens 2016; Jawadekar et al.&nbsp;2023）</span>、X-learner<span class="small">（Künzel et al.&nbsp;2019）</span>など</li>
+</ul></li>
+</ol>
+<ul>
+<li>注意点：<span class="alert">多重検定</span>の問題、<span class="alert">予め設定した仮説に基いて分割</span>すること</li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Athey, Susan and Guido Imbens. 2016. “<a href="https://doi.org/10.1073/pnas.1510489113">Recursive partitioning for heterogeneous causal effects</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 113(27): 7353-7360.</li>
+<li>Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “<a href="https://doi.org/10.1093/aje/kwad043">Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects</a>.” <em>American Journal of Epidemiology,</em> 192(7): 1155–1165.</li>
+<li>Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “<a href="https://doi.org/10.1073/pnas.1804597116">Metalearners for estimating heterogeneous treatment effects using machine learning</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 116(10): 4156-4165.</li>
+</ul>
+</div></aside></section></section>
 <section>
 <section id="実装時の注意点" class="title-slide slide level1 center">
 <h1><strong>5</strong> 実装時の注意点</h1>
@@ -1313,19 +1375,19 @@
 <li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn9"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{\frac{1}{2} (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn9"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
 <section id="バランスチェックの例" class="slide level2">
 <h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
 <li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" width="1500"></p>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-1.png" width="1500"></p>
 <figcaption>例1</figcaption>
 </figure>
 </div>
@@ -1333,7 +1395,7 @@
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-2.png" width="1500"></p>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-2.png" width="1500"></p>
 <figcaption>例2</figcaption>
 </figure>
 </div>
