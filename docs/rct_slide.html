@@ -1353,50 +1353,53 @@
 </section>
 <section id="バランスチェック" class="slide level2">
 <h2>バランスチェック</h2>
-<p>グループ間に平均独立が不成立しているかを確認する手法</p>
+<p>グループの均質性を確認する手法</p>
 <ul>
+<li><span class="alert">バランスしていない<span class="small">（imbalanced）</span>場合、グループ間の単純比較は不適切</span>
+<ul>
+<li>平均独立、交換可能性が成立していない可能性が極めて高い</li>
+</ul></li>
 <li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span></li>
 <li><span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
 <ul>
-<li><span class="alert"><strong>平均値の差分が大きい = グループ間に平均独立が不成立</strong></span></li>
+<li><span class="alert"><strong>平均値の差分が「十分に」大きい = グループは不均質</strong></span></li>
 <li>バランスの閾値は研究者が任意で決める<span class="small">（主に<span class="alert"><strong>0.1</strong></span>）</span>
 <ul>
 <li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span></li>
 </ul></li>
 <li>グループが3つ以上ならペアごとに<span class="small">（標準化した）</span>平均値の差分を計算</li>
 </ul></li>
-<li>実験データであってもバランスしていない<span class="small">（imbalanced）</span>可能性がある</li>
-<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span></li>
+<li>実験データであってもバランスしていない可能性がある</li>
 </ul>
 
 <aside><div>
 <ul>
 <li>Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “<a href="https://doi.org/10.1111/j.1467-985X.2007.00527.x">Misunderstandings between experimentalists and observationalists about causal inference</a>.” <em>Journal of the Royal Statistical Society: Series A,</em> 171(2): 481-502.</li>
 <li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
-<li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
 </div><ol class="aside-footnotes"><li id="fn9"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
 <section id="バランスチェックの例" class="slide level2">
 <h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
-<li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span></li>
+<li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span>
+<ul>
+<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span></li>
+</ul></li>
 </ul>
 <div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-1.png" width="1500"></p>
-<figcaption>例1</figcaption>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-2.png" width="1500"></p>
-<figcaption>例2</figcaption>
+<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -1404,7 +1407,12 @@
 </div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn10"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
+
+<aside><div>
+<ul>
+<li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
+</ul>
+</div><ol class="aside-footnotes"><li id="fn10"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

@@ -991,14 +991,14 @@
     "href": "rct_slide.html#バランスチェック",
     "title": "社会科学における因果推論",
     "section": "バランスチェック",
-    "text": "バランスチェック\nグループ間に平均独立が不成立しているかを確認する手法\n\n統計的有意性検定（\\(t\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が大きい = グループ間に平均独立が不成立\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n実験データであってもバランスしていない（imbalanced）可能性がある\nバランスしていないデータでも共変量調整でバイアスの補正が可能（Lin 2013）\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{0.5 (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
+    "text": "バランスチェック\nグループの均質性を確認する手法\n\nバランスしていない（imbalanced）場合、グループ間の単純比較は不適切\n\n平均独立、交換可能性が成立していない可能性が極めて高い\n\n統計的有意性検定（\\(t\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が「十分に」大きい = グループは不均質\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n実験データであってもバランスしていない可能性がある\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{0.5 (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
   },
   {
     "objectID": "rct_slide.html#バランスチェックの例",
     "href": "rct_slide.html#バランスチェックの例",
     "title": "社会科学における因果推論",
     "section": "バランスチェックの例",
-    "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\n\n\n\n\n\n\n例1\n\n\n\n\n\n\n\n例2\n\n\n\n\n\n\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
+    "text": "バランスチェックの例\n{cobalt}パッケージ1を利用したバランスチェックの例\n\n左の図の場合、ほとんどの共変量においてバランスが取れていない（閾値=0.1の場合）\n\nバランスしていないデータでも共変量調整でバイアスの補正が可能（Lin 2013）\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” The Annals of Applied Statistics 7(1): 295-318.\n\n{BalanceR}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{BalanceR}を使ってくれるなら感謝しかない。"
   },
   {
     "objectID": "r_slide.html#本日の内容-1",
