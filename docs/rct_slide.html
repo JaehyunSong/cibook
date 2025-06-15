@@ -1120,9 +1120,6 @@
 <h1><strong>5</strong> 実装時の注意点</h1>
 
 </section>
-<section id="実験デザイン時の注意点" class="slide level2">
-<h2>実験デザイン時の注意点</h2>
-</section>
 <section id="実験と研究倫理" class="slide level2">
 <h2>実験と研究倫理</h2>
 </section>
@@ -1133,24 +1130,115 @@
 <p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
 </blockquote>
 <ul>
-<li>相互干渉がないこと
-<ul>
-<li>にゃん！</li>
-</ul></li>
-<li>処置の隠れた変動がないこと
-<ul>
-<li>にゃん！</li>
-</ul></li>
+<li>以下の2つの仮定で構成
+<ol type="1">
+<li><span class="alert"><strong>干渉なし</strong></span></li>
+<li><span class="alert"><strong>処置の一意性</strong></span></li>
+</ol></li>
+<li>サーベイ実験では意識しなくても満たされるケースが多い（例外あり）</li>
 </ul>
 
 <aside><div>
 <ul>
-<li>Rubin, Donald B. 1980. “Discussion of”Randomization Analysis of Experimental Data in the Fisher Randomization Test” by Basu,” <em>The Journal of the American Statistical Association</em>, 75 (371): 591-593.</li>
+<li>Rubin, Donald B. 1980. “<a href="https://doi.org/10.2307/2287653">Discussion of ”Randomization Analysis of Experimental Data in the Fisher Randomization Test</a>.” <em>The Journal of the American Statistical Association</em>, 75 (371): 591-593.</li>
 <li>G.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店</li>
 </ul>
 </div></aside></section>
+<section id="sutva1" class="slide level2">
+<h2>SUTVA（1）</h2>
+<p><span class="alert"><strong>干渉なし</strong></span>（no interference）</p>
+<ul>
+<li>ある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと</li>
+<li>例）ワクチン接種の効果
+<ul>
+<li><span class="math inline">\(D\)</span>：ワクチン接種の有無（0, 1）</li>
+<li><span class="math inline">\(Y\)</span>：感染の確率（0〜1）</li>
+</ul></li>
+<li>Aの潜在的結果（<span class="math inline">\(Y_A\)</span>）はBのワクチン接種有無によって異なる（集団免疫）</li>
+</ul>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="caption-top">
+<caption>仮定が満たされない例</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(D_B = 0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(D_B = 1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D_A = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D_A = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.1\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="caption-top">
+<caption>仮定が満たされる例</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(D_B = 0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(D_B = 1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D_A = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.8\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D_A = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(Y_A = 0.3\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="sutva2" class="slide level2">
+<h2>SUTVA（2）</h2>
+<p><span class="alert"><strong>処置の一意性</strong></span>（no hidden variations of treatment）</p>
+<ul>
+<li>同じ処置はすべての個体に対して同じ方法で適用されること</li>
+<li>満たされる例：
+<ul>
+<li>医療実験で標準化された薬剤を同量・同時点で投与</li>
+</ul></li>
+<li>満たされない例：
+<ul>
+<li>教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在</li>
+<li>給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う<sup>1</sup></li>
+<li>給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など</li>
+</ul></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section>
 <section id="二重盲検法" class="slide level2">
 <h2>二重盲検法</h2>
+<p><span class="alert"><strong>二重盲検法</strong></span><span class="small">（double-blind）</span>：被験者も研究者も、誰がどの処置を受けたかを知らない設計</p>
+<ul>
+<li>二重盲検 &gt; 単盲検 &gt; 非盲検</li>
+<li><span class="alert">プラセボ効果</span>と<span class="alert">観察バイアス</span>の防止（評価者の期待が結果に影響）</li>
+<li>二重盲検法が困難なケースの例
+<ul>
+<li>教育介入（教師が処遇を知ってしまう）</li>
+<li>社会政策（給付の存在自体が分かる）</li>
+</ul></li>
+<li>サーベイ実験の場合、基本的に二重盲検が保障されるが、フィールド実験・実験室実験では単盲検、非盲検になる可能性も</li>
+</ul>
 </section>
 <section id="バランスチェック" class="slide level2">
 <h2>バランスチェック</h2>
@@ -1176,7 +1264,7 @@
 <li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn8"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{\frac{1}{2} (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn9"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{\frac{1}{2} (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
 <section id="バランスチェックの例" class="slide level2">
 <h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
@@ -1203,12 +1291,9 @@
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section>
-<section id="参考書" class="slide level2">
-<h2>参考書</h2>
 
 
-</section></section>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
