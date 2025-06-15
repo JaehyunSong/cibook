@@ -152,7 +152,7 @@
 <li>処置効果（因果効果）の推定値はバイアスを含む</li>
 <li><span class="alert"><strong>内生性は因果推論の敵</strong></span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -179,7 +179,7 @@
 <ul>
 <li>統制群と処置群を逆にしても問題ない（<span class="math inline">\(\Rightarrow\)</span>統制群と処置群は<strong>交換可能</strong>）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -768,7 +768,7 @@
 </ul></li>
 <li><span class="alert">推定の精度が上がる</span>ため、ブロッキングできる場合、ブロッキングをした方が良い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1122,7 +1122,56 @@
 </section>
 <section id="実験と研究倫理" class="slide level2">
 <h2>実験と研究倫理</h2>
+<ul>
+<li>RCTにおける倫理的配慮の必要性
+<ul>
+<li>RCTは介入<span class="small">（処置）</span>を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在
+<ul>
+<li>喫煙<span class="small">（原因）</span>と健康<span class="small">（結果）</span>をRCTで検証しようとしたら…?</li>
+<li>統制群に有効な処置を与えないことで、公正性や人道性に反するケースも</li>
+</ul></li>
+</ul></li>
+<li>RCT実施における倫理的対策
+<ul>
+<li><span class="alert"><strong>インフォームド・コンセント</strong></span>（説明と同意）の取得は必須
+<ul>
+<li>説明責任、理解、自由意志の保障、途中中止基準の明示など</li>
+</ul></li>
+<li><span class="alert"><strong>研究開始前に審査を必ず受ける</strong></span>
+<ul>
+<li><strong>IRB</strong>（Institutional Review Board／倫理審査委員会）</li>
+</ul></li>
+</ul></li>
+</ul>
 </section>
+<section id="研究倫理違反の例" class="slide level2">
+<h2>研究倫理違反の例</h2>
+<h4 id="スタンフォード監獄実験haney-et-al.-2018">スタンフォード監獄実験<span class="small">（Haney et al.&nbsp;2018）</span></h4>
+<ul>
+<li>被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察
+<ul>
+<li>当初2週間予定した実験だが6日間で中止</li>
+</ul></li>
+<li>被験者が心理的苦痛や屈辱を実際に体験<span class="small">（実験後も続く）</span></li>
+<li>インフォームド・コンセントの問題<span class="small">（被験者が途中退出できないと誤認）</span></li>
+<li>研究者自身<span class="small">（Zimbardo）</span>が刑務所長役として実験に介入</li>
+</ul>
+<h4 id="facebook感情操作実験kramer-et-al.-2014">Facebook感情操作実験<span class="small">（Kramer et al.&nbsp;2014）</span></h4>
+<ul>
+<li>Facebookが約69万人のユーザーのニュースフィードを操作
+<ul>
+<li>ポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ</li>
+<li>表示される投稿の感情傾向が、ユーザー自身の感情表現に影響</li>
+</ul></li>
+<li>インフォームド・コンセントの不在、研究倫理審査<span class="small">（IRB）</span>の管轄外で行われた実験</li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Haney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “<a href="">A Study of Prisoners and Guards in a Simulated Prison</a>.” <em>Naval Research Reviews,</em> 9(1): 1–17.</li>
+<li>Kramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “<a href="https://doi.org/10.1073/pnas.1320040111">Experimental evidence of massive-scale emotional contagion through social networks</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 111(24): 8788–8790.</li>
+</ul>
+</div></aside></section>
 <section id="sutva" class="slide level2">
 <h2>SUTVA</h2>
 <p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
@@ -1271,7 +1320,7 @@
 <ul>
 <li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">

@@ -949,7 +949,7 @@
     "href": "rct_slide.html#実験と研究倫理",
     "title": "社会科学における因果推論",
     "section": "実験と研究倫理",
-    "text": "実験と研究倫理"
+    "text": "実験と研究倫理\n\nRCTにおける倫理的配慮の必要性\n\nRCTは介入（処置）を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在\n\n喫煙（原因）と健康（結果）をRCTで検証しようとしたら…?\n統制群に有効な処置を与えないことで、公正性や人道性に反するケースも\n\n\nRCT実施における倫理的対策\n\nインフォームド・コンセント（説明と同意）の取得は必須\n\n説明責任、理解、自由意志の保障、途中中止基準の明示など\n\n研究開始前に審査を必ず受ける\n\nIRB（Institutional Review Board／倫理審査委員会）"
   },
   {
     "objectID": "rct_slide.html#sutva",
@@ -1763,5 +1763,19 @@
     "title": "社会科学における因果推論",
     "section": "SUTVA（2）",
     "text": "SUTVA（2）\n処置の一意性（no hidden variations of treatment）\n\n同じ処置はすべての個体に対して同じ方法で適用されること\n満たされる例：\n\n医療実験で標準化された薬剤を同量・同時点で投与\n\n満たされない例：\n\n教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在\n給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う1\n給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など\n\n\n2003年消費者物価地域差指数を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。"
+  },
+  {
+    "objectID": "rct_slide.html#研究倫理",
+    "href": "rct_slide.html#研究倫理",
+    "title": "社会科学における因果推論",
+    "section": "研究倫理",
+    "text": "研究倫理\n\nRCTにおける倫理的配慮の必要性\n\nRCTは介入（処置）を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在\n\n喫煙（原因）と健康（結果）をRCTで検証しようとしたら…?\n統制群に有効な処置を与えないことで、公正性や人道性に反するケースも\n\n\nRCT実施における倫理的対策\n\nインフォームド・コンセント（説明と同意）の取得は必須\n\n説明責任、理解、自由意志の保障、途中中止基準の明示など\n\n研究開始前に審査を必ず受ける\n\nIRB（Institutional Review Board／倫理審査委員会）\n\n\n\nスタンフォード監獄実験（Haney et al. 2018）\n\n被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察\n\n当初2週間予定した実験だが6日間で中止\n\n被験者が心理的苦痛や屈辱を実際に体験（実験後も続く）\nインフォームド・コンセントの問題（被験者が途中退出できないと誤認）\n研究者自身（Zimbardo）が「刑務所長役」として実験に介入\n\nFacebook感情操作実験（Kramer et al. 2014）\n\nFacebookが約69万人のユーザーのニュースフィードを操作\n\nポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ\n表示される投稿の感情傾向が、ユーザー自身の感情表現に影響\n\nインフォームド・コンセントの不在\n研究倫理審査（IRB）の管轄外で行われた実験\n\n\n\n\nHaney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “A Study of Prisoners and Guards in a Simulated Prison.” Naval Research Reviews, 9(1): 1–17.\nKramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “Experimental evidence of massive-scale emotional contagion through social networks.” Proceedings of the National Academy of Sciences of the United States of America, 111(24): 8788–8790."
+  },
+  {
+    "objectID": "rct_slide.html#研究倫理違反の例",
+    "href": "rct_slide.html#研究倫理違反の例",
+    "title": "社会科学における因果推論",
+    "section": "研究倫理違反の例",
+    "text": "研究倫理違反の例\nスタンフォード監獄実験（Haney et al. 2018）\n\n被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察\n\n当初2週間予定した実験だが6日間で中止\n\n被験者が心理的苦痛や屈辱を実際に体験（実験後も続く）\nインフォームド・コンセントの問題（被験者が途中退出できないと誤認）\n研究者自身（Zimbardo）が刑務所長役として実験に介入\n\nFacebook感情操作実験（Kramer et al. 2014）\n\nFacebookが約69万人のユーザーのニュースフィードを操作\n\nポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ\n表示される投稿の感情傾向が、ユーザー自身の感情表現に影響\n\nインフォームド・コンセントの不在、研究倫理審査（IRB）の管轄外で行われた実験\n\n\n\n\nHaney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “A Study of Prisoners and Guards in a Simulated Prison.” Naval Research Reviews, 9(1): 1–17.\nKramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “Experimental evidence of massive-scale emotional contagion through social networks.” Proceedings of the National Academy of Sciences of the United States of America, 111(24): 8788–8790."
   }
 ]
