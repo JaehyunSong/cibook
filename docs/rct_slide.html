@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="宋財泫（関西大学）">
   <title>困菓唯倫 with R – 社会科学における因果推論</title>
@@ -29,7 +29,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-b6d722145684ebde2f4126fbe9a56250.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1234,6 +1234,29 @@
 <li>Kramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “<a href="https://doi.org/10.1073/pnas.1320040111">Experimental evidence of massive-scale emotional contagion through social networks</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 111(24): 8788–8790.</li>
 </ul>
 </div></aside></section>
+<section id="内的妥当性と外的妥当性" class="slide level2">
+<h2>内的妥当性と外的妥当性</h2>
+<p>ランダム化比較試験<span class="small">（実験）</span>の場合、通常、内的妥当性が高い</p>
+<h4 id="内的妥当性internal-validity"><span class="alert">内的妥当性</span><span class="small">（internal validity）</span></h4>
+<ul>
+<li>推定された処置効果の信頼性<span class="small">（推定された処置効果が標本に対して有効か）</span></li>
+<li>処置効果が本当に処置によって引き起こされたか<span class="small">（交絡要因が正しく統制されているか）</span></li>
+<li>ランダム化比較試験の場合、<strong>無作為割り当て</strong>を用いるため内的妥当性が高い</li>
+</ul>
+<h4 id="外的妥当性external-validity"><span class="alert">外的妥当性</span><span class="small">（external validity）</span></h4>
+<ul>
+<li>標本から得られた処置効果がどの程度一般化可能か<span class="small">（母集団でも同じ結果が得られるか）</span></li>
+<li>標本が母集団を代表する場合、外的妥当性が高くなりやすい
+<ul>
+<li>緻密な設計<span class="small">（<strong>無作為抽出</strong>など）</span>で行われた観察から得られた結果は一般的に外的妥当性が高い</li>
+</ul></li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Findley, Michael G., Kyosuke Kikuta and Michael Denly. 2021. “<a href="https://doi.org/10.1146/annurev-polisci-041719-102556">External Validity</a>.” <em>Annual Review of Political Science,</em> 24: 365-393.</li>
+</ul>
+</div></aside></section>
 <section id="sutva" class="slide level2">
 <h2>SUTVA</h2>
 <p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
@@ -1262,10 +1285,10 @@
 <li>ある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと</li>
 <li>例）ワクチン接種の効果
 <ul>
-<li><span class="math inline">\(D\)</span>：ワクチン接種の有無（0, 1）</li>
+<li><span class="math inline">\(D\)</span>：ワクチン接種の有無（0 or 1）</li>
 <li><span class="math inline">\(Y\)</span>：感染の確率（0〜1）</li>
 </ul></li>
-<li>Aの潜在的結果（<span class="math inline">\(Y_A\)</span>）はBのワクチン接種有無によって異なる（集団免疫）</li>
+<li>Aの潜在的結果<span class="small">（<span class="math inline">\(Y_A\)</span>）</span>はBのワクチン接種有無によって異なる<span class="small">（集団免疫）</span></li>
 </ul>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
