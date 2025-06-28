@@ -152,7 +152,7 @@
 \]</span></p>
 <p>欠損している<span class="small">（=観察不可能）</span><span class="math inline">\(Y_i(0)\)</span>を回帰分析を用いて<span class="alert"><strong>代入</strong></span><span class="small">（imputation）</span>する</p>
 <p><span class="math display">\[
-\hat{\tau}_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - \textcolor{red}{\hat{Y_i}(0)} | D_i = 1]
+\hat{\tau}_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - \textcolor{red}{\widehat{Y_i}(0)} | D_i = 1]
 \]</span></p>
 <h4 id="haty_i0の推定方法"><span class="math inline">\(\hat{Y_i}(0)\)</span>の推定方法</h4>
 <ul>
@@ -166,8 +166,183 @@
 </section>
 <section id="マッチングの考え方" class="slide level2">
 <h2>マッチングの考え方</h2>
-<p>欠損している潜在的結果を予測せず、実際に比較可能な対象な個体のみ使用</p>
-</section>
+<p><strong>正確マッチング</strong><span class="small">（exact matching）</span>の例<sup>1</sup></p>
+<ul>
+<li>例）<span class="math inline">\(i\)</span>=4と7は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能</li>
+<li>例）統制群の中に<span class="math inline">\(i\)</span>=10と共変量が完全に一致する個体がないため、分析から除外</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="caption-top">
+<caption>統制群</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(D\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="caption-top">
+<caption>処置群</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(D\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:55%;">
+<table class="caption-top">
+<caption>マッチングの例（ATT）</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(D\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(Y(0)\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(Y(1)\)</span></th>
+<th style="text-align: right;">ITE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4-7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2-8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6-9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">ATT</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>「厳格マッチング」と訳されることもある。</p></li></ol></aside></section>
 <section id="マッチングによる因果推論の考え方" class="slide level2">
 <h2>マッチングによる因果推論の考え方</h2>
 <div class="cell" data-layout-align="center">
@@ -287,9 +462,19 @@
 <td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏿)</td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨🏼)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
@@ -307,12 +492,32 @@
 </div>
 </div>
 </center>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn2"><p>正確マッチング<span class="small">（exact matching）</span>の場合</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチング<span class="small">（exact matching）</span>の場合</p></li></ol></aside></section>
+<section id="マッチングの限界" class="slide level2">
+<h2>マッチングの限界</h2>
+<p>厳密にいえば正確マッチング<span class="small">（exact matching）</span>の限界</p>
+<p>次元の呪い</p>
+</section>
+<section id="傾向スコア-1" class="slide level2">
+<h2>傾向スコア</h2>
+<p><span class="math display">\[
+e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
+\]</span></p>
+<p>最近傍マッチング・共変量調整でも使われるが、ここれでは省略（マッチングは付録に）</p>
+</section></section>
+<section>
 <section id="仮定" class="title-slide slide level1 center">
 <h1><strong>2</strong> 仮定</h1>
 
 </section>
-
+<section id="条件付平均独立" class="slide level2">
+<h2>条件付（平均）独立</h2>
+</section>
+<section id="共有サポート" class="slide level2">
+<h2>共有サポート</h2>
+<p>共有サポート（common support）</p>
+<p>サポートは「台」とも訳される</p>
+</section></section>
 <section id="推定層化" class="title-slide slide level1 center">
 <h1><strong>3</strong> 推定：層化</h1>
 
