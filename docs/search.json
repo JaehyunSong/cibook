@@ -95,14 +95,14 @@
     "href": "reg_slide.html#単回帰分析",
     "title": "社会科学における因果推論",
     "section": "単回帰分析",
-    "text": "単回帰分析\n単回帰分析（simple regression）：説明変数が1つのみの線形回帰分析\n\n\\(Y\\)を\\(D\\)に回帰する（regress \\(Y\\) on \\(D\\)）\n\n\\[\nY_i = \\mathbb{E}[Y_i|D_i] + \\varepsilon_i = \\alpha + \\tau D_i + \\varepsilon_i\n\\]\n最小二乗法（ordinary least squares; OLS）\n\n残差の二乗和を最小とする\\(\\hat{\\alpha}\\)と\\(\\hat{\\tau}\\)を推定\n\n残差（residuals）：\\(u_i = Y_i - \\hat{\\alpha} - \\hat{\\tau} D_i\\)\n\\(\\bar{u_i}\\)の平方根：RMSE（Root mean square error）\n\n\n\\[\n(\\hat{\\alpha}, \\hat{\\tau}) = \\mathop{\\arg \\min}_{\\alpha, \\tau} \\sum_{i}^{n}(Y_i - \\alpha - \\tau D_i)^2\n\\]"
+    "text": "単回帰分析\n単回帰分析（simple regression）：説明変数が1つのみの線形回帰分析\n\n\\(Y\\)を\\(D\\)に回帰する（regress \\(Y\\) on \\(D\\)）\n\n\\[\n\\begin{eqnarray}\nY_i & = & \\mathbb{E}[Y_i|D_i] + \\varepsilon_i & = & \\alpha + \\tau D_i + \\varepsilon_i \\\\\n\\hat{Y}_i & = & \\mathbb{E}[Y_i|D_i] & = & \\hat{\\alpha} + \\hat{\\tau} D_i\n\\end{eqnarray}\n\\]\n\n推定対象：\\(\\hat{\\alpha}\\)、\\(\\hat{\\tau}\\)\n推定方法：最小二乗法（ordinary least squares; OLS）"
   },
   {
     "objectID": "reg_slide.html#最小二乗法",
     "href": "reg_slide.html#最小二乗法",
     "title": "社会科学における因果推論",
     "section": "最小二乗法",
-    "text": "最小二乗法\n\n残差の二乗和は141.13（左）、58.82（中）、66.55（右）\n\nRMSEはそれぞれ3.76、2.43、2.58"
+    "text": "最小二乗法\n\n残差の二乗和を最小とする\\(\\hat{\\alpha}\\)と\\(\\hat{\\tau}\\)を推定\n\n残差（residuals）：\\(u_i = Y_i - \\hat{Y}_i = Y_i - \\hat{\\alpha} - \\hat{\\tau} D_i\\)\n\n\\(u_i\\)は\\(\\varepsilon_i\\)の推定値（\\(\\hat{\\varepsilon}\\)）\n\n残差自乗和の平方根は「RMSE」（Root mean square error）とも呼ばれる\n\n\n\\[\n(\\hat{\\alpha}, \\hat{\\tau}) = \\mathop{\\arg \\min}_{\\alpha, \\tau} \\sum_{i}^{n}(Y_i - \\alpha - \\tau D_i)^2\n\\]"
   },
   {
     "objectID": "reg_slide.html#単回帰分析と因果推論",
@@ -151,7 +151,7 @@
     "href": "reg_slide.html#統制変数とブロッキング",
     "title": "社会科学における因果推論",
     "section": "統制変数とブロッキング",
-    "text": "統制変数とブロッキング\n重回帰分析における係数は通常、「他の変数が一定であれば…」と解釈される。\n\n\\(\\Rightarrow\\) 重回帰分析の推定値 = ブロック内処置効果の加重平均\n\n手順\n\nブロックごとに処置効果（A）を推定する\n（A）の加重平均を計算する。各ブロックの重みは、\n\n\\(Pr(X_i = x)\\)（ATEを推定する場合）\n\\(Pr(X_i = x, D_i = 1)\\)（ATTを推定する場合）\n\\(Pr(X_i = x, D_i = 0)\\)（ATCを推定する場合）\n\n\n\n\\(\\Rightarrow\\) 統制変数をうまく使えば因果推論ができそう\n\nどうすれば回帰分析で信頼できる処置効果が推定できるか\n\\(\\Rightarrow\\) [ブロック内で処置群と統制群が交換可能（or 平均独立）]{.alertであれば…?}"
+    "text": "統制変数とブロッキング\n重回帰分析における係数は通常、「他の変数が一定であれば…」と解釈される。\n\n\\(\\Rightarrow\\) 重回帰分析の推定値 = ブロック内処置効果の加重平均\n\n手順\n\nブロックごとに処置効果（A）を推定する\n（A）の加重平均を計算する。各ブロックの重みは、\n\n\\(Pr(X_i = x)\\)（ATEを推定する場合）\n\\(Pr(X_i = x, D_i = 1)\\)（ATTを推定する場合）\n\\(Pr(X_i = x, D_i = 0)\\)（ATCを推定する場合）\n\n\n\n\\(\\Rightarrow\\) 統制変数をうまく使えば因果推論ができそう\n\nどうすれば回帰分析で信頼できる処置効果が推定できるか\n\\(\\Rightarrow\\) ブロック内で処置群と統制群が交換可能（or 平均独立）であれば…?"
   },
   {
     "objectID": "reg_slide.html#条件付き独立の仮定",
@@ -270,35 +270,35 @@
     "href": "reg_slide.html#バックドア経路",
     "title": "社会科学における因果推論",
     "section": "バックドア経路",
-    "text": "バックドア経路\nバックドア経路（backdoor path）：原因と結果（DとY）両方にたどり着ける経路\n\n左：バックドア経路が存在（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が存在しない"
+    "text": "バックドア経路\nバックドア経路（backdoor path）：原因と結果（DとY）間のすべての経路\n\nただし、\\(D \\rightarrow Y\\)のパスを除く\n左：バックドア経路が存在（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が存在しない"
   },
   {
     "objectID": "reg_slide.html#分岐点",
     "href": "reg_slide.html#分岐点",
     "title": "社会科学における因果推論",
     "section": "分岐点",
-    "text": "分岐点\n分岐点（counfounder）：原因（D）と結果（Y）両方にたどり着ける変数\n\n左：Xが分岐点（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：分岐点が存在しない"
+    "text": "分岐点\n分岐点（confounder）：原因（D）と結果（Y）両方にたどり着ける変数\n\nバックドア経路に分岐点が存在するとそのバックドア経路は「開いている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（分岐点が存在しない）"
   },
   {
     "objectID": "reg_slide.html#分岐点への対処",
     "href": "reg_slide.html#分岐点への対処",
     "title": "社会科学における因果推論",
     "section": "分岐点への対処",
-    "text": "分岐点への対処\nバックドア経路が存在する場合、バックドア経路上の変数をモデルに投入\n\n\n\n\n\n\n\n\n\n\n\n\n\n経路上の全変数を統制する必要はない\n\nバックドア経路さえ無くせば良い\n経路上のすべての変数がなくても良い\n\nどのモデルでも\\(\\bigcirc\\)\n\nXのみ統制\nWのみ統制\nXとW両方統制\n\nバックドア経路が開いたままだと、欠落変数バイアスが発生"
+    "text": "分岐点への対処\nバックドア経路が開いている場合、バックドア経路上の変数をモデルに投入するとバックドア経路は閉ざされる\n\n\n\n\n\n\n\n\n\n\n\n\n\n経路上の全変数を統制する必要はない\n\nバックドア経路さえ無くせば良い\n経路上のすべての変数がなくても良い\n\nどのモデルでも\\(\\bigcirc\\)\n\nXのみ統制\nWのみ統制\nXとW両方統制\n\nバックドア経路が開いたままだと、欠落変数バイアスが発生"
   },
   {
     "objectID": "reg_slide.html#合流点",
     "href": "reg_slide.html#合流点",
     "title": "社会科学における因果推論",
     "section": "合流点",
-    "text": "合流点\n合流点（collider）：原因（D）と結果（Y）両方からたどり着ける変数\n\n左：合流点が存在しない（バックドアはある）\n右：Wが合流点（D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\leftarrow\\) Y）"
+    "text": "合流点\n合流点（collider）：原因（D）と結果（Y）両方からたどり着ける変数\n\nバックドア経路に分岐点が存在するとそのバックドア経路は「閉じている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（経路上に合流点が存在する; D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\leftarrow\\) Y）"
   },
   {
     "objectID": "reg_slide.html#中間点",
     "href": "reg_slide.html#中間点",
     "title": "社会科学における因果推論",
     "section": "中間点",
-    "text": "中間点\n中間点（mediator）：原因（D）から結果（Y）へ向かう経路上に存在する変数\n\n左：中間点が存在しない（バックドアはある）\n右：XとWが中間点（D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）"
+    "text": "中間点\n中間点（mediator）：原因（D）から結果（Y）へ向かう経路上に存在する変数\n\nバックドア経路に中間点が存在するとそのバックドア経路は「閉じている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（経路上に中間点が存在する; D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）"
   },
   {
     "objectID": "reg_slide.html#合流点中間点への対処",
@@ -312,7 +312,7 @@
     "href": "reg_slide.html#応用",
     "title": "社会科学における因果推論",
     "section": "応用",
-    "text": "応用\n\n\n\n\n\n\n\n\n\n\n\n\nバックドア経路は計2つ\n\nD \\(\\leftarrow\\) W \\(\\rightarrow\\) V \\(\\rightarrow\\) Y\nD \\(\\leftarrow\\) X \\(\\rightarrow\\) Y\n2つの経路すべてを閉じる\n\n{W, X}か{V, X}、{W, V, X}を統制"
+    "text": "応用\n\n\n\n\n\n\n\n\n\n\n\n\n分岐点を持つバックドア経路は計2つ\n\nD \\(\\leftarrow\\) W \\(\\rightarrow\\) V \\(\\rightarrow\\) Y\nD \\(\\leftarrow\\) X \\(\\rightarrow\\) Y\n2つの経路すべてを閉じる\n\n{W, X}か{V, X}、{W, V, X}を統制"
   },
   {
     "objectID": "reg_slide.html#rパッケージ",
@@ -326,7 +326,7 @@
     "href": "reg_slide.html#dagの書き方",
     "title": "社会科学における因果推論",
     "section": "DAGの書き方",
-    "text": "DAGの書き方\n\nmy_dag &lt;- dagify(\n  Y ~ D + V + X + P + Q,\n  V ~ W,\n  D ~ W + X + Z,\n  U ~ D + Y,\n  Q ~ D,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \"D\" = 0, \"W\" = 0, \"V\" = 2, \"X\" = 1, \"Z\" = 0, \"P\" = 2, \"U\" = 1, \"Q\" = 1),\n                y = c(\"Y\" = 0, \"D\" = 0, \"W\" = 2, \"V\" = 2, \"X\" = 0.75, \"Z\" = -1, \"P\" = -1, \"U\" = -1, \"Q\" = 1.5))\n)\n\nggdag(my_dag) + theme_dag()"
+    "text": "DAGの書き方\nDAGの作成および変数選択のためのRパッケージ：{dagitty} + {ggdag}\n\nmy_dag &lt;- dagify(\n  Y ~ D + V + X + P + Q,\n  V ~ W,\n  D ~ W + X + Z,\n  U ~ D + Y,\n  Q ~ D,\n  exposure = \"D\",\n  outcome  = \"Y\",\n  coords = list(x = c(\"Y\" = 2, \"D\" = 0, \"W\" = 0, \"V\" = 2, \"X\" = 1, \"Z\" = 0, \"P\" = 2, \"U\" = 1, \"Q\" = 1),\n                y = c(\"Y\" = 0, \"D\" = 0, \"W\" = 2, \"V\" = 2, \"X\" = 0.75, \"Z\" = -1, \"P\" = -1, \"U\" = -1, \"Q\" = 1.5))\n)\n\nggdag(my_dag)"
   },
   {
     "objectID": "reg_slide.html#統制変数の提案",
@@ -1903,5 +1903,19 @@
     "title": "社会科学における因果推論",
     "section": "傾向スコア",
     "text": "傾向スコア\n\\[\ne_i(x) = \\mbox{Pr}(D_i = 1 | X = x)\n\\]\n最近傍マッチング・共変量調整でも使われるが、ここれでは省略（マッチングは付録に）"
+  },
+  {
+    "objectID": "reg_slide.html#最小二乗法の例",
+    "href": "reg_slide.html#最小二乗法の例",
+    "title": "社会科学における因果推論",
+    "section": "最小二乗法の例",
+    "text": "最小二乗法の例\n\n残差の二乗和は141.13（左）、58.82（中）、66.55（右）\n\nRMSEはそれぞれ3.76、2.43、2.85"
+  },
+  {
+    "objectID": "reg_slide.html#中間点要検討",
+    "href": "reg_slide.html#中間点要検討",
+    "title": "社会科学における因果推論",
+    "section": "中間点（要検討）",
+    "text": "中間点（要検討）\n中間点（mediator）：原因（D）から結果（Y）へ向かう経路上に存在する変数\n\nバックドア経路に中間点が存在するとそのバックドア経路は「閉じている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（経路上に中間点が存在する; D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）"
   }
 ]

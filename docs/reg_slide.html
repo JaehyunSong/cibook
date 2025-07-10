@@ -217,30 +217,42 @@
 <li><span class="math inline">\(Y\)</span>を<span class="math inline">\(D\)</span>に回帰する<span class="small">（regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(D\)</span>）</span></li>
 </ul>
 <p><span class="math display">\[
-Y_i = \mathbb{E}[Y_i|D_i] + \varepsilon_i = \alpha + \tau D_i + \varepsilon_i
+\begin{eqnarray}
+Y_i &amp; = &amp; \mathbb{E}[Y_i|D_i] + \varepsilon_i &amp; = &amp; \alpha + \tau D_i + \varepsilon_i \\
+\hat{Y}_i &amp; = &amp; \mathbb{E}[Y_i|D_i] &amp; = &amp; \hat{\alpha} + \hat{\tau} D_i
+\end{eqnarray}
 \]</span></p>
-<h3 id="最小二乗法ordinary-least-squares-ols">最小二乗法<span class="small">（ordinary least squares; OLS）</span></h3>
+<ul>
+<li>推定対象：<span class="math inline">\(\hat{\alpha}\)</span>、<span class="math inline">\(\hat{\tau}\)</span></li>
+<li>推定方法：<span class="alert"><strong>最小二乗法</strong></span><span class="small">（ordinary least squares; OLS）</span></li>
+</ul>
+</section>
+<section id="最小二乗法" class="slide level2">
+<h2>最小二乗法</h2>
 <ul>
 <li><span class="alert"><strong>残差の二乗和を最小とする<span class="math inline">\(\hat{\alpha}\)</span>と<span class="math inline">\(\hat{\tau}\)</span>を推定</strong></span>
 <ul>
-<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(u_i = Y_i - \hat{\alpha} - \hat{\tau} D_i\)</span></li>
-<li><span class="math inline">\(\bar{u_i}\)</span>の平方根：RMSE<span class="small">（Root mean square error）</span></li>
+<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(u_i = Y_i - \hat{Y}_i = Y_i - \hat{\alpha} - \hat{\tau} D_i\)</span>
+<ul>
+<li><span class="math inline">\(u_i\)</span>は<span class="math inline">\(\varepsilon_i\)</span>の推定値（<span class="math inline">\(\hat{\varepsilon}\)</span>）</li>
+</ul></li>
+<li>残差自乗和の平方根は「<strong>RMSE</strong>」<span class="small">（Root mean square error）</span>とも呼ばれる</li>
 </ul></li>
 </ul>
 <p><span class="math display">\[
 (\hat{\alpha}, \hat{\tau}) = \mathop{\arg \min}_{\alpha, \tau} \sum_{i}^{n}(Y_i - \alpha - \tau D_i)^2
 \]</span></p>
 </section>
-<section id="最小二乗法" class="slide level2">
-<h2>最小二乗法</h2>
+<section id="最小二乗法の例" class="slide level2">
+<h2>最小二乗法の例</h2>
 <ul>
 <li>残差の二乗和は141.13（左）、<span class="alert">58.82</span>（中）、66.55（右）
 <ul>
-<li>RMSEはそれぞれ3.76、<span class="alert">2.43</span>、2.58</li>
+<li>RMSEはそれぞれ3.76、<span class="alert">2.43</span>、2.85</li>
 </ul></li>
 </ul>
 
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
 <section id="単回帰分析と因果推論" class="slide level2">
 <h2>単回帰分析と因果推論</h2>
 <p><span class="alert"><strong>処置変数が外生変数、かつ二値変数なら<span class="math inline">\(D_i\)</span>の係数の推定値はATEの推定値</strong></span></p>
@@ -274,7 +286,7 @@ Y_i = \mathbb{E}[Y_i|D_i] + \varepsilon_i = \alpha + \tau D_i + \varepsilon_i
 </ul></li>
 </ul>
 
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="処置変数が内生変数の場合" class="slide level2">
 <h2>処置変数が内生変数の場合</h2>
 <ul>
@@ -285,7 +297,7 @@ Y_i = \mathbb{E}[Y_i|D_i] + \varepsilon_i = \alpha + \tau D_i + \varepsilon_i
 </ul></li>
 </ul>
 
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="交絡要因が既知の場合" class="slide level2">
 <h2>交絡要因が既知の場合</h2>
 <ul>
@@ -296,7 +308,7 @@ Y_i = \mathbb{E}[Y_i|D_i] + \varepsilon_i = \alpha + \tau D_i + \varepsilon_i
 </ul></li>
 </ul>
 
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="重回帰分析" class="slide level2">
 <h2>重回帰分析</h2>
 <p>統制変数<span class="math inline">\(X\)</span>を追加した回帰モデル</p>
@@ -323,19 +335,19 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <li><span class="math inline">\(X_i = x\)</span>における傾きと<span class="math inline">\(X_i = x^{\prime}\)</span>における傾きは同値だと仮定（<span class="math inline">\(x \neq x^{\prime}\)</span>）</li>
 <li>この仮定を緩和するためには交差項が必要</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-8-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -362,7 +374,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <li><span class="math inline">\(\Rightarrow\)</span> <span class="alert">統制変数をうまく使えば因果推論ができそう</span>
 <ul>
 <li>どうすれば回帰分析で信頼できる処置効果が推定できるか</li>
-<li><span class="math inline">\(\Rightarrow\)</span> [<strong>ブロック内で処置群と統制群が交換可能（or 平均独立）</strong>]{.alertであれば…?}</li>
+<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>ブロック内で処置群と統制群が交換可能（or 平均独立）</strong></span>であれば…?</li>
 </ul></li>
 </ul>
 </section></section>
@@ -3031,19 +3043,19 @@ Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
 <ul>
 <li>負の効果?効果なし?内生性（自己選択）は?</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-15-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -3056,19 +3068,19 @@ Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
 <ul>
 <li>職業訓練前の年収を考慮したモデル：実は正の効果があるかも?</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -3089,7 +3101,7 @@ Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
 </figure>
 </div>
 </div>
@@ -3147,7 +3159,7 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -3187,19 +3199,19 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li><span class="alert">ノード</span>（点; node or vertex）と<span class="alert">エッジ</span>（線; edge）で構成</li>
 <li>因果推論での活用（詳細は<a href="https://amzn.asia/d/iRY9OPO">Pearl et al.&nbsp;[2016=2019]</a>などを参照）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-19-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3208,24 +3220,25 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </section>
 <section id="バックドア経路" class="slide level2">
 <h2>バックドア経路</h2>
-<p><span class="alert"><strong>バックドア経路</strong></span>（backdoor path）：原因と結果（DとY）両方にたどり着ける経路</p>
+<p><span class="alert"><strong>バックドア経路</strong></span>（backdoor path）：原因と結果（DとY）間のすべての経路</p>
 <ul>
+<li>ただし、<span class="math inline">\(D \rightarrow Y\)</span>のパスを除く</li>
 <li>左：バックドア経路が存在（D <span class="math inline">\(\leftarrow\)</span> <span class="alert"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
 <li>右：バックドア経路が存在しない</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-20-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3234,24 +3247,25 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </section>
 <section id="分岐点" class="slide level2">
 <h2>分岐点</h2>
-<p><span class="alert"><strong>分岐点</strong></span>（counfounder）：原因（D）と結果（Y）両方にたどり着ける変数</p>
+<p><span class="alert"><strong>分岐点</strong></span>（confounder）：原因（D）と結果（Y）両方にたどり着ける変数</p>
 <ul>
-<li>左：Xが分岐点（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
-<li>右：分岐点が存在しない</li>
+<li>バックドア経路に分岐点が存在するとそのバックドア経路は「<strong>開いている</strong>」</li>
+<li>左：バックドア経路が開いている（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
+<li>右：バックドア経路が閉じている（分岐点が存在しない）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-21-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3260,14 +3274,14 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </section>
 <section id="分岐点への対処" class="slide level2">
 <h2>分岐点への対処</h2>
-<p>バックドア経路が存在する場合、バックドア経路上の変数をモデルに投入</p>
+<p>バックドア経路が開いている場合、バックドア経路上の変数をモデルに投入するとバックドア経路は閉ざされる</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3293,48 +3307,50 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <h2>合流点</h2>
 <p><span class="alert"><strong>合流点</strong></span>（collider）：原因（D）と結果（Y）両方からたどり着ける変数</p>
 <ul>
-<li>左：合流点が存在しない（バックドアはある）</li>
-<li>右：Wが合流点（D <span class="math inline">\(\rightarrow\)</span> X <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\leftarrow\)</span> Y）</li>
+<li>バックドア経路に分岐点が存在するとそのバックドア経路は「<strong>閉じている</strong>」</li>
+<li>左：バックドア経路が開いている（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
+<li>右：バックドア経路が閉じている（経路上に合流点が存在する; D <span class="math inline">\(\rightarrow\)</span> X <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\leftarrow\)</span> Y）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-23-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="中間点" class="slide level2">
-<h2>中間点</h2>
+<section id="中間点要検討" class="slide level2">
+<h2>中間点（<span class="alert"><strong>要検討</strong></span>）</h2>
 <p><span class="alert"><strong>中間点</strong></span>（mediator）：原因（D）から結果（Y）へ向かう経路上に存在する変数</p>
 <ul>
-<li>左：中間点が存在しない（バックドアはある）</li>
-<li>右：XとWが中間点（D <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\rightarrow\)</span> Y）</li>
+<li>バックドア経路に中間点が存在するとそのバックドア経路は「<strong>閉じている</strong>」</li>
+<li>左：バックドア経路が開いている（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
+<li>右：バックドア経路が閉じている（経路上に中間点が存在する; D <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\rightarrow\)</span> Y）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-24-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3348,19 +3364,19 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li>モデルに投入すると新しいバックドア経路が開く（右はXを統制した例）</li>
 <li><span class="math inline">\(\Rightarrow\)</span> 合流点と中間点はモデルに投入しない！</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-25-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3375,13 +3391,13 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<p>バックドア経路は計2つ</p>
+<p>分岐点を持つバックドア経路は計2つ</p>
 <ul>
 <li>D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>V</strong></span> <span class="math inline">\(\rightarrow\)</span> Y</li>
 <li>D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> Y</li>
@@ -3392,16 +3408,9 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </ul>
 </div></div>
 </section>
-<section id="rパッケージ" class="slide level2">
-<h2>Rパッケージ</h2>
-<p>DAGの作成および変数選択のためのRパッケージ</p>
-<ul>
-<li>{<a href="https://cran.r-project.org/web/packages/dagitty/index.html">dagitty</a>}</li>
-<li>{<a href="https://r-causal.github.io/ggdag/">ggdag</a>}</li>
-</ul>
-</section>
 <section id="dagの書き方" class="slide level2">
 <h2>DAGの書き方</h2>
+<p>DAGの作成および変数選択のためのRパッケージ：{<a href="https://cran.r-project.org/web/packages/dagitty/index.html">dagitty</a>} + {<a href="https://r-causal.github.io/ggdag/">ggdag</a>}</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>my_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
 <span id="cb1-2"><a></a>  Y <span class="sc">~</span> D <span class="sc">+</span> V <span class="sc">+</span> X <span class="sc">+</span> P <span class="sc">+</span> Q,</span>
@@ -3415,10 +3424,9 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <span id="cb1-10"><a></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"V"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="fl">0.75</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"U"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"Q"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
 <span id="cb1-11"><a></a>)</span>
 <span id="cb1-12"><a></a></span>
-<span id="cb1-13"><a></a><span class="fu">ggdag</span>(my_dag) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<span id="cb1-13"><a></a><span class="fu">ggdag</span>(my_dag)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+</section>
 <section id="統制変数の提案" class="slide level2">
 <h2>統制変数の提案</h2>
 <div class="cell" data-layout-align="center">
@@ -3427,7 +3435,7 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <span id="cb2-3"><a></a>  <span class="fu">theme_dag</span>()</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="reg_slide_files/figure-html/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section></section>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section></section>
 <section>
 <section id="交互作用" class="title-slide slide level1 center">
 <h1><strong>6</strong> 交互作用</h1>
@@ -3440,19 +3448,19 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li>左：Xが交絡要因・分岐点（confounder）</li>
 <li>右：Xが<span class="alert">調整変数</span>（mediator）<sup>1</sup></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-29-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3481,7 +3489,7 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -3503,19 +3511,19 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li>重回帰分析（左）：男女の<span class="alert">傾きが同じ</span></li>
 <li>交互作用モデル（右）：男女の<span class="alert"><strong>傾きが異なる</strong></span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-31-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -4048,19 +4056,19 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 <section id="予測値左と限界効果右" class="slide level2">
 <h2>予測値（左）と限界効果（右）</h2>
 <p>男性の場合、投薬量が1mg増えると体温は約0.02℃上がる。一方、女性の場合、統計的有意な処置効果は確認できない<sup>1</sup>。</p>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-33-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -4170,7 +4178,7 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="reg_slide_files/figure-html/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -4411,6 +4419,44 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
