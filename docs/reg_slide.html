@@ -2836,7 +2836,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 
       function styleCell_4ds29k3aa37tg1vpxr3g(i, j, css_id) {
           var table = document.getElementById("tinytable_4ds29k3aa37tg1vpxr3g");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
               cell.classList.add(css_id);
@@ -2846,52 +2846,57 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
       }
       function insertSpanRow(i, colspan, content) {
         var table = document.getElementById('tinytable_4ds29k3aa37tg1vpxr3g');
-        var newRow = table.insertRow(i);
+        // Find the row with data-row attribute matching i
+        var targetRow = table.querySelector(`tr [data-row="${i}"]`).closest('tr');
+        var newRow = table.insertRow(targetRow.rowIndex);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
+        newCell.setAttribute("data-col", "0");
+        newCell.setAttribute("data-row", i - 1);
         // newCell.innerText = content;
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
       function spanCell_4ds29k3aa37tg1vpxr3g(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_4ds29k3aa37tg1vpxr3g");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
+        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+        if (!targetCell) {
+          console.warn(`Cell at (${i}, ${j}) not found.`);
+        }
+
+        // Get all cells that need to be removed
+        const cellsToRemove = [];
         for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
+          for (let c = 0; c < colspan; c++) {
+            if (r === 0 && c === 0) continue; // Skip the target cell
+            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
+            if (cell) {
+              cellsToRemove.push(cell);
             }
           }
         }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
+
+        // Remove all cells
+        cellsToRemove.forEach(cell => cell.remove());
+
+        // Set rowspan and colspan of the target cell if it exists
+        if (targetCell) {
+          targetCell.rowSpan = rowspan;
+          targetCell.colSpan = colspan;
+        }
       }
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 5, j: 1 }, { i: 5, j: 2 },  ], css_id: 'tinytable_css_dxyy803z947gy39wm6bx',}, 
-          { positions: [ { i: 3, j: 2 }, { i: 3, j: 1 },  ], css_id: 'tinytable_css_nv8jnvxfq1zbuwg7lrz8',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 4, j: 1 }, { i: 2, j: 1 }, { i: 2, j: 2 }, { i: 4, j: 2 },  ], css_id: 'tinytable_css_l8silzr6lkoaar75d4eo',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_0uwsdsnh0kwld4o9eus2',}, 
-          { positions: [ { i: 5, j: 0 },  ], css_id: 'tinytable_css_aulksnuncr0zrh15dwuy',}, 
-          { positions: [ { i: 3, j: 0 },  ], css_id: 'tinytable_css_m11vwktn5tr1pa36d6tr',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 4, j: 0 },  ], css_id: 'tinytable_css_iujq0io2zfwct4tm6ctk',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_3k8prjnjldoms4r72chx',}, 
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 },  ], css_id: 'tinytable_css_dxyy803z947gy39wm6bx',}, 
+          { positions: [ { i: '3', j: 2 }, { i: '3', j: 1 },  ], css_id: 'tinytable_css_nv8jnvxfq1zbuwg7lrz8',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '4', j: 1 }, { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '4', j: 2 },  ], css_id: 'tinytable_css_l8silzr6lkoaar75d4eo',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_0uwsdsnh0kwld4o9eus2',}, 
+          { positions: [ { i: '5', j: 0 },  ], css_id: 'tinytable_css_aulksnuncr0zrh15dwuy',}, 
+          { positions: [ { i: '3', j: 0 },  ], css_id: 'tinytable_css_m11vwktn5tr1pa36d6tr',}, 
+          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '4', j: 0 },  ], css_id: 'tinytable_css_iujq0io2zfwct4tm6ctk',}, 
+          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_3k8prjnjldoms4r72chx',}, 
           ];
 
           // Loop over the arrays to style the cells
@@ -2919,37 +2924,37 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
         <thead>
         
               <tr>
-                <th scope="col"> </th>
-                <th scope="col">統制変数なし</th>
-                <th scope="col">統制変数あり</th>
+                <th scope="col" data-row="0" data-col="0"> </th>
+                <th scope="col" data-row="0" data-col="1">統制変数なし</th>
+                <th scope="col" data-row="0" data-col="2">統制変数あり</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan="3">注：カッコ内はHC2頑健標準誤差</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td>切片</td>
-                  <td>2.100 (0.737)</td>
-                  <td>-0.000 (0.560)</td>
+                  <td data-row="1" data-col="0">切片</td>
+                  <td data-row="1" data-col="1">2.100 (0.737)</td>
+                  <td data-row="1" data-col="2">-0.000 (0.560)</td>
                 </tr>
                 <tr>
-                  <td>D</td>
-                  <td>0.800 (1.042)</td>
-                  <td>2.000 (0.683)</td>
+                  <td data-row="2" data-col="0">D</td>
+                  <td data-row="2" data-col="1">0.800 (1.042)</td>
+                  <td data-row="2" data-col="2">2.000 (0.683)</td>
                 </tr>
                 <tr>
-                  <td>X</td>
-                  <td></td>
-                  <td>3.000 (0.683)</td>
+                  <td data-row="3" data-col="0">X</td>
+                  <td data-row="3" data-col="1"></td>
+                  <td data-row="3" data-col="2">3.000 (0.683)</td>
                 </tr>
                 <tr>
-                  <td>Num.Obs.</td>
-                  <td>20</td>
-                  <td>20</td>
+                  <td data-row="4" data-col="0">Num.Obs.</td>
+                  <td data-row="4" data-col="1">20</td>
+                  <td data-row="4" data-col="2">20</td>
                 </tr>
                 <tr>
-                  <td>R2</td>
-                  <td>0.032</td>
-                  <td>0.406</td>
+                  <td data-row="5" data-col="0">R2</td>
+                  <td data-row="5" data-col="1">0.032</td>
+                  <td data-row="5" data-col="2">0.406</td>
                 </tr>
         </tbody>
       </table>
@@ -3196,7 +3201,7 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <ul>
 <li>右グラフはサイクルが存在（D <span class="math inline">\(\rightarrow\)</span> Y <span class="math inline">\(\rightarrow\)</span> X <span class="math inline">\(\rightarrow\)</span> D <span class="math inline">\(\rightarrow\)</span> Y <span class="math inline">\(\rightarrow\)</span>…）</li>
 </ul></li>
-<li><span class="alert">ノード</span>（点; node or vertex）と<span class="alert">エッジ</span>（線; edge）で構成</li>
+<li><span class="alert">ノード</span><span class="small">（点; node or vertex）</span>と<span class="alert">エッジ</span><span class="alert">（線; edge）</span>で構成</li>
 <li>因果推論での活用（詳細は<a href="https://amzn.asia/d/iRY9OPO">Pearl et al.&nbsp;[2016=2019]</a>などを参照）</li>
 </ul>
 <div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
@@ -3220,11 +3225,14 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </section>
 <section id="バックドア経路" class="slide level2">
 <h2>バックドア経路</h2>
-<p><span class="alert"><strong>バックドア経路</strong></span>（backdoor path）：原因と結果（DとY）間のすべての経路</p>
+<p><span class="alert"><strong>バックドア経路</strong></span><span class="alert">（backdoor path）</span>：原因と結果<span class="small">（DとY）</span>間のすべての経路中、原因<span class="small">（D）</span>へ向かう矢印を含む経路</p>
 <ul>
 <li>ただし、<span class="math inline">\(D \rightarrow Y\)</span>のパスを除く</li>
 <li>左：バックドア経路が存在（D <span class="math inline">\(\leftarrow\)</span> <span class="alert"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
-<li>右：バックドア経路が存在しない</li>
+<li>右：バックドア経路が存在しない
+<ul>
+<li>D <span class="math inline">\(\rightarrow\)</span> <span class="alert"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> YはDへ向かう矢印を含まない</li>
+</ul></li>
 </ul>
 <div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
