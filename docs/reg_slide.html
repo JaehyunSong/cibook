@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
   <meta name="author" content="宋財泫（関西大学）">
   <title>困菓唯倫 with R – 社会科学における因果推論</title>
@@ -332,8 +332,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <h2>統制変数の役割</h2>
 <p><span class="math inline">\(X_i = x\)</span>における傾き（<span class="math inline">\(\tau\)</span>）の推定</p>
 <ul>
-<li><span class="math inline">\(X_i = x\)</span>における傾きと<span class="math inline">\(X_i = x^{\prime}\)</span>における傾きは同値だと仮定（<span class="math inline">\(x \neq x^{\prime}\)</span>）</li>
-<li>この仮定を緩和するためには交差項が必要</li>
+<li>ただし、<span class="math inline">\(X_i = x\)</span>における傾きと<span class="math inline">\(X_i = x^{\prime}\)</span>における傾きは同じと仮定<sup>1</sup>（<span class="math inline">\(x \neq x^{\prime}\)</span>）</li>
 </ul>
 <div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
@@ -353,7 +352,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 </div>
 </div>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>この仮定を緩和するためには交互作用を考慮したモデリングが必要</p></li></ol></aside></section>
 <section id="統制変数とブロッキング" class="slide level2">
 <h2>統制変数とブロッキング</h2>
 <p>重回帰分析における係数は通常、「<span class="alert"><strong>他の変数が一定</strong></span>であれば…」と解釈される。</p>
@@ -2844,19 +2843,6 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_4ds29k3aa37tg1vpxr3g');
-        // Find the row with data-row attribute matching i
-        var targetRow = table.querySelector(`tr [data-row="${i}"]`).closest('tr');
-        var newRow = table.insertRow(targetRow.rowIndex);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        newCell.setAttribute("data-col", "0");
-        newCell.setAttribute("data-row", i - 1);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
       function spanCell_4ds29k3aa37tg1vpxr3g(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_4ds29k3aa37tg1vpxr3g");
         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
@@ -3474,7 +3460,7 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>DAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>DAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。</p></li></ol></aside></section>
 <section id="交互作用の例" class="slide level2">
 <h2>交互作用の例</h2>
 <p>Dの処置効果がXに値によって異なる場合</p>
@@ -4082,7 +4068,7 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。</p></li></ol></aside></section></section>
 <section>
 <section id="実装" class="title-slide slide level1 center">
 <h1><strong>7</strong> 実装</h1>
