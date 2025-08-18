@@ -249,7 +249,7 @@
     "href": "reg_slide.html#処置後変数とは",
     "title": "社会科学における因果推論",
     "section": "処置後変数とは",
-    "text": "処置後変数とは\n処置後変数（post-treatment variable）\n\n\n\n\n\n\n\n\n\n\n\n\n\nXはDの処置後変数\n\nXがYに直接与える処置効果（直接効果）\nXはDを経由してYに与える処置効果（間接効果）\n総効果 = 直接効果 + 間接効果\n\n因果推論において主に注目するのは総効果\n\nこの場合、Xを統制してはいけない\n説明変数がDのみの単回帰分析を採用すべき\n\n\n\n\n\n参考）XがYに与える影響を推定したい場合、Dを統制すべきである。なぜならXを処置変数と考えると、Dは交絡要因になるからだ。"
+    "text": "処置後変数とは\n処置後変数（post-treatment variable）\n\n\n\n\n\n\n\n\n\n\n\n\n\nXはDの処置後変数\n\nDがYに直接与える処置効果（直接効果）\nDがXを経由してYに与える処置効果（間接効果）\n総効果 = 直接効果 + 間接効果\n\n因果推論において主に注目するのは総効果\n\nこの場合、Xを統制してはいけない\n説明変数がDのみの単回帰分析を採用すべき\n\n\n\n\n\n参考）XがYに与える影響を推定したい場合、Dを統制すべきである。なぜならXを処置変数と考えると、Dは交絡要因になるからだ。"
   },
   {
     "objectID": "reg_slide.html#処置後変数バイアス-1",
@@ -284,7 +284,7 @@
     "href": "reg_slide.html#分岐点",
     "title": "社会科学における因果推論",
     "section": "分岐点",
-    "text": "分岐点\n分岐点（confounder）：原因（D）と結果（Y）両方にたどり着ける変数\n\nバックドア経路に分岐点が存在するとそのバックドア経路は「開いている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（分岐点が存在しない）"
+    "text": "分岐点\n分岐点（confounder）：原因（D）と結果（Y）両方にたどり着ける変数\n\nバックドア経路に分岐点が存在するとそのバックドア経路は「開いている」\n左：開いたバックドア経路がある（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：分岐点が存在しない"
   },
   {
     "objectID": "reg_slide.html#分岐点への対処",
@@ -298,7 +298,7 @@
     "href": "reg_slide.html#合流点",
     "title": "社会科学における因果推論",
     "section": "合流点",
-    "text": "合流点\n合流点（collider）：原因（D）と結果（Y）両方からたどり着ける変数\n\nバックドア経路に分岐点が存在するとそのバックドア経路は「閉じている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（経路上に合流点が存在する; D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\leftarrow\\) Y）"
+    "text": "合流点\n合流点（collider）：原因（D）と結果（Y）両方からたどり着ける変数\n\nバックドア経路に合流点が存在するとそのバックドア経路は「閉じている」\n左：バックドア経路が開いている（D \\(\\leftarrow\\) X \\(\\rightarrow\\) W \\(\\rightarrow\\) Y）\n右：バックドア経路が閉じている（経路上に合流点が存在する; D \\(\\rightarrow\\) X \\(\\rightarrow\\) W \\(\\leftarrow\\) Y）"
   },
   {
     "objectID": "reg_slide.html#中間点要検討",
