@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
   <meta name="author" content="宋財泫（関西大学）">
   <title>困菓唯倫 with R – 社会科学における因果推論</title>
@@ -29,7 +29,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-8959375eb0f6913aa26bd5e18886ba7d.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -312,7 +312,7 @@ D_i = \begin{cases}
 <h2>割当メカニズムの比較</h2>
 <p>割当変数の値が閾値を超えると、処置を受ける確率が<strong>ジャンプ</strong>する。</p>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
 <section>
 <section id="仮定" class="title-slide slide level1 center">
 <h1><strong>2</strong> 仮定</h1>
@@ -387,14 +387,14 @@ D_i = \begin{cases}
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:45%;">
 <p><span class="math display">\[
-\hat{Y_i} = \alpha + \rho D_i + \beta R_i
+\hat{Y_i} = \alpha + \textcolor{red}{\rho} D_i + \beta R_i
 \]</span></p>
 <ul>
 <li><p><span class="math inline">\(Y_i\)</span>：結果変数</p></li>
@@ -422,7 +422,7 @@ D_i = \begin{cases}
 <ul>
 <li>処置効果は<span class="math inline">\(R_i\)</span>の値に依存<sup>1</sup>（処置効果は<span class="math inline">\(R_i = c\)</span>の箇所のみで観察されるため）</li>
 </ul></li>
-<li>閾値（<span class="math inline">\(c\)</span>）が0になるように割当変数を調整（=<span class="alert">割当変数を閾値で<strong>中心化</strong></span>する）することを推奨
+<li>閾値（<span class="math inline">\(c\)</span>）が0になるように割当変数を調整（=<span class="alert">割当変数を閾値で<strong>中心化</strong></span>）することを推奨
 <ul>
 <li>割当変数の値から閾値を値を引くだけで十分</li>
 </ul></li>
@@ -437,7 +437,7 @@ D_i = \begin{cases}
 <p><span class="math display">\[
 \hat{Y_i} = \alpha + \rho D_i + \beta R_i + \gamma D_i \cdot R_i
 \]</span></p>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -540,11 +540,11 @@ D_i = \begin{cases}
 <section id="lateの推定値" class="slide level2">
 <h2>LATEの推定値</h2>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="モデルの適合度" class="slide level2">
 <h2>モデルの適合度</h2>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="ノンパラメトリック推定" class="slide level2">
 <h2>ノンパラメトリック推定</h2>
 <h3 id="パラメトリックのデメリット">パラメトリックのデメリット</h3>
@@ -577,9 +577,21 @@ D_i = \begin{cases}
 <ul>
 <li>全体平均の<span class="math inline">\(\widehat{\textsf{LATE}}\)</span>：<span class="math inline">\(\mathbb{E}[Y | c \leq R] - \mathbb{E}[Y | R &lt; c]\)</span></li>
 <li>局所平均の<span class="math inline">\(\widehat{\textsf{LATE}}\)</span>：<span class="math inline">\(\mathbb{E}[Y | c \leq R \leq c + h] - \mathbb{E}[Y | c - h \leq R &lt; c]\)</span></li>
+<li><span class="alert"><strong>カーネル関数を使用した加重平均</strong></span>（Nadaraya-Watson推定量）
+<ul>
+<li>重みなし平均も一様<span class="small">(uniform)</span>カーネル関数<sup>1</sup>に基づく加重平均</li>
+</ul></li>
 </ul>
-
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>長方形（rectangular）カーネル関数とも呼ばれる。</p></li></ol></aside></section>
 <section id="バンド幅" class="slide level2">
 <h2>バンド幅</h2>
 <ul>
@@ -606,11 +618,11 @@ D_i = \begin{cases}
 </section>
 <section id="局所回帰分析" class="slide level2">
 <h2>局所回帰分析</h2>
-<p>ハンド幅内の個体のみを用いたパラメトリック推定法（<a href="https://doi.org/10.1111/1468-0262.00183">Hahn, Todd, and van der Klaauw 2001</a>）</p>
+<p>ハンド幅内の個体のみを用いたパラメトリック推定法<span class="small">（<a href="https://doi.org/10.1111/1468-0262.00183">Hahn, Todd, and van der Klaauw 2001</a>）</span></p>
 <ul>
 <li>「線形+交差項」か「二次多項式+交差項」で十分な場合が多い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -628,14 +640,22 @@ D_i = \begin{cases}
 </div>
 </div>
 </div>
-</section>
+
+<aside><div>
+<ul>
+<li>Hahn, Jinyong, Petra Todd, and Wilbert Van der Klaauw. 2001. “<a href="https://doi.org/10.1111/1468-0262.00183">Identification and Estimation of Treatment Effects with a Regression-Discontinuity Design</a>.” <em>Econometrica,</em> 69 (1): 201-209.</li>
+</ul>
+</div></aside></section>
 <section id="局所平均と局所回帰" class="slide level2">
 <h2>局所平均と局所回帰</h2>
 <ul>
-<li><strong>境界問題</strong>によるバイアスの発生</li>
+<li><strong>境界問題</strong>によるバイアスの発生<span class="small">（<a href="https://doi.org/10.1111/1468-0262.00183">Hahn, Todd, and van der Klaauw 2001</a>）</span>
+<ul>
+<li>以下の例は長方形カーネル関数に基づく局所平均</li>
+</ul></li>
 </ul>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
 <section id="カーネル関数" class="slide level2">
 <h2>カーネル関数</h2>
 <p>閾値における処置効果に興味があるため、<span class="alert"><strong>閾値に近い個体ほど高い重み</strong></span>を付ける</p>
@@ -694,7 +714,7 @@ D_i = \begin{cases}
 </ul></li>
 <li>方法2：割当変数の<strong>区間</strong>と結果変数の<strong>平均値</strong>の散布図（右）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">

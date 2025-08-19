@@ -522,7 +522,7 @@
     "href": "rdd_slide.html#パラメトリック推定",
     "title": "社会科学における因果推論",
     "section": "パラメトリック推定",
-    "text": "パラメトリック推定\n結果変数を処置変数と割当変数に回帰した（非）線形回帰モデル\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i\n\\]\n\n\\(Y_i\\)：結果変数\n\\(D_i\\)：処置変数（\\(D_i \\in \\{0, 1\\}\\)）\n\\(R_i\\)：割当変数\n\\(\\rho\\)：局所処置効果（LATE）"
+    "text": "パラメトリック推定\n結果変数を処置変数と割当変数に回帰した（非）線形回帰モデル\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\hat{Y_i} = \\alpha + \\textcolor{red}{\\rho} D_i + \\beta R_i\n\\]\n\n\\(Y_i\\)：結果変数\n\\(D_i\\)：処置変数（\\(D_i \\in \\{0, 1\\}\\)）\n\\(R_i\\)：割当変数\n\\(\\rho\\)：局所処置効果（LATE）"
   },
   {
     "objectID": "rdd_slide.html#交互作用",
@@ -536,7 +536,7 @@
     "href": "rdd_slide.html#交互作用の注意点",
     "title": "社会科学における因果推論",
     "section": "交互作用の注意点",
-    "text": "交互作用の注意点\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i + \\gamma D_i \\cdot R_i\n\\]\n\nこの場合、LATEは\\(\\rho\\)ではなく、\\(\\rho + \\gamma \\cdot c\\)\n\n処置効果は\\(R_i\\)の値に依存1（処置効果は\\(R_i = c\\)の箇所のみで観察されるため）\n\n閾値（\\(c\\)）が0になるように割当変数を調整（=割当変数を閾値で中心化する）することを推奨\n\n割当変数の値から閾値を値を引くだけで十分\n\n割当変数を\\(c\\)で中心化すると、新しい\\(c\\)は必ず0\n\nLATEは\\(\\rho + \\gamma \\cdot 0\\) = \\(\\rho\\)\n\n\nなぜこうなるのかが分からない場合は、本講義の履修よりも先に交互作用の解釈について勉強すること。交互作用の解釈に関する解説はBrambor（2006）が詳しい。まだ読んだことない人にもおすすめできる論文だ。"
+    "text": "交互作用の注意点\n\\[\n\\hat{Y_i} = \\alpha + \\rho D_i + \\beta R_i + \\gamma D_i \\cdot R_i\n\\]\n\nこの場合、LATEは\\(\\rho\\)ではなく、\\(\\rho + \\gamma \\cdot c\\)\n\n処置効果は\\(R_i\\)の値に依存1（処置効果は\\(R_i = c\\)の箇所のみで観察されるため）\n\n閾値（\\(c\\)）が0になるように割当変数を調整（=割当変数を閾値で中心化）することを推奨\n\n割当変数の値から閾値を値を引くだけで十分\n\n割当変数を\\(c\\)で中心化すると、新しい\\(c\\)は必ず0\n\nLATEは\\(\\rho + \\gamma \\cdot 0\\) = \\(\\rho\\)\n\n\nなぜこうなるのかが分からない場合は、本講義の履修よりも先に交互作用の解釈について勉強すること。交互作用の解釈に関する解説はBrambor（2006）が詳しい。まだ読んだことない人にもおすすめできる論文だ。"
   },
   {
     "objectID": "rdd_slide.html#中心化の前後比較",
@@ -655,7 +655,7 @@
     "href": "rdd_slide.html#局所平均",
     "title": "社会科学における因果推論",
     "section": "局所平均",
-    "text": "局所平均\n\n全体平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R] - \\mathbb{E}[Y | R &lt; c]\\)\n局所平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R \\leq c + h] - \\mathbb{E}[Y | c - h \\leq R &lt; c]\\)"
+    "text": "局所平均\n\n全体平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R] - \\mathbb{E}[Y | R &lt; c]\\)\n局所平均の\\(\\widehat{\\textsf{LATE}}\\)：\\(\\mathbb{E}[Y | c \\leq R \\leq c + h] - \\mathbb{E}[Y | c - h \\leq R &lt; c]\\)\nカーネル関数を使用した加重平均（Nadaraya-Watson推定量）\n\n重みなし平均も一様(uniform)カーネル関数1に基づく加重平均\n\n\n\n\n\n\n\n\n\n\n\n長方形（rectangular）カーネル関数とも呼ばれる。"
   },
   {
     "objectID": "rdd_slide.html#バンド幅",
@@ -669,14 +669,14 @@
     "href": "rdd_slide.html#局所回帰分析",
     "title": "社会科学における因果推論",
     "section": "局所回帰分析",
-    "text": "局所回帰分析\nハンド幅内の個体のみを用いたパラメトリック推定法（Hahn, Todd, and van der Klaauw 2001）\n\n「線形+交差項」か「二次多項式+交差項」で十分な場合が多い"
+    "text": "局所回帰分析\nハンド幅内の個体のみを用いたパラメトリック推定法（Hahn, Todd, and van der Klaauw 2001）\n\n「線形+交差項」か「二次多項式+交差項」で十分な場合が多い\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHahn, Jinyong, Petra Todd, and Wilbert Van der Klaauw. 2001. “Identification and Estimation of Treatment Effects with a Regression-Discontinuity Design.” Econometrica, 69 (1): 201-209."
   },
   {
     "objectID": "rdd_slide.html#局所平均と局所回帰",
     "href": "rdd_slide.html#局所平均と局所回帰",
     "title": "社会科学における因果推論",
     "section": "局所平均と局所回帰",
-    "text": "局所平均と局所回帰\n\n境界問題によるバイアスの発生"
+    "text": "局所平均と局所回帰\n\n境界問題によるバイアスの発生（Hahn, Todd, and van der Klaauw 2001）\n\n以下の例は長方形カーネル関数に基づく局所平均"
   },
   {
     "objectID": "rdd_slide.html#カーネル関数",
@@ -1924,5 +1924,12 @@
     "title": "社会科学における因果推論",
     "section": "プラセボテスト要修正",
     "text": "プラセボテスト要修正\n3つの考え方\n\nタイミングをずらす：本来は何もないはずの時期に効果が見られないか\n\n前頁の例\n\n対象をずらす：本来は影響がないはずのグループに効果が見られないか？\n結果変数を変える：本来は影響がないはずの指標に効果が見られないか？\n\n実際の例も出すにゃー\n\n\n\nBertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “How Much Should We Trust Differences-in-Differences Estimates?” The Quarterly Journal of Economics, 119 (1) pp. 249-275.\nGruber, Jonathan and Daniel M. Hungerman. 2008. “The Effect of the Blue Laws on Religious and Secular Activity” The Quarterly Journal of Economics, 123 (2) pp. 711-744.\nCard, David, Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania” The American Economic Review, 84 (4) pp. 772-793."
+  },
+  {
+    "objectID": "did_slide.html#その他のモデル",
+    "href": "did_slide.html#その他のモデル",
+    "title": "社会科学における因果推論",
+    "section": "その他のモデル",
+    "text": "その他のモデル\n\nトレンド変数を含むモデル\n\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\textcolor{red}{\\gamma_i t} + \\varepsilon_{it}\n\\]\n\n共変量を含むモデル\n\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\textcolor{red}{\\eta X_{it}} + \\varepsilon_{it}\n\\]"
   }
 ]
