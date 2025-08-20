@@ -669,7 +669,7 @@
     "href": "rdd_slide.html#局所回帰分析",
     "title": "社会科学における因果推論",
     "section": "局所回帰分析",
-    "text": "局所回帰分析\nハンド幅内の個体のみを用いたパラメトリック推定法（Hahn, Todd, and van der Klaauw 2001）\n\n「線形+交差項」か「二次多項式+交差項」で十分な場合が多い\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHahn, Jinyong, Petra Todd, and Wilbert Van der Klaauw. 2001. “Identification and Estimation of Treatment Effects with a Regression-Discontinuity Design.” Econometrica, 69 (1): 201-209."
+    "text": "局所回帰分析\nハンド幅内の個体のみを用いたパラメトリック推定法（Hahn, Todd, and van der Klaauw 2001）\n\n「線形+交差項」か「二次多項式+交差項」で十分な場合が多い\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHahn, Jinyong, Petra Todd, and Wilbert Van der Klaauw. 2001. “Identification and Estimation of Treatment Effects with a Regression-Discontinuity Design.” Econometrica, 69 (1): 201-209."
   },
   {
     "objectID": "rdd_slide.html#局所平均と局所回帰",
