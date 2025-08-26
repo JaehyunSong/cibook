@@ -268,7 +268,7 @@
 </ul></li>
 <li>観測された共変量の値が（制度等によって決められた）閾値のいずれかの側にあるかによって、処置の割り当てが決まる。
 <ul>
-<li>「観測された共変量」は<span class="alert"><strong>割当変数</strong></span>（Running variable）、または<span class="alert"><strong>強制変数</strong></span>（Forcing variable）と呼ばれる。</li>
+<li>「観測された共変量」は<span class="alert"><strong>割当変数</strong></span>（Running variable）、または<strong>強制変数</strong>（Forcing variable）と呼ばれる。</li>
 <li>割当変数（<span class="math inline">\(R_i\)</span>）の値が閾値（<span class="math inline">\(c\)</span>）を超えた個体を「処置群（<span class="math inline">\(D_i = 1\)</span>）」と呼ぶケースが多い。</li>
 </ul></li>
 </ul>
@@ -312,7 +312,7 @@ D_i = \begin{cases}
 <h2>割当メカニズムの比較</h2>
 <p>割当変数の値が閾値を超えると、処置を受ける確率が<strong>ジャンプ</strong>する。</p>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1950"></section></section>
 <section>
 <section id="仮定" class="title-slide slide level1 center">
 <h1><strong>2</strong> 仮定</h1>
@@ -357,7 +357,7 @@ D_i = \begin{cases}
 <section id="割当変数の連続性" class="slide level2">
 <h2>割当変数の連続性</h2>
 <ul>
-<li>閾値周辺において強制変数の操作が行われていないこと</li>
+<li>閾値周辺において割当変数の操作が行われていないこと</li>
 <li><a href="https://doi.org/10.1016/j.jeconom.2007.05.005">McCrary（2008）</a>の密度検定（density test）で仮定違反有無が確認可能</li>
 </ul>
 
@@ -437,7 +437,7 @@ D_i = \begin{cases}
 <p><span class="math display">\[
 \hat{Y_i} = \alpha + \rho D_i + \beta R_i + \gamma D_i \cdot R_i
 \]</span></p>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -622,7 +622,7 @@ D_i = \begin{cases}
 <ul>
 <li>「線形+交差項」か「二次多項式+交差項」で十分な場合が多い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="3">
+<div class="cell quarto-layout-panel" data-layout-ncol="3" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -692,25 +692,21 @@ D_i = \begin{cases}
 <section>
 <section id="実装例" class="title-slide slide level1 center">
 <h1><strong>4</strong> 実装例</h1>
+<!--
 
-</section>
-<section id="推定パッケージ" class="slide level2">
-<h2>推定（パッケージ）</h2>
-<p>パッケージによってバンド幅、局所回帰分析の関数形、標準誤差の計算方法が異なるので、事前に確認しておくこと。</p>
-<ul>
-<li>推定用
-<ul>
-<li>{<a href="https://cran.r-project.org/web/packages/rdd/">rdd</a>}</li>
-<li>{<a href="https://rdpackages.github.io/rdrobust/">rdrobust</a>}</li>
-<li>{<a href="https://www.felixthoemmes.com/rddapp/">rddapp</a>}：推定 + ツールボックス</li>
-<li>{<a href="https://cran.r-project.org/web/packages/SpatialRDD/index.html">SpatialRDD</a>}：地理的RDD</li>
-</ul></li>
-<li>ツールボックス系
-<ul>
-<li>{<a href="https://cran.r-project.org/web/packages/rddtools/">rddtools</a>}</li>
-<li>{<a href="https://rdpackages.github.io/rddensity/">rddensity</a>}</li>
-</ul></li>
-</ul>
+## 推定（パッケージ）
+
+パッケージによってバンド幅、局所回帰分析の関数形、標準誤差の計算方法が異なるので、事前に確認しておくこと。
+
+- 推定用
+   - {[rdd](https://cran.r-project.org/web/packages/rdd/)}
+   - {[rdrobust](https://rdpackages.github.io/rdrobust/)}
+   - {[rddapp](https://www.felixthoemmes.com/rddapp/)}：推定 + ツールボックス
+   - {[SpatialRDD](https://cran.r-project.org/web/packages/SpatialRDD/index.html)}：地理的RDD
+- ツールボックス系
+   - {[rddtools](https://cran.r-project.org/web/packages/rddtools/)}
+   - {[rddensity](https://rdpackages.github.io/rddensity/)}
+-->
 </section>
 <section id="可視化散布図" class="slide level2">
 <h2>可視化（散布図）</h2>
@@ -721,7 +717,7 @@ D_i = \begin{cases}
 </ul></li>
 <li>方法2：割当変数の<strong>区間</strong>と結果変数の<strong>平均値</strong>の散布図（右）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -753,10 +749,10 @@ D_i = \begin{cases}
 </div></aside></section>
 <section id="プラセボ検定" class="slide level2">
 <h2>プラセボ検定</h2>
-<p><a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Imbens and Lemieux（2008）</a>のガイドライン</p>
+<p><span class="alert">閾値周辺における潜在的結果の連続性</span>の確認<span class="small">（Imbens and Lemieux 2008）</span></p>
 <ol type="1">
 <li>閾値を基準とし、左右でサンプルを分割する。</li>
-<li>それぞれのサブサンプルにおける<span class="math inline">\(R\)</span>の<span class="math inline">\(\delta\)</span>分位数をを求める。
+<li>それぞれのサブサンプルにおける<span class="math inline">\(R\)</span>の<span class="math inline">\(\delta\)</span>分位数を求める。
 <ul>
 <li>閾値左側サンプルにおける<span class="math inline">\(R\)</span>の<span class="math inline">\(\delta\)</span>分位数：<span class="math inline">\(q_{R, \delta, l}\)</span></li>
 <li>閾値右側サンプルにおける<span class="math inline">\(R\)</span>の<span class="math inline">\(\delta\)</span>分位数：<span class="math inline">\(q_{R, \delta, r}\)</span></li>
@@ -770,17 +766,77 @@ D_i = \begin{cases}
 </ol>
 
 <aside><div>
-<p>注：<a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Imbens and Lemieux（2008）</a>は割当変数を<span class="math inline">\(X\)</span>と表記しているため、<span class="math inline">\(q_{X, \delta, l}\)</span>、<span class="math inline">\(q_{X, \delta, l}\)</span>と表記している。</p>
+<ul>
+<li>Imbens, Guido W. and Thomas Lemieux. 2008. “<a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Regression discontinuity designs: A guide to practice.</a>” <em>Journal of Econometrics,</em> 142(2): 615-635.</li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Imbens and Lemieux（2008）</a>は割当変数を<span class="math inline">\(X\)</span>と表記しているため、<span class="math inline">\(q_{X, \delta, l}\)</span>、<span class="math inline">\(q_{X, \delta, l}\)</span>と表記している。</li>
+</ul>
 </div></aside></section>
+<section id="プラセボ検定のイメージdelta-0.75の場合" class="slide level2">
+<h2>プラセボ検定のイメージ（<span class="math inline">\(\delta\)</span> = 0.75の場合）</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p><br><br><br><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-39-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-39-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-40-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-40-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="プラセボ検定の例" class="slide level2">
 <h2>プラセボ検定の例</h2>
-<p>新しい閾値周辺においてジャンプが生じない（=LATEの推定値が0）ことが望ましい。</p>
+<p>新しい閾値周辺においてジャンプが生じない<span class="small">（=LATEの推定値が0）</span>ことが望ましい。</p>
+<ul>
+<li>統計的に有意なジャンプが生じた場合、潜在的結果の連続性に関する仮定が満たされていない可能性が高い。</li>
+</ul>
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-41-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
 <section id="バランスチェック" class="slide level2">
 <h2>バランスチェック</h2>
-<p>共変量（処置前変数）を結果変数とし、RDDを実行</p>
+<p><span class="alert">閾値周辺における共変量の連続性</span>の確認</p>
 <ul>
+<li>共変量（処置前変数）を結果変数とし、RDDを実行</li>
 <li>ジャンプが生じないことが望ましい</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
@@ -794,13 +850,15 @@ D_i = \begin{cases}
 </div></aside></section>
 <section id="密度検定" class="slide level2">
 <h2>密度検定</h2>
+<p><span class="alert">閾値周辺における割当変数の連続性</span>の確認</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>：閾値周辺において割当変数の操作が行われていない。</li>
+<li>同じ目的の検定として二項検定<span class="alert">（binomial test）</span></li>
 </ul>
 
 
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-40-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-43-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

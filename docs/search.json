@@ -508,7 +508,7 @@
     "href": "rdd_slide.html#割当変数の連続性",
     "title": "社会科学における因果推論",
     "section": "割当変数の連続性",
-    "text": "割当変数の連続性\n\n閾値周辺において強制変数の操作が行われていないこと\nMcCrary（2008）の密度検定（density test）で仮定違反有無が確認可能"
+    "text": "割当変数の連続性\n\n閾値周辺において割当変数の操作が行われていないこと\nMcCrary（2008）の密度検定（density test）で仮定違反有無が確認可能"
   },
   {
     "objectID": "rdd_slide.html#推定方法",
@@ -718,28 +718,28 @@
     "href": "rdd_slide.html#プラセボ検定",
     "title": "社会科学における因果推論",
     "section": "プラセボ検定",
-    "text": "プラセボ検定\nImbens and Lemieux（2008）のガイドライン\n\n閾値を基準とし、左右でサンプルを分割する。\nそれぞれのサブサンプルにおける\\(R\\)の\\(\\delta\\)分位数をを求める。\n\n閾値左側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, l}\\)\n閾値右側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, r}\\)\n中央値を\\(\\delta\\)とする場合、それぞれ\\(q_{R, 1/2, l}\\)と\\(q_{R, 1/2, r}\\)\n\n\\(q_{R, \\delta, l}\\)と\\(q_{R, \\delta, r}\\)をサブサンプルにおける閾値とする。\n各サブサンプル内でRDDを推定する。\n\n\\(\\delta=0.5\\)に加え、別の\\(\\delta\\)を採用しても良い。\n\n\n\n\n注：Imbens and Lemieux（2008）は割当変数を\\(X\\)と表記しているため、\\(q_{X, \\delta, l}\\)、\\(q_{X, \\delta, l}\\)と表記している。"
+    "text": "プラセボ検定\n閾値周辺における潜在的結果の連続性の確認（Imbens and Lemieux 2008）\n\n閾値を基準とし、左右でサンプルを分割する。\nそれぞれのサブサンプルにおける\\(R\\)の\\(\\delta\\)分位数を求める。\n\n閾値左側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, l}\\)\n閾値右側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, r}\\)\n中央値を\\(\\delta\\)とする場合、それぞれ\\(q_{R, 1/2, l}\\)と\\(q_{R, 1/2, r}\\)\n\n\\(q_{R, \\delta, l}\\)と\\(q_{R, \\delta, r}\\)をサブサンプルにおける閾値とする。\n各サブサンプル内でRDDを推定する。\n\n\\(\\delta=0.5\\)に加え、別の\\(\\delta\\)を採用しても良い。\n\n\n\n\n\nImbens, Guido W. and Thomas Lemieux. 2008. “Regression discontinuity designs: A guide to practice.” Journal of Econometrics, 142(2): 615-635.\nImbens and Lemieux（2008）は割当変数を\\(X\\)と表記しているため、\\(q_{X, \\delta, l}\\)、\\(q_{X, \\delta, l}\\)と表記している。"
   },
   {
     "objectID": "rdd_slide.html#プラセボ検定の例",
     "href": "rdd_slide.html#プラセボ検定の例",
     "title": "社会科学における因果推論",
     "section": "プラセボ検定の例",
-    "text": "プラセボ検定の例\n新しい閾値周辺においてジャンプが生じない（=LATEの推定値が0）ことが望ましい。"
+    "text": "プラセボ検定の例\n新しい閾値周辺においてジャンプが生じない（=LATEの推定値が0）ことが望ましい。\n\n統計的に有意なジャンプが生じた場合、潜在的結果の連続性に関する仮定が満たされていない可能性が高い。"
   },
   {
     "objectID": "rdd_slide.html#バランスチェック",
     "href": "rdd_slide.html#バランスチェック",
     "title": "社会科学における因果推論",
     "section": "バランスチェック",
-    "text": "バランスチェック\n共変量（処置前変数）を結果変数とし、RDDを実行\n\nジャンプが生じないことが望ましい\n\n\n\n\n\n\n\n\n出典：Lee, Moretti, and Butler（2004）"
+    "text": "バランスチェック\n閾値周辺における共変量の連続性の確認\n\n共変量（処置前変数）を結果変数とし、RDDを実行\nジャンプが生じないことが望ましい\n\n\n\n\n\n\n\n\n出典：Lee, Moretti, and Butler（2004）"
   },
   {
     "objectID": "rdd_slide.html#密度検定",
     "href": "rdd_slide.html#密度検定",
     "title": "社会科学における因果推論",
     "section": "密度検定",
-    "text": "密度検定\n\n\\(H_0\\)：閾値周辺において割当変数の操作が行われていない。"
+    "text": "密度検定\n閾値周辺における割当変数の連続性の確認\n\n\\(H_0\\)：閾値周辺において割当変数の操作が行われていない。\n同じ目的の検定として二項検定（binomial test）"
   },
   {
     "objectID": "rct_slide.html#内生性",
@@ -1931,5 +1931,47 @@
     "title": "社会科学における因果推論",
     "section": "その他のモデル",
     "text": "その他のモデル\n\nトレンド変数を含むモデル\n\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\textcolor{red}{\\gamma_i t} + \\varepsilon_{it}\n\\]\n\n共変量を含むモデル\n\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\textcolor{red}{\\eta X_{it}} + \\varepsilon_{it}\n\\]"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定のイメージdelta-0.5の場合",
+    "href": "rdd_slide.html#プラセボ検定のイメージdelta-0.5の場合",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定のイメージ（\\(\\delta\\) = 0.5の場合）",
+    "text": "プラセボ検定のイメージ（\\(\\delta\\) = 0.5の場合）\nにゃー"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定のイメージdelta-0.25の場合",
+    "href": "rdd_slide.html#プラセボ検定のイメージdelta-0.25の場合",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定のイメージ（\\(\\delta\\) = 0.25の場合）",
+    "text": "プラセボ検定のイメージ（\\(\\delta\\) = 0.25の場合）"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定imbens-and-lemieux-2008",
+    "href": "rdd_slide.html#プラセボ検定imbens-and-lemieux-2008",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定（Imbens and Lemieux 2008）",
+    "text": "プラセボ検定（Imbens and Lemieux 2008）\n閾値周辺における潜在的結果の連続性の確認\n\n閾値を基準とし、左右でサンプルを分割する。\nそれぞれのサブサンプルにおける\\(R\\)の\\(\\delta\\)分位数を求める。\n\n閾値左側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, l}\\)\n閾値右側サンプルにおける\\(R\\)の\\(\\delta\\)分位数：\\(q_{R, \\delta, r}\\)\n中央値を\\(\\delta\\)とする場合、それぞれ\\(q_{R, 1/2, l}\\)と\\(q_{R, 1/2, r}\\)\n\n\\(q_{R, \\delta, l}\\)と\\(q_{R, \\delta, r}\\)をサブサンプルにおける閾値とする。\n各サブサンプル内でRDDを推定する。\n\n\\(\\delta=0.5\\)に加え、別の\\(\\delta\\)を採用しても良い。\n\n\n\n\n\nImbens, Guido W. and Thomas Lemieux. 2008. “Regression discontinuity designs: A guide to practice.” Journal of Econometrics, 142(2): 615-635.\nImbens and Lemieux（2008）は割当変数を\\(X\\)と表記しているため、\\(q_{X, \\delta, l}\\)、\\(q_{X, \\delta, l}\\)と表記している。"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定のイメージdelta-0.75の場合",
+    "href": "rdd_slide.html#プラセボ検定のイメージdelta-0.75の場合",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定のイメージ（\\(\\delta\\) = 0.75の場合）",
+    "text": "プラセボ検定のイメージ（\\(\\delta\\) = 0.75の場合）"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定のイメージdelta-0.75の場合デルタ調整",
+    "href": "rdd_slide.html#プラセボ検定のイメージdelta-0.75の場合デルタ調整",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定のイメージ（\\(\\delta\\) = 0.75の場合）デルタ調整",
+    "text": "プラセボ検定のイメージ（\\(\\delta\\) = 0.75の場合）デルタ調整"
+  },
+  {
+    "objectID": "rdd_slide.html#プラセボ検定の例凡例を中に",
+    "href": "rdd_slide.html#プラセボ検定の例凡例を中に",
+    "title": "社会科学における因果推論",
+    "section": "プラセボ検定の例凡例を中に",
+    "text": "プラセボ検定の例凡例を中に\n新しい閾値周辺においてジャンプが生じない（=LATEの推定値が0）ことが望ましい。\n\n統計的に有意なジャンプが生じた場合、潜在的結果の連続性に関する仮定が満たされていない可能性が高い。"
   }
 ]
