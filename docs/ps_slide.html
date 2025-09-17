@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="宋財泫（関西大学）">
   <title>困菓唯倫 with R – 社会科学における因果推論</title>
@@ -29,7 +29,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-fa59b55c41a878cebefac86642c15c95.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -158,7 +158,7 @@
 <ul>
 <li>一般的に<span class="alert"><strong>パラメトリックモデル</strong></span>が使われる <span class="math inline">\(\Rightarrow\)</span> 回帰分析
 <ul>
-<li><span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \beta_1 D_i + \beta_2 {X1}_i + \beta_3 {X2}_i + ...\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(\hat{Y_i}(D_i = 0)\)</span>を予測する</li>
+<li><span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \beta_1 D_i + \beta_2 {X1}_i + \beta_3 {X2}_i + ...\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(Y_i(D_i = 0)\)</span>を予測する</li>
 <li>回帰分析に限らず、様々な手法が使える<span class="small">（ベイジアン、機械学習、最尤法、…）</span></li>
 </ul></li>
 <li>もし、モデルが間違ったら…? <span class="math inline">\(\leadsto\)</span> 間違った処置効果の推定量が得られる</li>
@@ -168,16 +168,23 @@
 <h2>マッチングの考え方</h2>
 <p><strong>正確マッチング</strong><span class="small">（exact matching）</span>の例<sup>1</sup></p>
 <ul>
-<li>例）<span class="math inline">\(i\)</span>=4と7は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能</li>
-<li>例）統制群の中に<span class="math inline">\(i\)</span>=10と共変量が完全に一致する個体がないため、分析から除外</li>
+<li>例）<span class="alert"><span class="math inline">\(i\)</span>=4と7</span>は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能</li>
+<li>例）統制群の中に<span class="royalblue"><span class="math inline">\(i\)</span>=10</span>と共変量が完全に一致する個体がないため、分析から除外</li>
 </ul>
 <div class="columns">
-<div class="column" style="width:45%;">
+<div class="column" style="width:50%;">
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="caption-top">
 <caption>統制群</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
@@ -196,11 +203,11 @@
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
+<td style="text-align: right;"><strong>1</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
@@ -210,11 +217,11 @@
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;"><span class="alert"><strong>4</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
@@ -224,11 +231,11 @@
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;"><span class="tomato"><strong>6</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>3</strong></span></td>
 </tr>
 </tbody>
 </table>
@@ -236,6 +243,13 @@
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="caption-top">
 <caption>処置群</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
@@ -247,44 +261,44 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;"><span class="alert"><strong>7</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="alert"><strong>3</strong></span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;"><strong>8</strong></td>
+<td style="text-align: right;"><strong>1</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
+<td style="text-align: right;"><strong>1</strong></td>
+<td style="text-align: right;"><strong>5</strong></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;"><span class="tomato"><strong>9</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="tomato"><strong>4</strong></span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;"><span class="royalblue"><strong>10</strong></span></td>
+<td style="text-align: right;"><span class="royalblue"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="royalblue"><strong>3</strong></span></td>
+<td style="text-align: right;"><span class="royalblue"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="royalblue"><strong>6</strong></span></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:55%;">
+</div><div class="column" style="width:50%;">
 <table class="caption-top">
 <caption>マッチングの例（ATT）</caption>
 <thead>
 <tr class="header">
-<th style="text-align: right;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
@@ -295,7 +309,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">4-7</td>
+<td style="text-align: center;"><span class="alert"><strong>7 vs.&nbsp;4</strong></span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -304,7 +318,7 @@
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2-8</td>
+<td style="text-align: center;"><strong>8 vs.&nbsp;2</strong></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">1</td>
@@ -313,7 +327,7 @@
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">6-9</td>
+<td style="text-align: center;"><span class="tomato"><strong>9 vs.&nbsp;6</strong></span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
@@ -322,16 +336,16 @@
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10</td>
+<td style="text-align: center;">10</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">-</td>
+<td style="text-align: right;">?</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">-</td>
+<td style="text-align: right;">?</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">ATT</td>
+<td style="text-align: center;">ATT</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -492,12 +506,29 @@
 </div>
 </div>
 </center>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチング<span class="small">（exact matching）</span>の場合</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチングの場合</p></li></ol></aside></section>
 <section id="マッチングの限界" class="slide level2">
 <h2>マッチングの限界</h2>
-<p>厳密にいえば正確マッチング<span class="small">（exact matching）</span>の限界</p>
-<p>次元の呪い</p>
-</section>
+<ul>
+<li>共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増<sup>1</sup>
+<ul>
+<li>例1）「男性 &amp; 大卒 &amp; 大阪府居住」</li>
+<li>例2）「男性 &amp; 176.5cm &amp; 大学院卒 &amp; 年収 352万円 &amp; 吹田市居住 &amp; 韓国人」</li>
+<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>次元の呪い</strong></span></li>
+</ul></li>
+<li>妥協案
+<ul>
+<li>共変量が一致するのではなく、<span class="alert">類似</span>したケース同士で比較
+<ul>
+<li><span class="math inline">\(\Rightarrow\)</span> 最近傍マッチング<span class="small">（nearest neighbor matching）</span></li>
+</ul></li>
+<li>共変量ではなく、<span class="alert">処置を受ける確率</span>がほぼ同じケース同士で比較
+<ul>
+<li>処置を受ける確率 = <span class="alert"><strong>傾向スコア</strong></span></li>
+</ul></li>
+</ul></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>厳密にいえば正確マッチングの限界</p></li></ol></aside></section>
 <section id="傾向スコア-1" class="slide level2">
 <h2>傾向スコア</h2>
 <p><span class="math display">\[
@@ -836,13 +867,14 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

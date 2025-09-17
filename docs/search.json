@@ -1124,28 +1124,28 @@
     "href": "ps_slide.html#回帰分析の限界attの例",
     "title": "社会科学における因果推論",
     "section": "回帰分析の限界（ATTの例）",
-    "text": "回帰分析の限界（ATTの例）\nすべての因果推論は潜在的結果間の比較\n\\[\n\\tau_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\n\\]\n欠損している（=観察不可能）\\(Y_i(0)\\)を回帰分析を用いて代入（imputation）する\n\\[\n\\hat{\\tau}_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - \\textcolor{red}{\\widehat{Y_i}(0)} | D_i = 1]\n\\]\n\\(\\hat{Y_i}(0)\\)の推定方法\n\n一般的にパラメトリックモデルが使われる \\(\\Rightarrow\\) 回帰分析\n\n\\(Y_i\\)を\\(\\alpha + \\beta_1 D_i + \\beta_2 {X1}_i + \\beta_3 {X2}_i + ...\\)のような特定の関数で表現できると仮定し、切片と傾きを推定することで\\(\\hat{Y_i}(D_i = 0)\\)を予測する\n回帰分析に限らず、様々な手法が使える（ベイジアン、機械学習、最尤法、…）\n\nもし、モデルが間違ったら…? \\(\\leadsto\\) 間違った処置効果の推定量が得られる"
+    "text": "回帰分析の限界（ATTの例）\nすべての因果推論は潜在的結果間の比較\n\\[\n\\tau_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\n\\]\n欠損している（=観察不可能）\\(Y_i(0)\\)を回帰分析を用いて代入（imputation）する\n\\[\n\\hat{\\tau}_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - \\textcolor{red}{\\widehat{Y_i}(0)} | D_i = 1]\n\\]\n\\(\\hat{Y_i}(0)\\)の推定方法\n\n一般的にパラメトリックモデルが使われる \\(\\Rightarrow\\) 回帰分析\n\n\\(Y_i\\)を\\(\\alpha + \\beta_1 D_i + \\beta_2 {X1}_i + \\beta_3 {X2}_i + ...\\)のような特定の関数で表現できると仮定し、切片と傾きを推定することで\\(Y_i(D_i = 0)\\)を予測する\n回帰分析に限らず、様々な手法が使える（ベイジアン、機械学習、最尤法、…）\n\nもし、モデルが間違ったら…? \\(\\leadsto\\) 間違った処置効果の推定量が得られる"
   },
   {
     "objectID": "ps_slide.html#マッチングの考え方",
     "href": "ps_slide.html#マッチングの考え方",
     "title": "社会科学における因果推論",
     "section": "マッチングの考え方",
-    "text": "マッチングの考え方\n正確マッチング（exact matching）の例1\n\n例）\\(i\\)=4と7は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能\n例）統制群の中に\\(i\\)=10と共変量が完全に一致する個体がないため、分析から除外\n\n\n\n\n\n\n\n統制群\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n1\n0\n1\n1\n0\n\n\n2\n0\n3\n1\n3\n\n\n3\n0\n2\n0\n2\n\n\n4\n0\n0\n1\n0\n\n\n5\n0\n2\n1\n3\n\n\n6\n0\n1\n0\n3\n\n\n\n\n\n\n処置群\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n7\n1\n0\n1\n3\n\n\n8\n1\n3\n1\n5\n\n\n9\n1\n1\n0\n4\n\n\n10\n1\n3\n0\n6\n\n\n\n\n\n\n\n\nマッチングの例（ATT）\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y(0)\\)\n\\(Y(1)\\)\nITE\n\n\n\n\n4-7\n1\n0\n1\n0\n3\n3\n\n\n2-8\n1\n3\n1\n3\n5\n2\n\n\n6-9\n1\n1\n0\n3\n4\n1\n\n\n10\n1\n2\n0\n-\n6\n-\n\n\nATT\n\n\n\n\n\n2\n\n\n\n\n「厳格マッチング」と訳されることもある。"
+    "text": "マッチングの考え方\n正確マッチング（exact matching）の例1\n\n例）\\(i\\)=4と7は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能\n例）統制群の中に\\(i\\)=10と共変量が完全に一致する個体がないため、分析から除外\n\n\n\n\n\n\n\n統制群\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n1\n0\n1\n1\n0\n\n\n2\n0\n3\n1\n3\n\n\n3\n0\n2\n0\n2\n\n\n4\n0\n0\n1\n0\n\n\n5\n0\n2\n1\n3\n\n\n6\n0\n1\n0\n3\n\n\n\n\n\n\n処置群\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n7\n1\n0\n1\n3\n\n\n8\n1\n3\n1\n5\n\n\n9\n1\n1\n0\n4\n\n\n10\n1\n3\n0\n6\n\n\n\n\n\n\n\n\nマッチングの例（ATT）\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y(0)\\)\n\\(Y(1)\\)\nITE\n\n\n\n\n7 vs. 4\n1\n0\n1\n0\n3\n3\n\n\n8 vs. 2\n1\n3\n1\n3\n5\n2\n\n\n9 vs. 6\n1\n1\n0\n3\n4\n1\n\n\n10\n1\n2\n0\n?\n6\n?\n\n\nATT\n\n\n\n\n\n2\n\n\n\n\n「厳格マッチング」と訳されることもある。"
   },
   {
     "objectID": "ps_slide.html#マッチングによる因果推論の考え方",
     "href": "ps_slide.html#マッチングによる因果推論の考え方",
     "title": "社会科学における因果推論",
     "section": "マッチングによる因果推論の考え方",
-    "text": "マッチングによる因果推論の考え方\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n　\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩)\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\n回帰分析1\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩)\n\n\n\\(\\widehat{Y}\\)(👩🏿)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n\\(\\widehat{Y}\\)(👨🏼)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\nマッチング2\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩)\n\n\n\n\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n\n\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\n\n厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる正確マッチング（exact matching）の場合"
+    "text": "マッチングによる因果推論の考え方\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n　\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩)\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\n回帰分析1\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩)\n\n\n\\(\\widehat{Y}\\)(👩🏿)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n\\(\\widehat{Y}\\)(👨🏼)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\nマッチング2\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩)\n\n\n\n\n\\(Y\\)(👩🏿)\n\n\n\\(Y\\)(👩🏻)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏻)\n\n\n\n\n\\(Y\\)(👨🏼)\n\n\n\\(Y\\)(👩🏽)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👩🏽)\n\n\n\\(Y\\)(👨)\n\\(\\leftrightarrow\\)\n\\(Y\\)(👨)\n\n\n\n\n\n\n\n厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる正確マッチングの場合"
   },
   {
     "objectID": "ps_slide.html#マッチングの限界",
     "href": "ps_slide.html#マッチングの限界",
     "title": "社会科学における因果推論",
     "section": "マッチングの限界",
-    "text": "マッチングの限界\n厳密にいえば正確マッチング（exact matching）の限界\n次元の呪い"
+    "text": "マッチングの限界\n\n共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増1\n\n例1）「男性 & 大卒 & 大阪府居住」\n例2）「男性 & 176.5cm & 大学院卒 & 年収 352万円 & 吹田市居住 & 韓国人」\n\\(\\Rightarrow\\) 次元の呪い\n\n妥協案\n\n共変量が一致するのではなく、類似したケース同士で比較\n\n\\(\\Rightarrow\\) 最近傍マッチング（nearest neighbor matching）\n\n共変量ではなく、処置を受ける確率がほぼ同じケース同士で比較\n\n処置を受ける確率 = 傾向スコア\n\n\n\n厳密にいえば正確マッチングの限界"
   },
   {
     "objectID": "ps_slide.html#傾向スコア-1",
@@ -1257,7 +1257,7 @@
     "href": "index.html",
     "title": "困菓唯倫 with R",
     "section": "",
-    "text": "本資料は作成中のものです。\n\n\n\n　本資料は、以下の3講義の教材として執筆中のものであり、2026年度中の公開を予定しております。\n\n関西大学総合情報学研究科「社会科学における因果推論」\n神戸大学法学研究科「方法論特殊講義III」\n神戸大学法学部「プログラム講義計量政治学方法論I」\n\n　現時点では\\(\\alpha\\)版に相当する段階であり、内容に不備や誤りが含まれている可能性が非常に高いです。したがって、本資料の内容に起因するいかなる問題についても、著者（宋）は一切の責任を負いかねます。"
+    "text": "重要本資料は作成中のものです。\n\n\n\n　本資料は、以下の3講義の教材として執筆中のものであり、2026年度中の公開を予定しております。\n\n関西大学総合情報学研究科「社会科学における因果推論」\n神戸大学法学研究科「方法論特殊講義III」\n神戸大学法学部「プログラム講義計量政治学方法論I」\n\n　現時点では\\(\\alpha\\)版に相当する段階であり、内容に不備や誤りが含まれている可能性が非常に高いです。したがって、本資料の内容に起因するいかなる問題についても、著者（宋）は一切の責任を負いかねます。"
   },
   {
     "objectID": "index.html#構成",
