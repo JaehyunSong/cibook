@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -56,51 +62,51 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #24292e;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-8959375eb0f6913aa26bd5e18886ba7d.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -192,125 +198,123 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">5/ 回帰分析</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="回帰分析" class="title-slide slide level1 center">
-<h1><strong>1</strong> 回帰分析</h1>
+</section><section><section id="回帰分析" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 回帰分析</h1>
 
-</section>
-<section id="単回帰分析" class="slide level2">
-<h2>単回帰分析</h2>
-<p><span class="alert"><strong>単回帰分析</strong></span><span class="small">（simple regression）</span>：説明変数が1つのみの線形回帰分析</p>
+</section><section id="単回帰分析" class="slide level2"><h2>単回帰分析</h2>
+<p><span class="strong">単回帰分析</span><span class="small">（simple regression）</span>：説明変数が1つのみの線形回帰分析</p>
 <ul>
-<li><span class="math inline">\(Y\)</span>を<span class="math inline">\(D\)</span>に回帰する<span class="small">（regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(D\)</span>）</span></li>
+<li>
+<span class="math inline">\(Y\)</span>を<span class="math inline">\(D\)</span>に回帰する<span class="small">（regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(D\)</span>）</span>
+</li>
 </ul>
 <p><span class="math display">\[
 \begin{eqnarray}
 Y_i &amp; = &amp; \mathbb{E}[Y_i|D_i] + \varepsilon_i &amp; = &amp; \alpha + \tau D_i + \varepsilon_i \\
-\hat{Y}_i &amp; = &amp; \mathbb{E}[Y_i|D_i] &amp; = &amp; \hat{\alpha} + \hat{\tau} D_i
+\widehat{Y}_i &amp; = &amp; \mathbb{E}[Y_i|D_i] &amp; = &amp; \widehat{\alpha} + \widehat{\tau} D_i
 \end{eqnarray}
 \]</span></p>
 <ul>
-<li>推定対象：<span class="math inline">\(\hat{\alpha}\)</span>、<span class="math inline">\(\hat{\tau}\)</span></li>
-<li>推定方法：<span class="alert"><strong>最小二乗法</strong></span><span class="small">（ordinary least squares; OLS）</span></li>
+<li>推定対象：<span class="math inline">\(\widehat{\alpha}\)</span>、<span class="math inline">\(\widehat{\tau}\)</span>
+</li>
+<li>推定方法：<span class="strong">最小二乗法</span><span class="small">（ordinary least squares; OLS）</span>
+</li>
+</ul></section><section id="最小二乗法" class="slide level2"><h2>最小二乗法</h2>
+<ul>
+<li>
+<span class="strong">残差の二乗和を最小とする<span class="math inline">\(\widehat{\alpha}\)</span>と<span class="math inline">\(\widehat{\tau}\)</span>を推定</span>
+<ul>
+<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(u_i = Y_i - \widehat{Y}_i = Y_i - \widehat{\alpha} - \widehat{\tau} D_i\)</span>
+<ul>
+<li>
+<span class="math inline">\(u_i\)</span>は<span class="math inline">\(\varepsilon_i\)</span>の推定値（<span class="math inline">\(\widehat{\varepsilon}\)</span>）</li>
 </ul>
-</section>
-<section id="最小二乗法" class="slide level2">
-<h2>最小二乗法</h2>
-<ul>
-<li><span class="alert"><strong>残差の二乗和を最小とする<span class="math inline">\(\hat{\alpha}\)</span>と<span class="math inline">\(\hat{\tau}\)</span>を推定</strong></span>
-<ul>
-<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(u_i = Y_i - \hat{Y}_i = Y_i - \hat{\alpha} - \hat{\tau} D_i\)</span>
-<ul>
-<li><span class="math inline">\(u_i\)</span>は<span class="math inline">\(\varepsilon_i\)</span>の推定値（<span class="math inline">\(\hat{\varepsilon}\)</span>）</li>
-</ul></li>
-<li>残差自乗和の平方根は「<strong>RMSE</strong>」<span class="small">（Root mean square error）</span>とも呼ばれる</li>
-</ul></li>
+</li>
+<li>残差自乗和の平方根は「<strong>RMSE</strong>」<span class="small">（root mean square error）</span>とも呼ばれる</li>
+</ul>
+</li>
 </ul>
 <p><span class="math display">\[
-(\hat{\alpha}, \hat{\tau}) = \mathop{\arg \min}_{\alpha, \tau} \sum_{i}^{n}(Y_i - \alpha - \tau D_i)^2
+(\widehat{\alpha}, \widehat{\tau}) = \mathop{\arg \min}_{\alpha, \tau} \sum_{i}^{n}(Y_i - \alpha - \tau D_i)^2
 \]</span></p>
-</section>
-<section id="最小二乗法の例" class="slide level2">
-<h2>最小二乗法の例</h2>
+</section><section id="最小二乗法の例" class="slide level2"><h2>最小二乗法の例</h2>
 <ul>
 <li>残差の二乗和は141.13（左）、<span class="alert">58.82</span>（中）、66.55（右）
 <ul>
 <li>RMSEはそれぞれ3.76、<span class="alert">2.43</span>、2.85</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
-<section id="単回帰分析と因果推論" class="slide level2">
-<h2>単回帰分析と因果推論</h2>
-<p><span class="alert"><strong>処置変数が外生変数、かつ二値変数なら<span class="math inline">\(D_i\)</span>の係数の推定値はATEの推定値</strong></span></p>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="単回帰分析と因果推論" class="slide level2"><h2>単回帰分析と因果推論</h2>
+<p><span class="strong">処置変数が外生変数、かつ二値変数なら<span class="math inline">\(D_i\)</span>の係数の推定値はATEの推定値</span></p>
 <ul>
-<li>処置変数<span class="math inline">\(D\)</span>が二値変数の場合、<span class="math inline">\(\hat{\tau}\)</span>は二群間の平均値の差分
+<li>処置変数<span class="math inline">\(D\)</span>が二値変数の場合、<span class="math inline">\(\widehat{\tau}\)</span>は二群間の平均値の差分
 <ul>
-<li><span class="math inline">\(\hat{\tau}\)</span> = ATT + セレクションバイアス</li>
-</ul></li>
+<li>
+<span class="math inline">\(\widehat{\tau}\)</span> = ATT + セレクションバイアス</li>
+</ul>
+</li>
 </ul>
 <p><span class="math display">\[
 \small
 \begin{align}
-\hat{\tau} &amp; = \mathbb{E}[Y_i(1)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 0] \\
+\widehat{\tau} &amp; = \mathbb{E}[Y_i(1)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 0] \\
 &amp; = \underbrace{\mathbb{E}[Y_i(1)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 0]}_{\textsf{selection bias}}
 \end{align}
 \]</span></p>
 <ul>
-<li>処置変数が外生変数（=交換可能性/平均独立が成立）なら…<sup>1</sup><sup>2</sup></li>
+<li>処置変数が外生変数（=交換可能性/平均独立が成立）なら…<sup>1</sup><sup>2</sup>
+</li>
 </ul>
 <p><span class="math display">\[
-\hat{\tau} = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)] = \textsf{ATE}
+\widehat{\tau} = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)] = \textsf{ATE}
 \]</span></p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>交換可能性、または平均独立が成立する場合、<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1] = \mathbb{E}[Y_i(1)|D_i = 0]\)</span>、かつ<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]\)</span>だから</p></li><li id="fn2"><p>セレクションバイアスが0なら（<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]\)</span>）、<span class="math inline">\(\hat{\tau}\)</span>はATEでなく、ATT</p></li></ol></aside></section>
-<section id="誤差に関する仮定" class="slide level2">
-<h2>誤差に関する仮定</h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>交換可能性、または平均独立が成立する場合、<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1] = \mathbb{E}[Y_i(1)|D_i = 0]\)</span>、かつ<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]\)</span>だから</p></li><li id="fn2"><p>セレクションバイアスが0なら（<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]\)</span>）、<span class="math inline">\(\widehat{\tau}\)</span>はATEでなく、ATT</p></li></ol></aside></section><section id="誤差に関する仮定" class="slide level2"><h2>誤差に関する仮定</h2>
 <ul>
 <li>回帰分析における誤差の仮定
 <ul>
 <li>誤差の期待値は0（<span class="math inline">\(\mathbb{E}[\varepsilon_i]\)</span> = 0）</li>
-<li><span class="alert"><strong>誤差と説明変数は独立</strong></span>（<span class="math inline">\(\textsf{Cov}(D, \varepsilon)\)</span> = <span class="math inline">\(\mathbb{E}[D \times \varepsilon]\)</span> = 0）</li>
-</ul></li>
+<li>
+<span class="alert"><strong>誤差と説明変数は独立</strong></span>（<span class="math inline">\(\textsf{Cov}(D, \varepsilon)\)</span> = <span class="math inline">\(\mathbb{E}[D \times \varepsilon]\)</span> = 0）</li>
+</ul>
+</li>
 </ul>
 
-<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="処置変数が内生変数の場合" class="slide level2">
-<h2>処置変数が内生変数の場合</h2>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="処置変数が内生変数の場合" class="slide level2"><h2>処置変数が内生変数の場合</h2>
 <ul>
-<li>誤差と説明変数は独立しない場合、<span class="math inline">\(\hat{\tau}\)</span>はバイアス付きのATT
+<li>誤差と説明変数は独立しない場合、<span class="math inline">\(\widehat{\tau}\)</span>はバイアス付きのATT
 <ul>
-<li><span class="math inline">\(\textsf{Cov}(D, \varepsilon) \neq\)</span> 0</li>
-<li><span class="math inline">\(\mathbb{E}[D \times \varepsilon] \neq\)</span> 0</li>
-</ul></li>
+<li>
+<span class="math inline">\(\textsf{Cov}(D, \varepsilon) \neq\)</span> 0</li>
+<li>
+<span class="math inline">\(\mathbb{E}[D \times \varepsilon] \neq\)</span> 0</li>
+</ul>
+</li>
 </ul>
 
-<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="交絡要因が既知の場合" class="slide level2">
-<h2>交絡要因が既知の場合</h2>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="交絡要因が既知の場合" class="slide level2"><h2>交絡要因が既知の場合</h2>
 <ul>
 <li>観察済みの変数<span class="math inline">\(X\)</span>が唯一の交絡要因ある場合
 <ul>
 <li>単回帰分析では<span class="math inline">\(X\)</span>は<span class="math inline">\(\varepsilon\)</span>の一部だったが、<span class="math inline">\(X\)</span>が観察済みなら<span class="math inline">\(\varepsilon \rightarrow X\)</span>のパスを消せる</li>
 <li>そのためには、内生性の原因である<span class="math inline">\(X\)</span>を考慮したモデリングが必要</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="重回帰分析" class="slide level2">
-<h2>重回帰分析</h2>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="重回帰分析" class="slide level2"><h2>重回帰分析</h2>
 <p>統制変数<span class="math inline">\(X\)</span>を追加した回帰モデル</p>
 <p><span class="math display">\[
 \begin{align}
@@ -319,71 +323,80 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 \end{align}
 \]</span></p>
 <ul>
-<li><span class="alert"><strong>残差の二乗和を最小とする<span class="math inline">\(\hat{\alpha}\)</span>と<span class="math inline">\(\hat{\tau}\)</span>、<span class="math inline">\(\hat{\beta}\)</span>を推定</strong></span>
+<li>
+<span class="alert"><strong>残差の二乗和を最小とする<span class="math inline">\(\widehat{\alpha}\)</span>と<span class="math inline">\(\widehat{\tau}\)</span>、<span class="math inline">\(\widehat{\beta}\)</span>を推定</strong></span>
 <ul>
-<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(Y_i - \alpha - \tau D_i - \beta X_i\)</span></li>
-</ul></li>
+<li>残差<span class="small">（residuals）</span>：<span class="math inline">\(Y_i - \alpha - \tau D_i - \beta X_i\)</span>
+</li>
+</ul>
+</li>
 </ul>
 <p><span class="math display">\[
-(\hat{\alpha}, \hat{\tau}, \hat{\beta}) = \mathop{\arg \min}_{\alpha, \tau, \beta} \sum_{i}^{n}(Y_i - \alpha - \tau D_i - \beta X_i)^2
+(\widehat{\alpha}, \widehat{\tau}, \widehat{\beta}) = \mathop{\arg \min}_{\alpha, \tau, \beta} \sum_{i}^{n}(Y_i - \alpha - \tau D_i - \beta X_i)^2
 \]</span></p>
-</section>
-<section id="統制変数の役割" class="slide level2">
-<h2>統制変数の役割</h2>
+</section><section id="統制変数の役割" class="slide level2"><h2>統制変数の役割</h2>
 <p><span class="math inline">\(X_i = x\)</span>における傾き（<span class="math inline">\(\tau\)</span>）の推定</p>
 <ul>
 <li>ただし、<span class="math inline">\(X_i = x\)</span>における傾きと<span class="math inline">\(X_i = x^{\prime}\)</span>における傾きは同じと仮定<sup>1</sup>（<span class="math inline">\(x \neq x^{\prime}\)</span>）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-8-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>この仮定を緩和するためには交互作用を考慮したモデリングが必要</p></li></ol></aside></section>
-<section id="統制変数とブロッキング" class="slide level2">
-<h2>統制変数とブロッキング</h2>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>この仮定を緩和するためには交互作用を考慮したモデリングが必要</p></li></ol></aside></section><section id="統制変数とブロッキング" class="slide level2"><h2>統制変数とブロッキング</h2>
 <p>重回帰分析における係数は通常、「<span class="alert"><strong>他の変数が一定</strong></span>であれば…」と解釈される。</p>
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> 重回帰分析の推定値 = ブロック内処置効果の加重平均</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 重回帰分析の推定値 = ブロック内処置効果の加重平均</li>
 </ul>
 <h4 id="手順"><strong>手順</strong></h4>
 <ol type="1">
 <li>ブロックごとに処置効果（A）を推定する</li>
 <li>（A）の加重平均を計算する。各ブロックの重みは、
 <ul>
-<li><span class="math inline">\(Pr(X_i = x)\)</span>（ATEを推定する場合）</li>
-<li><span class="math inline">\(Pr(X_i = x, D_i = 1)\)</span>（ATTを推定する場合）</li>
-<li><span class="math inline">\(Pr(X_i = x, D_i = 0)\)</span>（ATCを推定する場合）</li>
-</ul></li>
+<li>
+<span class="math inline">\(Pr(X_i = x)\)</span>（ATEを推定する場合）</li>
+<li>
+<span class="math inline">\(Pr(X_i = x, D_i = 1)\)</span>（ATTを推定する場合）</li>
+<li>
+<span class="math inline">\(Pr(X_i = x, D_i = 0)\)</span>（ATCを推定する場合）</li>
+</ul>
+</li>
 </ol>
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert">統制変数をうまく使えば因果推論ができそう</span>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert">統制変数をうまく使えば因果推論ができそう</span>
 <ul>
 <li>どうすれば回帰分析で信頼できる処置効果が推定できるか</li>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>ブロック内で処置群と統制群が交換可能（or 平均独立）</strong></span>であれば…?</li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>ブロック内で処置群と統制群が交換可能（or 平均独立）</strong></span>であれば…?</li>
 </ul>
-</section></section>
-<section>
-<section id="仮定" class="title-slide slide level1 center">
-<h1><strong>2</strong> 仮定</h1>
+</li>
+</ul></section></section><section><section id="仮定" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 仮定</h1>
 
-</section>
-<section id="条件付き独立の仮定" class="slide level2">
-<h2>条件付き独立の仮定</h2>
+</section><section id="条件付き独立の仮定" class="slide level2"><h2>条件付き独立の仮定</h2>
 <p><span class="alert"><strong>条件付き独立の仮定</strong></span><span class="small">（conditional independence assumption; <strong>CIA</strong>）</span></p>
 <ul>
 <li>統制変数（X）で条件づけた場合、処置変数（D）と結果変数（Y）の潜在的結果は独立する</li>
@@ -395,10 +408,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <ul>
 <li>全体では交換可能性が成立しないものの、統制変数Xで条件づけた下位グループ内では交換可能性が成立</li>
 <li><span class="alert"><strong>観察データを用いた回帰分析で因果推論を行うための仮定</strong></span></li>
-</ul>
-</section>
-<section id="条件付き平均独立性" class="slide level2">
-<h2>条件付き平均独立性</h2>
+</ul></section><section id="条件付き平均独立性" class="slide level2"><h2>条件付き平均独立性</h2>
 <p>CIAが成立すると<span class="alert"><strong>条件付き平均独立性</strong></span>が成り立つ</p>
 <ul>
 <li>平均独立性が成り立つとATEが推定可能となる</li>
@@ -412,9 +422,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <p><span class="math display">\[
 \mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(0)|X_i = x]
 \]</span></p>
-</section>
-<section id="条件付き平均独立の例" class="slide level2">
-<h2>条件付き平均独立の例</h2>
+</section><section id="条件付き平均独立の例" class="slide level2"><h2>条件付き平均独立の例</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
 <div class="cell" data-layout-align="center">
@@ -869,140 +877,176 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="D">D</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="X">X</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y">Y</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(0)">Y(0)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(1)">Y(1)</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="ID" class="gt_row gt_right">1</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="ID" class="gt_row gt_right">1</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">2</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">2</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">3</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">3</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">4</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">4</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">5</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">5</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">6</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">6</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-3</td>
-<td headers="Y(1)" class="gt_row gt_right">-1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">7</td>
+<td headers="Y(1)" class="gt_row gt_right">-1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">7</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">-2</td>
-<td headers="Y(1)" class="gt_row gt_right">0</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">8</td>
+<td headers="Y(1)" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">8</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">9</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">9</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">10</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">10</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">11</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">11</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">12</td>
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">12</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">5</td>
-<td headers="Y(1)" class="gt_row gt_right">7</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">13</td>
+<td headers="Y(1)" class="gt_row gt_right">7</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">13</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">14</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">14</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">15</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">15</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">16</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">16</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">17</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">17</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">6</td>
-<td headers="Y(1)" class="gt_row gt_right">8</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">18</td>
+<td headers="Y(1)" class="gt_row gt_right">8</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">18</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">19</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">19</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">20</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">20</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-  </tbody>
-  
-  
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -1019,9 +1063,7 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 \underbrace{\mathbb{E}[Y_i|D_i = 1]}_{\textsf{2.9}} - \underbrace{\mathbb{E}[Y_i|D_i = 0]}_{\textsf{2.1}} = 0.8
 \]</span></p>
 </div></div>
-</section>
-<section id="平均独立性は成立するか" class="slide level2">
-<h2>平均独立性は成立するか</h2>
+</section><section id="平均独立性は成立するか" class="slide level2"><h2>平均独立性は成立するか</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
 <div class="cell" data-layout-align="center">
@@ -1476,153 +1518,187 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="D">D</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="X">X</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y">Y</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(0)">Y(0)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(1)">Y(1)</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="ID" class="gt_row gt_right">1</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="ID" class="gt_row gt_right">1</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">2</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">2</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">3</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">3</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">4</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">4</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">5</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">5</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">6</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">6</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-3</td>
-<td headers="Y(1)" class="gt_row gt_right">-1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">7</td>
+<td headers="Y(1)" class="gt_row gt_right">-1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">7</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">-2</td>
-<td headers="Y(1)" class="gt_row gt_right">0</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">8</td>
+<td headers="Y(1)" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">8</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">9</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">9</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">10</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">10</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">11</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">11</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">12</td>
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">12</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">5</td>
-<td headers="Y(1)" class="gt_row gt_right">7</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">13</td>
+<td headers="Y(1)" class="gt_row gt_right">7</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">13</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">14</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">14</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">15</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">15</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">16</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">16</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">17</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">17</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">6</td>
-<td headers="Y(1)" class="gt_row gt_right">8</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">18</td>
+<td headers="Y(1)" class="gt_row gt_right">8</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">18</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">19</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">19</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">20</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">20</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-  </tbody>
-  
-  
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:75%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i]\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i]\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(D_i = 0\)</span></td>
@@ -1636,33 +1712,52 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 </tr>
 </tbody>
 </table>
-<h4 id="ケース1平均独立性times"><strong>ケース1：</strong>平均独立性<span class="math inline">\(\times\)</span></h4>
-<ul>
-<li>もし、現在の処置群が統制群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 0.9</li>
-</ul></li>
-<li>もし、現在の統制群が統制群になったら…（観察済）
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 2.1</li>
-</ul></li>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-1-1">ケース1</a></li>
+<li><a href="#tabset-1-2">ケース2</a></li>
 </ul>
-<h4 id="ケース2平均独立性times"><strong>ケース2：</strong>平均独立性<span class="math inline">\(\times\)</span></h4>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
 <ul>
-<li>もし、現在の処置群が処置群になったら…（観察済）
+<li>もし、現在の処置群が統制群になったら…（<strong>反</strong>事実）
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 2.9</li>
-</ul></li>
-<li>もし、現在の統制群が処置群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 4.1</li>
-</ul></li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 0.9</li>
 </ul>
+</li>
+<li>もし、現在の統制群が統制群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 2.1</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="tabset-1-2">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
+<ul>
+<li>もし、現在の処置群が処置群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 2.9</li>
+</ul>
+</li>
+<li>もし、現在の統制群が処置群になったら…（<strong>反</strong>事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 4.1</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <!-- もし処置群と統制群が逆になったらATEの推定値は 4.1 - 0.9 = 3.2になる -->
 </div></div>
-</section>
-<section id="x_i-0の場合" class="slide level2">
-<h2><span class="math inline">\(X_i = 0\)</span>の場合</h2>
+</section><section id="x_i-0の場合" class="slide level2"><h2>
+<span class="math inline">\(X_i = 0\)</span>の場合</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
 <div class="cell" data-layout-align="center">
@@ -2117,93 +2212,107 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="D">D</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="X">X</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y">Y</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(0)">Y(0)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(1)">Y(1)</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="ID" class="gt_row gt_right">1</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="ID" class="gt_row gt_right">1</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">2</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">2</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">3</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">3</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">4</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">4</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">5</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">5</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">6</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">6</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">-1</td>
 <td headers="Y(0)" class="gt_row gt_right">-3</td>
-<td headers="Y(1)" class="gt_row gt_right">-1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">7</td>
+<td headers="Y(1)" class="gt_row gt_right">-1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">7</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">-2</td>
-<td headers="Y(1)" class="gt_row gt_right">0</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">8</td>
+<td headers="Y(1)" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">8</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">-1</td>
-<td headers="Y(1)" class="gt_row gt_right">1</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">9</td>
+<td headers="Y(1)" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">9</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">10</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">10</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">0</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-  </tbody>
-  
-  
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:75%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i, X_i = 0]\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i, X_i = 0]\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(D_i = 0\)</span></td>
@@ -2217,32 +2326,51 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 </tr>
 </tbody>
 </table>
-<h4 id="ケース1平均独立性bigcirc"><strong>ケース1：</strong>平均独立性<span class="math inline">\(\bigcirc\)</span></h4>
-<ul>
-<li>もし、現在の処置群が統制群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 0</li>
-</ul></li>
-<li>もし、現在の統制群が統制群になったら…（観察済）
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 0</li>
-</ul></li>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-2-1">ケース1</a></li>
+<li><a href="#tabset-2-2">ケース2</a></li>
 </ul>
-<h4 id="ケース2平均独立性bigcirc"><strong>ケース2：</strong>平均独立性<span class="math inline">\(\bigcirc\)</span></h4>
+<div class="tab-content">
+<div id="tabset-2-1">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
 <ul>
-<li>もし、現在の処置群が処置群になったら…（観察済）
+<li>もし、現在の処置群が統制群になったら…（<strong>反</strong>事実）
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 2</li>
-</ul></li>
-<li>もし、現在の統制群が処置群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 2</li>
-</ul></li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 0</li>
 </ul>
+</li>
+<li>もし、現在の統制群が統制群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 0</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="tabset-2-2">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
+<ul>
+<li>もし、現在の処置群が処置群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 2</li>
+</ul>
+</li>
+<li>もし、現在の統制群が処置群になったら…（<strong>反</strong>事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 2</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div></div>
-</section>
-<section id="x_i-1の場合" class="slide level2">
-<h2><span class="math inline">\(X_i = 1\)</span>の場合</h2>
+</section><section id="x_i-1の場合" class="slide level2"><h2>
+<span class="math inline">\(X_i = 1\)</span>の場合</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
 <div class="cell" data-layout-align="center">
@@ -2697,93 +2825,107 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ID">ID</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="D">D</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="X">X</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y">Y</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(0)">Y(0)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Y(1)">Y(1)</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="ID" class="gt_row gt_right">11</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="ID" class="gt_row gt_right">11</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">12</td>
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">12</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">5</td>
-<td headers="Y(1)" class="gt_row gt_right">7</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">13</td>
+<td headers="Y(1)" class="gt_row gt_right">7</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">13</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">1</td>
 <td headers="Y(0)" class="gt_row gt_right">1</td>
-<td headers="Y(1)" class="gt_row gt_right">3</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">14</td>
+<td headers="Y(1)" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">14</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">0</td>
 <td headers="Y(0)" class="gt_row gt_right">0</td>
-<td headers="Y(1)" class="gt_row gt_right">2</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">15</td>
+<td headers="Y(1)" class="gt_row gt_right">2</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">15</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">2</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">16</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">16</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">3</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">17</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">17</td>
 <td headers="D" class="gt_row gt_right">0</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">6</td>
-<td headers="Y(1)" class="gt_row gt_right">8</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">18</td>
+<td headers="Y(1)" class="gt_row gt_right">8</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">18</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">4</td>
 <td headers="Y(0)" class="gt_row gt_right">2</td>
-<td headers="Y(1)" class="gt_row gt_right">4</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">19</td>
+<td headers="Y(1)" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">19</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">5</td>
 <td headers="Y(0)" class="gt_row gt_right">3</td>
-<td headers="Y(1)" class="gt_row gt_right">5</td></tr>
-    <tr><td headers="ID" class="gt_row gt_right">20</td>
+<td headers="Y(1)" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="ID" class="gt_row gt_right">20</td>
 <td headers="D" class="gt_row gt_right">1</td>
 <td headers="X" class="gt_row gt_right">1</td>
 <td headers="Y" class="gt_row gt_right">6</td>
 <td headers="Y(0)" class="gt_row gt_right">4</td>
-<td headers="Y(1)" class="gt_row gt_right">6</td></tr>
-  </tbody>
-  
-  
+<td headers="Y(1)" class="gt_row gt_right">6</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:75%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i, X_i = 1]\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i, X_i = 1]\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(D_i = 0\)</span></td>
@@ -2797,154 +2939,129 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 </tr>
 </tbody>
 </table>
-<h4 id="ケース1平均独立性bigcirc-1"><strong>ケース1：</strong>平均独立性<span class="math inline">\(\bigcirc\)</span></h4>
-<ul>
-<li>もし、現在の処置群が統制群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 3</li>
-</ul></li>
-<li>もし、現在の統制群が統制群になったら…（観察済）
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 3</li>
-</ul></li>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-3-1">ケース1</a></li>
+<li><a href="#tabset-3-2">ケース2</a></li>
 </ul>
-<h4 id="ケース2平均独立性bigcirc-1"><strong>ケース2：</strong>平均独立性<span class="math inline">\(\bigcirc\)</span></h4>
+<div class="tab-content">
+<div id="tabset-3-1">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
 <ul>
-<li>もし、現在の処置群が処置群になったら…（観察済）
+<li>もし、現在の処置群が統制群になったら…（<strong>反</strong>事実）
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 5</li>
-</ul></li>
-<li>もし、現在の統制群が処置群になったら…
-<ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 5</li>
-</ul></li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1]\)</span> = 3</li>
 </ul>
+</li>
+<li>もし、現在の統制群が統制群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 0]\)</span> = 3</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="tabset-3-2">
+<p>平均独立性<span class="math inline">\(\times\)</span></p>
+<ul>
+<li>もし、現在の処置群が処置群になったら…（事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 1]\)</span> = 5</li>
+</ul>
+</li>
+<li>もし、現在の統制群が処置群になったら…（<strong>反</strong>事実）
+<ul>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0]\)</span> = 5</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div></div>
-</section>
-<section id="条件付き平均独立と回帰分析" class="slide level2">
-<h2>条件付き平均独立と回帰分析</h2>
-<p><span class="alert"><strong>条件付き平均独立が成立する場合、重回帰分析でバイアスのないATEが推定可能</strong></span></p>
-<ul>
-<li>CIAが成り立ったらさらに良い</li>
-</ul>
+</section><section id="条件付き平均独立と回帰分析" class="slide level2"><h2>条件付き平均独立と回帰分析</h2>
+<p><span class="strong">条件付き平均独立が成立する場合、重回帰分析でバイアスのないATEが推定可能</span></p>
+<!-- - CIAが成り立ったらさらに良い -->
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <!-- preamble start -->
 
-    <script>
-
-      function styleCell_4ds29k3aa37tg1vpxr3g(i, j, css_id) {
-          var table = document.getElementById("tinytable_4ds29k3aa37tg1vpxr3g");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_4ds29k3aa37tg1vpxr3g(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_4ds29k3aa37tg1vpxr3g");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_ojsd4d27mbdh6s51oazm = TinyTable.createTableFunctions("tinytable_ojsd4d27mbdh6s51oazm");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 },  ], css_id: 'tinytable_css_dxyy803z947gy39wm6bx',}, 
-          { positions: [ { i: '3', j: 2 }, { i: '3', j: 1 },  ], css_id: 'tinytable_css_nv8jnvxfq1zbuwg7lrz8',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '4', j: 1 }, { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '4', j: 2 },  ], css_id: 'tinytable_css_l8silzr6lkoaar75d4eo',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_0uwsdsnh0kwld4o9eus2',}, 
-          { positions: [ { i: '5', j: 0 },  ], css_id: 'tinytable_css_aulksnuncr0zrh15dwuy',}, 
-          { positions: [ { i: '3', j: 0 },  ], css_id: 'tinytable_css_m11vwktn5tr1pa36d6tr',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '4', j: 0 },  ], css_id: 'tinytable_css_iujq0io2zfwct4tm6ctk',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_3k8prjnjldoms4r72chx',}, 
+          { positions: [ { i: '5', j: 2 }, { i: '5', j: 3 } ], css_id: 'tinytable_css_nv8jnvxfq1zbuwg7lrz8',}, 
+          { positions: [ { i: '3', j: 2 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_l8silzr6lkoaar75d4eo',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '4', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_0uwsdsnh0kwld4o9eus2',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_aulksnuncr0zrh15dwuy',}, 
+          { positions: [ { i: '5', j: 1 } ], css_id: 'tinytable_css_m11vwktn5tr1pa36d6tr',}, 
+          { positions: [ { i: '3', j: 1 } ], css_id: 'tinytable_css_iujq0io2zfwct4tm6ctk',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '4', j: 1 } ], css_id: 'tinytable_css_3k8prjnjldoms4r72chx',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_4ds29k3aa37tg1vpxr3g',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_4ds29k3aa37tg1vpxr3g(cell.i, cell.j, group.css_id);
+                  tableFns_ojsd4d27mbdh6s51oazm.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_dxyy803z947gy39wm6bx, .table th.tinytable_css_dxyy803z947gy39wm6bx { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_nv8jnvxfq1zbuwg7lrz8, .table th.tinytable_css_nv8jnvxfq1zbuwg7lrz8 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_l8silzr6lkoaar75d4eo, .table th.tinytable_css_l8silzr6lkoaar75d4eo { text-align: center; }
-      .table td.tinytable_css_0uwsdsnh0kwld4o9eus2, .table th.tinytable_css_0uwsdsnh0kwld4o9eus2 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_aulksnuncr0zrh15dwuy, .table th.tinytable_css_aulksnuncr0zrh15dwuy { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_m11vwktn5tr1pa36d6tr, .table th.tinytable_css_m11vwktn5tr1pa36d6tr { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_iujq0io2zfwct4tm6ctk, .table th.tinytable_css_iujq0io2zfwct4tm6ctk { text-align: left; }
-      .table td.tinytable_css_3k8prjnjldoms4r72chx, .table th.tinytable_css_3k8prjnjldoms4r72chx { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_nv8jnvxfq1zbuwg7lrz8, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_nv8jnvxfq1zbuwg7lrz8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_l8silzr6lkoaar75d4eo, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_l8silzr6lkoaar75d4eo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_0uwsdsnh0kwld4o9eus2, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_0uwsdsnh0kwld4o9eus2 { text-align: center }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_aulksnuncr0zrh15dwuy, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_aulksnuncr0zrh15dwuy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_m11vwktn5tr1pa36d6tr, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_m11vwktn5tr1pa36d6tr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_iujq0io2zfwct4tm6ctk, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_iujq0io2zfwct4tm6ctk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_3k8prjnjldoms4r72chx, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_3k8prjnjldoms4r72chx { text-align: left }
+    #tinytable_ojsd4d27mbdh6s51oazm td.tinytable_css_4ds29k3aa37tg1vpxr3g, #tinytable_ojsd4d27mbdh6s51oazm th.tinytable_css_4ds29k3aa37tg1vpxr3g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
-    <div class="container">
-      <table class="table table-borderless" id="tinytable_4ds29k3aa37tg1vpxr3g" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
-        
-              <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">統制変数なし</th>
-                <th scope="col" data-row="0" data-col="2">統制変数あり</th>
-              </tr>
-        </thead>
-        <tfoot><tr><td colspan="3">注：カッコ内はHC2頑健標準誤差</td></tr></tfoot>
-        <tbody>
-                <tr>
-                  <td data-row="1" data-col="0">切片</td>
-                  <td data-row="1" data-col="1">2.100 (0.737)</td>
-                  <td data-row="1" data-col="2">-0.000 (0.560)</td>
+<div class="container">
+      <table class="tinytable" id="tinytable_ojsd4d27mbdh6s51oazm" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">統制変数なし</th>
+                <th scope="col" data-row="0" data-col="3">統制変数あり</th>
+              </tr></thead>
+<tfoot><tr><td colspan="3">注：カッコ内はHC2頑健標準誤差</td></tr></tfoot>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">切片</td>
+                  <td data-row="1" data-col="2">2.100 (0.737)</td>
+                  <td data-row="1" data-col="3">-0.000 (0.560)</td>
                 </tr>
-                <tr>
-                  <td data-row="2" data-col="0">D</td>
-                  <td data-row="2" data-col="1">0.800 (1.042)</td>
-                  <td data-row="2" data-col="2">2.000 (0.683)</td>
+<tr>
+<td data-row="2" data-col="1">D</td>
+                  <td data-row="2" data-col="2">0.800 (1.042)</td>
+                  <td data-row="2" data-col="3">2.000 (0.683)</td>
                 </tr>
-                <tr>
-                  <td data-row="3" data-col="0">X</td>
-                  <td data-row="3" data-col="1"></td>
-                  <td data-row="3" data-col="2">3.000 (0.683)</td>
+<tr>
+<td data-row="3" data-col="1">X</td>
+                  <td data-row="3" data-col="2"></td>
+                  <td data-row="3" data-col="3">3.000 (0.683)</td>
                 </tr>
-                <tr>
-                  <td data-row="4" data-col="0">Num.Obs.</td>
-                  <td data-row="4" data-col="1">20</td>
+<tr>
+<td data-row="4" data-col="1">Num.Obs.</td>
                   <td data-row="4" data-col="2">20</td>
+                  <td data-row="4" data-col="3">20</td>
                 </tr>
-                <tr>
-                  <td data-row="5" data-col="0">R2</td>
-                  <td data-row="5" data-col="1">0.032</td>
-                  <td data-row="5" data-col="2">0.406</td>
+<tr>
+<td data-row="5" data-col="1">R2</td>
+                  <td data-row="5" data-col="2">0.032</td>
+                  <td data-row="5" data-col="3">0.406</td>
                 </tr>
-        </tbody>
-      </table>
-    </div>
+</tbody>
+</table>
+</div>
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
@@ -2952,16 +3069,15 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 <li>統制変数<strong>なし</strong>（単回帰分析）のATEの推定値：0.8
 <ul>
 <li>処置群と統制群を交換する場合、ATEの推定値は3.2</li>
-</ul></li>
-<li>統制変数<strong>あり</strong>（重回帰分析）のATEの推定値：2.0
-<ul>
-<li>{<span class="math inline">\(X_i = 0\)</span>におけるATE} = {<span class="math inline">\(X_i = 1\)</span>におけるATE} = 2</li>
-<li><span class="math inline">\(X_i = x\)</span>で処置群と統制群を交換してもATEの推定値は2</li>
-</ul></li>
 </ul>
-</section>
-<section id="cia条件付き平均独立性は確認可能か" class="slide level2">
-<h2>CIA/条件付き平均独立性は確認可能か</h2>
+</li>
+<li>統制変数<strong>あり</strong>（重回帰分析）のATEの推定値：2.0 <!--   - {$X_i = 0$におけるATE} = {$X_i = 1$におけるATE} = 2 -->
+<ul>
+<li>
+<span class="math inline">\(X_i = x\)</span>で処置群と統制群を交換してもATEの推定値は2</li>
+</ul>
+</li>
+</ul></section><section id="cia条件付き平均独立性は確認可能か" class="slide level2"><h2>CIA/条件付き平均独立性は確認可能か</h2>
 <p>条件付き平均独立性</p>
 <p><span class="math display">\[
 \mathbb{E}[Y_i(1)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(1)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(1)|X_i = x]
@@ -2973,34 +3089,38 @@ Y_i &amp; = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
 \mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(0)|X_i = x]
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0, X_i = x]\)</span>、<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1, X_i = x]\)</span>は観察不可
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1)|D_i = 0, X_i = x]\)</span>、<span class="math inline">\(\mathbb{E}[Y_i(0)|D_i = 1, X_i = x]\)</span>は観察不可
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>平均独立性が成り立っているかどうかは確認できない</strong></span>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>平均独立性が成り立っているかどうかは確認できない</strong></span>
 <ul>
 <li>平均独立性よりも厳しいCIAの確認はさらに難しい</li>
-</ul></li>
-<li>「Xで条件付ければ平均独立性が成り立つだろう」と仮定するしかない</li>
-<li><span class="alert">非実験データ</span>であれば、変数選択&amp;モデリングを慎重に行う必要がある</li>
-</ul></li>
-<li>もし、間違った条件付けをしてしまったら…?</li>
 </ul>
-</section></section>
-<section>
-<section id="欠落変数バイアス" class="title-slide slide level1 center">
-<h1><strong>3</strong> 欠落変数バイアス</h1>
+</li>
+<li>「<span class="math inline">\(X\)</span>で条件付ければ平均独立性が成り立つだろう」と仮定するしかない</li>
+<li>
+<span class="alert">非実験データ</span>であれば、変数選択&amp;モデリングを慎重に行う必要がある</li>
+</ul>
+</li>
+<li>もし、間違った条件付けをしてしまったら…?</li>
+</ul></section></section><section><section id="欠落変数バイアス" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 欠落変数バイアス</h1>
 
-</section>
-<section id="欠落変数バイアスの定式化" class="slide level2">
-<h2>欠落変数バイアスの定式化</h2>
+</section><section id="欠落変数バイアスの定式化" class="slide level2"><h2>欠落変数バイアスの定式化</h2>
 <ul>
 <li>3つのモデル（真の処置効果は<span class="math inline">\(\tau^l\)</span>）
 <ul>
-<li>真のモデル（long regression）：<span class="math inline">\(Y_i = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i\)</span></li>
-<li>バイアス付きのモデル（short regression）：<span class="math inline">\(Y_i = \alpha^s + \tau^s D_i + \zeta_i\)</span></li>
-<li>XをDに回帰したモデル：<span class="math inline">\(X_i = \alpha_0 + \lambda D_i + \nu_i\)</span></li>
-</ul></li>
+<li>真のモデル（long regression）：<span class="math inline">\(Y_i = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i\)</span>
+</li>
+<li>バイアス付きのモデル（short regression）：<span class="math inline">\(Y_i = \alpha^s + \tau^s D_i + \zeta_i\)</span>
+</li>
+<li>XをDに回帰したモデル：<span class="math inline">\(X_i = \alpha_0 + \lambda D_i + \nu_i\)</span>
+</li>
 </ul>
-<h3 id="真のモデルからxが消えたら"><strong>真のモデルからXが消えたら…</strong></h3>
+</li>
+</ul>
+<p><strong>真のモデルからXが消えたら…</strong></p>
 <p><span class="math display">\[
 \begin{align}
 Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
@@ -3009,90 +3129,97 @@ Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
 &amp; = \underbrace{(\alpha^l + \beta^l\alpha_0)}_{\alpha^s} + \underbrace{(\tau^l + \beta^l \lambda)}_{\tau^s} D_i + \underbrace{(\varepsilon_i + \beta^l \nu_i)}_{\varepsilon_i}
 \end{align}
 \]</span></p>
-</section>
-<section id="欠落変数バイアス-1" class="slide level2">
-<h2>欠落変数バイアス</h2>
+</section><section id="欠落変数バイアス-1" class="slide level2"><h2>欠落変数バイアス</h2>
 <p><span class="alert"><strong>欠落変数バイアス</strong></span>（omitted variable bias; <span class="alert"><strong>OVB</strong></span>）</p>
 <ul>
-<li><span class="math inline">\(\beta^l\)</span>：X <span class="math inline">\(\rightarrow\)</span> Yの係数</li>
-<li><span class="math inline">\(\lambda\)</span>：D <span class="math inline">\(\rightarrow\)</span> Xの係数</li>
+<li>
+<span class="math inline">\(\beta^l\)</span>：X <span class="math inline">\(\rightarrow\)</span> Yの係数</li>
+<li>
+<span class="math inline">\(\lambda\)</span>：D <span class="math inline">\(\rightarrow\)</span> Xの係数</li>
 </ul>
 <p><span class="math display">\[
 \underbrace{\tau^s}_{\textsf{バイアス付きの推定値}} = \underbrace{\tau^l}_{\textsf{真の処置効果}} + \underbrace{\textcolor{red}{\beta^l \lambda}}_{\textsf{欠落変数バイアス}}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\beta^l = 0\)</span>、または<span class="math inline">\(\lambda = 0\)</span>ならOVBは発生しない</li>
-<li><span class="math inline">\(\beta^l \neq 0\)</span>、かつ<span class="math inline">\(\lambda \neq 0\)</span>の場合、Xは<span class="alert"><strong>交絡要因</strong></span>（confounder）である。
+<li>
+<span class="math inline">\(\beta^l = 0\)</span>、または<span class="math inline">\(\lambda = 0\)</span>ならOVBは発生しない</li>
+<li>
+<span class="math inline">\(\beta^l \neq 0\)</span>、かつ<span class="math inline">\(\lambda \neq 0\)</span>の場合、Xは<span class="alert"><strong>交絡要因</strong></span>（confounder）である。
 <ul>
 <li><span class="alert"><strong>交絡要因を統制しないと、OVBが発生する</strong></span></li>
-</ul></li>
 </ul>
-</section>
-<section id="欠落変数バイアスの可視化1" class="slide level2">
-<h2>欠落変数バイアスの可視化（1）</h2>
+</li>
+</ul></section><section id="欠落変数バイアスの可視化1" class="slide level2"><h2>欠落変数バイアスの可視化（1）</h2>
 <p>職業訓練（D）は将来の年収（Y）にどのような影響を与えるか</p>
 <ul>
 <li>負の効果?効果なし?内生性（自己選択）は?</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-15-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="欠落変数バイアスの可視化2" class="slide level2">
-<h2>欠落変数バイアスの可視化（2）</h2>
+</div>
+</section><section id="欠落変数バイアスの可視化2" class="slide level2"><h2>欠落変数バイアスの可視化（2）</h2>
 <p>交絡要因として職業訓練前の年収（X）</p>
 <ul>
 <li>職業訓練前の年収を考慮したモデル：実は正の効果があるかも?</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section></section>
-<section>
-<section id="処置後変数バイアス" class="title-slide slide level1 center">
-<h1><strong>4</strong> 処置後変数バイアス</h1>
+</div>
+</section></section><section><section id="処置後変数バイアス" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 処置後変数バイアス</h1>
 
-</section>
-<section id="処置後変数とは" class="slide level2">
-<h2>処置後変数とは</h2>
+</section><section id="処置後変数とは" class="slide level2"><h2>処置後変数とは</h2>
 <p><span class="alert"><strong>処置後変数</strong></span>（post-treatment variable）</p>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
 </figure>
 </div>
 </div>
@@ -3103,57 +3230,67 @@ Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
 <ul>
 <li>DがYに直接与える処置効果（<span class="tomato">直接効果</span>）</li>
 <li>DがXを経由してYに与える処置効果（<span class="royalblue">間接効果</span>）</li>
-<li>総効果 = <span class="tomato">直接効果</span> + <span class="royalblue">間接効果</span></li>
-</ul></li>
+<li>総効果 = <span class="tomato">直接効果</span> + <span class="royalblue">間接効果</span>
+</li>
+</ul>
+</li>
 <li>因果推論において主に注目するのは<span class="alert"><strong>総効果</strong></span>
 <ul>
 <li>この場合、Xを統制してはいけない</li>
 <li>説明変数がDのみの単回帰分析を採用すべき</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div></div>
 
 <aside><div>
 <p>参考）XがYに与える影響を推定したい場合、Dを統制すべきである。なぜならXを処置変数と考えると、Dは交絡要因になるからだ。</p>
-</div></aside></section>
-<section id="直接効果間接効果総効果" class="slide level2">
-<h2>直接効果、間接効果、総効果</h2>
+</div></aside></section><section id="直接効果間接効果総効果" class="slide level2"><h2>直接効果、間接効果、総効果</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="1050"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="1050"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><span class="tomato">直接効果</span>：<span class="math inline">\(\tau^p\)</span></li>
-<li><span class="royalblue">間接効果</span>：<span class="math inline">\(\lambda \times \beta^p\)</span>
+<li>
+<span class="tomato">直接効果</span>：<span class="math inline">\(\tau^p\)</span>
+</li>
+<li>
+<span class="royalblue">間接効果</span>：<span class="math inline">\(\lambda \times \beta^p\)</span>
 <ul>
 <li>Dが1単位上がると、Xが<span class="math inline">\(\lambda\)</span>分増加するため</li>
-</ul></li>
-<li>総効果：<span class="math inline">\(\tau^p + \lambda \beta^p\)</span></li>
+</ul>
+</li>
+<li>総効果：<span class="math inline">\(\tau^p + \lambda \beta^p\)</span>
+</li>
 </ul>
 <p><br></p>
 <ul>
-<li><span class="math inline">\(\hat{y} = \beta_0 + \beta_1 D + \beta_2 X\)</span>のモデル
+<li>
+<span class="math inline">\(\widehat{y} = \beta_0 + \beta_1 D + \beta_2 X\)</span>のモデル
 <ul>
-<li><span class="math inline">\(\beta_1\)</span>：直接効果（<span class="math inline">\(\tau^p\)</span>）</li>
-<li><span class="math inline">\(\beta_2\)</span>：間接効果の一部（<span class="math inline">\(\beta^p\)</span>）</li>
-</ul></li>
-<li><span class="math inline">\(\hat{y} = \beta_0 + \beta_1 D\)</span>のモデル
+<li>
+<span class="math inline">\(\beta_1\)</span>：直接効果（<span class="math inline">\(\tau^p\)</span>）</li>
+<li>
+<span class="math inline">\(\beta_2\)</span>：間接効果の一部（<span class="math inline">\(\beta^p\)</span>）</li>
+</ul>
+</li>
+<li>
+<span class="math inline">\(\widehat{y} = \beta_0 + \beta_1 D\)</span>のモデル
 <ul>
-<li><span class="math inline">\(\beta_1\)</span>：総効果（<span class="math inline">\(\tau^p + \lambda \beta^p\)</span>）</li>
-</ul></li>
+<li>
+<span class="math inline">\(\beta_1\)</span>：総効果（<span class="math inline">\(\tau^p + \lambda \beta^p\)</span>）</li>
+</ul>
+</li>
 </ul>
 </div></div>
-</section>
-<section id="処置後変数バイアスの数式化" class="slide level2">
-<h2>処置後変数バイアスの数式化</h2>
+</section><section id="処置後変数バイアスの数式化" class="slide level2"><h2>処置後変数バイアスの数式化</h2>
 <ul>
 <li><span class="math inline">\(Y_i = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p\)</span></li>
 <li><span class="math inline">\(X_i = \alpha_0 + \lambda D_i + \nu_i\)</span></li>
@@ -3169,46 +3306,56 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <ul>
 <li>YをDのみに回帰した場合の処置効果：<span class="math inline">\(\tau^p + \beta^p \lambda\)</span>（=<span class="alert"><strong>真の処置効果</strong></span>）
 <ul>
-<li>Xがモデル含まれている場合の処置効果の推定値：<span class="math inline">\(\tau^p\)</span></li>
+<li>Xがモデル含まれている場合の処置効果の推定値：<span class="math inline">\(\tau^p\)</span>
+</li>
 <li><span class="alert">処置後変数バイアス：<span class="math inline">\(-\beta^p \lambda\)</span></span></li>
-</ul></li>
-<li><span class="math inline">\(\lambda\)</span>か<span class="math inline">\(\beta^p\)</span>が0なら、処置後変数バイアスは発生しない
-<ul>
-<li><span class="math inline">\(\lambda\)</span> = 0なら、そもそもXはDの処置後変数ではない</li>
-</ul></li>
 </ul>
-</section></section>
-<section>
-<section id="変数選択" class="title-slide slide level1 center">
-<h1><strong>5</strong> 変数選択</h1>
+</li>
+<li>
+<span class="math inline">\(\lambda\)</span>か<span class="math inline">\(\beta^p\)</span>が0なら、処置後変数バイアスは発生しない
+<ul>
+<li>
+<span class="math inline">\(\lambda\)</span> = 0なら、そもそもXはDの処置後変数ではない</li>
+</ul>
+</li>
+</ul></section></section><section><section id="変数選択" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 変数選択</h1>
 
-</section>
-<section id="dag" class="slide level2">
-<h2>DAG</h2>
+</section><section id="dag" class="slide level2"><h2>DAG</h2>
 <p><span class="alert"><strong>有向非巡回グラフ</strong></span>（Directed acyclic graph, <span class="alert"><strong>DAG</strong></span>）</p>
 <ul>
 <li>サイクルが存在しない有向グラフ（無向グラフは常にサイクルが存在）
 <ul>
 <li>右グラフはサイクルが存在（D <span class="math inline">\(\rightarrow\)</span> Y <span class="math inline">\(\rightarrow\)</span> X <span class="math inline">\(\rightarrow\)</span> D <span class="math inline">\(\rightarrow\)</span> Y <span class="math inline">\(\rightarrow\)</span>…）</li>
-</ul></li>
-<li><span class="alert">ノード</span><span class="small">（点; node or vertex）</span>と<span class="alert">エッジ</span><span class="small">（線; edge）</span>で構成</li>
-<li>因果推論での活用<span class="smal">（詳細は<a href="https://amzn.asia/d/iRY9OPO">Pearl et al.&nbsp;[2016=2019]</a>などを参照）</span></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+</li>
+<li>
+<span class="alert">ノード</span><span class="small">（点; node or vertex）</span>と<span class="alert">エッジ</span><span class="small">（線; edge）</span>で構成</li>
+<li>因果推論での活用<span class="smal">（詳細は<a href="https://amzn.asia/d/iRY9OPO">Pearl et al.&nbsp;[2016=2019]</a>などを参照）</span>
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[-10,35,-10,35,-10]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 35.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 35.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-19-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
@@ -3217,74 +3364,82 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <ul>
 <li>Pearl, Judea, Madelyn Glymour, and Nicholas P. Jewell. 2016. <a href="https://amzn.asia/d/9GIXD1J"><em>Causal Inference in Statistics: A Primer.</em></a> Wiley.</li>
 </ul>
-</div></aside></section>
-<section id="バックドア経路" class="slide level2">
-<h2>バックドア経路</h2>
-<p><span class="alert"><strong>バックドア経路</strong></span><span class="alert">（backdoor path）</span>：原因と結果<span class="small">（DとY）</span>間のすべての経路中、原因<span class="small">（D）</span>へ向かう矢印を含む経路</p>
+</div></aside></section><section id="バックドア経路" class="slide level2"><h2>バックドア経路</h2>
+<p><span class="strong">バックドア経路<span class="small">（backdoor path）</span></span>：原因と結果<span class="small">（DとY）</span>間のすべての経路中、原因<span class="small">（D）</span>へ向かう矢印を含む経路</p>
 <ul>
 <li>ただし、<span class="math inline">\(D \rightarrow Y\)</span>のパスを除く</li>
 <li>左：バックドア経路が存在（D <span class="math inline">\(\leftarrow\)</span> <span class="alert"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
 <li>右：バックドア経路が存在しない
 <ul>
 <li>D <span class="math inline">\(\rightarrow\)</span> <span class="alert"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> YはDへ向かう矢印を含まない</li>
-</ul></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[-10,35,-10,35,-10]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 35.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 35.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-20-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="分岐点" class="slide level2">
-<h2>分岐点</h2>
+</div>
+</section><section id="分岐点" class="slide level2"><h2>分岐点</h2>
 <p><span class="alert"><strong>分岐点</strong></span>（confounder）：原因（D）と結果（Y）両方にたどり着ける変数</p>
 <ul>
 <li>バックドア経路に分岐点が存在するとそのバックドア経路は「<strong>開いている</strong>」</li>
 <li>左：開いたバックドア経路がある（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
 <li>右：分岐点が存在しない</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-21-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="分岐点への対処" class="slide level2">
-<h2>分岐点への対処</h2>
+</div>
+</section><section id="分岐点への対処" class="slide level2"><h2>分岐点への対処</h2>
 <p>バックドア経路が開いている場合、バックドア経路上の変数をモデルに投入するとバックドア経路は閉ざされる</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -3295,109 +3450,126 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <ul>
 <li>バックドア経路さえ無くせば良い</li>
 <li>経路上のすべての変数がなくても良い</li>
-</ul></li>
+</ul>
+</li>
 <li>どのモデルでも<span class="math inline">\(\bigcirc\)</span>
 <ul>
 <li>Xのみ統制</li>
 <li>Wのみ統制</li>
 <li>XとW両方統制</li>
-</ul></li>
+</ul>
+</li>
 <li>バックドア経路が開いたままだと、<span class="alert">欠落変数バイアス</span>が発生</li>
 </ul>
 </div></div>
-</section>
-<section id="合流点" class="slide level2">
-<h2>合流点</h2>
+</section><section id="合流点" class="slide level2"><h2>合流点</h2>
 <p><span class="alert"><strong>合流点</strong></span><span class="small">（collider）</span>：原因<span class="small">（D）</span>と結果<span class="small">（Y）</span>両方からたどり着ける変数</p>
 <ul>
 <li>バックドア経路に合流点が存在するとそのバックドア経路は「<strong>閉じている</strong>」</li>
 <li>左：バックドア経路が開いている（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
 <li>右：バックドア経路が閉じている（経路上に合流点が存在する; D <span class="math inline">\(\rightarrow\)</span> X <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\leftarrow\)</span> Y）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-23-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="中間点要検討" class="slide level2">
-<h2>中間点（<span class="alert"><strong>要検討</strong></span>）</h2>
+</div>
+</section><section id="中間点要検討" class="slide level2"><h2>中間点（<span class="alert"><strong>要検討</strong></span>）</h2>
 <p><span class="alert"><strong>中間点</strong></span><span class="small">（mediator）</span>：原因<span class="small">（D）</span>から結果<span class="small">（Y）</span>へ向かう経路上に存在する変数</p>
 <ul>
 <li>バックドア経路に中間点が存在するとそのバックドア経路は「<strong>閉じている</strong>」</li>
 <li>左：バックドア経路が開いている（D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）</li>
 <li>右：バックドア経路が閉じている（経路上に中間点が存在する; D <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> <span class="tomato"><strong>W</strong></span> <span class="math inline">\(\rightarrow\)</span> Y）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-24-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="合流点中間点への対処" class="slide level2">
-<h2>合流点・中間点への対処</h2>
+</div>
+</section><section id="合流点中間点への対処" class="slide level2"><h2>合流点・中間点への対処</h2>
 <p>合流点、中間点はいずれも<span class="alert"><strong>処置後変数</strong></span>（処置後変数バイアスの原因）</p>
 <ul>
 <li>モデルに投入すると新しいバックドア経路が開く（右はXを統制した例）
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> 合流点と中間点はモデルに投入しない！</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 合流点はそもそも「結果の結果」だから投入しない！</li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 合流点と中間点はモデルに投入しない！</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 合流点はそもそも「結果の結果」だから投入しない！</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-25-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="応用" class="slide level2">
-<h2>応用</h2>
+</div>
+</section><section id="応用" class="slide level2"><h2>応用</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="500"></p>
 </figure>
 </div>
 </div>
@@ -3409,78 +3581,77 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li>D <span class="math inline">\(\leftarrow\)</span> <span class="tomato"><strong>X</strong></span> <span class="math inline">\(\rightarrow\)</span> Y</li>
 <li>2つの経路すべてを閉じる
 <ul>
-<li><span class="alert">{W, X}</span>か<span class="alert">{V, X}</span>、{W, V, X}を統制</li>
-</ul></li>
+<li>
+<span class="alert">{W, X}</span>か<span class="alert">{V, X}</span>、{W, V, X}を統制</li>
+</ul>
+</li>
 </ul>
 </div></div>
-</section>
-<section id="dagの書き方" class="slide level2">
-<h2>DAGの書き方</h2>
+</section><section id="dagの書き方" class="slide level2"><h2>DAGの書き方</h2>
 <p>DAGの作成および変数選択のためのRパッケージ：{<a href="https://cran.r-project.org/web/packages/dagitty/index.html">dagitty</a>} + {<a href="https://r-causal.github.io/ggdag/">ggdag</a>}</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>my_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb1-2"><a></a>  Y <span class="sc">~</span> D <span class="sc">+</span> V <span class="sc">+</span> X <span class="sc">+</span> P <span class="sc">+</span> Q,</span>
-<span id="cb1-3"><a></a>  V <span class="sc">~</span> W,</span>
-<span id="cb1-4"><a></a>  D <span class="sc">~</span> W <span class="sc">+</span> X <span class="sc">+</span> Z,</span>
-<span id="cb1-5"><a></a>  U <span class="sc">~</span> D <span class="sc">+</span> Y,</span>
-<span id="cb1-6"><a></a>  Q <span class="sc">~</span> D,</span>
-<span id="cb1-7"><a></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
-<span id="cb1-8"><a></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb1-9"><a></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"V"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"U"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Q"</span> <span class="ot">=</span> <span class="dv">1</span>),</span>
-<span id="cb1-10"><a></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"V"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="fl">0.75</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"U"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"Q"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
-<span id="cb1-11"><a></a>)</span>
-<span id="cb1-12"><a></a></span>
-<span id="cb1-13"><a></a><span class="fu">ggdag</span>(my_dag)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>my_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb1-2"><a aria-label="2"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> V <span class="sc">+</span> X <span class="sc">+</span> P <span class="sc">+</span> Q,</span>
+<span id="cb1-3"><a aria-label="3"></a>  V <span class="sc">~</span> W,</span>
+<span id="cb1-4"><a aria-label="4"></a>  D <span class="sc">~</span> W <span class="sc">+</span> X <span class="sc">+</span> Z,</span>
+<span id="cb1-5"><a aria-label="5"></a>  U <span class="sc">~</span> D <span class="sc">+</span> Y,</span>
+<span id="cb1-6"><a aria-label="6"></a>  Q <span class="sc">~</span> D,</span>
+<span id="cb1-7"><a aria-label="7"></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
+<span id="cb1-8"><a aria-label="8"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb1-9"><a aria-label="9"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"V"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"U"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Q"</span> <span class="ot">=</span> <span class="dv">1</span>),</span>
+<span id="cb1-10"><a aria-label="10"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"V"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="fl">0.75</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"U"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">"Q"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
+<span id="cb1-11"><a aria-label="11"></a>)</span>
+<span id="cb1-12"><a aria-label="12"></a></span>
+<span id="cb1-13"><a aria-label="13"></a><span class="fu">ggdag</span>(my_dag)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="統制変数の提案" class="slide level2">
-<h2>統制変数の提案</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>my_dag <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a></a>  <span class="fu">ggdag_adjustment_set</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb2-3"><a></a>  <span class="fu">theme_dag</span>()</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="統制変数の提案" class="slide level2"><h2>統制変数の提案</h2>
 
-</div>
-<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section></section>
-<section>
-<section id="交互作用" class="title-slide slide level1 center">
-<h1><strong>6</strong> 交互作用</h1>
+<img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section></section><section><section id="交互作用" class="title-slide slide level1 center"><h1>
+<strong>6</strong> 交互作用</h1>
 
-</section>
-<section id="交互作用とは" class="slide level2">
-<h2>交互作用とは</h2>
-<p><span class="alert"><strong>交互作用</strong></span><span class="small">（Interaction）</span>：D <span class="math inline">\(\rightarrow\)</span> Yの影響がXの値に依存する</p>
+</section><section id="交互作用とは" class="slide level2"><h2>交互作用とは</h2>
+<p><span class="strong">交互作用</span><span class="small">（Interaction）</span>：D <span class="math inline">\(\rightarrow\)</span> Yの影響がXの値に依存する</p>
 <ul>
-<li>左：Xが交絡要因・分岐点<span class="small">（confounder）</span></li>
-<li>右：Xが<span class="alert">調整変数</span><sup>1</sup><span class="small">（mediator）</span></li>
+<li>左：Xが交絡要因・分岐点<span class="small">（confounder）</span>
+</li>
+<li>右：Xが<span class="alert">調整変数</span><sup>1</sup><span class="small">（mediator）</span>
+</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-30-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>DAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。</p></li></ol></aside></section>
-<section id="交互作用の例" class="slide level2">
-<h2>交互作用の例</h2>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>DAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。</p></li></ol></aside></section><section id="交互作用の例" class="slide level2"><h2>交互作用の例</h2>
 <p>Dの処置効果がXに値によって異なる場合</p>
 <ul>
-<li><span class="alert">不均一な処置効果</span><span class="small">（heterogeneous treatment effect）</span>
+<li>
+<span class="alert">不均一な処置効果</span><span class="small">（heterogeneous treatment effect）</span>
 <ul>
-<li>または<span class="alert">条件付きATE</span><span class="small">（conditional average treatment effect; <span class="alert"><strong>CATE</strong></span>）</span></li>
-</ul></li>
+<li>または<span class="alert">条件付きATE</span><span class="small">（conditional average treatment effect; <span class="alert"><strong>CATE</strong></span>）</span>
+</li>
+</ul>
+</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -3488,56 +3659,60 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 <li>例）薬の効き目が性別によって異なる
 <ul>
 <li>直線は単回帰分析に基づく回帰直線</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 </div>
 </div></div>
-</section>
-<section id="交互作用のモデリング" class="slide level2">
-<h2>交互作用のモデリング</h2>
+</section><section id="交互作用のモデリング" class="slide level2"><h2>交互作用のモデリング</h2>
 <p>通常の重回帰モデルに<span class="alert"><strong>交差項</strong></span><span class="small">（interaction term）</span>を投入</p>
 <ul>
 <li>交差項：2つ以上の変数の<strong>積</strong>（以下の<span class="math inline">\(D_i X_i\)</span>）</li>
-<li>DとXの交互作用なし：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\)</span></li>
-<li>DとXの交互作用あり：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i~ +\)</span> <span class="math inline">\(\gamma\)</span> <span class="alert"><span class="math inline">\(D_i X_i\)</span></span> <span class="math inline">\(+~ \varepsilon_i\)</span></li>
-</ul>
-</section>
-<section id="重回帰分析との比較図" class="slide level2">
-<h2>重回帰分析との比較（図）</h2>
+<li>DとXの交互作用なし：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\)</span>
+</li>
+<li>DとXの交互作用あり：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i~ +\)</span> <span class="math inline">\(\gamma\)</span> <span class="alert"><span class="math inline">\(D_i X_i\)</span></span> <span class="math inline">\(+~ \varepsilon_i\)</span>
+</li>
+</ul></section><section id="重回帰分析との比較図" class="slide level2"><h2>重回帰分析との比較（図）</h2>
 <ul>
-<li>重回帰分析（左）：男女の<span class="alert">傾きが同じ</span></li>
-<li>交互作用モデル（右）：男女の<span class="alert"><strong>傾きが異なる</strong></span></li>
+<li>重回帰分析（左）：男女の<span class="alert">傾きが同じ</span>
+</li>
+<li>交互作用モデル（右）：男女の<span class="alert"><strong>傾きが異なる</strong></span>
+</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-32-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-</section>
-<section id="重回帰分析との比較表" class="slide level2">
-<h2>重回帰分析との比較（表）</h2>
+</div>
+</section><section id="重回帰分析との比較表" class="slide level2"><h2>重回帰分析との比較（表）</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="wzkmwbxbgr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -3990,56 +4165,64 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a-"> </th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a-"> </th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a交互作用なし">交互作用なし</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a交互作用あり">交互作用あり</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers=" " class="gt_row gt_left">切片</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers=" " class="gt_row gt_left">切片</td>
 <td headers="交互作用なし" class="gt_row gt_center">35.835 (0.245)</td>
-<td headers="交互作用あり" class="gt_row gt_center">36.419 (0.329)</td></tr>
-    <tr><td headers=" " class="gt_row gt_left">投薬量</td>
+<td headers="交互作用あり" class="gt_row gt_center">36.419 (0.329)</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left">投薬量</td>
 <td headers="交互作用なし" class="gt_row gt_center">0.010 (0.004)</td>
-<td headers="交互作用あり" class="gt_row gt_center" style="background-color: #CCCCCC; color: #000000;">-0.002 (0.006)</td></tr>
-    <tr><td headers=" " class="gt_row gt_left">男性ダミー</td>
+<td headers="交互作用あり" class="gt_row gt_center" style="background-color: #CCCCCC; color: #000000;">-0.002 (0.006)</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left">男性ダミー</td>
 <td headers="交互作用なし" class="gt_row gt_center">1.584 (0.221)</td>
-<td headers="交互作用あり" class="gt_row gt_center">0.442 (0.438)</td></tr>
-    <tr><td headers=" " class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">投薬量:男性ダミー</td>
+<td headers="交互作用あり" class="gt_row gt_center">0.442 (0.438)</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">投薬量:男性ダミー</td>
 <td headers="交互作用なし" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
-<td headers="交互作用あり" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">0.023 (0.007)</td></tr>
-    <tr><td headers=" " class="gt_row gt_left">Num.Obs.</td>
+<td headers="交互作用あり" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">0.023 (0.007)</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left">Num.Obs.</td>
 <td headers="交互作用なし" class="gt_row gt_center">100</td>
-<td headers="交互作用あり" class="gt_row gt_center">100</td></tr>
-    <tr><td headers=" " class="gt_row gt_left">R2</td>
+<td headers="交互作用あり" class="gt_row gt_center">100</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left">R2</td>
 <td headers="交互作用なし" class="gt_row gt_center">0.377</td>
-<td headers="交互作用あり" class="gt_row gt_center">0.436</td></tr>
-    <tr><td headers=" " class="gt_row gt_left">R2 Adj.</td>
+<td headers="交互作用あり" class="gt_row gt_center">0.436</td>
+</tr>
+<tr>
+<td headers=" " class="gt_row gt_left">R2 Adj.</td>
 <td headers="交互作用なし" class="gt_row gt_center">0.365</td>
-<td headers="交互作用あり" class="gt_row gt_center">0.418</td></tr>
-  </tbody>
-  <tfoot class="gt_sourcenotes">
-    <tr>
-      <td class="gt_sourcenote" colspan="3">注：カッコ内はHC2頑健標準誤差</td>
-    </tr>
-  </tfoot>
-  
+<td headers="交互作用あり" class="gt_row gt_center">0.418</td>
+</tr>
+</tbody>
+<tfoot><tr class="gt_sourcenotes">
+<td class="gt_sourcenote" colspan="3">注：カッコ内はHC2頑健標準誤差</td>
+    </tr></tfoot>
 </table>
 </div>
 </div>
 </div>
 <ul>
-<li><strong>係数の解釈：</strong>他の条件が同じであれば投薬量が1単位<span class="small">（= 1mg）</span>増えると体温の期待値は0.002単位<span class="small">（0.002℃）</span>下がる
+<li>
+<strong>係数の解釈：</strong>他の条件が同じであれば投薬量が1単位<span class="small">（= 1mg）</span>増えると体温の期待値は0.002単位<span class="small">（0.002℃）</span>下がる
 <ul>
 <li>これで大丈夫?</li>
 <li>何か忘れていませんか?<span class="alert">回帰式に処置変数<span class="small">（投薬量）</span>は2回登場する</span>はず</li>
-</ul></li>
 </ul>
-</section>
-<section id="交互作用の解釈" class="slide level2">
-<h2>交互作用の解釈</h2>
+</li>
+</ul></section><section id="交互作用の解釈" class="slide level2"><h2>交互作用の解釈</h2>
 <p>処置効果は<span class="math inline">\(\tau\)</span>でなく、<span class="alert"><span class="math inline">\(\tau + \gamma X_i\)</span></span></p>
 <p><span class="math display">\[
 \begin{align}
@@ -4048,11 +4231,17 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 \end{align}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(X_i = 0\)</span>の時の処置効果、<span class="math inline">\(X_i = 1\)</span>の時の処置効果、<span class="math inline">\(X_i = 3\)</span>の時の処置効果、…
+<li>
+<span class="math inline">\(X_i = 0\)</span>の時の処置効果、<span class="math inline">\(X_i = 1\)</span>の時の処置効果、<span class="math inline">\(X_i = 3\)</span>の時の処置効果、…
 <ul>
-<li><span class="alert"><strong>限界効果</strong></span><span class="small">（marginal effect）</span></li>
-</ul></li>
-<li><span class="alert">交互作用は<strong>予測値</strong>と<strong>限界効果</strong>に基づいて解釈すべき</span><span class="small">（回帰係数にこだわらない）</span></li>
+<li>
+<span class="alert"><strong>限界効果</strong></span><span class="small">（marginal effect）</span>
+</li>
+</ul>
+</li>
+<li>
+<span class="alert">交互作用は<strong>予測値</strong>と<strong>限界効果</strong>に基づいて解釈すべき</span><span class="small">（回帰係数にこだわらない）</span>
+</li>
 <li>詳細は<a href="https://doi.org/10.1093/pan/mpi014">Brambor（2006）</a>を参照</li>
 </ul>
 
@@ -4060,66 +4249,66 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 <ul>
 <li>Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. “<a href="https://doi.org/10.1093/pan/mpi014">Understanding Interaction Models: Improving Empirical Analyses</a>.” <em>Political Analysis,</em> 14(1): 63–82.</li>
 </ul>
-</div></aside></section>
-<section id="予測値左と限界効果右" class="slide level2">
-<h2>予測値（左）と限界効果（右）</h2>
+</div></aside></section><section id="予測値左と限界効果右" class="slide level2"><h2>予測値（左）と限界効果（右）</h2>
 <p>男性の場合、投薬量が1mg増えると体温は約0.02℃上がる。一方、女性の場合、統計的有意な処置効果は確認できない<sup>1</sup>。</p>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-34-2.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。</p></li></ol></aside></section></section>
-<section>
-<section id="実装" class="title-slide slide level1 center">
-<h1><strong>7</strong> 実装</h1>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。</p></li></ol></aside></section></section><section><section id="実装" class="title-slide slide level1 center"><h1>
+<strong>7</strong> 実装</h1>
 
-</section>
-<section id="推定" class="slide level2">
-<h2>推定</h2>
+</section><section id="推定" class="slide level2"><h2>推定</h2>
 <h4 id="共通"><strong>共通</strong></h4>
 <ul>
-<li>予測値、効果量を示すことで実質科学的な議論を</li>
+<li>予測値、効果量を示すことで実質科学的な議論へ</li>
 <li>交差項を含むモデルの場合、限界効果も示すこと</li>
 </ul>
 <h4 id="実験データの場合"><strong>実験データの場合</strong></h4>
 <ul>
-<li>処置変数は外生変数<span class="small">（の可能性が非常に高い）</span>であるため、統制変数は不要
-<ul>
-<li>実験でも処置の自己選択が生じるケースもあるため、統制変数が必要な場合も</li>
-</ul></li>
+<li>処置変数は外生変数<span class="small">（の可能性が非常に高い）</span>であるため、統制変数は不要</li>
 <li>統制変数を入れても良い
 <ul>
-<li><i class="bi bi-emoji-smile"></i> 標準誤差が小さくなる</li>
-<li><i class="bi bi-emoji-dizzy"></i> 処置後変数は投入しない!</li>
-</ul></li>
+<li>
+<i class="bi bi-emoji-smile"></i> 標準誤差が小さくなる</li>
+<li>
+<i class="bi bi-emoji-dizzy"></i> 処置後変数は投入しない!</li>
+</ul>
+</li>
+<li>実験でも処置の自己選択が生じるケースもあるため、統制変数が必要な場合も</li>
 </ul>
 <h4 id="観察データの場合"><strong>観察データの場合</strong></h4>
 <ul>
 <li>処置変数は内生変数<span class="small">（の可能性が非常に高い）</span>であるため、統制変数が必要</li>
 <li>慎重な変数選択が必要</li>
-</ul>
-</section>
-<section id="実験データと重回帰分析" class="slide level2">
-<h2>実験データと重回帰分析</h2>
+</ul></section><section id="実験データと重回帰分析" class="slide level2"><h2>実験データと重回帰分析</h2>
 <ul>
 <li>Freedman（2008a, 2008b）の問題提起
 <ul>
 <li>内生性の問題が多く解決されているはずの実験データであっても、共変量調整は場合によって<span class="alert">精度の低下、バイアスの導入、信頼できない標準誤差の原因</span>になる</li>
-</ul></li>
+</ul>
+</li>
 <li>Lin（2013）の提案
 <ul>
 <li>Freedmanの議論は正しいが、以下の2つを採用することで解決可能（大標本を前提とする）</li>
@@ -4127,7 +4316,8 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 <ol type="1">
 <li>処置変数と共変量間の交差項を投入（共変量が複数なら<strong>すべて</strong>の共変量との交差項を投入）</li>
 <li>頑健標準誤差<span class="small">（Huber–White sandwich standard error）</span>を使用</li>
-</ol></li>
+</ol>
+</li>
 </ul>
 
 <aside><div>
@@ -4136,28 +4326,28 @@ Y_i &amp; = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
 <li>Freedman, David A. 2008b. “<a href="https://doi.org/10.1214/08-STS262">Randomization Does Not Justify Logistic Regression</a>.” <em>Statistical Science.</em> 23(2): 237-249.</li>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div></aside></section>
-<section id="効果量" class="slide level2">
-<h2>効果量</h2>
+</div></aside></section><section id="効果量" class="slide level2"><h2>効果量</h2>
 <p>処置効果の大きさを数値化し、評価する（<span class="alert"><strong>ドメイン知識</strong></span>が必要）</p>
 <ul>
 <li>統制群と処置群間の結果変数の差
 <ul>
-<li><span class="alert">差</span>はいくらか、または<span class="alert">何SD分</span>かなど</li>
-</ul></li>
+<li>
+<span class="alert">差</span>はいくらか、または<span class="alert">何SD分</span>かなど</li>
+</ul>
+</li>
 <li>処置変数が連続の場合は、最小値 <span class="math inline">\(\rightarrow\)</span> 最大値、平均を中心とした <span class="math inline">\(\pm\)</span> 1 or 2SDなど</li>
 </ul>
 <p>心理学を中心とした効果量の議論</p>
 <ul>
 <li>Standardized mean difference</li>
-<li>Cohen’s <em>d</em></li>
-</ul>
-</section>
-<section id="効果量の例cohens-d" class="slide level2">
-<h2>効果量の例：Cohen’s <em>d</em></h2>
+<li>Cohen’s <em>d</em>
+</li>
+</ul></section><section id="効果量の例cohens-d" class="slide level2"><h2>効果量の例：Cohen’s <em>d</em>
+</h2>
 <p>幅広く使われる効果量（<a href="https://amzn.asia/d/f1tdgqC">Cohen 1980</a>）</p>
 <ul>
-<li><span class="math inline">\(s_{\cdot}^2\)</span>は不偏分散</li>
+<li>
+<span class="math inline">\(s_{\cdot}^2\)</span>は不偏分散</li>
 </ul>
 <p><span class="math display">\[
 \begin{align}
@@ -4176,17 +4366,14 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
 <ul>
 <li>Cohen, Jacob. 1988. <a href="https://amzn.asia/d/f1tdgqC"><em>Statistical Power Analysis for the Behavioral Sciences</em></a>. Routledge.</li>
 </ul>
-</div></aside></section>
-<section id="統制変数の解釈について" class="slide level2">
-<h2>統制変数の解釈について</h2>
+</div></aside></section><section id="統制変数の解釈について" class="slide level2"><h2>統制変数の解釈について</h2>
 <p>基本的に統制変数の係数は<span class="alert">解釈しない</span></p>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
+<figure><p><img data-src="reg_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -4194,13 +4381,18 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
 </div><div class="column" style="width:50%;">
 <p>信頼できる<span class="math inline">\(\tau\)</span>を推定するために、交絡要因<span class="small">（分岐点）</span>であるXを統制</p>
 <ul>
-<li><span class="math inline">\(\tau\)</span>：DがYに与える効果</li>
-<li><span class="math inline">\(\beta\)</span>：XがYに与える効果?
+<li>
+<span class="math inline">\(\tau\)</span>：DがYに与える効果</li>
+<li>
+<span class="math inline">\(\beta\)</span>：XがYに与える効果?
 <ul>
-<li>X <span class="math inline">\(\rightarrow\)</span> Yの関係においてDは中間点<span class="small">（媒介変数）</span></li>
-<li><span class="alert">中間点は統制しない</span>のが原則</li>
+<li>X <span class="math inline">\(\rightarrow\)</span> Yの関係においてDは中間点<span class="small">（媒介変数）</span>
+</li>
+<li>
+<span class="alert">中間点は統制しない</span>のが原則</li>
 <li>XがYに与える効果を推定するためにはモデルからDを除外すべき</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div></div>
 
@@ -4211,31 +4403,14 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
 <li>「Dが同じ場合、XがYに与える効果」（= XからYへの直接効果）を推定する場合、DとX両方を投入したモデルは正しい。しかし、Xが変わるとDが必ず変わるため、「Dを固定したら…」という前提はそもそも現実的ではない。</li>
 </ul>
 </div></aside></section></section>
-
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>回帰分析</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -4393,7 +4568,7 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -4426,9 +4601,7 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -4463,9 +4636,7 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -4513,13 +4684,14 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -4598,6 +4770,160 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -4637,6 +4963,6 @@ s &amp; = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
         }
       });
       </script>
-    
+
 
 </body></html>

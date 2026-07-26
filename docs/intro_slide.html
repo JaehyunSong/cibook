@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,12 +35,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -126,56 +132,50 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">1/ イントロダクション</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="講義概要" class="title-slide slide level1 center">
-<h1><strong>1</strong> 講義概要</h1>
+</section><section><section id="講義概要" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 講義概要</h1>
 
-</section>
-<section id="講義概要-1" class="slide level2">
-<h2>講義概要</h2>
+</section><section id="講義概要-1" class="slide level2"><h2>講義概要</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="figs/intro/profile.png"></p>
+<p><img data-src="_figs/intro/profile.png"></p>
 </div><div class="column" style="width:70%;">
 <ul>
-<li><strong>講義名：</strong>社会科学における因果推論</li>
-<li><strong>担当教員：</strong><ruby>宋<rt>そん</rt></ruby><ruby>財泫<rt>じぇひょん</rt></ruby>
-<ul>
+<li>
+<strong>講義名：</strong>社会科学における因果推論</li>
+<li>
+<strong>担当教員：</strong><ruby>宋<rt>そん</rt></ruby><ruby>財泫<rt>じぇひょん</rt></ruby><ul>
 <li>関西大学総合情報学部　准教授</li>
 <li>博士（政治学）</li>
-</ul></li>
-<li><i class="bi bi-house"></i> <a href="https://www.jaysong.net/" class="uri">https://www.jaysong.net/</a></li>
-<li><i class="bi bi-envelope"></i> song<i class="bi bi-at"></i>kansai-u.ac.jp</li>
+</ul>
+</li>
+<li>
+<i class="bi bi-house"></i> <a href="https://www.jaysong.net/" class="uri">https://www.jaysong.net/</a>
+</li>
+<li>
+<i class="bi bi-envelope"></i> song<i class="bi bi-at"></i>kansai-u.ac.jp</li>
 </ul>
 </div></div>
-</section>
-<section id="内容" class="slide level2">
-<h2>内容</h2>
+</section><section id="内容" class="slide level2"><h2>内容</h2>
 <p>以下の内容は進捗に応じて変更される可能性がある。</p>
-<ul>
-<li>実習がなくても、独習用のRコードが提供される場合もある</li>
-</ul>
+<!-- 実習がなくても、独習用のRコードが提供される場合もある -->
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;">トピック</th>
 <th style="text-align: left;">内容</th>
 <th style="text-align: left;">備考</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -205,33 +205,35 @@
 <tr class="even">
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">Lab session</td>
-<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span>
+</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">7</td>
 <td style="text-align: left;">傾向スコア</td>
-<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span>
+</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">8</td>
 <td style="text-align: left;">差分の差分法</td>
-<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span>
+</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">9</td>
 <td style="text-align: left;">回帰不連続デザイン</td>
-<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span>
+</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">10</td>
 <td style="text-align: left;">操作変数法</td>
-<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: left;">実習<span class="math inline">\(\bigcirc\)</span>
+</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="前提知識" class="slide level2">
-<h2>前提知識</h2>
+</table></section><section id="前提知識" class="slide level2"><h2>前提知識</h2>
 <p>履修者は以下の内容を理解していると仮定する</p>
 <ul>
 <li>RについてはLab sessionを用意し、<span class="alert"><strong>簡単な復習</strong></span>を行う</li>
@@ -246,7 +248,8 @@
 <ul>
 <li>帰無仮説と対立仮説</li>
 <li>検定統計量、信頼区間、<span class="math inline">\(p\)</span>値</li>
-</ul></li>
+</ul>
+</li>
 <li>平均値の差の検定（t検定）</li>
 <li>線形回帰分析</li>
 </ul>
@@ -257,24 +260,22 @@
 <li>データハンドリング
 <ul>
 <li>{dplyr}とパイプ演算子（<code>|&gt;</code>）</li>
-</ul></li>
+</ul>
+</li>
 <li>可視化
 <ul>
 <li>とりあえず棒グラフ、散布図程度で十分</li>
-</ul></li>
+</ul>
+</li>
 <li>t検定と線形回帰分析の推定と解釈</li>
 </ul>
 </div></div>
-</section>
-<section id="教科書" class="slide level2">
-<h2>教科書</h2>
+</section><section id="教科書" class="slide level2"><h2>教科書</h2>
 <ul>
 <li>講義のサポートページの資料のみで対応</li>
-<li>サポートページ：<a href="https://www.jaysong.net" class="uri">https://www.jaysong.net</a></li>
-</ul>
-</section>
-<section id="参考書理論" class="slide level2">
-<h2>参考書（理論）</h2>
+<li>サポートページ：<a href="https://www.jaysong.net" class="uri">https://www.jaysong.net</a>
+</li>
+</ul></section><section id="参考書理論" class="slide level2"><h2>参考書（理論）</h2>
 <ul>
 <li>中室牧子・津川友介. 2017.『<a href="http://amzn.asia/d/gQN4bLu">「原因と結果」の経済学</a>』ダイヤモンド社.</li>
 <li>伊藤公一郎. 2017.『<a href="http://amzn.asia/d/avVVT5S">データ分析の力</a>』光文社新書.</li>
@@ -283,10 +284,7 @@
 <li>Angrist, Joahua D., and Jorn-steffen Pischke. 2008. <a href="https://amzn.asia/d/ibZZtvZ"><em>Mostly Harmless Econometrics</em></a>. Princeton University Press.（<a href="http://amzn.asia/d/3JwCmNG">邦訳</a>）</li>
 <li>Morgan, Stephen L. and Christoper Winship. 2014. <a href="https://amzn.asia/d/gRjUUhe"><em>Counterfactuals and Causal Inference</em></a>. Cambridge University Press.（<a href="https://amzn.asia/d/dPikrkb">邦訳</a>）</li>
 <li>Imbens, Guido W. and Donald B. Rubin. 2015. <a href="https://amzn.asia/d/biQByrF"><em>Causal Inference for Statistics, Social, and Biomedical Sciences</em></a>. Cambridge University Press.（邦訳<a href="https://amzn.asia/d/9t0UiLY">上</a>/<a href="https://amzn.asia/d/29uCwBO">下</a>）</li>
-</ul>
-</section>
-<section id="参考書r" class="slide level2">
-<h2>参考書（R）</h2>
+</ul></section><section id="参考書r" class="slide level2"><h2>参考書（R）</h2>
 <h3 id="rによる実装">Rによる実装</h3>
 <ul>
 <li>高橋将宜. 2022. 『<a href="https://www.amazon.co.jp/dp/4320112458/">統計的因果推論の理論と実装</a>』共立出版.</li>
@@ -297,136 +295,116 @@
 <li>宋財泫・矢内勇生. 『<a href="https://www.jaysong.net/RBook/">私たちのR</a>』Web-book</li>
 <li>Wickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. <a href="https://r4ds.hadley.nz/"><em>R for Data Science (2nd Ed.)</em></a>. O’Reilly.（<a href="https://amzn.asia/d/gc50qkD">邦訳</a>）</li>
 <li>松村優哉・湯谷啓明・紀ノ定保礼・前田和寛. 2021.『<a href="https://amzn.asia/d/amsKzlr">改訂2版 RユーザのためのRStudio[実践]入門</a>』技術評論社.</li>
-</ul>
-</section></section>
-<section>
-<section id="評価" class="title-slide slide level1 center">
-<h1><strong>2</strong> 評価</h1>
+</ul></section></section><section><section id="評価" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 評価</h1>
 
-</section>
-<section id="評価-1" class="slide level2">
-<h2>評価</h2>
+</section><section id="評価-1" class="slide level2"><h2>評価</h2>
 <ul>
 <li>平常点：0%</li>
 <li>期末課題：0%</li>
-</ul>
-</section></section>
-<section>
-<section id="実習について" class="title-slide slide level1 center">
-<h1><strong>3</strong> 実習について</h1>
+</ul></section></section><section><section id="実習について" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 実習について</h1>
 
-</section>
-<section id="実習" class="slide level2">
-<h2>実習</h2>
+</section><section id="実習" class="slide level2"><h2>実習</h2>
 <p>言語はR、総合開発環境（IDE）は<a href="https://posit.co/">RStudio</a>を使用する</p>
 <ul>
 <li>RStudioでなく、<a href="https://positron.posit.co/">Positron</a>でも可だが、現時点ではRStudioが安定</li>
 <li>R + Pythonの二刀流ならPositronでも良い
 <ul>
 <li>ただ、RStudioでもR + Pythonは可能</li>
-</ul></li>
-<li>本講義の内容はRだけでなく、Python、Julia、Stata、SPSS、Excel等でも実装可能</li>
+</ul>
+</li>
+<li>本講義の内容はRだけでなく、Python、Julia、Stata、SPSS、Excel等でも実装可</li>
 </ul>
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/intro/r.png" height="150"></p>
-<figcaption>R</figcaption>
-</figure>
+<figure><p><img data-src="_figs/intro/r.png" height="150"></p>
+<figcaption>R</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/intro/rstudio.png" height="150"></p>
-<figcaption>RStudio</figcaption>
-</figure>
+<figure><p><img data-src="_figs/intro/rstudio.png" height="150"></p>
+<figcaption>RStudio</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/intro/positron.png" height="150"></p>
-<figcaption>Positron</figcaption>
-</figure>
+<figure><p><img data-src="_figs/intro/positron.png" height="150"></p>
+<figcaption>Positron</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="実習環境" class="slide level2">
-<h2>実習環境</h2>
+</section><section id="実習環境" class="slide level2"><h2>実習環境</h2>
 <p>基本的に最新のR、RStudioを使用していれば問題ない（R&gt;4.1を推奨）</p>
 <h4 id="宋のr環境">宋のR環境</h4>
 <ul>
-<li>macOS Sequoia 15.4.1</li>
-<li>R version 4.5.0 (2025-04-11)</li>
-<li>RStudio 2025.05.0+496</li>
+<li>macOS Tahoe 26.5.2</li>
+<li>R version 4.6.1 (2026-06-24)</li>
+<li>RStudio 2026.07.1+147</li>
 </ul>
 <h4 id="その他本資料の執筆環境">その他（本資料の執筆環境）</h4>
 <ul>
-<li>Firefox 138.0.1</li>
-<li>Quarto 1.7.31</li>
-<li>R package {quarto} 1.4.4</li>
-</ul>
-</section>
-<section id="rの導入" class="slide level2">
-<h2>Rの導入</h2>
+<li>Firefox 152.0.6</li>
+<li>Quarto 1.10.18</li>
+<li>R package {quarto} 1.5.1</li>
+</ul></section><section id="rの導入" class="slide level2"><h2>Rの導入</h2>
 <ol type="1">
 <li>自分のPCにR&amp;RStudioがインストールされている場合
 <ul>
 <li>バージョン確認後、最新であればそのまま使用</li>
 <li>必要に応じて適宜アップデートすること</li>
-</ul></li>
+</ul>
+</li>
 <li>自分のPCにR&amp;RStudioがインストールされて<strong>いない</strong>場合
 <ul>
 <li>これからもR&amp;RStudioを使っていく予定の場合
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> <a href="https://www.jaysong.net/RBook/installation.html#%E8%87%AA%E5%88%86%E3%81%AEpc%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">自分のPCにR&amp;RStudioをインストール</a>する</li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <a href="https://www.jaysong.net/RBook/installation.html#%E8%87%AA%E5%88%86%E3%81%AEpc%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">自分のPCにR&amp;RStudioをインストール</a>する</li>
+</ul>
+</li>
 <li>本講義のみにて使う予定/お試しの場合
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> <a href="https://www.jaysong.net/RBook/installation.html#%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E7%89%88%E3%81%AE%E5%88%A9%E7%94%A8">JDCat分析ツール</a>（クラウド版のR&amp;RStudio）を導入する</li>
-</ul></li>
-</ul></li>
-</ol>
-</section>
-<section id="使用パッケージ" class="slide level2">
-<h2>使用パッケージ</h2>
-<p>予め以下のパッケージの最新バージョンをインストールしておくこと（その他のパッケージは適宜紹介する）。</p>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> クラウド版のR&amp;RStudio（<a href="https://www.jaysong.net/RBook/installation.html#%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E7%89%88%E3%81%AE%E5%88%A9%E7%94%A8">JDCat分析ツール</a> / <a href="https://posit.cloud/">Posit Cloud</a>）を導入する</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol></section><section id="使用パッケージ" class="slide level2"><h2>使用パッケージ</h2>
+<p>予め以下のパッケージの最新バージョンをインストールしておくこと<sup>1</sup>。</p>
 <ul>
 <li>{pacman}</li>
 <li>{tidyverse}</li>
 </ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>パッケージはなるべく最新バージョンを使うこと</strong></p>
+</div>
+<div class="callout-content">
+<p>定期的にインストール済みパッケージのアップデートを行うこと。パッケージのアップデート方法はGoogle等で「R パッケージ アップデート」で検索するか、<a href="https://www.jaysong.net/RBook/packages.html">『私たちのR』第5章</a>を参照。</p>
+</div>
+</div>
+</div>
 
 
-</section></section>
-    </div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>その他のパッケージは適宜紹介する</p></li></ol></aside></section></section>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>イントロダクション</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -584,7 +562,7 @@
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -617,9 +595,7 @@
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -654,9 +630,7 @@
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -704,13 +678,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -789,6 +764,160 @@
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -828,6 +957,6 @@
         }
       });
       </script>
-    
+
 
 </body></html>

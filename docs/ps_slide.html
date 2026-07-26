@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,12 +35,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-fa59b55c41a878cebefac86642c15c95.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -126,26 +132,21 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">7/ 傾向スコア</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="傾向スコア" class="title-slide slide level1 center">
-<h1><strong>1</strong> 傾向スコア</h1>
+</section><section><section id="傾向スコア" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 傾向スコア</h1>
 
-</section>
-<section id="回帰分析の限界attの例" class="slide level2">
-<h2>回帰分析の限界（ATTの例）</h2>
+</section><section id="回帰分析の限界attの例" class="slide level2"><h2>回帰分析の限界（ATTの例）</h2>
 <p>すべての因果推論は<span class="alert"><strong>潜在的結果間の比較</strong></span></p>
 <p><span class="math display">\[
 \tau_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]
@@ -154,18 +155,19 @@
 <p><span class="math display">\[
 \hat{\tau}_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - \textcolor{red}{\widehat{Y_i}(0)} | D_i = 1]
 \]</span></p>
-<h4 id="haty_i0の推定方法"><span class="math inline">\(\hat{Y_i}(0)\)</span>の推定方法</h4>
+<h4 id="haty_i0の推定方法">
+<span class="math inline">\(\hat{Y_i}(0)\)</span>の推定方法</h4>
 <ul>
 <li>一般的に<span class="alert"><strong>パラメトリックモデル</strong></span>が使われる <span class="math inline">\(\Rightarrow\)</span> 回帰分析
 <ul>
-<li><span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \beta_1 D_i + \beta_2 {X1}_i + \beta_3 {X2}_i + ...\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(Y_i(D_i = 0)\)</span>を予測する</li>
-<li>回帰分析に限らず、様々な手法が使える<span class="small">（ベイジアン、機械学習、最尤法、…）</span></li>
-</ul></li>
-<li>もし、モデルが間違ったら…? <span class="math inline">\(\leadsto\)</span> 間違った処置効果の推定量が得られる</li>
+<li>
+<span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \beta_1 D_i + \beta_2 {X1}_i + \beta_3 {X2}_i + ...\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(Y_i(D_i = 0)\)</span>を予測する</li>
+<li>回帰分析に限らず、様々な手法が使える<span class="small">（ベイジアン、機械学習、最尤法、…）</span>
+</li>
 </ul>
-</section>
-<section id="マッチングの考え方" class="slide level2">
-<h2>マッチングの考え方</h2>
+</li>
+<li>もし、モデルが間違ったら…? <span class="math inline">\(\leadsto\)</span> 間違った処置効果の推定量が得られる</li>
+</ul></section><section id="マッチングの考え方" class="slide level2"><h2>マッチングの考え方</h2>
 <p><strong>正確マッチング</strong><span class="small">（exact matching）</span>の例<sup>1</sup></p>
 <ul>
 <li>例）<span class="alert"><span class="math inline">\(i\)</span>=4と7</span>は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能</li>
@@ -185,15 +187,13 @@
 <col style="width: 20%">
 <col style="width: 20%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -250,15 +250,13 @@
 <col style="width: 20%">
 <col style="width: 20%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X2\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;"><span class="alert"><strong>7</strong></span></td>
@@ -296,8 +294,7 @@
 </div><div class="column" style="width:50%;">
 <table class="caption-top">
 <caption>マッチングの例（ATT）</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(X1\)</span></th>
@@ -305,8 +302,7 @@
 <th style="text-align: right;"><span class="math inline">\(Y(0)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y(1)\)</span></th>
 <th style="text-align: right;">ITE</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="alert"><strong>7 vs.&nbsp;4</strong></span></td>
@@ -356,14 +352,11 @@
 </tbody>
 </table>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>「厳格マッチング」と訳されることもある。</p></li></ol></aside></section>
-<section id="マッチングによる因果推論の考え方" class="slide level2">
-<h2>マッチングによる因果推論の考え方</h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>「厳格マッチング」と訳されることもある。</p></li></ol></aside></section><section id="マッチングによる因果推論の考え方" class="slide level2"><h2>マッチングによる因果推論の考え方</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
 </figure>
 </div>
 </div>
@@ -374,131 +367,171 @@
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <table class="caption-top">
 <caption>　</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;">統制群</th>
 <th style="text-align: center;">vs</th>
 <th style="text-align: center;">処置群</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">?</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏿)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">?</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨🏼)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏼)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <table class="caption-top">
-<caption>回帰分析<sup>1</sup></caption>
-<thead>
-<tr class="header">
+<caption>回帰分析<sup>1</sup>
+</caption>
+<thead><tr class="header">
 <th style="text-align: center;">統制群</th>
 <th style="text-align: center;">vs</th>
 <th style="text-align: center;">処置群</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(\widehat{Y}\)</span>(👩🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👩🏿)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏿)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(\widehat{Y}\)</span>(👨🏼)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👨🏼)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨🏼)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏼)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <table class="caption-top">
-<caption>マッチング<sup>2</sup></caption>
-<thead>
-<tr class="header">
+<caption>マッチング<sup>2</sup>
+</caption>
+<thead><tr class="header">
 <th style="text-align: center;">統制群</th>
 <th style="text-align: center;">vs</th>
 <th style="text-align: center;">処置群</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏿)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨🏼)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏼)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
 <td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
 </tr>
 </tbody>
 </table>
@@ -506,90 +539,148 @@
 </div>
 </div>
 </center>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチングの場合</p></li></ol></aside></section>
-<section id="マッチングの限界" class="slide level2">
-<h2>マッチングの限界</h2>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチングの場合</p></li></ol></aside></section><section id="マッチングによる因果推論の考え方-1" class="slide level2"><h2>マッチングによる因果推論の考え方</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<table class="caption-top">
+<caption>　</caption>
+<thead><tr class="header">
+<th style="text-align: center;">統制群</th>
+<th style="text-align: center;">vs</th>
+<th style="text-align: center;">処置群</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏿)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏼)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</section><section id="マッチングの限界" class="slide level2"><h2>マッチングの限界</h2>
 <ul>
 <li>共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増<sup>1</sup>
 <ul>
 <li>例1）「男性 &amp; 大卒 &amp; 大阪府居住」</li>
 <li>例2）「男性 &amp; 176.5cm &amp; 大学院卒 &amp; 年収 352万円 &amp; 吹田市居住 &amp; 韓国人」</li>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>次元の呪い</strong></span></li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>次元の呪い</strong></span>
+</li>
+</ul>
+</li>
 <li>妥協案
 <ul>
 <li>共変量が一致するのではなく、<span class="alert">類似</span>したケース同士で比較
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> 最近傍マッチング<span class="small">（nearest neighbor matching）</span></li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 最近傍マッチング<span class="small">（nearest neighbor matching）</span>
+</li>
+</ul>
+</li>
 <li>共変量ではなく、<span class="alert">処置を受ける確率</span>がほぼ同じケース同士で比較
 <ul>
-<li>処置を受ける確率 = <span class="alert"><strong>傾向スコア</strong></span></li>
-</ul></li>
-</ul></li>
+<li>処置を受ける確率 = <span class="alert"><strong>傾向スコア</strong></span>
+</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>厳密にいえば正確マッチングの限界</p></li></ol></aside></section>
-<section id="傾向スコア-1" class="slide level2">
-<h2>傾向スコア</h2>
+</li>
+</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn4"><p>厳密にいえば正確マッチングの限界</p></li></ol></aside></section><section id="傾向スコア-1" class="slide level2"><h2>傾向スコア</h2>
 <p><span class="math display">\[
 e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
 \]</span></p>
 <p>最近傍マッチング・共変量調整でも使われるが、ここれでは省略（マッチングは付録に）</p>
-</section></section>
-<section>
-<section id="仮定" class="title-slide slide level1 center">
-<h1><strong>2</strong> 仮定</h1>
+</section></section><section><section id="仮定" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 仮定</h1>
 
-</section>
-<section id="条件付平均独立" class="slide level2">
-<h2>条件付（平均）独立</h2>
-</section>
-<section id="共有サポート" class="slide level2">
-<h2>共有サポート</h2>
+</section><section id="条件付平均独立" class="slide level2"><h2>条件付（平均）独立</h2>
+</section><section id="共有サポート" class="slide level2"><h2>共有サポート</h2>
 <p>共有サポート（common support）</p>
 <p>サポートは「台」とも訳される</p>
-</section></section>
-<section id="推定層化" class="title-slide slide level1 center">
-<h1><strong>3</strong> 推定：層化</h1>
+</section></section><section id="推定層化" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 推定：層化</h1>
 
-</section>
+</section><section id="推定重み付け" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 推定：重み付け</h1>
 
-<section id="推定重み付け" class="title-slide slide level1 center">
-<h1><strong>4</strong> 推定：重み付け</h1>
-
-</section>
-
-<section id="実装例" class="title-slide slide level1 center">
-<h1><strong>5</strong> 実装例</h1>
+</section><section id="実装例" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 実装例</h1>
 
 
 </section>
-
-
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>傾向スコア</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -747,7 +838,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -780,9 +871,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -817,9 +906,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -953,6 +1040,160 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -992,6 +1233,6 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
         }
       });
       </script>
-    
+
 
 </body></html>

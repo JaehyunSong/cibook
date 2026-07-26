@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -56,51 +62,51 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #24292e;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-fa59b55c41a878cebefac86642c15c95.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -192,26 +198,21 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">5/ Lab session</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="本日の内容" class="title-slide slide level1 center">
-<h1><strong>1</strong> 本日の内容</h1>
+</section><section><section id="本日の内容" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 本日の内容</h1>
 
-</section>
-<section id="本日の内容-1" class="slide level2">
-<h2>本日の内容</h2>
+</section><section id="本日の内容-1" class="slide level2"><h2>本日の内容</h2>
 <ol type="1">
 <li>Rの導入（省略）</li>
 <li>データハンドリング</li>
@@ -221,90 +222,123 @@
 <ul>
 <li>線形回帰分析</li>
 <li>多重比較</li>
-</ul></li>
+</ul>
+</li>
 <li>推定結果の可視化</li>
-</ol>
-</section></section>
-<section>
-<section id="データ操作" class="title-slide slide level1 center">
-<h1><strong>2</strong> データ操作</h1>
+</ol></section></section><section><section id="データ操作" class="title-slide slide level1 center"><h1>
+<strong>2</strong> データ操作</h1>
 
-</section>
-<section id="データ操作の手順" class="slide level2">
-<h2>データ操作の手順</h2>
+</section><section id="データ操作の手順" class="slide level2"><h2>データ操作の手順</h2>
 <ol type="1">
+<li>必要なパッケージの読み込み</li>
 <li>データの読み込み</li>
+<li>列の整理</li>
 <li>欠損値処理</li>
-</ol>
-</section>
-<section id="パイプ演算子" class="slide level2">
-<h2>パイプ演算子</h2>
-</section>
-<section id="行列の抽出" class="slide level2">
-<h2>行・列の抽出</h2>
+<li>変数の計算</li>
+<li>列の整理</li>
+</ol></section><section id="パイプ演算子" class="slide level2"><h2>パイプ演算子</h2>
+<p>パイプ演算子（<code>|&gt;</code>）：オブジェクトを関数の第一引数として渡す演算子</p>
+<ul>
+<li>
+<code>func(x, y)</code>は<code>x |&gt; func(y)</code>と同じ
+<ul>
+<li>パイプなし：<code>print(mean(x, na.rm = TRUE))</code>
+</li>
+<li>パイプあり：<code>x |&gt; mean(na.rm = TRUE) |&gt; print()</code>
+</li>
+</ul>
+</li>
+<li>コーディングを考える順番（or コードを読む順番）と書く順番が一致
+<ul>
+<li>
+<span class="math inline">\(\therefore\)</span> コーディングミスが少なく、メンテナンスしやすい</li>
+</ul>
+</li>
+</ul></section><section id="パイプ演算子の例1" class="slide level2"><h2>パイプ演算子の例（1）</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="_figs/r/wo_pipe.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>)</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">print</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a aria-label="3"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="パイプ演算子の例2" class="slide level2"><h2>パイプ演算子の例（2）</h2>
+
+<img data-src="_figs/r/w_pipe.png" class="r-stretch"><div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>)</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="co"># 必須ではないが、パイプ演算子の後は改行が推奨される。</span></span>
+<span id="cb2-3"><a aria-label="3"></a>x <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a aria-label="4"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a aria-label="5"></a>  <span class="fu">print</span>()</span>
+<span id="cb2-6"><a aria-label="6"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="列の整理" class="slide level2"><h2>列の整理</h2>
 <ul>
 <li>列の抽出：<code>select()</code>
 <ul>
-<li>列名の変更：<code>rename()</code></li>
-<li>列の位置変更：<code>relocate()</code></li>
-</ul></li>
-<li>行の抽出：<code>filter()</code></li>
+<li>列名の変更：<code>rename()</code>
+</li>
+<li>列の位置変更：<code>relocate()</code>
+</li>
 </ul>
-</section></section>
-<section>
-<section id="可視化" class="title-slide slide level1 center">
-<h1><strong>3</strong> 可視化</h1>
-
-</section>
-<section id="ggplot2の考え方" class="slide level2">
-<h2>{ggplot2}の考え方</h2>
-</section></section>
-<section>
-<section id="記述統計" class="title-slide slide level1 center">
-<h1><strong>4</strong> 記述統計</h1>
-
-</section>
-<section id="記述統計量" class="slide level2">
-<h2>記述統計量</h2>
-<p>必ず分析に使用するデータの記述統計量を報告すること</p>
+</li>
+<li>行の抽出：<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>
+</li>
+</ul></section><section id="欠損値の処理" class="slide level2"><h2>欠損値の処理</h2>
+<p>欠損値（missing value）：本来あるべき値が記録されていないこと</p>
 <ul>
-<li><strong>分析に使われるケース（個体）、変数のみ</strong>で十分</li>
-<li>分析に使われないケース（個体）、クリーニング前の変数は載せない。</li>
-<li>よく使う記述統計量は<strong>平均値</strong>、<strong>標準偏差</strong>、<strong>最小値</strong>、<strong>最大値</strong>
-<ul>
-<li><strong>中央値</strong>も入れるとなおさら良い</li>
-</ul></li>
-<li>実験データの場合、グループごとに掲載する場合もあるが、別途バランスチェックを行うなら不要</li>
+<li>調査の無回答、観測機器の不具合、入力ミス、政治的な理由などで発生する</li>
+<li>分析に使用する変数が1つ以上欠損した行（ケース）は分析から除外される<sup>1</sup>ため、予め除外しておく<sup>2</sup>
+</li>
 </ul>
-</section>
-<section id="記述統計表の例" class="slide level2">
-<h2>記述統計表の例</h2>
+<h4 id="欠損値処理の手順">欠損値処理の手順</h4>
+<p>同じデータセットでも欠損値の表記方法は複数あり得るため、自分が生産したデータでない場合はコードブックを参照すること</p>
+<ol type="1">
+<li>
+<strong>Step 1：</strong><code>999</code>や<code>-9</code>などの数値、<code>""</code>（空欄）が欠損値を意味する場合、これらの値をRの欠損値（<code>NA</code>）に置換</li>
+<li>
+<strong>Step 2：</strong><code>drop_na()</code>や<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>で欠損値を含む行を除去</li>
+</ol>
+
+<aside><div>
+<ul>
+<li>高橋将宜・渡辺美智子. 2017. 『欠測データ処理: Rによる単一代入法と多重代入法』共立出版.</li>
+</ul>
+</div><ol class="aside-footnotes"><li id="fn1"><p>一部の関数やパッケージは欠損した箇所を当該変数の平均値や中央値で勝手に埋めるケースがある。</p></li><li id="fn2"><p>多重代入法（multiple imputation）等の手法で欠損値を埋めて分析に使うことも可能。詳細は高橋・渡辺（2017）等を参照されたい。</p></li></ol></aside></section><section id="値の置換" class="slide level2"><h2>値の置換</h2>
+<p>特定の値を<code>NA</code>に置換する<code><a href="https://naniar.njtierney.com/reference/replace_with_na.html">replace_with_na()</a></code>関数（要{naniar}パッケージ）</p>
+<ul>
+<li>例）<code>age</code>は999、<code>educ</code>は-9と-10が欠損値（<code>female</code>は欠損値が既に<code>NA</code>になっている）</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:30%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="ibilacdmwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ibilacdmwu table {
+<div id="aklklqzqro" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#aklklqzqro table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ibilacdmwu thead, #ibilacdmwu tbody, #ibilacdmwu tfoot, #ibilacdmwu tr, #ibilacdmwu td, #ibilacdmwu th {
+#aklklqzqro thead, #aklklqzqro tbody, #aklklqzqro tfoot, #aklklqzqro tr, #aklklqzqro td, #aklklqzqro th {
   border-style: none;
 }
 
-#ibilacdmwu p {
+#aklklqzqro p {
   margin: 0;
   padding: 0;
 }
 
-#ibilacdmwu .gt_table {
+#aklklqzqro .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
-  font-size: 16px;
+  font-size: 32px;
   font-weight: normal;
   font-style: normal;
   background-color: #FFFFFF;
@@ -323,12 +357,12 @@
   border-left-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_caption {
+#aklklqzqro .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ibilacdmwu .gt_title {
+#aklklqzqro .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -340,7 +374,7 @@
   border-bottom-width: 0;
 }
 
-#ibilacdmwu .gt_subtitle {
+#aklklqzqro .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -352,7 +386,7 @@
   border-top-width: 0;
 }
 
-#ibilacdmwu .gt_heading {
+#aklklqzqro .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -364,13 +398,13 @@
   border-right-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_bottom_border {
+#aklklqzqro .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_col_headings {
+#aklklqzqro .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -385,7 +419,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_col_heading {
+#aklklqzqro .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -405,7 +439,7 @@
   overflow-x: hidden;
 }
 
-#ibilacdmwu .gt_column_spanner_outer {
+#aklklqzqro .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -417,15 +451,15 @@
   padding-right: 4px;
 }
 
-#ibilacdmwu .gt_column_spanner_outer:first-child {
+#aklklqzqro .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ibilacdmwu .gt_column_spanner_outer:last-child {
+#aklklqzqro .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ibilacdmwu .gt_column_spanner {
+#aklklqzqro .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -437,11 +471,11 @@
   width: 100%;
 }
 
-#ibilacdmwu .gt_spanner_row {
+#aklklqzqro .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ibilacdmwu .gt_group_heading {
+#aklklqzqro .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -467,7 +501,7 @@
   text-align: left;
 }
 
-#ibilacdmwu .gt_empty_group_heading {
+#aklklqzqro .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -482,15 +516,15 @@
   vertical-align: middle;
 }
 
-#ibilacdmwu .gt_from_md > :first-child {
+#aklklqzqro .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ibilacdmwu .gt_from_md > :last-child {
+#aklklqzqro .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ibilacdmwu .gt_row {
+#aklklqzqro .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -509,7 +543,7 @@
   overflow-x: hidden;
 }
 
-#ibilacdmwu .gt_stub {
+#aklklqzqro .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -522,7 +556,7 @@
   padding-right: 5px;
 }
 
-#ibilacdmwu .gt_stub_row_group {
+#aklklqzqro .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -536,15 +570,15 @@
   vertical-align: top;
 }
 
-#ibilacdmwu .gt_row_group_first td {
+#aklklqzqro .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ibilacdmwu .gt_row_group_first th {
+#aklklqzqro .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ibilacdmwu .gt_summary_row {
+#aklklqzqro .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -554,16 +588,16 @@
   padding-right: 5px;
 }
 
-#ibilacdmwu .gt_first_summary_row {
+#aklklqzqro .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_first_summary_row.thick {
+#aklklqzqro .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ibilacdmwu .gt_last_summary_row {
+#aklklqzqro .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -573,7 +607,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_grand_summary_row {
+#aklklqzqro .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -583,7 +617,7 @@
   padding-right: 5px;
 }
 
-#ibilacdmwu .gt_first_grand_summary_row {
+#aklklqzqro .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -593,7 +627,7 @@
   border-top-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_last_grand_summary_row_top {
+#aklklqzqro .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -603,11 +637,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_striped {
+#aklklqzqro .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ibilacdmwu .gt_table_body {
+#aklklqzqro .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -616,7 +650,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_footnotes {
+#aklklqzqro .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -630,7 +664,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_footnote {
+#aklklqzqro .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -639,7 +673,7 @@
   padding-right: 5px;
 }
 
-#ibilacdmwu .gt_sourcenotes {
+#aklklqzqro .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -653,7 +687,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ibilacdmwu .gt_sourcenote {
+#aklklqzqro .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -661,153 +695,190 @@
   padding-right: 5px;
 }
 
-#ibilacdmwu .gt_left {
+#aklklqzqro .gt_left {
   text-align: left;
 }
 
-#ibilacdmwu .gt_center {
+#aklklqzqro .gt_center {
   text-align: center;
 }
 
-#ibilacdmwu .gt_right {
+#aklklqzqro .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ibilacdmwu .gt_font_normal {
+#aklklqzqro .gt_font_normal {
   font-weight: normal;
 }
 
-#ibilacdmwu .gt_font_bold {
+#aklklqzqro .gt_font_bold {
   font-weight: bold;
 }
 
-#ibilacdmwu .gt_font_italic {
+#aklklqzqro .gt_font_italic {
   font-style: italic;
 }
 
-#ibilacdmwu .gt_super {
+#aklklqzqro .gt_super {
   font-size: 65%;
 }
 
-#ibilacdmwu .gt_footnote_marks {
+#aklklqzqro .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ibilacdmwu .gt_asterisk {
+#aklklqzqro .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ibilacdmwu .gt_indent_1 {
+#aklklqzqro .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ibilacdmwu .gt_indent_2 {
+#aklklqzqro .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ibilacdmwu .gt_indent_3 {
+#aklklqzqro .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ibilacdmwu .gt_indent_4 {
+#aklklqzqro .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ibilacdmwu .gt_indent_5 {
+#aklklqzqro .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ibilacdmwu .katex-display {
+#aklklqzqro .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ibilacdmwu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#aklklqzqro div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a::stub"></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Median">Median</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Std.Dev">Std.Dev</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Min">Min</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Max">Max</th>
+<thead>
+<tr class="gt_heading">
+<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style=""><span data-qmd-base64="YGRmYOOBruS4rei6qw=="><span class="gt_from_md"><code>df</code>の中身</span></span></td>
     </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">treat</th>
-<td headers="stub_1_1 Mean" class="gt_row gt_right">0.301</td>
-<td headers="stub_1_1 Median" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_1 Std.Dev" class="gt_row gt_right">0.459</td>
-<td headers="stub_1_1 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_1 Max" class="gt_row gt_right">1.000</td></tr>
-    <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">educ</th>
-<td headers="stub_1_2 Mean" class="gt_row gt_right">10.269</td>
-<td headers="stub_1_2 Median" class="gt_row gt_right">11.000</td>
-<td headers="stub_1_2 Std.Dev" class="gt_row gt_right">2.628</td>
-<td headers="stub_1_2 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_2 Max" class="gt_row gt_right">18.000</td></tr>
-    <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">black</th>
-<td headers="stub_1_3 Mean" class="gt_row gt_right">0.396</td>
-<td headers="stub_1_3 Median" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_3 Std.Dev" class="gt_row gt_right">0.489</td>
-<td headers="stub_1_3 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_3 Max" class="gt_row gt_right">1.000</td></tr>
-    <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">hispan</th>
-<td headers="stub_1_4 Mean" class="gt_row gt_right">0.117</td>
-<td headers="stub_1_4 Median" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_4 Std.Dev" class="gt_row gt_right">0.322</td>
-<td headers="stub_1_4 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_4 Max" class="gt_row gt_right">1.000</td></tr>
-    <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">white</th>
-<td headers="stub_1_5 Mean" class="gt_row gt_right">0.487</td>
-<td headers="stub_1_5 Median" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_5 Std.Dev" class="gt_row gt_right">0.500</td>
-<td headers="stub_1_5 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_5 Max" class="gt_row gt_right">1.000</td></tr>
-    <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">re74</th>
-<td headers="stub_1_6 Mean" class="gt_row gt_right">4,557.547</td>
-<td headers="stub_1_6 Median" class="gt_row gt_right">1,042.330</td>
-<td headers="stub_1_6 Std.Dev" class="gt_row gt_right">6,477.964</td>
-<td headers="stub_1_6 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_6 Max" class="gt_row gt_right">35,040.070</td></tr>
-    <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">re75</th>
-<td headers="stub_1_7 Mean" class="gt_row gt_right">2,184.938</td>
-<td headers="stub_1_7 Median" class="gt_row gt_right">601.548</td>
-<td headers="stub_1_7 Std.Dev" class="gt_row gt_right">3,295.679</td>
-<td headers="stub_1_7 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_7 Max" class="gt_row gt_right">25,142.240</td></tr>
-    <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">re78</th>
-<td headers="stub_1_8 Mean" class="gt_row gt_right">6,792.834</td>
-<td headers="stub_1_8 Median" class="gt_row gt_right">4,759.019</td>
-<td headers="stub_1_8 Std.Dev" class="gt_row gt_right">7,470.731</td>
-<td headers="stub_1_8 Min" class="gt_row gt_right">0.000</td>
-<td headers="stub_1_8 Max" class="gt_row gt_right">60,307.930</td></tr>
-  </tbody>
-  
-  
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="female">female</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="age">age</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="educ">educ</th>
+    </tr>
+</thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="id" class="gt_row gt_right">1</td>
+<td headers="female" class="gt_row gt_right">0</td>
+<td headers="age" class="gt_row gt_right">18</td>
+<td headers="educ" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">2</td>
+<td headers="female" class="gt_row gt_right">1</td>
+<td headers="age" class="gt_row gt_right">55</td>
+<td headers="educ" class="gt_row gt_right">3</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">3</td>
+<td headers="female" class="gt_row gt_right">1</td>
+<td headers="age" class="gt_row gt_right">24</td>
+<td headers="educ" class="gt_row gt_right">-9</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">4</td>
+<td headers="female" class="gt_row gt_right">1</td>
+<td headers="age" class="gt_row gt_right">999</td>
+<td headers="educ" class="gt_row gt_right">-10</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">5</td>
+<td headers="female" class="gt_row gt_right">0</td>
+<td headers="age" class="gt_row gt_right">24</td>
+<td headers="educ" class="gt_row gt_right">5</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">6</td>
+<td headers="female" class="gt_row gt_right">NA</td>
+<td headers="age" class="gt_row gt_right">39</td>
+<td headers="educ" class="gt_row gt_right">4</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
+</div><div class="column" style="width:70%;">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/njtierney/naniar">naniar</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://naniar.njtierney.com/reference/replace_with_na.html">replace_with_na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>age  <span class="op">=</span> <span class="fl">999</span>,</span>
+<span>                       educ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">9</span>, <span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## # A tibble: 6 × 4</span></span>
+<span><span class="co">##      id female   age  educ</span></span>
+<span><span class="co">##   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">## 1     1      0    18     4</span></span>
+<span><span class="co">## 2     2      1    55     3</span></span>
+<span><span class="co">## 3     3      1    24    NA</span></span>
+<span><span class="co">## 4     4      1    NA    NA</span></span>
+<span><span class="co">## 5     5      0    24     5</span></span>
+<span><span class="co">## 6     6     NA    39     4</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+</section><section id="欠損値を含む行の削除" class="slide level2"><h2>欠損値を含む行の削除</h2>
+<ol type="1">
+<li>
+<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>関数
+<ul>
+<li>a</li>
+</ul>
+</li>
+<li>
+<code>drop_na()</code>関数
+<ul>
+<li>a</li>
+</ul>
+</li>
+</ol></section></section><section><section id="可視化" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 可視化</h1>
+
+</section><section id="ggplot2の考え方" class="slide level2"><h2>{ggplot2}の考え方</h2>
+</section></section><section><section id="記述統計" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 記述統計</h1>
+
+</section><section id="記述統計量" class="slide level2"><h2>記述統計量</h2>
+<p>必ず分析に使用するデータの記述統計量を報告すること</p>
+<ul>
+<li>
+<strong>分析に使われるケース（個体）、変数のみ</strong>で十分</li>
+<li>分析に使われないケース（個体）、クリーニング前の変数は載せない。</li>
+<li>よく使う記述統計量は<strong>平均値</strong>、<strong>標準偏差</strong>、<strong>最小値</strong>、<strong>最大値</strong>
+<ul>
+<li>
+<strong>中央値</strong>も入れるとなおさら良い</li>
+</ul>
+</li>
+<li>実験データの場合、グループごとに掲載する場合もあるが、別途バランスチェックを行うなら不要</li>
+</ul></section><section id="記述統計表の例" class="slide level2"><h2>記述統計表の例</h2>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">変数名</th>
 <th style="text-align: right;">平均値</th>
 <th style="text-align: right;">中央値</th>
 <th style="text-align: right;">標準偏差</th>
 <th style="text-align: right;">最小値</th>
 <th style="text-align: right;">最大値</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">女性</td>
@@ -882,138 +953,112 @@
 <td style="text-align: right;">100</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="記述統計量の計算方法" class="slide level2">
-<h2>記述統計量の計算方法</h2>
+</table></section><section id="記述統計量の計算方法" class="slide level2"><h2>記述統計量の計算方法</h2>
 <ul>
-<li><strong>方法1：</strong>R内蔵関数を利用する
+<li>
+<strong>方法1：</strong>R内蔵関数を利用する
 <ul>
-<li><code>mean()</code>、<code>median()</code>、<code>sd()</code>、<code>min()</code>、<code>max()</code></li>
+<li>
+<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>、<code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>、<code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>、<code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>、<code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>
+</li>
 <li>{dplyr}の<code>summarise()</code>との組み合わせが効率的</li>
 <li>複数の変数の記述統計量を計算する場合、更に<code>across()</code>と組み合わせるか、別途のパッケージ（{summarytools}など）を使った方が効率的</li>
-</ul></li>
-<li><strong>方法2：</strong>{<a href="https://cran.r-project.org/web/packages/summarytools/index.html">summarytools</a>}の<code>descr()</code>を利用する（<strong>推奨</strong>）</li>
+</ul>
+</li>
+<li>
+<strong>方法2：</strong>{<a href="https://cran.r-project.org/web/packages/summarytools/index.html">summarytools</a>}の<code>descr()</code>を利用する（<strong>推奨</strong>）</li>
 </ul>
 
 <aside><div>
 <p>注：名目変数の記述統計量（最頻値を除く）を計算する場合、<code>if_else()</code>や{fastDummies}パッケージ等を使って、予めダミー変数に変換しておくこと。</p>
-</div></aside></section>
-<section id="バランスチェック" class="slide level2">
-<h2>バランスチェック</h2>
+</div></aside></section><section id="バランスチェック" class="slide level2"><h2>バランスチェック</h2>
 <p>{<a href="https://ngreifer.github.io/cobalt/index.html">cobalt</a>}パッケージの<code>bal.tab()</code>を利用した標準化平均差の計算</p>
 <div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>Balance Measures
-               Type Diff.Un     M.Threshold.Un
-age         Contin. -0.2419 Not Balanced, &gt;0.1
-educ        Contin.  0.0448     Balanced, &lt;0.1
-race_black   Binary  0.6404 Not Balanced, &gt;0.1
-race_hispan  Binary -0.0827     Balanced, &lt;0.1
-race_white   Binary -0.5577 Not Balanced, &gt;0.1
-married      Binary -0.3236 Not Balanced, &gt;0.1
-re74        Contin. -0.5958 Not Balanced, &gt;0.1
-re75        Contin. -0.2870 Not Balanced, &gt;0.1
-
-Balance tally for mean differences
-                   count
-Balanced, &lt;0.1         2
-Not Balanced, &gt;0.1     6
-
-Variable with the greatest mean difference
-   Variable Diff.Un     M.Threshold.Un
- race_black  0.6404 Not Balanced, &gt;0.1
-
-Sample sizes
-    Control Treated
-All     429     185</code></pre>
+<pre><code>## Balance Measures
+##                Type Diff.Un     M.Threshold.Un
+## age         Contin. -0.2419 Not Balanced, &gt;0.1
+## educ        Contin.  0.0448     Balanced, &lt;0.1
+## race_black   Binary  0.6404 Not Balanced, &gt;0.1
+## race_hispan  Binary -0.0827     Balanced, &lt;0.1
+## race_white   Binary -0.5577 Not Balanced, &gt;0.1
+## married      Binary -0.3236 Not Balanced, &gt;0.1
+## re74        Contin. -0.5958 Not Balanced, &gt;0.1
+## re75        Contin. -0.2870 Not Balanced, &gt;0.1
+## 
+## Balance tally for mean differences
+##                    count
+## Balanced, &lt;0.1         2
+## Not Balanced, &gt;0.1     6
+## 
+## Variable with the greatest mean difference
+##    Variable Diff.Un     M.Threshold.Un
+##  race_black  0.6404 Not Balanced, &gt;0.1
+## 
+## Sample sizes
+##     Control Treated
+## All     429     185</code></pre>
 </div>
-</div>
-</section>
-<section id="バランスチェック可視化" class="slide level2">
-<h2>バランスチェック（可視化）</h2>
+</section><section id="バランスチェック可視化" class="slide level2"><h2>バランスチェック（可視化）</h2>
 <p><code>bal.tab()</code> + <code>love.plot()</code>を利用した可視化</p>
 
-<img data-src="r_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section></section>
-<section>
-<section id="推定" class="title-slide slide level1 center">
-<h1><strong>4</strong> 推定</h1>
+<img data-src="r_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section></section><section><section id="推定" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 推定</h1>
 
-</section>
-<section id="線形回帰モデル" class="slide level2">
-<h2>線形回帰モデル</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">lm</span>(formula, data, weights)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</section><section id="線形回帰モデル" class="slide level2"><h2>線形回帰モデル</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">lm</span>(formula, data, weights)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>formula</code>：<code>結果変数 ~ 説明変数1 + 説明変数2 + ...</code></li>
-<li><code>data</code>：結果変数および説明変数が格納されているデータフレーム名
+<li>
+<code>formula</code>：<code>結果変数 ~ 説明変数1 + 説明変数2 + ...</code>
+</li>
+<li>
+<code>data</code>：結果変数および説明変数が格納されているデータフレーム名
 <ul>
-<li>パイプ演算子を使用する場合、<code>データフレーム名 |&gt; lm(formula, data = _)</code></li>
-</ul></li>
-<li><code>weights</code>：重み付け回帰分析の場合、重み変数の列名</li>
+<li>パイプ演算子を使用する場合、<code>データフレーム名 |&gt; lm(formula, data = _)</code>
+</li>
 </ul>
-</section>
-<section id="処置効果" class="slide level2">
-<h2>処置効果</h2>
-</section>
-<section id="予測値" class="slide level2">
-<h2>予測値</h2>
-</section>
-<section id="限界効果" class="slide level2">
-<h2>限界効果</h2>
-</section></section>
-<section>
-<section id="可視化-1" class="title-slide slide level1 center">
-<h1><strong>5</strong> 可視化</h1>
+</li>
+<li>
+<code>weights</code>：重み付け回帰分析の場合、重み変数の列名</li>
+</ul></section><section id="処置効果" class="slide level2"><h2>処置効果</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">lm</span>(結果変数 <span class="sc">~</span> 処置変数 <span class="sc">+</span> 統制変数1 <span class="sc">+</span> 統制変数2 <span class="sc">+</span> ..., <span class="at">data =</span> データフレーム名)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</section><section id="予測値" class="slide level2"><h2>予測値</h2>
+</section><section id="限界効果" class="slide level2"><h2>限界効果</h2>
+</section></section><section><section id="可視化-1" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 可視化</h1>
 
-</section>
-<section id="棒グラフ" class="slide level2">
-<h2>棒グラフ</h2>
+</section><section id="棒グラフ" class="slide level2"><h2>棒グラフ</h2>
 <ul>
-<li>幾何オブジェクト：<code>geom_bar()</code>、または<code>geom_col()</code></li>
+<li>幾何オブジェクト：<code>geom_bar()</code>、または<code>geom_col()</code>
+</li>
 <li>マッピング
 <ul>
-<li>必須：<code>x</code>、<code>y</code></li>
+<li>必須：<code>x</code>、<code>y</code>
+</li>
 <li>その他：<code>fill</code>など</li>
-</ul></li>
 </ul>
-</section>
-<section id="点範囲グラフ" class="slide level2">
-<h2>点―範囲グラフ</h2>
+</li>
+</ul></section><section id="点範囲グラフ" class="slide level2"><h2>点―範囲グラフ</h2>
 <ul>
-<li>幾何オブジェクト：<code>geom_pointrange()</code></li>
+<li>幾何オブジェクト：<code>geom_pointrange()</code>
+</li>
 <li>マッピング
 <ul>
 <li>必須：<code>x</code>、<code>y</code>、<code>ymin</code>、<code>ymax</code>（または、<code>x</code>、<code>xmin</code>、<code>xmax</code>、<code>y</code>）</li>
 <li>その他：<code>color</code>、<code>alpha</code>、<code>shpae</code>など</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 
 </section></section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>Lab session</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1171,7 +1216,7 @@ All     429     185</code></pre>
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -1204,9 +1249,7 @@ All     429     185</code></pre>
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -1241,9 +1284,7 @@ All     429     185</code></pre>
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -1377,6 +1418,160 @@ All     429     185</code></pre>
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -1416,6 +1611,6 @@ All     429     185</code></pre>
         }
       });
       </script>
-    
+
 
 </body></html>

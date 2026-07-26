@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,12 +35,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-8959375eb0f6913aa26bd5e18886ba7d.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -126,26 +132,21 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">8/ 差分の差分法</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="差分の差分法" class="title-slide slide level1 center">
-<h1><strong>1</strong> 差分の差分法</h1>
+</section><section><section id="差分の差分法" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 差分の差分法</h1>
 
-</section>
-<section id="電子投票の導入と投票率" class="slide level2">
-<h2>電子投票の導入と投票率</h2>
+</section><section id="電子投票の導入と投票率" class="slide level2"><h2>電子投票の導入と投票率</h2>
 <p>2004年京都市長選挙における電子投票の導入<sup>1</sup></p>
 <ul>
 <li>11の行政区の内、東山区<span class="alert"><strong>のみ</strong></span>導入</li>
@@ -155,153 +156,167 @@
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/did/eVote1.jpg"></p>
-<figcaption>我々が考えている電子投票</figcaption>
-</figure>
+<figure><p><img data-src="_figs/did/eVote1.jpg"></p>
+<figcaption>我々が考えている電子投票</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/did/eVote2.jpg"></p>
-<figcaption>現在の電子投票</figcaption>
-</figure>
+<figure><p><img data-src="_figs/did/eVote2.jpg"></p>
+<figcaption>現在の電子投票</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>日本における電子投票の初導入事例は2002年の岡山県新見市（首長・市議会選挙）</p></li></ol></aside></section>
-<section id="東山区の投票率経時的変化" class="slide level2">
-<h2>東山区の投票率（経時的変化）</h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>日本における電子投票の初導入事例は2002年の岡山県新見市（首長・市議会選挙）</p></li></ol></aside></section><section id="東山区の投票率経時的変化" class="slide level2"><h2>東山区の投票率（経時的変化）</h2>
 <ul>
 <li>電子投票導入後、投票率が約2.1%p減少（45.6% <span class="math inline">\(\rightarrow\)</span> 43.5%）
 <ul>
 <li>電子投票は投票率を下げる?</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="内生性" class="slide level2">
-<h2>内生性</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="内生性" class="slide level2"><h2>内生性</h2>
 
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1200"><ul>
 <li>電子投票の導入は選管が決めるため、自己選択バイアスの可能性がある。</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 電子投票と投票率間の交絡要因は?
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 電子投票と投票率間の交絡要因は?
 <ul>
 <li>どのような場合に選管は電子投票の導入を検討するか。</li>
-</ul></li>
 </ul>
-</section>
-<section id="自己選択バイアスの例1" class="slide level2">
-<h2>自己選択バイアスの例（1）</h2>
+</li>
+</ul></section><section id="自己選択バイアスの例1" class="slide level2"><h2>自己選択バイアスの例（1）</h2>
 
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1200"><ul>
 <li>東山区の投票率は元々低く、選管が投票率向上のために電子投票を導入</li>
 <li>元々投票率の低い地域は次の選挙の投票率も低い傾向</li>
 <li>電子投票のおかげで2.1%p減で食い止められたかも</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 単純前後比較には限界があり、<span class="alert"><strong>比較対象が必要</strong></span></li>
-</ul>
-</section>
-<section id="東山区の投票率群間比較" class="slide level2">
-<h2>東山区の投票率（群間比較）</h2>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 単純前後比較には限界があり、<span class="alert"><strong>比較対象が必要</strong></span>
+</li>
+</ul></section><section id="東山区の投票率群間比較" class="slide level2"><h2>東山区の投票率（群間比較）</h2>
 <ul>
 <li>電子投票を導入した東山区の投票率は導入しなかった区に比べ、約4.5%p高い
 <ul>
 <li>電子投票は投票率を上げる?</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="自己選択バイアスの例2" class="slide level2">
-<h2>自己選択バイアスの例（2）</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="自己選択バイアスの例2" class="slide level2"><h2>自己選択バイアスの例（2）</h2>
 
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1200"><ul>
 <li>東山区の選管は投票参加の重要性を認識
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> 東山区は元々投票率が高かった可能性 &amp; 更に投票率を上げるための方法を導入</li>
-</ul></li>
-<li>電子投票がなくても東山区は投票率が高い可能性</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 単純群間比較には限界があり、<span class="alert"><strong>比較対象が必要</strong></span></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 東山区は元々投票率が高かった可能性 &amp; 更に投票率を上げるための方法を導入</li>
 </ul>
-</section>
-<section id="何と何を比較するか" class="slide level2">
-<h2>何と何を比較するか</h2>
+</li>
+<li>電子投票がなくても東山区は投票率が高い可能性</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 単純群間比較には限界があり、<span class="alert"><strong>比較対象が必要</strong></span>
+</li>
+</ul></section><section id="何と何を比較するか" class="slide level2"><h2>何と何を比較するか</h2>
 <p>「<span class="alert"><strong>電子投票を導入しなかった2004年の東山区</strong></span>」が最適な比較対象</p>
 <ul>
 <li>しかし、観察できない（<span class="alert">因果推論の根本問題</span>）</li>
-<li>郡間比較も、前後比較も、適切な比較方法ではない<span class="small">（可能性が高い）</span></li>
+<li>郡間比較も、前後比較も、適切な比較方法ではない<span class="small">（可能性が高い）</span>
+</li>
 <li>ある仮定が満たされれば、郡間比較、または前後比較で因果効果が推定可能
 <ul>
 <li>その仮定とは?</li>
-</ul></li>
 </ul>
-</section>
-<section id="つの推定方法" class="slide level2">
-<h2>2つの推定方法</h2>
+</li>
+</ul></section><section id="つの推定方法1" class="slide level2"><h2>2つの推定方法（1）</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
 <col style="width: 33%">
 <col style="width: 33%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;"></th>
 <th style="text-align: center;">処置前（Pre）</th>
 <th style="text-align: center;">処置後（Post）</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">統制（<span class="math inline">\(D_i = 0\)</span>）</td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, pre}^0|D_i = 0]\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, post}^0|D_i = 0]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">処置（<span class="math inline">\(D_i = 1\)</span>）</td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, pre}^1|D_i = 1]\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, post}^1|D_i = 1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></td>
 </tr>
 </tbody>
 </table>
 <p><span class="math display">\[
 \textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
 \]</span></p>
-<h4 id="群間比較cross-sectional-design"><strong>群間比較</strong>（Cross-sectional design）</h4>
+<h4 id="群間比較cross-sectional-design">
+<strong>群間比較</strong>（Cross-sectional design）</h4>
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></li>
-<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></li>
-</ul>
-<h4 id="前後比較before-and-after-design"><strong>前後比較</strong>（Before-and-after design）</h4>
+<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span>
+</li>
+</ul></section><section id="つの推定方法2" class="slide level2"><h2>2つの推定方法（2）</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">処置前（Pre）</th>
+<th style="text-align: center;">処置後（Post）</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">統制（<span class="math inline">\(D_i = 0\)</span>）</td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">処置（<span class="math inline">\(D_i = 1\)</span>）</td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[
+\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
+\]</span></p>
+<h4 id="前後比較before-and-after-design">
+<strong>前後比較</strong>（Before-and-after design）</h4>
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></li>
-<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></li>
-</ul>
-</section>
-<section id="前後-群間比較" class="slide level2">
-<h2>前後 + 群間比較</h2>
+<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span>
+</li>
+</ul></section><section id="前後-群間比較" class="slide level2"><h2>前後 + 群間比較</h2>
 <ul>
 <li>同時期における北区の投票率は約8.3%p減少（48.7% <span class="math inline">\(\rightarrow\)</span> 40.4%）
 <ul>
 <li>電子投票は投票率を下げる? <span class="math inline">\(\rightarrow\)</span> そうじゃないかも知れない。</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="反実仮想を考える" class="slide level2">
-<h2>反実仮想を考える</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="反事実を考える" class="slide level2"><h2>反事実を考える</h2>
 <p>2004年に東山区が電子投票を導入しなかったら…</p>
 <ul>
-<li>北区同様、約8.3%p減少したかも知れない（破線）。</li>
+<li>北区同様、約8.3%p減少したかも知れない（<span style="color:tomato;">破線</span>）。</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="900"></p>
+<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -309,19 +324,23 @@
 </div><div class="column" style="width:50%;">
 <ul>
 <li>実際は約2.1%p減に留まった。</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 電子投票のおかげで投票率が<span class="alert"><strong>6.2%p増</strong></span></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 電子投票のおかげで投票率が<span class="alert"><strong>6.2%p増</strong></span>
+</li>
 </ul>
 </div></div>
-</section>
-<section id="電子投票の因果効果の推定" class="slide level2">
-<h2>電子投票の因果効果の推定</h2>
+</section><section id="電子投票の因果効果の推定" class="slide level2"><h2>電子投票の因果効果の推定</h2>
 <ul>
 <li>処置効果<span class="math inline">\(\delta\)</span>は<span class="alert"><strong>処置群における変化量</strong></span>と<span class="alert"><strong>統制群における変化量</strong></span>の差分
 <ul>
-<li><span class="math inline">\(A\)</span>：処置群における差分 = 観測された処置群の変化量</li>
-<li><span class="math inline">\(B\)</span>：統制群における差分 = もし処置群が処置を受けなかった場合の処置群の変化量の推定値（反実仮想）</li>
-<li><span class="math inline">\(\delta_{\textsf{ATT}} = A - B\)</span>：因果効果・処置効果</li>
-</ul></li>
+<li>
+<span class="math inline">\(A\)</span>：処置群における差分 = 観測された処置群の変化量</li>
+<li>
+<span class="math inline">\(B\)</span>：統制群における差分 = もし処置群が処置を受けなかった場合の処置群の変化量の推定値（反事実）</li>
+<li>
+<span class="math inline">\(\delta_{\textsf{ATT}} = A - B\)</span>：因果効果・処置効果</li>
+</ul>
+</li>
 </ul>
 <p><span class="math display">\[
 \begin{align}
@@ -331,48 +350,47 @@
 &amp; = 0.062
 \end{align}
 \]</span></p>
-</section>
-<section id="差分の差分法-1" class="slide level2">
-<h2>差分の差分法</h2>
-<p><span class="alert"><strong>Difference-in-Differences</strong></span>（DD / DID / Diff-in-Diff / Dif-in-Dif）</p>
+</section><section id="差分の差分法-1" class="slide level2"><h2>差分の差分法</h2>
+<p><span class="strong">Difference-in-Differences</span>（DD / DID / Diff-in-Diff / Dif-in-Dif）</p>
 <ul>
 <li>処置群と統制群の変化の差を比較することで、因果効果を推定する準実験的手法
 <ul>
-<li>主に<span class="alert"><strong>政策介入</strong></span>や<span class="alert"><strong>制度変更</strong></span>などの因果効果を推定する際に使用</li>
-</ul></li>
+<li>主に<span class="strong">政策介入</span>や<span class="strong">制度変更</span>などの因果効果を推定する際に使用</li>
+</ul>
+</li>
 <li>時間を通じた結果変数の変化の差を、処置群と統制群の間で比較
 <ul>
 <li>時系列データを使って対象の経時的変化のみを分析（<span class="math inline">\(\times\)</span>）</li>
 <li>ある時点における介入群と対照群の差異のみを分析（<span class="math inline">\(\times\)</span>）</li>
-</ul></li>
-<li>推定量はATEでなく、<span class="alert"><strong>ATT</strong></span></li>
-<li><span class="alert"><strong>パネルデータ</strong></span>（panel data）が必要</li>
 </ul>
-</section>
-<section id="パネルデータ" class="slide level2">
-<h2>パネルデータ</h2>
-<p><span class="alert">同じ個体を複数回の観測</span>したデータ</p>
+</li>
+<li>推定量はATEでなく、<span class="strong">ATT</span>
+</li>
+<li>
+<span class="strong">パネルデータ</span>（panel data）が必要</li>
+</ul></section><section id="パネルデータ" class="slide level2"><h2>パネルデータ</h2>
+<p><span class="strong">同じ個体を複数回の観測</span>したデータ</p>
 <ul>
 <li>個体は主に国、地域、企業、団体などの集団が多い
 <ul>
-<li>DIDが主に政策介入、制度変更の因果効果に活用される理由</li>
-<li>個体自ら観測結果を発信することが多いので、収集コストが非常に低い</li>
+<li>DIDが主に政策介入、制度変更の因果効果に活用される理由 <!--   - 個体自ら観測結果を発信することが多いので、収集コストが非常に低い -->
+</li>
 <li>人間のパネルデータも構築可能（収集コストが高い）</li>
-</ul></li>
+</ul>
+</li>
 <li>以下は2つの個体（東山区と北区）を2回（2000年と2004年）観測したデータ
 <ul>
 <li>観測単位は「区」でも、「年」でもなく、「区 <span class="math inline">\(\times\)</span> 年」</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">区</th>
 <th style="text-align: right;">年</th>
 <th style="text-align: left;">投票方式</th>
 <th style="text-align: right;">投票率</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">東山区</td>
@@ -399,23 +417,19 @@
 <td style="text-align: right;">40.4</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="クロスセクションデータ" class="slide level2">
-<h2>クロスセクションデータ</h2>
+</table></section><section id="参考クロスセクションデータ" class="slide level2"><h2>参考）クロスセクションデータ</h2>
 <p>一つ一つの個体は1回のみ登場する</p>
 <ul>
 <li>すべての個体は同じタイミングで観測されており、観測回数は1回のみ</li>
-<li><span class="math inline">\(\Rightarrow\)</span>「個体1」が2回以上登場することはない</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span>「個体1」が2回以上登場することはない</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">個体</th>
 <th style="text-align: right;">変数1</th>
 <th style="text-align: right;">変数2</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">個体1</td>
@@ -452,19 +466,11 @@
 <td style="text-align: right;">3.8</td>
 <td style="text-align: right;">48.6</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">個体8</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">50.5</td>
-</tr>
 </tbody>
-</table>
-</section>
-<section id="パネルデータの例" class="slide level2">
-<h2>パネルデータの例</h2>
-<p>個体が4つ（個体1〜4）、時期が3期（2022年、2023年、2024年）の場合</p>
+</table></section><section id="パネルデータの例" class="slide level2"><h2>パネルデータの例</h2>
+<p>個体が4つ（個体1〜4）、時期が2期（2023年、2024年）の場合</p>
 <div class="columns">
-<div class="column" style="width:34%;">
+<div class="column" style="width:40%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -472,38 +478,24 @@
 <col style="width: 25%">
 <col style="width: 25%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">個体</th>
 <th style="text-align: left;">時期</th>
 <th style="text-align: right;">変数1</th>
 <th style="text-align: right;">変数2</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">個体1</td>
-<td style="text-align: left;"><span class="fg" style="--col: #19A647">2022年</span></td>
-<td style="text-align: right;">1305</td>
-<td style="text-align: right;">80</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">個体1</td>
 <td style="text-align: left;"><span class="fg" style="--col: #1955A6">2023年</span></td>
 <td style="text-align: right;">1299</td>
 <td style="text-align: right;">79</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">個体1</td>
 <td style="text-align: left;"><span class="fg" style="--col: #B22222">2024年</span></td>
 <td style="text-align: right;">1266</td>
 <td style="text-align: right;">90</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="fg" style="--col: #B22222">個体2</span></td>
-<td style="text-align: left;"><span class="fg" style="--col: #19A647">2022年</span></td>
-<td style="text-align: right;">1593</td>
-<td style="text-align: right;">20</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="fg" style="--col: #B22222">個体2</span></td>
@@ -519,27 +511,15 @@
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="fg" style="--col: #19A647">個体3</span></td>
-<td style="text-align: left;"><span class="fg" style="--col: #19A647">2022年</span></td>
-<td style="text-align: right;">1539</td>
-<td style="text-align: right;">25</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="fg" style="--col: #19A647">個体3</span></td>
 <td style="text-align: left;"><span class="fg" style="--col: #1955A6">2023年</span></td>
 <td style="text-align: right;">1551</td>
 <td style="text-align: right;">23</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><span class="fg" style="--col: #19A647">個体3</span></td>
 <td style="text-align: left;"><span class="fg" style="--col: #B22222">2024年</span></td>
 <td style="text-align: right;">1585</td>
 <td style="text-align: right;">23</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="fg" style="--col: #1955A6">個体4</span></td>
-<td style="text-align: left;"><span class="fg" style="--col: #19A647">2022年</span></td>
-<td style="text-align: right;">1021</td>
-<td style="text-align: right;">157</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="fg" style="--col: #1955A6">個体4</span></td>
@@ -555,111 +535,106 @@
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:66%;">
+</div><div class="column" style="width:60%;">
 <ul>
-<li><span class="fg" style="--col: #B22222">個体2</span>は3回登場する。
+<li>
+<span class="fg" style="--col: #B22222">個体2</span>は2回登場する。
 <ul>
-<li>個体2は計3回（<span class="fg" style="--col: #19A647">2022年</span>、<span class="fg" style="--col: #1955A6">2023年</span>、<span class="fg" style="--col: #B22222">2024年</span>）測定されているから</li>
-</ul></li>
-<li><span class="fg" style="--col: #1955A6">2023年</span>は4回登場する。
+<li>個体2は計2回（<span class="fg" style="--col: #1955A6">2023年</span>、<span class="fg" style="--col: #B22222">2024年</span>）測定されているから</li>
+</ul>
+</li>
+<li>
+<span class="fg" style="--col: #1955A6">2023年</span>は4回登場する。
 <ul>
-<li><span class="fg" style="--col: #1955A6">2023年</span>において計4つの個体（個体1、<span class="fg" style="--col: #B22222">個体2</span>、<span class="fg" style="--col: #19A647">個体3</span>、<span class="blue">個体4</span>）を測定しているから</li>
-</ul></li>
+<li>
+<span class="fg" style="--col: #1955A6">2023年</span>において計4つの個体（個体1、<span class="fg" style="--col: #B22222">個体2</span>、<span class="fg" style="--col: #19A647">個体3</span>、<span class="fg" style="--col: #19A647">個体4</span>）を測定しているから</li>
+</ul>
+</li>
 <li>パネルデータのサンプルサイズは個体数 <span class="math inline">\(\times\)</span> 観測回数
 <ul>
 <li>パネル脱落による欠損等により、「個体数 <span class="math inline">\(\times\)</span> 観測回数」より少なくなることはあり得る（逆は成立しない）</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div></div>
-</section></section>
-<section>
-<section id="仮定" class="title-slide slide level1 center">
-<h1><strong>2</strong> 仮定</h1>
+</section></section><section><section id="仮定" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 仮定</h1>
 
-</section>
-<section id="並行トレンドの仮定" class="slide level2">
-<h2>並行トレンドの仮定</h2>
+</section><section id="並行トレンドの仮定" class="slide level2"><h2>並行トレンドの仮定</h2>
 <p><span class="alert"><strong>平均トレンドの仮定</strong></span>（parallel trend assumption）</p>
 <ul>
 <li>処置が行われなかった場合の潜在的な結果の傾向は、処置群と統制群の間で同じであること</li>
-<li>この仮定が満たされる場合、<span class="alert"><strong>統制群のトレンドを処置群の反実仮想として使える</strong></span>。</li>
+<li>この仮定が満たされる場合、<span class="alert"><strong>統制群のトレンドを処置群の反事実として使える</strong></span>。</li>
 </ul>
 <p><span class="math display">\[
 \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 1] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 1]}_{\textsf{(A)}} = \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 0] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 0]}_{\textsf{(B)}}
 \]</span></p>
 <ul>
-<li>（A）：処置群がもし処置を受けなかった場合の変化量（反実仮想）</li>
+<li>（A）：処置群がもし処置を受けなかった場合の変化量（反事実）</li>
 <li>（B）：統制群における変化量（観察可能）</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 「統制群の変化量」=「処置群が処置を受けなかった場合の潜在的結果」</li>
-</ul>
-</section>
-<section id="仮定が満たされる場合" class="slide level2">
-<h2>仮定が満たされる場合</h2>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 「統制群の変化量」=「処置群が処置を受けなかった場合の潜在的結果」</li>
+</ul></section><section id="仮定が満たされる場合" class="slide level2"><h2>仮定が満たされる場合</h2>
 <ul>
 <li>処置を受けるまでは東山区と北区の投票率のトレンドが平行
 <ul>
-<li>北区が東山区の反実仮想として使える</li>
-</ul></li>
+<li>北区が東山区の反事実として使える</li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="仮定が満たされない場合" class="slide level2">
-<h2>仮定が満たされない場合</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="仮定が満たされない場合" class="slide level2"><h2>仮定が満たされない場合</h2>
 <ul>
 <li>処置を受けるまで東山区と北区の投票率のトレンドが平行でない
 <ul>
-<li>北区を東山区の反実仮想として使うことは不適切</li>
-</ul></li>
+<li>北区を東山区の反事実として使うことは不適切</li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="可視化による確認" class="slide level2">
-<h2>可視化による確認</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="可視化による確認" class="slide level2"><h2>可視化による確認</h2>
 <ul>
 <li>長期間であるほど、統制群の個体が多いほど確認しやすい</li>
 <li>人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠（<em>suggestive evidence</em>）に過ぎない</li>
 <li>プラセボテストで並行トレンドの仮定が<span class="alert">満たされていない</span>ことは検知可能（後述）</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
-<section>
-<section id="推定" class="title-slide slide level1 center">
-<h1><strong>3</strong> 推定</h1>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section><section><section id="推定" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 推定</h1>
 
-</section>
-<section id="回帰分析と差分の差分法" class="slide level2">
-<h2>回帰分析と差分の差分法</h2>
+</section><section id="回帰分析と差分の差分法" class="slide level2"><h2>回帰分析と差分の差分法</h2>
 <p>2つの個体、2期の場合</p>
 <p><span class="math display">\[
 y_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t} + \varepsilon_{it}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(y_{it}\)</span>：結果変数
+<li>
+<span class="math inline">\(y_{it}\)</span>：結果変数
 <ul>
-<li><span class="math inline">\(i\)</span>：個体（今回の例だと京都の行政区）</li>
-<li><span class="math inline">\(t\)</span>：時間（1996年、2000年、2004年、…）</li>
-</ul></li>
-<li><span class="math inline">\(D_{i}\)</span>：個体<span class="math inline">\(i\)</span>が処置群に属するかを示すダミー変数</li>
-<li><span class="math inline">\(P_{t}\)</span>：時間<span class="math inline">\(t\)</span>が処置後であることを示すダミー変数</li>
+<li>
+<span class="math inline">\(i\)</span>：個体（今回の例だと京都の行政区）</li>
+<li>
+<span class="math inline">\(t\)</span>：時間（1996年、2000年、2004年、…）</li>
 </ul>
-</section>
-<section id="実装例" class="slide level2">
-<h2>実装例</h2>
+</li>
+<li>
+<span class="math inline">\(D_{i}\)</span>：個体<span class="math inline">\(i\)</span>が処置群に属するかを示すダミー変数</li>
+<li>
+<span class="math inline">\(P_{t}\)</span>：時間<span class="math inline">\(t\)</span>が処置後であることを示すダミー変数</li>
+</ul></section><section id="実装例" class="slide level2"><h2>実装例</h2>
 <p><span class="math display">\[
 y_{it} = 48.7 + 6.2 (D_i \times P_t) - 3.1 D_{i} - 8.3 P_{t} + \varepsilon_{it}
 \]</span></p>
 <div class="columns">
 <div class="column" style="width:40%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">Name</th>
 <th style="text-align: right;"><span class="math inline">\(y_{it}\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D_{i}\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(P_{t}\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D_i \times P_t\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">東山区</td>
@@ -693,27 +668,34 @@ y_{it} = 48.7 + 6.2 (D_i \times P_t) - 3.1 D_{i} - 8.3 P_{t} + \varepsilon_{it}
 </table>
 </div><div class="column" style="width:60%;">
 <ul>
-<li><span class="math inline">\(\alpha\)</span> = 48.7
+<li>
+<span class="math inline">\(\alpha\)</span> = 48.7
 <ul>
 <li>処置前における統制群の結果変数</li>
-</ul></li>
-<li><span class="math inline">\(\delta\)</span> = 6.2
+</ul>
+</li>
+<li>
+<span class="math inline">\(\delta\)</span> = 6.2
 <ul>
-<li><span class="alert"><strong>処置効果</strong></span>（ATT）</li>
-</ul></li>
-<li><span class="math inline">\(\beta\)</span> = -3.1
+<li>
+<span class="alert"><strong>処置効果</strong></span>（ATT）</li>
+</ul>
+</li>
+<li>
+<span class="math inline">\(\beta\)</span> = -3.1
 <ul>
 <li>処置前における処置群と統制群と差</li>
-</ul></li>
-<li><span class="math inline">\(\gamma\)</span> = -8.3
+</ul>
+</li>
+<li>
+<span class="math inline">\(\gamma\)</span> = -8.3
 <ul>
 <li>統制群における結果変数の変化量</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div></div>
-</section>
-<section id="did回帰の仕組み" class="slide level2">
-<h2>DID回帰の仕組み</h2>
+</section><section id="did回帰の仕組み" class="slide level2"><h2>DID回帰の仕組み</h2>
 <p><span class="math display">\[
 \hat{y}_{it} = \alpha + \delta (D_i \times P_t) - \beta D_{i} - \gamma P_{t}
 \]</span></p>
@@ -721,62 +703,66 @@ y_{it} = 48.7 + 6.2 (D_i \times P_t) - 3.1 D_{i} - 8.3 P_{t} + \varepsilon_{it}
 <li>処置群の差分：<span class="math inline">\(\hat{y}_{it}(D_i = 1, P_t = 1) − \hat{y}_{it}(D_i = 1, P_t = 0)\)</span>
 <ul>
 <li><span class="math inline">\(\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\hat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\hat{y}_{it}(D_i = 1, P_t = 0)}\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li>統制群の差分：<span class="math inline">\(\hat{y}_{it}(D_i = 0, P_t = 1) − \hat{y}_{it}(D_0 = 1, P_t = 0)\)</span>
 <ul>
 <li><span class="math inline">\(\gamma = \underbrace{(\alpha + \gamma)}_{\hat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\hat{y}_{it}(D_i = 0, P_t = 0)}\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li>差分の差分：<span class="math inline">\(\delta = (\delta + \gamma) - (\gamma)\)</span>
 <ul>
-<li><span class="math inline">\(\Rightarrow \delta\)</span>：<span class="alert"><strong>処置効果</strong></span></li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow \delta\)</span>：<span class="alert"><strong>処置効果</strong></span>
+</li>
 </ul>
-</section>
-<section id="より一般化したdid回帰" class="slide level2">
-<h2>より一般化したDID回帰</h2>
+</li>
+</ul></section><section id="より一般化したdid回帰" class="slide level2"><h2>より一般化したDID回帰</h2>
 <p><span class="math display">\[
 y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \varepsilon_{it}
 \]</span></p>
 <ul>
 <li>個体と時間の固定効果モデル（二元配置固定効果モデル）
 <ul>
-<li><span class="math inline">\(\gamma_i\)</span>：個体のダミー変数</li>
-<li><span class="math inline">\(\lambda_t\)</span>：時間のダミー変数</li>
-</ul></li>
-<li>注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。</li>
+<li>
+<span class="math inline">\(\gamma_i\)</span>：個体のダミー変数</li>
+<li>
+<span class="math inline">\(\lambda_t\)</span>：時間のダミー変数</li>
 </ul>
-</section>
-<section id="系列相関と標準誤差" class="slide level2">
-<h2>系列相関と標準誤差</h2>
+</li>
+<li>注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。</li>
+</ul></section><section id="系列相関と標準誤差" class="slide level2"><h2>系列相関と標準誤差</h2>
 <ul>
 <li>2期間より長いパネルデータを分析する場合、結果変数は個体内で強い相関を持つ
 <ul>
-<li><strong>系列相関</strong>（serial correlation）が発生する</li>
-</ul></li>
+<li>
+<strong>系列相関</strong>（serial correlation）が発生する</li>
+</ul>
+</li>
 <li>例）2004年の東山区の投票率は、2000年の東山区の投票率と強い相関関係があり、2000年の東山区の投票率は、1996年の東山区の投票率と強い相関関係があり、…
 <ul>
 <li>投票率が高いところは、これからも高い可能性が高い（逆も同じ）
 <ul>
 <li>一つ一つのの観測値が独立とは言えなくなる</li>
-</ul></li>
+</ul>
+</li>
 <li>似たような観測が多くなるため、有効なサンプルサイズ（Effective Sample Size[ESS]）は実際よりも小さい</li>
-</ul></li>
-<li>系列相関が存在する場合、従来の標準誤差（<code>lm()</code>等）は過小評価される
+</ul>
+</li>
+<li>系列相関が存在する場合、従来の標準誤差（<code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>等）は過小評価される
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>個体でクラスター化した頑健な標準誤差</strong></span>（cluster-robust standard error）</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>個体でクラスター化した頑健な標準誤差</strong></span>（cluster-robust standard error）</li>
 <li>その他）ブロック・ブートストラップ / データを処置前後の2期に集約</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 <aside><div>
 <p>参考）Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “<a href="https://doi.org/10.1162/003355304772839588">How Much Should We Trust Differences-in-Differences Estimates?</a>” <em>The Quarterly Journal of Economics,</em> 119 (1): 249–275.</p>
-</div></aside></section>
-<section id="系列相関の例" class="slide level2">
-<h2>系列相関の例</h2>
+</div></aside></section><section id="系列相関の例" class="slide level2"><h2>系列相関の例</h2>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1950"></section>
-<section id="その他のモデル" class="slide level2">
-<h2>その他のモデル</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1950"></section><section id="その他のモデル" class="slide level2"><h2>その他のモデル</h2>
 <ul>
 <li>トレンド変数を含むモデル</li>
 </ul>
@@ -789,33 +775,33 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\gamma_
 <p><span class="math display">\[
 y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_{it}} + \varepsilon_{it}
 \]</span></p>
-</section>
-<section id="トレンド変数" class="slide level2">
-<h2>トレンド変数</h2>
+</section><section id="トレンド変数" class="slide level2"><h2>トレンド変数</h2>
 <p><span class="alert"><strong>トレンド変数と個体ダミー変数の交差項</strong></span>を投入</p>
 <ul>
-<li><span style="color:firebrick;"><strong>結果変数</strong></span>と<span style="color:royalblue;"><strong>説明変数</strong></span></li>
+<li>
+<span style="color:firebrick;"><strong>結果変数</strong></span>と<span style="color:royalblue;"><strong>説明変数</strong></span>
+</li>
 <li>さらに、「北区 <span class="math inline">\(\times\)</span> トレンド」、「東山区 <span class="math inline">\(\times\)</span> トレンド」、「西京区 <span class="math inline">\(\times\)</span> トレンド」も投入</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="mrrzqfdist" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mrrzqfdist table {
+<div id="ebajnwwgzn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ebajnwwgzn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mrrzqfdist thead, #mrrzqfdist tbody, #mrrzqfdist tfoot, #mrrzqfdist tr, #mrrzqfdist td, #mrrzqfdist th {
+#ebajnwwgzn thead, #ebajnwwgzn tbody, #ebajnwwgzn tfoot, #ebajnwwgzn tr, #ebajnwwgzn td, #ebajnwwgzn th {
   border-style: none;
 }
 
-#mrrzqfdist p {
+#ebajnwwgzn p {
   margin: 0;
   padding: 0;
 }
 
-#mrrzqfdist .gt_table {
+#ebajnwwgzn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -841,12 +827,12 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-left-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_caption {
+#ebajnwwgzn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mrrzqfdist .gt_title {
+#ebajnwwgzn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -858,7 +844,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-width: 0;
 }
 
-#mrrzqfdist .gt_subtitle {
+#ebajnwwgzn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -870,7 +856,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-width: 0;
 }
 
-#mrrzqfdist .gt_heading {
+#ebajnwwgzn .gt_heading {
   background-color: rgba(255, 255, 255, 0);
   text-align: center;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -882,13 +868,13 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_bottom_border {
+#ebajnwwgzn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_col_headings {
+#ebajnwwgzn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -903,7 +889,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_col_heading {
+#ebajnwwgzn .gt_col_heading {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -923,7 +909,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#mrrzqfdist .gt_column_spanner_outer {
+#ebajnwwgzn .gt_column_spanner_outer {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -935,15 +921,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 4px;
 }
 
-#mrrzqfdist .gt_column_spanner_outer:first-child {
+#ebajnwwgzn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mrrzqfdist .gt_column_spanner_outer:last-child {
+#ebajnwwgzn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mrrzqfdist .gt_column_spanner {
+#ebajnwwgzn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -955,11 +941,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   width: 100%;
 }
 
-#mrrzqfdist .gt_spanner_row {
+#ebajnwwgzn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mrrzqfdist .gt_group_heading {
+#ebajnwwgzn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -985,7 +971,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   text-align: left;
 }
 
-#mrrzqfdist .gt_empty_group_heading {
+#ebajnwwgzn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
@@ -1000,15 +986,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: middle;
 }
 
-#mrrzqfdist .gt_from_md > :first-child {
+#ebajnwwgzn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mrrzqfdist .gt_from_md > :last-child {
+#ebajnwwgzn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mrrzqfdist .gt_row {
+#ebajnwwgzn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1027,7 +1013,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#mrrzqfdist .gt_stub {
+#ebajnwwgzn .gt_stub {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1040,7 +1026,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#mrrzqfdist .gt_stub_row_group {
+#ebajnwwgzn .gt_stub_row_group {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1054,15 +1040,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: top;
 }
 
-#mrrzqfdist .gt_row_group_first td {
+#ebajnwwgzn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mrrzqfdist .gt_row_group_first th {
+#ebajnwwgzn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mrrzqfdist .gt_summary_row {
+#ebajnwwgzn .gt_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -1072,16 +1058,16 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#mrrzqfdist .gt_first_summary_row {
+#ebajnwwgzn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_first_summary_row.thick {
+#ebajnwwgzn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mrrzqfdist .gt_last_summary_row {
+#ebajnwwgzn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1091,7 +1077,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_grand_summary_row {
+#ebajnwwgzn .gt_grand_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -1101,7 +1087,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#mrrzqfdist .gt_first_grand_summary_row {
+#ebajnwwgzn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1111,7 +1097,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_last_grand_summary_row_top {
+#ebajnwwgzn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1121,11 +1107,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_striped {
+#ebajnwwgzn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mrrzqfdist .gt_table_body {
+#ebajnwwgzn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1134,7 +1120,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_footnotes {
+#ebajnwwgzn .gt_footnotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -1148,7 +1134,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_footnote {
+#ebajnwwgzn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1157,7 +1143,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#mrrzqfdist .gt_sourcenotes {
+#ebajnwwgzn .gt_sourcenotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -1171,7 +1157,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#mrrzqfdist .gt_sourcenote {
+#ebajnwwgzn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1179,79 +1165,78 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#mrrzqfdist .gt_left {
+#ebajnwwgzn .gt_left {
   text-align: left;
 }
 
-#mrrzqfdist .gt_center {
+#ebajnwwgzn .gt_center {
   text-align: center;
 }
 
-#mrrzqfdist .gt_right {
+#ebajnwwgzn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mrrzqfdist .gt_font_normal {
+#ebajnwwgzn .gt_font_normal {
   font-weight: normal;
 }
 
-#mrrzqfdist .gt_font_bold {
+#ebajnwwgzn .gt_font_bold {
   font-weight: bold;
 }
 
-#mrrzqfdist .gt_font_italic {
+#ebajnwwgzn .gt_font_italic {
   font-style: italic;
 }
 
-#mrrzqfdist .gt_super {
+#ebajnwwgzn .gt_super {
   font-size: 65%;
 }
 
-#mrrzqfdist .gt_footnote_marks {
+#ebajnwwgzn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mrrzqfdist .gt_asterisk {
+#ebajnwwgzn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mrrzqfdist .gt_indent_1 {
+#ebajnwwgzn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mrrzqfdist .gt_indent_2 {
+#ebajnwwgzn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mrrzqfdist .gt_indent_3 {
+#ebajnwwgzn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mrrzqfdist .gt_indent_4 {
+#ebajnwwgzn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mrrzqfdist .gt_indent_5 {
+#ebajnwwgzn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mrrzqfdist .katex-display {
+#ebajnwwgzn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mrrzqfdist div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ebajnwwgzn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">ID</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">ID</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Ward_J">区</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">年</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="a北区">北区</th>
@@ -1263,10 +1248,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="eVote">電子投票</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="turnout">投票率</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trend">トレンド</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="id" class="gt_row gt_right">1</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="id" class="gt_row gt_right">1</td>
 <td headers="Ward_J" class="gt_row gt_left">北区</td>
 <td headers="year" class="gt_row gt_right">1996</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
@@ -1277,8 +1262,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.447</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">2</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">2</td>
 <td headers="Ward_J" class="gt_row gt_left">東山区</td>
 <td headers="year" class="gt_row gt_right">1996</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1289,8 +1276,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.430</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">3</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">3</td>
 <td headers="Ward_J" class="gt_row gt_left">西京区</td>
 <td headers="year" class="gt_row gt_right">1996</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1301,8 +1290,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.407</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">4</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">4</td>
 <td headers="Ward_J" class="gt_row gt_left">北区</td>
 <td headers="year" class="gt_row gt_right">2000</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
@@ -1313,8 +1304,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.487</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">5</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">5</td>
 <td headers="Ward_J" class="gt_row gt_left">東山区</td>
 <td headers="year" class="gt_row gt_right">2000</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1325,8 +1318,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.456</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">6</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">6</td>
 <td headers="Ward_J" class="gt_row gt_left">西京区</td>
 <td headers="year" class="gt_row gt_right">2000</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1337,8 +1332,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.460</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">7</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">2</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">7</td>
 <td headers="Ward_J" class="gt_row gt_left">北区</td>
 <td headers="year" class="gt_row gt_right">2004</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
@@ -1349,8 +1346,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.404</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">8</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">8</td>
 <td headers="Ward_J" class="gt_row gt_left">東山区</td>
 <td headers="year" class="gt_row gt_right">2004</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1361,8 +1360,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.435</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td></tr>
-    <tr><td headers="id" class="gt_row gt_right">9</td>
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td>
+</tr>
+<tr>
+<td headers="id" class="gt_row gt_right">9</td>
 <td headers="Ward_J" class="gt_row gt_left">西京区</td>
 <td headers="year" class="gt_row gt_right">2004</td>
 <td headers="北区" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
@@ -1373,69 +1374,58 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <td headers="2004年" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">1</td>
 <td headers="eVote" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">0</td>
 <td headers="turnout" class="gt_row gt_right" style="background-color: #FFB6C1; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightpink; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightpink;">0.381</td>
-<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td></tr>
-  </tbody>
-  
-  
+<td headers="trend" class="gt_row gt_right" style="background-color: #ADD8E6; color: #000000; font-weight: normal; border-top-width: 1px; border-top-style: solid; border-top-color: lightblue; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightblue;">3</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
-</section>
-<section id="トレンド変数の必要性" class="slide level2">
-<h2>トレンド変数の必要性</h2>
+</section><section id="トレンド変数の必要性" class="slide level2"><h2>トレンド変数の必要性</h2>
 <ul>
 <li>左：トレンド変数がなくてもOK</li>
 <li>右：トレンド変数を投入することである程度バイアスが小さくなる
 <ul>
-<li><span class="math inline">\(\Rightarrow\)</span> 並行トレンドの仮定の緩和</li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 並行トレンドの仮定の緩和</li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="トレンド変数と反実仮想" class="slide level2">
-<h2>トレンド変数と反実仮想</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="トレンド変数と反事実" class="slide level2"><h2>トレンド変数と反事実</h2>
 <ul>
 <li>左：トレンド変数を投入していないモデル</li>
 <li>右：トレンド変数を投入したモデル</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="共変量が必要な時" class="slide level2">
-<h2>共変量が必要な時</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="共変量が必要な時" class="slide level2"><h2>共変量が必要な時</h2>
 <ul>
 <li>3期以上のパネルデータを使用したDIDの場合、未観察の<span class="alert"><strong>交絡要因が時間不変</strong></span><span class="small">（no time-varying confounders）</span>であることが前提
 <ul>
 <li>この仮定が満たされない場合、共変量を投入することが推奨される</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="共変量の投入" class="slide level2">
-<h2>共変量の投入</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="共変量の投入" class="slide level2"><h2>共変量の投入</h2>
 <ul>
 <li>時間と共に変化する交絡要因（time-varying confounder）の投入
 <ul>
 <li>適切な共変量を投入すると<span class="alert"><strong>条件付き</strong>並行トレンドの仮定</span>が成立</li>
-</ul></li>
+</ul>
+</li>
 <li>トレンド変数と共変量、両方投入しても良い</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
-<section>
-<section id="実装例-1" class="title-slide slide level1 center">
-<h1><strong>4</strong> 実装例</h1>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section><section><section id="実装例-1" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 実装例</h1>
 
-</section>
-<section id="パネルデータの確認" class="slide level2">
-<h2>パネルデータの確認</h2>
+</section><section id="パネルデータの確認" class="slide level2"><h2>パネルデータの確認</h2>
 <ul>
 <li>個体 <span class="math inline">\(\times\)</span> 時間 <span class="math inline">\(\times\)</span> 処置有無の可視化（以下は{panelView}パッケージを使用した例）</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="推定-1" class="slide level2">
-<h2>推定</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="推定-1" class="slide level2"><h2>推定</h2>
 <p><span class="alert"><strong>線形回帰モデル</strong></span>（二元配置固定効果モデル）</p>
 <ul>
 <li>投入する変数
@@ -1444,191 +1434,159 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <li><span class="alert"><strong>個体と時間の固定効果</strong></span></li>
 <li>トレンド変数</li>
 <li>共変量</li>
-</ul></li>
-<li><span class="alert">2期以上のデータである場合、<strong>個体でクラスター化した標準誤差</strong></span>を使用
+</ul>
+</li>
+<li>
+<span class="alert">2期以上のデータである場合、<strong>個体でクラスター化した標準誤差</strong></span>を使用
 <ul>
-<li>例）{estimatr}の<code>lm_robust()</code></li>
-</ul></li>
+<li>例）{estimatr}の<code>lm_robust()</code>
+</li>
+</ul>
+</li>
 <li>一般的に処置変数の係数のみ報告
 <ul>
 <li>固定効果はデータによっては数百個の変数にもなるため</li>
 <li>トレンド変数や共変量の係数は付録などに</li>
-</ul></li>
 </ul>
-</section>
-<section id="garcía-montoya-et-al.-2022" class="slide level2">
-<h2>García-Montoya et al.&nbsp;(2022)</h2>
+</li>
+</ul></section><section id="garcía-montoya-et-al.-2022" class="slide level2"><h2>García-Montoya et al.&nbsp;(2022)</h2>
 <ul>
-<li>3種類の処置変数 <span class="math inline">\(\times\)</span> 4つのモデル <!-- Neighborは隣のcountyでshootingがあったかを表す --></li>
+<li>3種類の処置変数 <span class="math inline">\(\times\)</span> 4つのモデル <!-- Neighborは隣のcountyでshootingがあったかを表す -->
+</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/did/García-Montoya_et_al_2022.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+<figure><p><img data-src="_figs/did/García-Montoya_et_al_2022.png" class="quarto-figure quarto-figure-center" width="800"></p>
 </figure>
 </div>
 
 <aside><div>
-<p>García-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. “<a href="https://doi.org/10.1017/S0003055421001179">Violence and Voting in the United States: How School Shootings Affect Elections</a>.” <em>American Political Science Review,</em> 116(3): 807–826.</p>
-</div></aside></section>
-<section id="イベントスタディ要修正" class="slide level2">
-<h2>イベント・スタディ<span class="alert"><strong>要修正</strong></span></h2>
+<ul>
+<li>García-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. “<a href="https://doi.org/10.1017/S0003055421001179">Violence and Voting in the United States: How School Shootings Affect Elections</a>.” <em>American Political Science Review,</em> 116(3): 807–826.</li>
+</ul>
+</div></aside></section><section id="イベントスタディ要修正" class="slide level2"><h2>イベント・スタディ<span class="alert"><strong>要修正</strong></span>
+</h2>
 <p>頑健性を示すために介入前のトレンドに統計的に有意な差がないかを検定する方法</p>
 <ol type="1">
 <li>介入が行われる直前の時点を基準（例：t = -1）とする</li>
 <li>介入前の各時点（例：t = -2, -3, …）について、処置群であることを示すダミー変数との交差項を回帰モデルに含めて分析
 <ul>
 <li>具体的には（各時点のダミー変数）×（処置群ダミー変数）をモデルに投入</li>
-</ul></li>
+</ul>
+</li>
 <li>交差項の係数が、統計的に有意に0と異ならない（p値が大きい）ことを確認</li>
 </ol>
 <p>もし介入前の特定の時点の係数が統計的に有意である場合、その時点では処置群と対照群の間に、介入とは無関係な何らかの差が存在した可能性が示唆され、並行トレンドの仮定が満たされていない可能性が疑われる。</p>
 <ul>
-<li><i class="bi bi-emoji-sunglasses"></i>客観的な数値（係数やp値）で仮定の妥当性を示すことが可能</li>
-<li><i class="bi bi-emoji-tear"></i><span class="math inline">\(n\)</span>が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性</li>
-<li><i class="bi bi-emoji-tear"></i>逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性</li>
-</ul>
-</section>
-<section id="プラセボテスト要修正" class="slide level2">
-<h2>プラセボテスト<span class="alert"><strong>要修正</strong></span></h2>
-<p><strong>並行トレンドの仮定が<span class="alert">満たされていない</span></strong>ことは検知可能（逆は不可能）</p>
-<h4 id="手順">手順</h4>
+<li>
+<i class="bi bi-emoji-sunglasses"></i>客観的な数値（係数やp値）で仮定の妥当性を示すことが可能</li>
+<li>
+<i class="bi bi-emoji-tear"></i><span class="math inline">\(n\)</span>が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性</li>
+<li>
+<i class="bi bi-emoji-tear"></i>逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性</li>
+</ul></section><section id="プラセボテスト要修正" class="slide level2"><h2>プラセボテスト<span class="alert"><strong>要修正</strong></span>
+</h2>
+<p>並行トレンドの仮定が<span class="strong">満たされていない</span>ことは検知可能（逆は不可能）</p>
 <ol type="1">
-<li>処置前のデータのみ抽出する</li>
-<li>任意の時期に処置が行われたと仮定し、再コーディングする
+<li>
+<strong>Step1</strong>：処置前のデータのみ抽出する</li>
+<li>
+<strong>Step2</strong>：任意の時期に処置が行われたと仮定し、再コーディングする
 <ul>
 <li>例）東山区が2000年に電子投票を導入したかのように修正する（実際は2004年）</li>
-</ul></li>
-<li>DID推定</li>
-<li>処置効果が統計的有意に0でない場合、並行トレンドが満たされていないと判断</li>
+</ul>
+</li>
+<li>
+<strong>Step3</strong>：DID推定</li>
+<li>
+<strong>Step4</strong>：処置効果が統計的有意に0でない場合、並行トレンドが満たされていないと判断</li>
 </ol>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <!-- preamble start -->
 
-    <script>
-
-      function styleCell_ffhuupc9qw5ye2c03lcu(i, j, css_id) {
-          var table = document.getElementById("tinytable_ffhuupc9qw5ye2c03lcu");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_ffhuupc9qw5ye2c03lcu(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ffhuupc9qw5ye2c03lcu");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_cw8q5m6u19y5j87fap51 = TinyTable.createTableFunctions("tinytable_cw8q5m6u19y5j87fap51");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '4', j: 1 }, { i: '4', j: 2 },  ], css_id: 'tinytable_css_ocr7qxc64ekx2w2unh7l',}, 
-          { positions: [ { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '2', j: 1 }, { i: '2', j: 2 },  ], css_id: 'tinytable_css_91jwpm9h9qcyz6sdllg9',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '1', j: 1 },  ], css_id: 'tinytable_css_i2zz7l37gs79qltdj7ln',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_wvfm2iz6s4lzm0lz6x4k',}, 
-          { positions: [ { i: '4', j: 0 },  ], css_id: 'tinytable_css_v9r8f47s6qo4w4q2c5dq',}, 
-          { positions: [ { i: '2', j: 0 }, { i: '3', j: 0 },  ], css_id: 'tinytable_css_awy3dya5fvco7tp3aut5',}, 
-          { positions: [ { i: '1', j: 0 },  ], css_id: 'tinytable_css_fadye6f4jjmlx4chzfry',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_rwaul87zfl29gu0qo9dn',}, 
+          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_92pcekrz0676ev8oac4h',}, 
+          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_uxnl22decu20hnzqf0fn',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_nnwmpxwzbulyfrgvm6on',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_54wsx1sgbqo3jrotemeq',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_yk9c5y9kp976mz8f6knh',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_1nmlbbrfhhirx2o1l3o2',}, 
+          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_50m1e6qu1rqbrd5m9aok',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_tfwkky44zym9j8drn35b',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_ffhuupc9qw5ye2c03lcu(cell.i, cell.j, group.css_id);
+                  tableFns_cw8q5m6u19y5j87fap51.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_ocr7qxc64ekx2w2unh7l, .table th.tinytable_css_ocr7qxc64ekx2w2unh7l { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_91jwpm9h9qcyz6sdllg9, .table th.tinytable_css_91jwpm9h9qcyz6sdllg9 { text-align: center; }
-      .table td.tinytable_css_i2zz7l37gs79qltdj7ln, .table th.tinytable_css_i2zz7l37gs79qltdj7ln { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_wvfm2iz6s4lzm0lz6x4k, .table th.tinytable_css_wvfm2iz6s4lzm0lz6x4k { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_v9r8f47s6qo4w4q2c5dq, .table th.tinytable_css_v9r8f47s6qo4w4q2c5dq { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_awy3dya5fvco7tp3aut5, .table th.tinytable_css_awy3dya5fvco7tp3aut5 { text-align: left; }
-      .table td.tinytable_css_fadye6f4jjmlx4chzfry, .table th.tinytable_css_fadye6f4jjmlx4chzfry { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_rwaul87zfl29gu0qo9dn, .table th.tinytable_css_rwaul87zfl29gu0qo9dn { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_92pcekrz0676ev8oac4h, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_92pcekrz0676ev8oac4h {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_uxnl22decu20hnzqf0fn, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_uxnl22decu20hnzqf0fn { text-align: center }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_nnwmpxwzbulyfrgvm6on, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_nnwmpxwzbulyfrgvm6on {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_54wsx1sgbqo3jrotemeq, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_54wsx1sgbqo3jrotemeq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_yk9c5y9kp976mz8f6knh, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_yk9c5y9kp976mz8f6knh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_1nmlbbrfhhirx2o1l3o2, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_1nmlbbrfhhirx2o1l3o2 { text-align: left }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_50m1e6qu1rqbrd5m9aok, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_50m1e6qu1rqbrd5m9aok {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cw8q5m6u19y5j87fap51 td.tinytable_css_tfwkky44zym9j8drn35b, #tinytable_cw8q5m6u19y5j87fap51 th.tinytable_css_tfwkky44zym9j8drn35b {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
-    <div class="container">
-      <table class="table table-borderless" id="tinytable_ffhuupc9qw5ye2c03lcu" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
-        
-              <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">通常のデータ</th>
-                <th scope="col" data-row="0" data-col="2">プラセボ</th>
-              </tr>
-        </thead>
-        <tfoot><tr><td colspan="3">注：カッコ内は標準誤差</td></tr></tfoot>
-        <tbody>
-                <tr>
-                  <td data-row="1" data-col="0">eVote</td>
-                  <td data-row="1" data-col="1">0.047(0.005)***</td>
-                  <td data-row="1" data-col="2">-0.009(0.006)</td>
+<div class="container">
+      <table class="tinytable" id="tinytable_cw8q5m6u19y5j87fap51" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">通常のデータ</th>
+                <th scope="col" data-row="0" data-col="3">プラセボ</th>
+              </tr></thead>
+<tfoot><tr><td colspan="3">注：カッコ内は標準誤差</td></tr></tfoot>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">eVote</td>
+                  <td data-row="1" data-col="2">0.047(0.005)***</td>
+                  <td data-row="1" data-col="3">-0.009(0.006)</td>
                 </tr>
-                <tr>
-                  <td data-row="2" data-col="0">Num.Obs.</td>
-                  <td data-row="2" data-col="1">55</td>
-                  <td data-row="2" data-col="2">44</td>
+<tr>
+<td data-row="2" data-col="1">Num.Obs.</td>
+                  <td data-row="2" data-col="2">55</td>
+                  <td data-row="2" data-col="3">44</td>
                 </tr>
-                <tr>
-                  <td data-row="3" data-col="0">区固定効果</td>
-                  <td data-row="3" data-col="1">Yes</td>
+<tr>
+<td data-row="3" data-col="1">区固定効果</td>
                   <td data-row="3" data-col="2">Yes</td>
+                  <td data-row="3" data-col="3">Yes</td>
                 </tr>
-                <tr>
-                  <td data-row="4" data-col="0">年固定効果</td>
-                  <td data-row="4" data-col="1">Yes</td>
+<tr>
+<td data-row="4" data-col="1">年固定効果</td>
                   <td data-row="4" data-col="2">Yes</td>
+                  <td data-row="4" data-col="3">Yes</td>
                 </tr>
-        </tbody>
-      </table>
-    </div>
+</tbody>
+</table>
+</div>
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 <!--
 [Statistical Tools for Causal Inference](https://chabefer.github.io/STCI/)の[Ch. 8 Placebo Tests](https://chabefer.github.io/STCI/Placebo.html)
 -->
-</section>
-<section id="プラセボテスト要修正-1" class="slide level2">
-<h2>プラセボテスト<span class="alert"><strong>要修正</strong></span></h2>
+</section><section id="プラセボテスト要修正-1" class="slide level2"><h2>プラセボテスト<span class="alert"><strong>要修正</strong></span>
+</h2>
 <p>3つの考え方</p>
 <ul>
 <li>タイミングをずらす：本来は何もないはずの時期に効果が見られないか
 <ul>
 <li>前頁の例</li>
-</ul></li>
+</ul>
+</li>
 <li>対象をずらす：本来は影響がないはずのグループに効果が見られないか？</li>
 <li>結果変数を変える：本来は影響がないはずの指標に効果が見られないか？</li>
 </ul>
@@ -1640,14 +1598,10 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <li>Gruber, Jonathan and Daniel M. Hungerman. 2008. “The Effect of the Blue Laws on Religious and Secular Activity” <em>The Quarterly Journal of Economics,</em> 123 (2) pp.&nbsp;711-744.</li>
 <li>Card, David, Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania” <em>The American Economic Review,</em> 84 (4) pp.&nbsp;772-793.</li>
 </ul>
-</div></aside></section></section>
-<section>
-<section id="番外編scm" class="title-slide slide level1 center">
-<h1><strong>5</strong> 番外編：SCM</h1>
+</div></aside></section></section><section><section id="番外編scm" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 番外編：SCM</h1>
 
-</section>
-<section id="合成コントロール法" class="slide level2">
-<h2>合成コントロール法</h2>
+</section><section id="合成コントロール法" class="slide level2"><h2>合成コントロール法</h2>
 <p><span class="alert"><strong>Synthetic Control Method</strong></span>（SCM）</p>
 <ul>
 <li>合成コントロール法、または合成制御法と訳される（SCMともよく呼ばれる）</li>
@@ -1655,7 +1609,8 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <ul>
 <li>処置群と並行トレンドを満たす架空の統制群を作り上げる</li>
 <li>Abadie, Diamond, and Hainmueller（2010, 2015）によって提案され、Xu（2017）が一般化SCMを提案</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 <aside><div>
@@ -1664,65 +1619,55 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <li>Abadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2015. “Comparative politics and the synthetic control method.” <em>American Journal of Political Science,</em> 59(2): 495–510.</li>
 <li>Xu, Yiqing. 2017. “Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models.” <em>Political Analysis</em>, 25 (1): 57–76.</li>
 </ul>
-</div></aside></section>
-<section id="並行トレンドは" class="slide level2">
-<h2>並行トレンドは?</h2>
+</div></aside></section><section id="並行トレンドは" class="slide level2"><h2>並行トレンドは?</h2>
 <ul>
 <li>どうみても平行トレンドの仮定が満たされているとは言い難い。</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
-<section id="たくさんの統制群を用意する" class="slide level2">
-<h2>たくさんの統制群を用意する</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="たくさんの統制群を用意する" class="slide level2"><h2>たくさんの統制群を用意する</h2>
 <ul>
 <li>一つ一つの線は西ドイツと平行でないかも知れないが、重み付けで合成すれば西ドイツのトレンドを追従するトレンドが作れそう。</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="統制群の合成" class="slide level2">
-<h2>統制群の合成</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="統制群と処置群" class="slide level2"><h2>統制群と処置群</h2>
+
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="統制群の合成" class="slide level2"><h2>統制群の合成</h2>
 <p>統制群に重みを付けて合成する</p>
 <ul>
 <li>通常のSCMの場合、重みは必ず正であるが、一般化SCM（Xu 2017）の場合、負もあり得る。</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
-<section id="合成された架空の西ドイツ" class="slide level2">
-<h2>合成された架空の西ドイツ</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="合成された架空の西ドイツ" class="slide level2"><h2>合成された架空の西ドイツ</h2>
 <p>統一（1990年）までのトレンドが類似（しているように見える）</p>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
-<section id="比較" class="slide level2">
-<h2>比較</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="比較" class="slide level2"><h2>比較</h2>
 <p>統一するまでのトレンドがほぼ一致</p>
 <ul>
-<li>架空の西ドイツは西ドイツの反実仮想（統一しなかった西ドイツ）として適切</li>
+<li>架空の西ドイツは西ドイツの反事実（統一しなかった西ドイツ）として適切</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section>
-<section id="因果効果は" class="slide level2">
-<h2>因果効果は?</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="因果効果は" class="slide level2"><h2>因果効果は?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="reuhhlcgbv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#reuhhlcgbv table {
+<div id="lkmuzehbho" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lkmuzehbho table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#reuhhlcgbv thead, #reuhhlcgbv tbody, #reuhhlcgbv tfoot, #reuhhlcgbv tr, #reuhhlcgbv td, #reuhhlcgbv th {
+#lkmuzehbho thead, #lkmuzehbho tbody, #lkmuzehbho tfoot, #lkmuzehbho tr, #lkmuzehbho td, #lkmuzehbho th {
   border-style: none;
 }
 
-#reuhhlcgbv p {
+#lkmuzehbho p {
   margin: 0;
   padding: 0;
 }
 
-#reuhhlcgbv .gt_table {
+#lkmuzehbho .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1748,12 +1693,12 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-left-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_caption {
+#lkmuzehbho .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#reuhhlcgbv .gt_title {
+#lkmuzehbho .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1765,7 +1710,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-width: 0;
 }
 
-#reuhhlcgbv .gt_subtitle {
+#lkmuzehbho .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1777,7 +1722,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-width: 0;
 }
 
-#reuhhlcgbv .gt_heading {
+#lkmuzehbho .gt_heading {
   background-color: rgba(255, 255, 255, 0);
   text-align: center;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1789,13 +1734,13 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_bottom_border {
+#lkmuzehbho .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_col_headings {
+#lkmuzehbho .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1810,7 +1755,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_col_heading {
+#lkmuzehbho .gt_col_heading {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1830,7 +1775,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#reuhhlcgbv .gt_column_spanner_outer {
+#lkmuzehbho .gt_column_spanner_outer {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1842,15 +1787,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 4px;
 }
 
-#reuhhlcgbv .gt_column_spanner_outer:first-child {
+#lkmuzehbho .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#reuhhlcgbv .gt_column_spanner_outer:last-child {
+#lkmuzehbho .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#reuhhlcgbv .gt_column_spanner {
+#lkmuzehbho .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1862,11 +1807,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   width: 100%;
 }
 
-#reuhhlcgbv .gt_spanner_row {
+#lkmuzehbho .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#reuhhlcgbv .gt_group_heading {
+#lkmuzehbho .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1892,7 +1837,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   text-align: left;
 }
 
-#reuhhlcgbv .gt_empty_group_heading {
+#lkmuzehbho .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
@@ -1907,15 +1852,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: middle;
 }
 
-#reuhhlcgbv .gt_from_md > :first-child {
+#lkmuzehbho .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#reuhhlcgbv .gt_from_md > :last-child {
+#lkmuzehbho .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#reuhhlcgbv .gt_row {
+#lkmuzehbho .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1934,7 +1879,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#reuhhlcgbv .gt_stub {
+#lkmuzehbho .gt_stub {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1947,7 +1892,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#reuhhlcgbv .gt_stub_row_group {
+#lkmuzehbho .gt_stub_row_group {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1961,15 +1906,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: top;
 }
 
-#reuhhlcgbv .gt_row_group_first td {
+#lkmuzehbho .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#reuhhlcgbv .gt_row_group_first th {
+#lkmuzehbho .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#reuhhlcgbv .gt_summary_row {
+#lkmuzehbho .gt_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -1979,16 +1924,16 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#reuhhlcgbv .gt_first_summary_row {
+#lkmuzehbho .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_first_summary_row.thick {
+#lkmuzehbho .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#reuhhlcgbv .gt_last_summary_row {
+#lkmuzehbho .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1998,7 +1943,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_grand_summary_row {
+#lkmuzehbho .gt_grand_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -2008,7 +1953,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#reuhhlcgbv .gt_first_grand_summary_row {
+#lkmuzehbho .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2018,7 +1963,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_last_grand_summary_row_top {
+#lkmuzehbho .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2028,11 +1973,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_striped {
+#lkmuzehbho .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#reuhhlcgbv .gt_table_body {
+#lkmuzehbho .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2041,7 +1986,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_footnotes {
+#lkmuzehbho .gt_footnotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -2055,7 +2000,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_footnote {
+#lkmuzehbho .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2064,7 +2009,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#reuhhlcgbv .gt_sourcenotes {
+#lkmuzehbho .gt_sourcenotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -2078,7 +2023,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#reuhhlcgbv .gt_sourcenote {
+#lkmuzehbho .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2086,169 +2031,197 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#reuhhlcgbv .gt_left {
+#lkmuzehbho .gt_left {
   text-align: left;
 }
 
-#reuhhlcgbv .gt_center {
+#lkmuzehbho .gt_center {
   text-align: center;
 }
 
-#reuhhlcgbv .gt_right {
+#lkmuzehbho .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#reuhhlcgbv .gt_font_normal {
+#lkmuzehbho .gt_font_normal {
   font-weight: normal;
 }
 
-#reuhhlcgbv .gt_font_bold {
+#lkmuzehbho .gt_font_bold {
   font-weight: bold;
 }
 
-#reuhhlcgbv .gt_font_italic {
+#lkmuzehbho .gt_font_italic {
   font-style: italic;
 }
 
-#reuhhlcgbv .gt_super {
+#lkmuzehbho .gt_super {
   font-size: 65%;
 }
 
-#reuhhlcgbv .gt_footnote_marks {
+#lkmuzehbho .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#reuhhlcgbv .gt_asterisk {
+#lkmuzehbho .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#reuhhlcgbv .gt_indent_1 {
+#lkmuzehbho .gt_indent_1 {
   text-indent: 5px;
 }
 
-#reuhhlcgbv .gt_indent_2 {
+#lkmuzehbho .gt_indent_2 {
   text-indent: 10px;
 }
 
-#reuhhlcgbv .gt_indent_3 {
+#lkmuzehbho .gt_indent_3 {
   text-indent: 15px;
 }
 
-#reuhhlcgbv .gt_indent_4 {
+#lkmuzehbho .gt_indent_4 {
   text-indent: 20px;
 }
 
-#reuhhlcgbv .gt_indent_5 {
+#lkmuzehbho .gt_indent_5 {
   text-indent: 25px;
 }
 
-#reuhhlcgbv .katex-display {
+#lkmuzehbho .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#reuhhlcgbv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lkmuzehbho div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">年</th>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">年</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="treated">西ドイツ</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="counter">反実仮想</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="counter">反事実</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="att">差分</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cum_att">累積</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="year" class="gt_row gt_right">1960</td>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="year" class="gt_row gt_right">1960</td>
 <td headers="treated" class="gt_row gt_right">2,284</td>
-<td headers="counter" class="gt_row gt_right">2,275</td>
-<td headers="att" class="gt_row gt_right">9</td>
-<td headers="cum_att" class="gt_row gt_right"></td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1961</td>
+<td headers="counter" class="gt_row gt_center">2,285</td>
+<td headers="att" class="gt_row gt_right">−1</td>
+<td headers="cum_att" class="gt_row gt_right"></td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1961</td>
 <td headers="treated" class="gt_row gt_right">2,388</td>
-<td headers="counter" class="gt_row gt_right">2,397</td>
-<td headers="att" class="gt_row gt_right">−9</td>
-<td headers="cum_att" class="gt_row gt_right"></td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1962</td>
+<td headers="counter" class="gt_row gt_center">2,374</td>
+<td headers="att" class="gt_row gt_right">14</td>
+<td headers="cum_att" class="gt_row gt_right"></td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1962</td>
 <td headers="treated" class="gt_row gt_right">2,527</td>
-<td headers="counter" class="gt_row gt_right">2,526</td>
-<td headers="att" class="gt_row gt_right">1</td>
-<td headers="cum_att" class="gt_row gt_right"></td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1963</td>
+<td headers="counter" class="gt_row gt_center">2,518</td>
+<td headers="att" class="gt_row gt_right">9</td>
+<td headers="cum_att" class="gt_row gt_right"></td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1963</td>
 <td headers="treated" class="gt_row gt_right">2,610</td>
-<td headers="counter" class="gt_row gt_right">2,621</td>
-<td headers="att" class="gt_row gt_right">−11</td>
-<td headers="cum_att" class="gt_row gt_right"></td></tr>
-    <tr><td headers="year" class="gt_row gt_right">...</td>
+<td headers="counter" class="gt_row gt_center">2,628</td>
+<td headers="att" class="gt_row gt_right">−18</td>
+<td headers="cum_att" class="gt_row gt_right"></td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">...</td>
 <td headers="treated" class="gt_row gt_right">...</td>
-<td headers="counter" class="gt_row gt_right">...</td>
+<td headers="counter" class="gt_row gt_center">...</td>
 <td headers="att" class="gt_row gt_right">...</td>
-<td headers="cum_att" class="gt_row gt_right">...</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1988</td>
+<td headers="cum_att" class="gt_row gt_right">...</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1988</td>
 <td headers="treated" class="gt_row gt_right">17,786</td>
-<td headers="counter" class="gt_row gt_right">17,769</td>
-<td headers="att" class="gt_row gt_right">17</td>
-<td headers="cum_att" class="gt_row gt_right"></td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1989</td>
+<td headers="counter" class="gt_row gt_center">17,902</td>
+<td headers="att" class="gt_row gt_right">−116</td>
+<td headers="cum_att" class="gt_row gt_right"></td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1989</td>
 <td headers="treated" class="gt_row gt_right">18,994</td>
-<td headers="counter" class="gt_row gt_right">19,005</td>
-<td headers="att" class="gt_row gt_right">−11</td>
-<td headers="cum_att" class="gt_row gt_right">-11</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1990</td>
+<td headers="counter" class="gt_row gt_center">19,041</td>
+<td headers="att" class="gt_row gt_right">−47</td>
+<td headers="cum_att" class="gt_row gt_right">-47</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1990</td>
 <td headers="treated" class="gt_row gt_right">20,465</td>
-<td headers="counter" class="gt_row gt_right">20,394</td>
-<td headers="att" class="gt_row gt_right">71</td>
-<td headers="cum_att" class="gt_row gt_right">60</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1991</td>
+<td headers="counter" class="gt_row gt_center">20,152</td>
+<td headers="att" class="gt_row gt_right">313</td>
+<td headers="cum_att" class="gt_row gt_right">266</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1991</td>
 <td headers="treated" class="gt_row gt_right">21,602</td>
-<td headers="counter" class="gt_row gt_right">21,574</td>
-<td headers="att" class="gt_row gt_right">28</td>
-<td headers="cum_att" class="gt_row gt_right">88</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1992</td>
+<td headers="counter" class="gt_row gt_center">20,959</td>
+<td headers="att" class="gt_row gt_right">643</td>
+<td headers="cum_att" class="gt_row gt_right">909</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1992</td>
 <td headers="treated" class="gt_row gt_right">22,154</td>
-<td headers="counter" class="gt_row gt_right">22,326</td>
-<td headers="att" class="gt_row gt_right">−172</td>
-<td headers="cum_att" class="gt_row gt_right">-84</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1993</td>
+<td headers="counter" class="gt_row gt_center">21,711</td>
+<td headers="att" class="gt_row gt_right">443</td>
+<td headers="cum_att" class="gt_row gt_right">1353</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1993</td>
 <td headers="treated" class="gt_row gt_right">21,878</td>
-<td headers="counter" class="gt_row gt_right">22,697</td>
-<td headers="att" class="gt_row gt_right">−819</td>
-<td headers="cum_att" class="gt_row gt_right">-903</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">1994</td>
+<td headers="counter" class="gt_row gt_center">22,298</td>
+<td headers="att" class="gt_row gt_right">−420</td>
+<td headers="cum_att" class="gt_row gt_right">932</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">1994</td>
 <td headers="treated" class="gt_row gt_right">22,371</td>
-<td headers="counter" class="gt_row gt_right">23,700</td>
-<td headers="att" class="gt_row gt_right">−1,329</td>
-<td headers="cum_att" class="gt_row gt_right">-2233</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">...</td>
+<td headers="counter" class="gt_row gt_center">23,395</td>
+<td headers="att" class="gt_row gt_right">−1,024</td>
+<td headers="cum_att" class="gt_row gt_right">-92</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">...</td>
 <td headers="treated" class="gt_row gt_right">...</td>
-<td headers="counter" class="gt_row gt_right">...</td>
+<td headers="counter" class="gt_row gt_center">...</td>
 <td headers="att" class="gt_row gt_right">...</td>
-<td headers="cum_att" class="gt_row gt_right">...</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">2001</td>
+<td headers="cum_att" class="gt_row gt_right">...</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">2001</td>
 <td headers="treated" class="gt_row gt_right">27,449</td>
-<td headers="counter" class="gt_row gt_right">33,659</td>
-<td headers="att" class="gt_row gt_right">−6,210</td>
-<td headers="cum_att" class="gt_row gt_right">-27295</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">2002</td>
+<td headers="counter" class="gt_row gt_center">31,832</td>
+<td headers="att" class="gt_row gt_right">−4,383</td>
+<td headers="cum_att" class="gt_row gt_right">-19166</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">2002</td>
 <td headers="treated" class="gt_row gt_right">28,348</td>
-<td headers="counter" class="gt_row gt_right">34,348</td>
-<td headers="att" class="gt_row gt_right">−6,000</td>
-<td headers="cum_att" class="gt_row gt_right">-33295</td></tr>
-    <tr><td headers="year" class="gt_row gt_right">2003</td>
+<td headers="counter" class="gt_row gt_center">32,658</td>
+<td headers="att" class="gt_row gt_right">−4,310</td>
+<td headers="cum_att" class="gt_row gt_right">-23476</td>
+</tr>
+<tr>
+<td headers="year" class="gt_row gt_right">2003</td>
 <td headers="treated" class="gt_row gt_right">28,855</td>
-<td headers="counter" class="gt_row gt_right">35,041</td>
-<td headers="att" class="gt_row gt_right">−6,186</td>
-<td headers="cum_att" class="gt_row gt_right">-39481</td></tr>
-  </tbody>
-  
-  
+<td headers="counter" class="gt_row gt_center">33,485</td>
+<td headers="att" class="gt_row gt_right">−4,630</td>
+<td headers="cum_att" class="gt_row gt_right">-28105</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -2257,70 +2230,35 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <ul>
 <li>推定される処置効果は<span class="alert"><strong>ATT</strong></span>
 <ul>
-<li>1993年におけるATT：-819ドル</li>
-<li>1993年におけるATT：-1,329ドル</li>
-</ul></li>
+<li>1993年におけるATT：-420ドル</li>
+<li>1994年におけるATT：-1,024ドル</li>
+</ul>
+</li>
 <li>代表値で報告する場合
 <ul>
-<li>平均ATT：-2,819ドル</li>
-<li>累積ATT（CATT）：-39,481ドル</li>
-</ul></li>
+<li>平均ATT：–2004ドル</li>
+<li>累積ATT（CATT）：–28059ドル</li>
+</ul>
+</li>
 <li>どの推定値（特定時点におけるATT、平均ATT、CATT）を報告するかを決めるのは分析者の仕事</li>
 </ul>
 </div></div>
-</section>
-<section id="attの可視化" class="slide level2">
-<h2>ATTの可視化</h2>
+</section><section id="attの可視化" class="slide level2"><h2>ATTの可視化</h2>
 <ul>
-<li>左：各時点ごとのATT</li>
-<li>右：各時点における累積ATT（処置後のみ）</li>
+<li>各時点におけるATT</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-29-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
 
 
-</section></section>
 
-    </div>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1500"></section></section>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>差分の差分法</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -2478,7 +2416,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -2511,9 +2449,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -2548,9 +2484,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -2598,13 +2532,14 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -2683,6 +2618,160 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -2722,6 +2811,6 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
         }
       });
       </script>
-    
+
 
 </body></html>

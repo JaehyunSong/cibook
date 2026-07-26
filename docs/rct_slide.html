@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,12 +35,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -126,85 +132,86 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">4/ ランダム化比較試験</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="内生性と外生性" class="title-slide slide level1 center">
-<h1><strong>1</strong> 内生性と外生性</h1>
+</section><section><section id="内生性と外生性" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 内生性と外生性</h1>
 
-</section>
-<section id="内生性" class="slide level2">
-<h2>内生性</h2>
+</section><section id="内生性" class="slide level2"><h2>内生性</h2>
 <p>処置変数と誤差項間に相関が存在する場合</p>
 <ul>
 <li>処置変数は<span class="alert">内生変数</span>（<span class="math inline">\(\Leftrightarrow\)</span>外生変数）</li>
-<li>処置効果（因果効果）の推定値はバイアスを含む</li>
-<li><span class="alert"><strong>内生性は因果推論の敵</strong></span></li>
+<li>処置変数が外生変数の場合、処置効果<span class="small">（因果効果）</span>の推定値はバイアスを含む</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-3-1.png" width="1200"></p>
-<figcaption>内生性あり</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-3-1.png" width="1200"></p>
+<figcaption>内生性あり</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-3-2.png" width="1200"></p>
-<figcaption>内生性なし</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-3-2.png" width="1200"></p>
+<figcaption>内生性なし</figcaption></figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="内生性がない状態" class="slide level2">
-<h2>内生性がない状態</h2>
+</section><section id="内生性がない状態" class="slide level2"><h2>内生性がない状態</h2>
 <p>内生性が存在しない場合、処置群と統制群は集団として均質</p>
 <ul>
 <li>統制群と処置群を逆にしても問題ない（<span class="math inline">\(\Rightarrow\)</span>統制群と処置群は<strong>交換可能</strong>）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-4-1.png" width="1200"></p>
-<figcaption>例1）やる気のある学生が処置群に多い（内生性あり）</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-4-1.png" width="1200"></p>
+<figcaption>例1）やる気のある学生が処置群に多い（内生性あり）</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-4-2.png" width="1200"></p>
-<figcaption>例2）やる気のある学生の割合は処置群・統制群において均等（内生性なし）</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-4-2.png" width="1200"></p>
+<figcaption>例2）やる気のある学生の割合は処置群・統制群において均等（内生性なし）</figcaption></figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="交換可能性" class="slide level2">
-<h2>交換可能性</h2>
-<p><span class="alert"><strong>交換可能性</strong></span><span class="small">（exchangeability）</span>：処置と潜在的結果が独立であること</p>
+</section><section id="交換可能性" class="slide level2"><h2>交換可能性</h2>
+<p><span class="strong">交換可能性</span><span class="small">（exchangeability）</span>：処置と潜在的結果が独立であること</p>
 <ul>
-<li><span class="alert">無視可能性</span><span class="small">（ignorability）</span>、または<span class="alert">独立性</span><span class="small">（independence）</span>とも呼ばれる</li>
+<li>
+<span class="alert">無視可能性</span><span class="small">（ignorability）</span>、または<span class="alert">独立性</span><span class="small">（independence）</span>とも呼ばれる</li>
 </ul>
 <p><span class="math display">\[
 (Y(0), Y(1)) \mathop{\perp\!\!\!\!\perp} D
@@ -212,19 +219,19 @@
 <ul>
 <li>処置群と統制群の潜在的結果の分布が同じであること
 <ul>
-<li>処置群と統制群が均質であるため、処置群を統制群に、統制群を処置群に<span class="alert"><strong>交換可能</strong></span></li>
-</ul></li>
-<li><span class="alert">交換可能性が成立する場合、ATEが推定可能</span></li>
+<li>処置群と統制群が同質 <span class="math inline">\(\Rightarrow\)</span> 処置群を統制群（あるいはその逆に）に<span class="strong">交換可能</span>
+</li>
+</ul>
+</li>
+<li><span class="strong">交換可能性が成立する場合、ATEが推定可能</span></li>
 </ul>
 
-<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
-<section id="平均独立性" class="slide level2">
-<h2>平均独立性</h2>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="平均独立性" class="slide level2"><h2>平均独立性</h2>
 <p><span class="alert"><strong>平均独立性</strong></span><span class="small">（mean independence）</span></p>
 <p><span class="math display">\[
 \begin{gathered}
 \mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] \\
-\&amp; \\
+\textsf{かつ} \\
 \mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0]
 \end{gathered}
 \]</span></p>
@@ -232,35 +239,29 @@
 <li>潜在的結果の<ruby>分布<rt>・・</rt></ruby>でなく、<ruby><strong>期待値</strong><rt>・・・</rt></ruby>に関する条件：<span class="alert">交換可能性より緩い条件</span>
 <ul>
 <li><span class="alert">平均独立が成立していればATEは推定可能</span></li>
-<li>ただし、不均一処置効果（HTE）を推定する場合、平均独立だけでは不十分<sup>1</sup>（交換可能性が必要）</li>
-</ul></li>
+<li>ただし、不均一処置効果<span class="small">（heterogeneous treatment effect）</span>を推定する場合、平均独立だけでは不十分<sup>1</sup>
+</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>識別自体は可能だが、推定値が信頼できる推定値かは別の問題である。</p></li></ol></aside></section>
-<section id="平均独立と交換可能性間の関係" class="slide level2">
-<h2>平均独立と交換可能性間の関係</h2>
-<p><strong><span class="alert">交換可能性は平均独立を内包する</span>より強い仮定</strong></p>
-<ul>
-<li>ただし、平均独立が交換可能性を保証するわけではない</li>
-</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn1"><p>識別自体は可能だが、推定値が信頼できる推定値かは別の問題である。信頼できるHTEを推定するためには交換可能性が満たされる必要がある。</p></li></ol></aside></section><section id="平均独立と交換可能性間の関係" class="slide level2"><h2>平均独立と交換可能性間の関係</h2>
+<p><strong><span class="strong">交換可能性は平均独立を内包する</span>より強い仮定</strong><sup>1</sup></p>
 <p><span class="math display">\[
 \begin{gathered}
 (Y(0), Y(1)) \mathop{\perp\!\!\!\!\perp} D \\
 \Downarrow \\
 \mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] \\
-\&amp; \\
+\textsf{かつ} \\
 \mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0]
 \end{gathered}
 \]</span></p>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;">ケース</th>
 <th style="text-align: left;">平均独立</th>
 <th style="text-align: left;">交換可能性</th>
 <th style="text-align: left;">ATE</th>
 <th style="text-align: left;">HTE</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
@@ -291,27 +292,20 @@
 <td style="text-align: left;">識別不可</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="平均独立と交換可能性" class="slide level2">
-<h2>平均独立と交換可能性</h2>
+</table><aside><ol class="aside-footnotes"><li id="fn2"><p>平均独立が交換可能性を保証するわけではない。</p></li></ol></aside></section><section id="平均独立と交換可能性" class="slide level2"><h2>平均独立と交換可能性</h2>
 
-<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
-<section id="平均独立と交換可能性が成立する例" class="slide level2">
-<h2>平均独立と交換可能性が成立する例</h2>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="平均独立と交換可能性が成立する例" class="slide level2"><h2>平均独立と交換可能性が成立する例</h2>
 <p>真のATEが2の例</p>
 <div class="columns">
 <div class="column" style="width:35%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(0)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(1)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -391,17 +385,16 @@
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] = 5\)</span></li>
 <li><span class="math inline">\(\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0] = 7\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li>交換可能性：成立（潜在的結果の分布が同じ）</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;"><span class="math inline">\(Y(0)\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(Y(1)\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">統制群</td>
@@ -416,26 +409,22 @@
 </tbody>
 </table>
 <ul>
-<li>観察データを用いたATEの推定値：2</li>
-<li>統制群と処置群が逆でもATEの推定値：2</li>
+<li>事実<span class="small">（factual）</span>を基づく<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：2</li>
+<li>統制群と処置群が逆にした場合の<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：2</li>
 </ul>
 </div></div>
-</section>
-<section id="平均独立と交換可能性が成立しない例" class="slide level2">
-<h2>平均独立と交換可能性が成立しない例</h2>
+</section><section id="平均独立と交換可能性が成立しない例" class="slide level2"><h2>平均独立と交換可能性が成立しない例</h2>
 <p>真のATEが2の例</p>
 <div class="columns">
 <div class="column" style="width:35%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(0)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(1)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -515,17 +504,16 @@
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y(0)|D = 1] = 5.8 \neq \mathbb{E}[Y(0)|D = 0] = 2.8\)</span></li>
 <li><span class="math inline">\(\mathbb{E}[Y(1)|D = 1] = 7.8 \neq \mathbb{E}[Y(1)|D = 0] = 4.8\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li>交換可能性：<span class="alert">不成立</span>（潜在的結果の分布が異なる）</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;"><span class="math inline">\(Y(0)\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(Y(1)\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">統制群</td>
@@ -540,26 +528,22 @@
 </tbody>
 </table>
 <ul>
-<li>観察データを用いたATEの推定値：5</li>
-<li>統制群と処置群が逆でもATEの推定値：-1</li>
+<li>事実<span class="small">（factual）</span>を基づく<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：5</li>
+<li>統制群と処置群が逆にした場合の<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：-1</li>
 </ul>
 </div></div>
-</section>
-<section id="平均独立のみ成立する例" class="slide level2">
-<h2>平均独立のみ成立する例</h2>
+</section><section id="平均独立のみ成立する例" class="slide level2"><h2>平均独立のみ成立する例</h2>
 <p>真のATEが0の例</p>
 <div class="columns">
 <div class="column" style="width:35%;">
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(D_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(0)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(1)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -639,17 +623,16 @@
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] = 4\)</span></li>
 <li><span class="math inline">\(\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0] = 12\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li>交換可能性：<span class="alert">不成立</span>（潜在的結果の分布が異なる）</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;"><span class="math inline">\(Y(0)\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(Y(1)\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">統制群</td>
@@ -664,147 +647,153 @@
 </tbody>
 </table>
 <ul>
-<li>観察データを用いたATEの推定値：0</li>
-<li>統制群と処置群が逆ならATEの推定値：0</li>
+<li>事実<span class="small">（factual）</span>を基づく<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：0</li>
+<li>統制群と処置群が逆にした場合の<span class="math inline">\(\widehat{\textsf{ATE}}\)</span>：0</li>
 </ul>
 </div></div>
-</section>
-<section id="平均独立交換可能性の確認" class="slide level2">
-<h2>平均独立・交換可能性の確認</h2>
+</section><section id="平均独立交換可能性の確認" class="slide level2"><h2>平均独立・交換可能性の確認</h2>
 <p>結論：<span class="alert">平均独立・交換可能性の成立有無は確認できない</span><span class="small">（因果推論の根本問題）</span></p>
 <ul>
-<li>「内生性が存在しない」ことは確認できない<sup>1</sup></li>
+<li>「内生性が存在しない」ことは確認できない<sup>1</sup>
+</li>
 <li>それでも信頼できる処置効果の推定のためには内生性の確認が必要</li>
 <li>解決策
 <ul>
-<li><del>既存のデータに内生性がないことを確認する</del>（不可能）</li>
-<li>理論的に内生性をなくす<span class="small">（条件付け）</span></li>
-<li>理論的に内生性が（ほぼ）存在しないはずのデータを見つける<span class="small">（自然実験・疑似実験）</span></li>
-<li><span class="alert"><strong>内生性が存在しないデータを作り上げる</strong></span><span class="small">（実験）</span></li>
-</ul></li>
+<li>
+<del>内生性がないことを確認する</del>（不可能）</li>
+<li>理論的に内生性をなくす<span class="small">（条件付け）</span>
+</li>
+<li>理論的に内生性が（ほぼ）存在しないはずのデータを見つける<span class="small">（自然実験・疑似実験）</span>
+</li>
+<li>
+<span class="strong">内生性が存在しないデータを作り上げる</span><span class="small">（実験）</span>
+</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>後述するバランスチェックを行えば、平均独立・交換可能性が満たされて<strong><ruby>いない<rt>・・・</rt></ruby></strong>ことは確認できるが、平均独立・交換可能性が満たされていることは示せない。</p></li></ol></aside></section></section>
-<section>
-<section id="無作為割り当て" class="title-slide slide level1 center">
-<h1><strong>2</strong> 無作為割り当て</h1>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>後述するバランスチェックを行えば、平均独立・交換可能性が満たされて<strong><ruby>いない<rt>・・・</rt></ruby></strong>ことは確認できるが、平均独立・交換可能性が満たされていることは示せない。</p></li></ol></aside></section></section><section><section id="無作為割り当て" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 無作為割り当て</h1>
 
-</section>
-<section id="無作為割り当てrandom-assignment" class="slide level2">
-<h2>無作為割り当て<span class="small">（Random assignment）</span></h2>
+</section><section id="無作為割り当てrandom-assignment" class="slide level2"><h2>無作為割り当て<span class="small">（Random assignment）</span>
+</h2>
 <ul>
 <li>被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法</li>
 <li>各個体がどのグループに割り当てられるかは等しい確率
 <ul>
 <li>グループが2つ（<span class="math inline">\(D\)</span> = {0, 1}）なら…</li>
 <li>Pr(<span class="math inline">\(D_i\)</span> = 1) = Pr(<span class="math inline">\(D_{j \neq i}\)</span> = 1) &amp; Pr(<span class="math inline">\(D_i\)</span> = 0) = Pr(<span class="math inline">\(D_{j \neq i}\)</span> = 0)</li>
-</ul></li>
+</ul>
+</li>
 <li>グループ間の事前の差異を最小限に抑えることが可能</li>
 </ul>
 
-<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section>
-<section id="無作為抽出random-samplingとの違い" class="slide level2">
-<h2>無作為抽出<span class="small">（Random sampling）</span>との違い</h2>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section><section id="無作為抽出random-samplingとの違い" class="slide level2 no-stretch"><h2>無作為抽出<span class="small">（Random sampling）</span>との違い</h2>
 <ul>
 <li>サンプリング法の一つであり、主に母集団から標本（サンプル）を抽出する際に用いられる（とされている）
 <ul>
-<li><strong>単純無作為抽出</strong><sup>1</sup>：母集団内の各個体が標本として選ばれる確率は等しい</li>
-</ul></li>
+<li>
+<strong>単純無作為抽出</strong><sup>1</sup>：母集団内の各個体が標本として選ばれる確率は等しい</li>
+</ul>
+</li>
 <li>無作為抽出された標本は母集団を代表する
 <ul>
 <li>無作為抽出された標本の分布は母集団の分布と同じ<sup>2</sup>（<span class="alert">交換可能性が成立</span>）</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="2700"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
 </figure>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>無作為抽出にも様々なバリエーションがあり、単純無作為抽出、系統無作為抽出、層化無作為抽出などがある。詳細は社会調査法、サンプリングの教科書を参照すること</p></li><li id="fn4"><p>また、標本の大きさが十分であれば、大数の法則（law of large number）により平均独立性も成り立つ。</p></li></ol></aside></section>
-<section id="無作為割り当てと交換可能性" class="slide level2">
-<h2>無作為割り当てと交換可能性</h2>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>無作為抽出にも様々なバリエーションがあり、単純無作為抽出、系統無作為抽出、層化無作為抽出などがある。詳細は社会調査法、サンプリングの教科書を参照すること</p></li><li id="fn5"><p>また、標本の大きさが十分であれば、大数の法則（law of large number）により平均独立性も成り立つ。</p></li></ol></aside></section><section id="無作為割り当てと交換可能性" class="slide level2"><h2>無作為割り当てと交換可能性</h2>
 <p>交換可能性が成立するので、平均独立は当然ながら成立</p>
 
-<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1200"></section>
-<section id="無作為抽出-無作為割り当て" class="slide level2">
-<h2>無作為抽出 + 無作為割り当て</h2>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1200"></section><section id="無作為抽出-無作為割り当て" class="slide level2"><h2>無作為抽出 + 無作為割り当て</h2>
 <p>無作為抽出 + 無作為割り当て：<span class="alert">統制群と処置群と標本と母集団は交換可能</span></p>
 <ul>
 <li>「処置群の結果変数 = 母集団に処置を施した場合の結果変数」として解釈可能</li>
 <li>理想の話ではあり、標本が母集団を代表しない（交換不可能）ケースも多い</li>
 </ul>
 
-<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section>
-<section id="無作為割り当ての方法" class="slide level2">
-<h2>無作為割り当ての方法</h2>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="無作為割り当ての方法" class="slide level2"><h2>無作為割り当ての方法</h2>
 <ul>
-<li><span class="alert"><strong>ベルヌーイ実験</strong></span><span class="small">（Bernoulli randomized experiment; コイン投げ）</span>
+<li>
+<span class="alert"><strong>ベルヌーイ実験</strong></span><span class="small">（Bernoulli randomized experiment; コイン投げ）</span>
 <ul>
 <li>各個体は確率<span class="math inline">\(p\)</span>で独立的に処置を受ける</li>
-<li>「望ましくない」ランダム化の可能性あり（例：すべての固体が処置群になる）</li>
-</ul></li>
-<li><span class="alert"><strong>完全ランダム化実験</strong></span><span class="small">（completely randomized experiment）</span>
-<ul>
-<li>予め処置群の大きさ<span class="math inline">\(n_1\)</span>を決め（<span class="math inline">\(n_1 &lt; n\)</span>）、全個体の中から<span class="math inline">\(n_1\)</span>個をランダムに選ぶ</li>
-<li>「望ましくない」ランダム化の可能性あり（例：処置群の全員が女性になる）</li>
-</ul></li>
-<li><span class="alert"><strong>ブロック別（層別）ランダム化実験</strong></span><span class="small">（block/stratified randomized experiment）</span>
-<ul>
-<li>サンプルを2つ以上のブロックに分け、ブロック内で完全無作為割り当てを行う</li>
-<li>ブロックが2つのみの場合、「<span class="alert"><strong>ペアごとのランダム化実験</strong></span>」<span class="small">（paired randomized experiment）</span>と呼ばれる</li>
-</ul></li>
+<li>「望ましくない」ランダム化の可能性（例：すべての固体が処置群になる）</li>
 </ul>
-</section>
-<section id="ブロッキング" class="slide level2">
-<h2>ブロッキング</h2>
+</li>
+<li>
+<span class="alert"><strong>完全ランダム化実験</strong></span><span class="small">（completely randomized experiment）</span>
 <ul>
-<li>完全ランダム化の場合、偏ったグループが出来上がる可能性がある<sup>1</sup></li>
-<li><span class="alert"><strong>ブロッキング</strong></span><span class="small">（blocking）</span>：ブロック内で完全ランダム化割り当てを実施
+<li>予め処置群の大きさ<span class="math inline">\(n_1\)</span>を決め<span class="small">（<span class="math inline">\(n_1 &lt; n\)</span>）</span>、全個体の中から<span class="math inline">\(n_1\)</span>個を無作為に選ぶ</li>
+<li>「望ましくない」ランダム化の可能性あり（例：処置群の全員が女性になる）</li>
+</ul>
+</li>
+<li>
+<span class="alert"><strong>ブロック別（層別）ランダム化実験</strong></span><span class="small">（block/stratified randomized experiment）</span>
+<ul>
+<li>サンプルを2つ以上のブロックに分け、ブロック内で完全無作為割り当て</li>
+<li>ブロックが2つのみの場合、「<span class="alert"><strong>ペアごとのランダム化実験</strong></span>」<span class="small">（paired randomized experiment）</span>と呼ばれる</li>
+</ul>
+</li>
+</ul></section><section id="ブロッキング" class="slide level2"><h2>ブロッキング</h2>
+<ul>
+<li>完全ランダム化の場合、偏ったグループが出来上がる可能性がある<sup>1</sup>
+</li>
+<li>
+<span class="strong">ブロッキング</span><span class="small">（blocking）</span>：ブロック内で完全ランダム化割り当てを実施
 <ul>
 <li>例）男性と女性の中で完全ランダム化割り当てを実施</li>
-</ul></li>
-<li><span class="alert">推定の精度が上がる</span>ため、ブロッキングできる場合、ブロッキングをした方が良い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+</li>
+<li>
+<span class="alert">推定の精度が上がる</span>ため、ブロッキングできる場合、ブロッキングをした方が良い</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-15,35,-10,35,-15]]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 13.6%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 31.8%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-11-1.png" width="1500"></p>
-<figcaption>完全ランダム化が失敗した例</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-11-1.png" width="1500"></p>
+<figcaption>完全ランダム化が失敗した例</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 9.1%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 31.8%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-11-2.png" width="1500"></p>
-<figcaption>ブロック別ランダム化の例</figcaption>
-</figure>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-11-2.png" width="1500"></p>
+<figcaption>ブロック別ランダム化の例</figcaption></figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 13.6%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>サンプルサイズ（<span class="math inline">\(n\)</span>）が十分大きい場合、この可能性は低い。</p></li></ol></aside></section></section>
-<section>
-<section id="ランダム化比較試験" class="title-slide slide level1 center">
-<h1><strong>3</strong> ランダム化比較試験</h1>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>サンプルサイズ（<span class="math inline">\(n\)</span>）が十分大きい場合、この可能性は低い。</p></li></ol></aside></section></section><section><section id="ランダム化比較試験" class="title-slide slide level1 center"><h1>
+<strong>3</strong> ランダム化比較試験</h1>
 
-</section>
-<section id="ランダム化比較試験randomized-controlled-trials-rct" class="slide level2">
-<h2>ランダム化比較試験<span class="small">（randomized controlled trials; <strong>RCT</strong>）</span></h2>
+</section><section id="ランダム化比較試験randomized-controlled-trials-rct" class="slide level2"><h2>ランダム化比較試験<span class="small">（randomized controlled trials; <strong>RCT</strong>）</span>
+</h2>
 <ul>
 <li>標本<span class="small">（サンプル）</span>を無作為割り当てで複数<span class="small">（2つ以上）</span>のグループに分割し、各グループに異なる処置<sup>1</sup>を施し、結果変数を比較する手法</li>
-<li><span class="alert"><strong>実験</strong></span><span class="small">（experiment）</span>とも呼ばれる<span class="alert">因果推論の王道</span><span class="small">（best practice）</span></li>
+<li>
+<span class="alert"><strong>実験</strong></span><span class="small">（experiment）</span>とも呼ばれる<span class="alert">因果推論の王道</span><span class="small">（best practice）</span>
+</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="3600"></p>
 </figure>
 </div>
 </div>
@@ -812,30 +801,29 @@
 
 <aside><div>
 <p>厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。</p>
-</div><ol class="aside-footnotes"><li id="fn6"><p>ここには処置を施さないことも含まれる。</p></li></ol></aside></section>
-<section id="実験の種類" class="slide level2">
-<h2>実験の種類</h2>
+</div><ol class="aside-footnotes"><li id="fn7"><p>ここには処置を施さないことも含まれる。</p></li></ol></aside></section><section id="実験の種類" class="slide level2"><h2>実験の種類</h2>
 <p>Hyde<span class="small">（2015）</span>による分類</p>
 <ul>
-<li>フィールド実験<span class="small">（field experiment）</span></li>
-<li>実験室実験<span class="small">（laboratory experiment）</span></li>
-<li>サーベイ実験<span class="small">（survey experiment）</span></li>
+<li>
+<strong>フィールド</strong>実験<span class="small">（field experiment）</span>
+</li>
+<li>
+<strong>実験室</strong>実験<span class="small">（laboratory experiment）</span>
+</li>
+<li>
+<strong>サーベイ</strong>実験<span class="small">（survey experiment）</span>
+</li>
 </ul>
-<p>それぞれの実験は長所と短所を持つ</p>
-<ul>
-<li>以下は目安であり、設計次第でいくらでも上下する</li>
-</ul>
+<p>それぞれの実験は長所と短所を持つ<span class="small">（以下は目安であり、設計次第でいくらでも上下する）</span></p>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">種類</th>
 <th style="text-align: center;">内的妥当性</th>
 <th style="text-align: center;">外的妥当性</th>
 <th style="text-align: center;">実施コスト</th>
 <th style="text-align: center;">コントロール性</th>
 <th style="text-align: left;">対象</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">実験室実験</td>
@@ -868,29 +856,32 @@
 <ul>
 <li>Hyde, Susan D.. 2015. “<a href="https://doi.org/10.1146/annurev-polisci-020614-094854">Experiments in International Relations: Lab, Survey, and Field</a>.” <em>Annual Review of Political Science,</em> 18: 403-424.</li>
 </ul>
-</div></aside></section>
-<section id="フィールド実験field-experiment" class="slide level2">
-<h2>フィールド実験<span class="small">（field experiment）</span></h2>
-<p>実生活<span class="small">（学校、地域、職場、選挙など）</span>の場面で行われる実験。</p>
+</div></aside></section><section id="フィールド実験field-experiment" class="slide level2"><h2>フィールド実験<span class="small">（field experiment）</span>
+</h2>
+<p>実生活<span class="small">（学校、地域、職場、選挙など）</span>の場面で行われる実験</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="メリット">メリット</h4>
 <ul>
-<li>メリット
-<ul>
-<li>外的妥当性<span class="small">（現実の行動に近い）</span></li>
+<li>外的妥当性<span class="small">（現実の行動に近い）</span>
+</li>
 <li>自然な環境で被験者が行動するため、実験効果が出にくい</li>
 <li>政策介入の効果などを現場で検証できる</li>
-</ul></li>
-<li>デメリット
-<ul>
-<li>内的妥当性<span class="small">（外的要因が混入しやすい）</span></li>
-<li>高い実施コスト<span class="small">（+ 許可や倫理的配慮も必要）</span></li>
-<li>研究者による統制が限定的</li>
-</ul></li>
 </ul>
-</section>
-<section id="フィールド実験の例" class="slide level2">
-<h2>フィールド実験の例</h2>
+</div><div class="column" style="width:50%;">
+<h4 id="デメリット">デメリット</h4>
 <ul>
-<li>問い：啓発メッセージは投票参加を促すか<span class="small">（Gerber, Green, and Larimer 2008）</span></li>
+<li>内的妥当性<span class="small">（外的要因が混入しやすい）</span>
+</li>
+<li>高い実施コスト<span class="small">（+ 許可や倫理的配慮も必要）</span>
+</li>
+<li>研究者による統制が限定的</li>
+</ul>
+</div></div>
+</section><section id="フィールド実験の例" class="slide level2"><h2>フィールド実験の例</h2>
+<ul>
+<li>問い：啓発メッセージは投票参加を促すか<span class="small">（Gerber, Green, and Larimer 2008）</span>
+</li>
 <li>統制群：処置なし</li>
 <li>処置群：<span class="alert">投票参加を促すメッセージが記載されたハガキ</span>を発送</li>
 <li>メッセージの処置効果 = 処置群の投票率 - 統制群の投票率</li>
@@ -898,8 +889,7 @@
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
 </figure>
 </div>
 </div>
@@ -910,49 +900,49 @@
 <li>Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. “<a href="https://doi.org/10.1017/S000305540808009X">Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment</a>.” <em>American Political Science Review</em> 102(1): 33–48.</li>
 <li>Gerber, Alan S. and Donald P. Green. 2012. <a href="https://www.amazon.co.jp/dp/0393979954/"><em>Field Experiments</em></a>, Norton.</li>
 </ul>
-</div></aside></section>
-<section id="実験室実験labotary-experiment" class="slide level2">
-<h2>実験室実験<span class="small">（labotary experiment）</span></h2>
-<p>研究者が完全にコントロールされた環境<span class="small">（例：大学の実験室）</span>で行う実験</p>
+</div></aside></section><section id="実験室実験labotary-experiment" class="slide level2"><h2>実験室実験<span class="small">（labotary experiment）</span>
+</h2>
+<p>研究者によって完全にコントロールされる環境<span class="small">（例：大学の実験室）</span>で行う実験</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="メリット-1">メリット</h4>
 <ul>
-<li>主に心理学・経済学などで用いられる</li>
-<li>メリット
-<ul>
-<li>高い内部妥当性<span class="small">（因果関係の識別が容易）</span></li>
+<li>高い内部妥当性<span class="small">（因果関係の識別が容易）</span>
+</li>
 <li>外部のノイズを排除しやすい</li>
 <li>実験環境の精密なコントロールが可能</li>
-</ul></li>
-<li>デメリット
+</ul>
+</div><div class="column" style="width:50%;">
+<h4 id="デメリット-1">デメリット</h4>
 <ul>
 <li>外的妥当性</li>
-<li>観測者効果、ホーソン効果<span class="small">（被験者が「実験されている」と強く意識）</span></li>
-<li>限定されたサンプルになりがち<span class="small">（主に大学生）</span></li>
-</ul></li>
+<li>観測者効果、ホーソン効果<span class="small">（被験者が「実験されている」と強く意識）</span>への懸念</li>
+<li>偏ったサンプルになりがち<span class="small">（主に大学生）</span>
+</li>
 </ul>
+</div></div>
 <blockquote>
-<p><em>College sophomores may not be people</em>（Hovland 1959）</p>
+<p><em>College sophomores may not be people</em>（Hovland 1959）<sup>1</sup></p>
 </blockquote>
-
-<aside><div>
-<p>Hovland, Carl. I. 1959. “<a href="https://doi.org/10.1037/h0042210">Reconciling conflicting results derived from experimental and survey studies of attitude change</a>.” <em>American Psychologist,</em> 14(1): 8–17.</p>
-</div></aside></section>
-<section id="実験室実験の例" class="slide level2">
-<h2>実験室実験の例</h2>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>Hovland, Carl. I. 1959. “<a href="https://doi.org/10.1037/h0042210">Reconciling conflicting results derived from experimental and survey studies of attitude change</a>.” <em>American Psychologist,</em> 14(1): 8-17.</p></li></ol></aside></section><section id="実験室実験の例" class="slide level2"><h2>実験室実験の例</h2>
 <ul>
 <li>問い：討議は少数派への配慮が強めるか</li>
-<li><strong>Step 1：</strong>全員を対象に不公平に対する嫌悪感（inequity aversion）を測定</li>
-<li><strong>Step 2：</strong>公平な配分案 vs.&nbsp;多数派優遇の不公平配分案の投票
+<li>
+<strong>Step 1：</strong>全員を対象に不公平に対する嫌悪感<span class="small">（inequity aversion）</span>を測定</li>
+<li>
+<strong>Step 2：</strong>公平な配分案 vs.&nbsp;多数派優遇の不公平配分案の投票
 <ul>
 <li>処置群のみ<span class="alert">グループ内のコミュニケーション（議論）</span>を許可</li>
-</ul></li>
-<li><strong>Step 3：</strong>全員を対象とした5つの配分案の投票</li>
-<li>議論の処置効果 = 公平な配分案への処置群の支持 - 公平な配分案への統制群の支持</li>
+</ul>
+</li>
+<li>
+<strong>Step 3：</strong>全員を対象とした5つの配分案の投票</li>
+<li>議論の因果効果 = 公平な配分案に対する「処置群の支持 - 統制群の支持」</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="2250"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
 </figure>
 </div>
 </div>
@@ -962,36 +952,43 @@
 <ul>
 <li>Woon, Jonathan, Minsu Jang, Kira Pronin and Jacob Schiller. 2023. “<a href="https://doi.org/10.1017/XPS.2023.29">Discussion and Fairness in a Laboratory Voting Experiment</a>,” <em>Journal of Experimental Political Science,</em> 11(2): 224-236.</li>
 </ul>
-</div></aside></section>
-<section id="サーベイ実験survey-experiment" class="slide level2">
-<h2>サーベイ実験<span class="small">（survey experiment）</span></h2>
-<p>アンケート内に無作為割当の処置<span class="small">（例：文言の違い、シナリオの提示）</span>を埋め込み、参加者の反応を比較する実験</p>
+</div></aside></section><section id="サーベイ実験survey-experiment" class="slide level2"><h2>サーベイ実験<span class="small">（survey experiment）</span>
+</h2>
+<p>アンケート内に無作為に割り当てたの処置<span class="small">（例：文言の違い、シナリオの提示）</span>を埋め込み、参加者の反応を比較する実験</p>
 <ul>
 <li>インターネットを用いたアンケートに処置を埋め込むのが一般的</li>
-<li>メリット
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="メリット-2">メリット</h4>
 <ul>
 <li>実施コストが低く、大規模サンプルを得やすい</li>
-<li>インターネット調査での実施が可能（時系列や国際比較も容易）</li>
-<li>さまざまな認知的・態度的反応が測定可能</li>
-</ul></li>
-<li>デメリット
+<li>インターネット調査での実施が可能
 <ul>
-<li>行動ではなく意見や認識の測定が中心<span class="small">（行動的な結果の妥当性に限界）</span></li>
-<li>省力回答者（satisficer）の存在</li>
-<li>処置の「強さ」が限られ、効果量が小さくなることが多い</li>
-</ul></li>
+<li>時系列や国際比較も容易</li>
 </ul>
+</li>
+<li>さまざまな認知的・態度的反応が測定可能</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h4 id="デメリット-2">デメリット</h4>
+<ul>
+<li>行動ではなく意見や認識の測定が中心<span class="small">（行動的な結果の妥当性に限界）</span>
+</li>
+<li>省力回答者<span class="small">（satisficer）</span>の存在</li>
+<li>処置の「強さ」が限られ、効果量が小さくなることが多い</li>
+</ul>
+</div></div>
 
 <aside><div>
 <ul>
 <li>SONG Jaehyun・秦正樹. 2020. 「<a href="https://doi.org/10.11218/ojjams.35.92">オンライン・サーベイ実験の方法：理論編</a>」『理論と方法』35(1): 92-108.</li>
 <li>秦正樹・SONG Jaehyun. 2020. 「<a href="https://doi.org/10.11218/ojjams.35.109">オンライン・サーベイ実験の方法：実践編</a>」『理論と方法』35(1): 109-127.</li>
 </ul>
-</div></aside></section>
-<section id="サーベイ実験の例" class="slide level2">
-<h2>サーベイ実験の例</h2>
+</div></aside></section><section id="サーベイ実験の例" class="slide level2"><h2>サーベイ実験の例</h2>
 <ul>
-<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか<span class="small">（Asaba et al.&nbsp;2020）</span></li>
+<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか<span class="small">（Asaba et al.&nbsp;2020）</span>
+</li>
 <li>統制群：米豪合同軍事演習の動画を視聴</li>
 <li>処置群：<span class="alert">日米韓同軍事演習の動画</span>を視聴</li>
 <li>動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度</li>
@@ -999,65 +996,66 @@
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="3000"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
 </figure>
 </div>
 </div>
 </div>
 
 <aside><div>
-<p>Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “<a href="https://doi.org/10.1093/irap/lcy024">38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea</a>,” <em>International Relations of the Asia-Pacific</em>, 20(2): 253-273.</p>
-</div></aside></section></section>
-<section>
-<section id="処置効果の推定" class="title-slide slide level1 center">
-<h1><strong>4</strong> 処置効果の推定</h1>
+<ul>
+<li>Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “<a href="https://doi.org/10.1093/irap/lcy024">38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea</a>,” <em>International Relations of the Asia-Pacific</em>, 20(2): 253-273.</li>
+</ul>
+</div></aside></section></section><section><section id="処置効果の推定" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 処置効果の推定</h1>
 
-</section>
-<section id="処置効果の推定-1" class="slide level2">
-<h2>処置効果の推定</h2>
+</section><section id="処置効果の推定-1" class="slide level2"><h2>処置効果の推定</h2>
 <p>結果変数の平均値をグループ間で比較</p>
 <ul>
 <li>ATE = <span class="math inline">\(\mathbb{E}[Y|D = 1] - \mathbb{E}[Y|D = 0]\)</span>
 <ul>
 <li>ATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>使用可能な手法</p>
 <ul>
 <li>平均値/比率の差の検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(z\)</span>検定）</span>
 <ul>
 <li>グループが3つ以上の場合、ペアごと<span class="small">（pairwise）</span>の検定を実施</li>
-</ul></li>
-<li>分散分析<span class="small">（ANOVA、MANCOVAなど）</span></li>
-<li><span class="alert"><strong>線形回帰分析</strong></span></li>
 </ul>
-</section>
-<section id="多重比較の問題multiple-comparisons-problem" class="slide level2">
-<h2>多重比較の問題<span class="small">（multiple comparisons problem）</span></h2>
+</li>
+<li>分散分析<span class="small">（ANOVA、MANCOVAなど）</span>
+</li>
+<li><span class="alert"><strong>線形回帰分析</strong></span></li>
+</ul></section><section id="多重比較の問題multiple-comparisons-problem" class="slide level2"><h2>多重比較の問題<span class="small">（multiple comparisons problem）</span>
+</h2>
 <ul>
-<li><span class="alert">複数回の比較から処置効果を推定する際に発生</span>する問題
+<li>
+<span class="alert">複数回の比較から処置効果を推定する際に発生</span>する問題
 <ul>
 <li>統制群と処置群1、処置群2がある場合、「統制群 vs.&nbsp;処置群1」、「統制群 vs.&nbsp;処置群2」計2回の比較が行われる</li>
-</ul></li>
-<li><span class="math inline">\(p\)</span> = 0.05を基準とした統計的有意性検定の限界
+</ul>
+</li>
+<li>
+<span class="math inline">\(p\)</span> = 0.05を基準とした統計的有意性検定の限界
 <ul>
 <li>処置効果が0でも、処置効果があると判定される可能性は約5%</li>
-<li><span class="alert"><strong>比較が複数回行われたら、処置効果があると判定される可能性が自然に上がる</strong></span>
+<li><span class="alert"><strong>比較が複数回行われたら、処置効果があると判定される可能性が自然に上がる</strong></span></li>
+</ul>
+</li>
+</ul></section><section id="多重比較の例" class="slide level2"><h2>多重比較の例</h2>
+<p>2回の比較のうち、1つでも<span class="math inline">\(p\)</span> &lt; 0.05になったら「処置効果がある」と判定してしまう</p>
 <ul>
-<li>2回の比較のうち、1つでも<span class="math inline">\(p\)</span> &lt; 0.05になったら「処置効果がある」と判定するから</li>
-</ul></li>
-</ul></li>
+<li>より厳しい基準で統計的有意性検定を行うべき</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;">施行</th>
 <th style="text-align: right;">統制群 vs.&nbsp;処置群1</th>
 <th style="text-align: right;">統制群 vs.&nbsp;処置群2</th>
 <th style="text-align: center;">処置効果</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
@@ -1096,94 +1094,105 @@
 <td style="text-align: center;">留保</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="多重比較の問題の補正" class="slide level2">
-<h2>多重比較の問題の補正</h2>
-<p><span class="alert"><strong>ボンフェローニ補正</strong></span><span class="small">（Bonferroni correction）</span><sup>1</sup>の例</p>
+</table></section><section id="多重比較の問題の補正" class="slide level2"><h2>多重比較の問題の補正</h2>
+<p><span class="strong">ボンフェローニ補正</span><span class="small">（Bonferroni correction）</span><sup>1</sup>の例</p>
 <ul>
 <li>真の処置効果が0でも、計2回の比較が行われる場合、それぞれの比較において<span class="math inline">\(p\)</span> &lt; 0.05になる割合は5%
 <ul>
 <li>1つでも<span class="math inline">\(p\)</span> &lt; 0.05になったら「処置効果がある」と判定される</li>
 <li>計2回の比較が行われるため、「処置効果がある」と判定される割合は10%（<strong>2倍</strong>）</li>
-<li><span class="math inline">\(\Rightarrow\)</span> <span class="alert">「処置効果がある」と判定される可能性は既存の<span class="math inline">\(m\)</span>倍</span>（<span class="math inline">\(m\)</span>は比較回数）</li>
-<li><span class="math inline">\(\Rightarrow\)</span> <strong>解決策：</strong><span class="alert">統計的有意性の閾値（<span class="math inline">\(\alpha\)</span>）を<span class="math inline">\(m\)</span>分の1に変更</span>する</li>
-</ul></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert">「処置効果がある」と判定される可能性は既存の<span class="math inline">\(m\)</span>倍</span>（<span class="math inline">\(m\)</span>は比較回数）</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <strong>解決策：</strong><span class="alert">統計的有意性の閾値（<span class="math inline">\(\alpha\)</span>）を<span class="math inline">\(m\)</span>分の1に変更</span>する</li>
+</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn9"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section><section id="ボンフェローニ補正の例" class="slide level2"><h2>ボンフェローニ補正の例</h2>
+<ul>
 <li>例）<span class="math inline">\(\alpha = 0.05\)</span>、比較回数が2回の場合
 <ul>
-<li><span class="math inline">\(p\)</span>値が0.025（= 0.05 / 2）を下回る場合、「5%水準で統計的に有意」と解釈する</li>
-</ul></li>
-<li>例）<span class="math inline">\(\alpha = 0.05\)</span>、比較回数が5回の場合
-<ul>
-<li><span class="math inline">\(p\)</span>値が0.01（= 0.05 / 5）を下回る場合、「5%水準で統計的に有意」と解釈する</li>
-</ul></li>
+<li>
+<span class="math inline">\(p\)</span>値が0.025（= 0.05 / 2）を下回る場合、「5%水準で統計的に有意」と解釈する</li>
+<li>得られた<span class="math inline">\(p\)</span>値を2倍にし、その<span class="math inline">\(p\)</span>値が0.05を下回る場合、「5%水準で統計的に有意」と解釈する</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn7"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section>
-<section id="不均一な処置効果heterogeneous-treatment-effect-hte" class="slide level2">
-<h2>不均一な処置効果<span class="small">（heterogeneous treatment effect; HTE）</span></h2>
+</li>
+<li>例）<span class="math inline">\(\alpha = 0.01\)</span>、比較回数が5回の場合
+<ul>
+<li>
+<span class="math inline">\(p\)</span>値が0.002（= 0.01 / 5）を下回る場合、「1%水準で統計的に有意」と解釈する</li>
+<li>得られた<span class="math inline">\(p\)</span>値を5倍にし、その<span class="math inline">\(p\)</span>値が0.01を下回る場合、「1%水準で統計的に有意」と解釈する</li>
+</ul>
+</li>
+</ul></section><section id="不均一な処置効果heterogeneous-treatment-effect-hte" class="slide level2"><h2>不均一な処置効果<span class="small">（heterogeneous treatment effect; HTE）</span>
+</h2>
 <ul>
 <li>処置効果は人によって異なる
 <ul>
 <li>平均処置効果<span class="small">（ATE）</span>はあくまで「平均値」</li>
-<li>現実には<span class="alert"><strong>個人や集団によって処置効果が異なる</strong></span>可能性が高い<span class="small">（処置効果の異質性）</span></li>
-</ul></li>
+<li>現実には<span class="strong">個人や集団によって処置効果が異なる</span>可能性が高い<span class="small">（処置効果の異質性）</span>
+</li>
+</ul>
+</li>
 <li>問いの例
 <ul>
 <li>処置効果が最も大きいのは誰か</li>
 <li>どの条件下で処置効果が最大・最小か</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <h4 id="不均一な処置効果が考えられる例">不均一な処置効果が考えられる例</h4>
 <ul>
-<li>例1）1万円給付金の処置効果
+<li>1万円給付金の処置効果
 <ul>
-<li>高所得者：少額<span class="small">（?!）</span>の給付金で消費にあまり影響なし</li>
-<li>低所得者：生活必需品の購入が可能に <span class="math inline">\(\rightarrow\)</span> 実質的な効果大</li>
-</ul></li>
+<li>高所得者：少額<span class="small">（…?）</span>の給付金で消費にあまり影響なし</li>
+<li>低所得者：生活必需品の購入が可能に <span class="math inline">\(\rightarrow\)</span> 実質的な効果大 &lt;!–</li>
+</ul>
+</li>
 <li>例2）新しい教授法の効果
 <ul>
-<li>すでに成績の良い生徒 vs 学習機会がなかった生徒</li>
-</ul></li>
+<li>すでに成績の良い生徒 vs 学習機会がなかった生徒 –&gt;</li>
 </ul>
-</section>
-<section id="hteの推定" class="slide level2">
-<h2>HTEの推定</h2>
-<ol type="1">
-<li><span class="alert"><strong>交互作用項</strong></span>による推定
+</li>
+</ul></section><section id="hteの推定" class="slide level2"><h2>HTEの推定</h2>
+<ul>
+<li>
+<span class="alert"><strong>交互作用項</strong></span>による推定
 <ul>
 <li>例：<span class="math inline">\(Y_i = \alpha + \tau T_i + \beta X_i + \delta (T_i \cdot X_i) + \varepsilon_i\)</span>
 <ul>
-<li><span class="math inline">\(\tau + \delta X_i\)</span>：<span class="math inline">\(X_i = x\)</span>における処置効果<span class="small">（限界効果 [marginal effect]）</span></li>
-</ul></li>
-</ul></li>
-<li><span class="alert"><strong>サブグループごと</strong></span>の推定<span class="small">（conditional average treatment efffect; <strong>CATE</strong>）</span>
+<li>
+<span class="math inline">\(\tau + \delta X_i\)</span>：<span class="math inline">\(X_i = x\)</span>における処置効果<span class="small">（限界効果 [marginal effect]）</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<span class="alert"><strong>サブグループごと</strong></span>の推定<span class="small">（conditional average treatment efffect; <strong>CATE</strong>）</span>
 <ul>
 <li>年齢・性別・所得などで層別化してATEを推定</li>
-<li><span class="math inline">\(\mathbb{E}[Y(1)−Y(0)|X=x]\)</span>：<span class="math inline">\(X = x\)</span>における平均処置効果</li>
-</ul></li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y(1)−Y(0)|X=x]\)</span>：<span class="math inline">\(X = x\)</span>における平均処置効果</li>
+</ul>
+</li>
 <li>機械学習
 <ul>
-<li>Causal Forest<span class="small">（Athey and Imbens 2016; Jawadekar et al.&nbsp;2023）</span>、X-learner<span class="small">（Künzel et al.&nbsp;2019）</span>など</li>
-</ul></li>
-</ol>
-<ul>
-<li>注意点：<span class="alert">多重検定</span>の問題、<span class="alert">予め設定した仮説に基いて分割</span>すること</li>
+<li>Causal Forest<span class="small">（Athey and Imbens 2016; Jawadekar et al.&nbsp;2023）</span>、X-learner<span class="small">（Künzel et al.&nbsp;2019）</span>等</li>
+</ul>
+</li>
 </ul>
 
 <aside><div>
 <ul>
+<li>サブグループは<strong>予め設定した仮説に基いて選定</strong>すべきであり、<strong>多重検定</strong>の問題も考慮する必要がある。</li>
 <li>Athey, Susan and Guido Imbens. 2016. “<a href="https://doi.org/10.1073/pnas.1510489113">Recursive partitioning for heterogeneous causal effects</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 113(27): 7353-7360.</li>
 <li>Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “<a href="https://doi.org/10.1093/aje/kwad043">Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects</a>.” <em>American Journal of Epidemiology,</em> 192(7): 1155–1165.</li>
 <li>Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “<a href="https://doi.org/10.1073/pnas.1804597116">Metalearners for estimating heterogeneous treatment effects using machine learning</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 116(10): 4156-4165.</li>
 </ul>
-</div></aside></section></section>
-<section>
-<section id="実装時の注意点" class="title-slide slide level1 center">
-<h1><strong>5</strong> 実装時の注意点</h1>
+</div></aside></section></section><section><section id="実装時の注意点" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 実装時の注意点</h1>
 
-</section>
-<section id="実験と研究倫理" class="slide level2">
-<h2>実験と研究倫理</h2>
+</section><section id="実験と研究倫理" class="slide level2"><h2>実験と研究倫理</h2>
 <ul>
 <li>RCTにおける倫理的配慮の必要性
 <ul>
@@ -1191,74 +1200,93 @@
 <ul>
 <li>喫煙<span class="small">（原因）</span>と健康<span class="small">（結果）</span>をRCTで検証しようとしたら…?</li>
 <li>統制群に有効な処置を与えないことで、公正性や人道性に反するケースも</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>RCT実施における倫理的対策
 <ul>
-<li><span class="alert"><strong>インフォームド・コンセント</strong></span>（説明と同意）の取得は必須
+<li>
+<span class="alert"><strong>インフォームド・コンセント</strong></span>（説明と同意）の取得は必須
 <ul>
 <li>説明責任、理解、自由意志の保障、途中中止基準の明示など</li>
-</ul></li>
-<li><span class="alert"><strong>研究開始前に審査を必ず受ける</strong></span>
-<ul>
-<li><strong>IRB</strong>（Institutional Review Board／倫理審査委員会）</li>
-</ul></li>
-</ul></li>
 </ul>
-</section>
-<section id="研究倫理違反の例" class="slide level2">
-<h2>研究倫理違反の例</h2>
-<h4 id="スタンフォード監獄実験haney-et-al.-2018">スタンフォード監獄実験<span class="small">（Haney et al.&nbsp;2018）</span></h4>
+</li>
+<li>
+<span class="alert"><strong>研究開始前に審査を必ず受ける</strong></span>
+<ul>
+<li>
+<strong>IRB</strong>（Institutional Review Board／倫理審査委員会）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></section><section id="研究倫理違反の例1" class="slide level2"><h2>研究倫理違反の例（1）</h2>
+<p><strong>スタンフォード監獄実験</strong><span class="small">（Haney et al.&nbsp;2018）</span></p>
 <ul>
 <li>被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察
 <ul>
 <li>当初2週間予定した実験だが6日間で中止</li>
-</ul></li>
-<li>被験者が心理的苦痛や屈辱を実際に体験<span class="small">（実験後も続く）</span></li>
-<li>インフォームド・コンセントの問題<span class="small">（被験者が途中退出できないと誤認）</span></li>
-<li>研究者自身<span class="small">（Zimbardo）</span>が刑務所長役として実験に介入</li>
 </ul>
-<h4 id="facebook感情操作実験kramer-et-al.-2014">Facebook感情操作実験<span class="small">（Kramer et al.&nbsp;2014）</span></h4>
-<ul>
-<li>Facebookが約69万人のユーザーのニュースフィードを操作
-<ul>
-<li>ポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ</li>
-<li>表示される投稿の感情傾向が、ユーザー自身の感情表現に影響</li>
-</ul></li>
-<li>インフォームド・コンセントの不在、研究倫理審査<span class="small">（IRB）</span>の管轄外で行われた実験</li>
+</li>
+<li>被験者が心理的苦痛や屈辱を実際に体験<span class="small">（実験後も続く）</span>
+</li>
+<li>インフォームド・コンセントの問題<span class="small">（被験者が途中退出できないと誤認）</span>
+</li>
+<li>研究者自身<span class="small">（Zimbardo）</span>が刑務所長役として実験に介入</li>
 </ul>
 
 <aside><div>
 <ul>
 <li>Haney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “<a href="">A Study of Prisoners and Guards in a Simulated Prison</a>.” <em>Naval Research Reviews,</em> 9(1): 1–17.</li>
+</ul>
+</div></aside></section><section id="研究倫理違反の例2" class="slide level2"><h2>研究倫理違反の例（2）</h2>
+<p><strong>Facebook感情操作実験</strong><span class="small">（Kramer et al.&nbsp;2014）</span></p>
+<ul>
+<li>Facebookが約69万人のユーザーのニュースフィードを操作
+<ul>
+<li>ポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ</li>
+<li>表示される投稿の感情傾向が、ユーザー自身の感情表現に影響</li>
+</ul>
+</li>
+<li>インフォームド・コンセントの不在</li>
+<li>研究倫理審査<span class="small">（IRB）</span>の管轄外で行われた実験</li>
+</ul>
+
+<aside><div>
+<ul>
 <li>Kramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. “<a href="https://doi.org/10.1073/pnas.1320040111">Experimental evidence of massive-scale emotional contagion through social networks</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 111(24): 8788–8790.</li>
 </ul>
-</div></aside></section>
-<section id="内的妥当性と外的妥当性" class="slide level2">
-<h2>内的妥当性と外的妥当性</h2>
+</div></aside></section><section id="内的妥当性と外的妥当性" class="slide level2"><h2>内的妥当性と外的妥当性</h2>
 <p>ランダム化比較試験<span class="small">（実験）</span>の場合、通常、内的妥当性が高い</p>
-<h4 id="内的妥当性internal-validity"><span class="alert">内的妥当性</span><span class="small">（internal validity）</span></h4>
+<h4 id="内的妥当性internal-validity">
+<span class="alert">内的妥当性</span><span class="small">（internal validity）</span>
+</h4>
 <ul>
-<li>推定された処置効果の信頼性<span class="small">（推定された処置効果が標本に対して有効か）</span></li>
-<li>処置効果が本当に処置によって引き起こされたか<span class="small">（交絡要因が正しく統制されているか）</span></li>
+<li>推定された処置効果の信頼性<span class="small">（推定された処置効果が標本に対して有効か）</span>
+</li>
+<li>処置効果が本当に処置によって引き起こされたか<span class="small">（交絡要因が正しく統制されているか）</span>
+</li>
 <li>ランダム化比較試験の場合、<strong>無作為割り当て</strong>を用いるため内的妥当性が高い</li>
 </ul>
-<h4 id="外的妥当性external-validity"><span class="alert">外的妥当性</span><span class="small">（external validity）</span></h4>
+<h4 id="外的妥当性external-validity">
+<span class="alert">外的妥当性</span><span class="small">（external validity）</span>
+</h4>
 <ul>
-<li>標本から得られた処置効果がどの程度一般化可能か<span class="small">（母集団でも同じ結果が得られるか）</span></li>
+<li>標本から得られた処置効果がどの程度（どこまで）一般化可能か<span class="small">（母集団でも同じ結果が得られるか）</span>
+</li>
 <li>標本が母集団を代表する場合、外的妥当性が高くなりやすい
 <ul>
 <li>緻密な設計<span class="small">（<strong>無作為抽出</strong>など）</span>で行われた観察から得られた結果は一般的に外的妥当性が高い</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 <aside><div>
 <ul>
 <li>Findley, Michael G., Kyosuke Kikuta and Michael Denly. 2021. “<a href="https://doi.org/10.1146/annurev-polisci-041719-102556">External Validity</a>.” <em>Annual Review of Political Science,</em> 24: 365-393.</li>
 </ul>
-</div></aside></section>
-<section id="sutva" class="slide level2">
-<h2>SUTVA</h2>
+</div></aside></section><section id="sutva" class="slide level2"><h2>SUTVA</h2>
 <p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
 <blockquote>
 <p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
@@ -1268,7 +1296,8 @@
 <ol type="1">
 <li><span class="alert"><strong>干渉なし</strong></span></li>
 <li><span class="alert"><strong>処置の一意性</strong></span></li>
-</ol></li>
+</ol>
+</li>
 <li>サーベイ実験では意識しなくても満たされるケースが多い（例外あり）</li>
 </ul>
 
@@ -1277,31 +1306,31 @@
 <li>Rubin, Donald B. 1980. “<a href="https://doi.org/10.2307/2287653">Discussion of ”Randomization Analysis of Experimental Data in the Fisher Randomization Test</a>.” <em>The Journal of the American Statistical Association</em>, 75 (371): 591-593.</li>
 <li>G.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店</li>
 </ul>
-</div></aside></section>
-<section id="sutva1" class="slide level2">
-<h2>SUTVA（1）</h2>
+</div></aside></section><section id="sutva1" class="slide level2"><h2>SUTVA（1）</h2>
 <p><span class="alert"><strong>干渉なし</strong></span>（no interference）</p>
 <ul>
 <li>ある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと</li>
 <li>例）ワクチン接種の効果
 <ul>
-<li><span class="math inline">\(D\)</span>：ワクチン接種の有無（0 or 1）</li>
-<li><span class="math inline">\(Y\)</span>：感染の確率（0〜1）</li>
-</ul></li>
-<li>Aの潜在的結果<span class="small">（<span class="math inline">\(Y_A\)</span>）</span>はBのワクチン接種有無によって異なる<span class="small">（集団免疫）</span></li>
+<li>
+<span class="math inline">\(D\)</span>：ワクチン接種の有無（0 or 1）</li>
+<li>
+<span class="math inline">\(Y\)</span>：感染の確率（0〜1）</li>
+</ul>
+</li>
+<li>Aの潜在的結果<span class="small">（<span class="math inline">\(Y_A\)</span>）</span>はBのワクチン接種有無によって異なる<span class="small">（集団免疫）</span>
+</li>
 </ul>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="caption-top">
 <caption>仮定が満たされない例</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;"></th>
 <th style="text-align: center;"><span class="math inline">\(D_B = 0\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(D_B = 1\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(D_A = 0\)</span></td>
@@ -1319,13 +1348,11 @@
 <div class="center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="caption-top">
 <caption>仮定が満たされる例</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;"></th>
 <th style="text-align: center;"><span class="math inline">\(D_B = 0\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(D_B = 1\)</span></th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(D_A = 0\)</span></td>
@@ -1342,57 +1369,71 @@
 </div>
 </div>
 </div>
-</section>
-<section id="sutva2" class="slide level2">
-<h2>SUTVA（2）</h2>
+</section><section id="sutva2" class="slide level2"><h2>SUTVA（2）</h2>
 <p><span class="alert"><strong>処置の一意性</strong></span>（no hidden variations of treatment）</p>
 <ul>
 <li>同じ処置はすべての個体に対して同じ方法で適用されること</li>
 <li>満たされる例：
 <ul>
 <li>医療実験で標準化された薬剤を同量・同時点で投与</li>
-</ul></li>
+</ul>
+</li>
 <li>満たされない例：
 <ul>
 <li>教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在</li>
-<li>給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う<sup>1</sup></li>
+<li>給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う<sup>1</sup>
+</li>
 <li>給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など</li>
-</ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section>
-<section id="二重盲検法" class="slide level2">
-<h2>二重盲検法</h2>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn10"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section><section id="二重盲検法" class="slide level2"><h2>二重盲検法</h2>
 <p><span class="alert"><strong>二重盲検法</strong></span><span class="small">（double-blind）</span>：被験者も研究者も、誰がどの処置を受けたかを知らない設計</p>
 <ul>
 <li>二重盲検 &gt; 単盲検 &gt; 非盲検</li>
-<li><span class="alert">プラセボ効果</span>と<span class="alert">観察バイアス</span>の防止（評価者の期待が結果に影響）</li>
+<li>
+<span class="alert">プラセボ効果</span>と<span class="alert">観察バイアス</span>の防止（評価者の期待が結果に影響）</li>
 <li>二重盲検法が困難なケースの例
 <ul>
 <li>教育介入（教師が処遇を知ってしまう）</li>
 <li>社会政策（給付の存在自体が分かる）</li>
-</ul></li>
-<li>サーベイ実験の場合、基本的に二重盲検が保障されるが、フィールド実験・実験室実験では単盲検、非盲検になる可能性も</li>
 </ul>
-</section>
-<section id="バランスチェック" class="slide level2">
-<h2>バランスチェック</h2>
+</li>
+<li>サーベイ実験の場合、基本的に二重盲検が保障されるが、フィールド実験・実験室実験では単盲検、非盲検になる可能性も</li>
+</ul></section><section id="バランスチェック" class="slide level2"><h2>バランスチェック</h2>
 <p>グループの均質性を確認する手法</p>
 <ul>
-<li><span class="alert">バランスしていない<span class="small">（imbalanced）</span>場合、グループ間の単純比較は不適切</span>
+<li>処置群と統制群が同質<span class="small">（= 交換可能）</span>であれば、処置以外の変数<span class="small">（被験者の性別、年齢、学歴、支持政党、…）</span>も同じであるはず
+<ul>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 統制群と処置群間において様々な共変量のバランスがとれている</li>
+</ul>
+</li>
+<li>
+<span class="alert">バランスしていない<span class="small">（imbalanced）</span>場合、グループ間の単純比較は不適切</span>
 <ul>
 <li>平均独立、交換可能性が成立していない可能性が極めて高い</li>
-</ul></li>
-<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span></li>
-<li><span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
+</ul>
+</li>
+<li>
+<span class="alert"><strong>注意：</strong></span>バランスしていることは、交換可能性・平均独立性を担保しない。<strong>バランスは交換可能性<span class="small">（または、平均独立性）</span>の必要条件</strong>に過ぎず、十分条件ではない</li>
+<li>実験データであってもバランスしていない可能性がある</li>
+</ul></section><section id="バランスチェックの方法" class="slide level2"><h2>バランスチェックの方法</h2>
+<ul>
+<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(\chi^2\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span>
+</li>
+<li>
+<span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
 <ul>
 <li><span class="alert"><strong>平均値の差分が「十分に」大きい = グループは不均質</strong></span></li>
 <li>バランスの閾値は研究者が任意で決める<span class="small">（主に<span class="alert"><strong>0.1</strong></span>）</span>
 <ul>
-<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span></li>
-</ul></li>
+<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span>
+</li>
+</ul>
+</li>
 <li>グループが3つ以上ならペアごとに<span class="small">（標準化した）</span>平均値の差分を計算</li>
-</ul></li>
-<li>実験データであってもバランスしていない可能性がある</li>
+</ul>
+</li>
 </ul>
 
 <aside><div>
@@ -1400,31 +1441,38 @@
 <li>Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “<a href="https://doi.org/10.1111/j.1467-985X.2007.00527.x">Misunderstandings between experimentalists and observationalists about causal inference</a>.” <em>Journal of the Royal Statistical Society: Series A,</em> 171(2): 481-502.</li>
 <li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn9"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section>
-<section id="バランスチェックの例" class="slide level2">
-<h2>バランスチェックの例</h2>
+</div><ol class="aside-footnotes"><li id="fn11"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
-<li>左の図の場合、ほとんどの共変量においてバランスが取れていない<span class="small">（閾値=0.1の場合）</span>
+<li>左の図の場合、ほとんどの共変量がバランスしていない<span class="small">（閾値=0.1の場合）</span>
 <ul>
-<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span></li>
-</ul></li>
+<li>バランスしていないデータでも<span class="alert">共変量調整でバイアスの補正</span>が可能<span class="small">（Lin 2013）</span>
+</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-7,38,-10,38,-7]]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 7.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 38.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 38.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-16-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 7.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
@@ -1435,32 +1483,15 @@
 <ul>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn10"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
-
-    </div>
+</div><ol class="aside-footnotes"><li id="fn12"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>ランダム化比較試験</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1618,7 +1649,7 @@
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -1651,9 +1682,7 @@
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -1688,9 +1717,7 @@
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -1738,13 +1765,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -1823,6 +1851,160 @@
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -1862,6 +2044,6 @@
         }
       });
       </script>
-    
+
 
 </body></html>

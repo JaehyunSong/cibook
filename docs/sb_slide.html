@@ -6,21 +6,27 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
-
-  <meta name="author" content="宋財泫（関西大学）">
-  <title>困菓唯倫 with R – 社会科学における因果推論</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="author" content="宋財泫（関西大学）">
+<title>困菓唯倫 with R – 社会科学における因果推論</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+<style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,12 +35,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-28f20f89def4d4f980e412ff7c04615b.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -126,137 +132,139 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">社会科学における因果推論</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
   <p class="subtitle">3/ 内生性</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-宋財泫（関西大学） 
+宋財泫（関西大学）
 </div>
 </div>
 </div>
 
-</section>
-<section>
-<section id="内生性" class="title-slide slide level1 center">
-<h1><strong>1</strong> 内生性</h1>
+</section><section><section id="内生性" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 内生性</h1>
 
-</section>
-<section id="割当メカニズム" class="slide level2">
-<h2>割当メカニズム</h2>
-<p><span class="alert"><strong>割当メカニズム</strong></span><span class="small">（assignment mechanism）</span>：個体<span class="math inline">\(i\)</span>が処置を受けるメカニズム</p>
+</section><section id="割当メカニズム" class="slide level2"><h2>割当メカニズム</h2>
+<p><span class="strong">割当メカニズム</span><span class="small">（assignment mechanism）</span>：個体<span class="math inline">\(i\)</span>が処置を受けるメカニズム</p>
 <ul>
-<li>以下は処置有無（D）が3つの変数（X、Z）から規定される例
+<li>以下は処置有無（<strong>D</strong>）が3つの変数（<strong>X</strong>、<strong>Z</strong>）から規定される例
 <ul>
 <li>例）GPAが高い学生が宋さんの授業を履修する</li>
 <li>例）単位がやばい学生が宋さんの授業を履修する</li>
 <li>例）やる気がある学生が宋さんの授業を履修するなど</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
-<img data-src="sb_slide_files/figure-html/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
-<section id="内生性-1" class="slide level2">
-<h2>内生性</h2>
-<p><span class="alert"><strong>内生性</strong></span><span class="small">（endogeneity）</span>：処置変数と誤差項間に相関が存在する状態（<span class="math inline">\(\Leftrightarrow\)</span><span class="alert">外生性</span>）</p>
+<img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="内生性-1" class="slide level2"><h2>内生性</h2>
+<p><span class="strong">内生性</span><span class="small">（endogeneity）</span>：処置変数と誤差項間に相関が存在する状態（<span class="math inline">\(\Leftrightarrow\)</span><span class="strong">外生性</span>）</p>
 <ul>
 <li>内生性が存在する場合、処置変数は<span class="alert">内生変数</span>（<span class="math inline">\(\Leftrightarrow\)</span><span class="alert">外生変数</span>）と呼ばれる</li>
 <li>処置変数が内生変数なら…
 <ul>
 <li>処置効果の推定量は一致<span class="small">（consistent）</span>推定量でも、不偏<span class="small">（unbiased）</span>推定量でもなくなる</li>
-</ul></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[-5,40,-1,40,-5]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.5%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 44.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-4-1.png" width="1200"></p>
-<figcaption>Dは外生変数</figcaption>
-</figure>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-4-1.png" width="1200"></p>
+<figcaption>Dは外生変数</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 1.1%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 44.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-4-2.png" width="1200"></p>
-<figcaption>Dは内生変数</figcaption>
-</figure>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-4-2.png" width="1200"></p>
+<figcaption>Dは内生変数</figcaption></figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.5%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="参考誤差" class="slide level2">
-<h2>参考：誤差</h2>
-<p>例）2024年衆院選の投票率：53.8%（真の値; パラメーター）</p>
+</section><section id="参考誤差" class="slide level2"><h2>参考：誤差</h2>
+<p>例）2024年衆院選の投票率：53.8%（真の値 = パラメーター）</p>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead><tr class="header">
 <th style="text-align: left;">調査</th>
 <th style="text-align: right;"><span class="math inline">\(n\)</span></th>
-<th style="text-align: right;">投票率</th>
+<th style="text-align: right;">回答者の投票率<br><span class="small">（推定量）</span>
+</th>
+<th style="text-align: right;">真の投票率<br><span class="small">（パラメーター）</span>
+</th>
 <th style="text-align: right;">誤差</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">調査A</td>
 <td style="text-align: right;">100</td>
 <td style="text-align: right;">0.490</td>
+<td style="text-align: right;">0.538</td>
 <td style="text-align: right;">0.048</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">調査B</td>
-<td style="text-align: right;">500</td>
-<td style="text-align: right;">0.568</td>
-<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">1,000</td>
+<td style="text-align: right;">0.561</td>
+<td style="text-align: right;">0.538</td>
+<td style="text-align: right;">0.023</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">調査C</td>
-<td style="text-align: right;">1,000</td>
-<td style="text-align: right;">0.561</td>
-<td style="text-align: right;">0.023</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">調査D</td>
 <td style="text-align: right;">2,000</td>
 <td style="text-align: right;">0.543</td>
+<td style="text-align: right;">0.538</td>
 <td style="text-align: right;">0.005</td>
 </tr>
 </tbody>
 </table>
-<center>
-<br>観測値 = 真の値 + <span class="alert"><strong>誤差</strong></span> <br><br>
+<!--|調査B|500|0.568|0.030|--><center>
+<br> 推定量 = 真の値 + <span class="strong">誤差</span> <br>
 </center>
 <ul>
-<li><span class="alert"><strong>誤差</strong></span><span class="small">（error）</span>：観測された値と真の値（母数; パラメーター）間のズレ
+<li>
+<span class="strong">誤差</span><span class="small">（error）</span>：推定量とパラメーター<span class="small">（母数; 真の値）</span>間のズレ
 <ul>
 <li>誤差がぴったり0になることはほぼない</li>
-<li>サンプルが母集団から無作為抽出されているのであれば、<span class="math inline">\(n\)</span>が大きくなるほど誤差は0へ収斂する <span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>大数の法則</strong></span><sup>1</sup><span class="small">（Law of large numbers; LLM）</span></li>
-<li>ある統計量が<span class="alert">一致推定量</span>であれば、<span class="math inline">\(n\)</span>を大きくすることでよりパラメーターに近い値が得られる</li>
-</ul></li>
+<li>サンプルが母集団から無作為抽出されたのであれば、<span class="math inline">\(n\)</span>が大きくなるほど誤差は0へ収斂する <br><span class="math inline">\(\Rightarrow\)</span> <span class="strong">大数の法則</span><span class="small">（Law of large numbers; LLM）</span> <br><span class="math inline">\(\Rightarrow\)</span> 標本平均<span class="small">（sample mean）</span>は母平均<span class="small">（population mean）</span>一致推定量<span class="small">（consistent estimator）</span> <!-- - ある統計量が[一致推定量]{.alert}であれば、$n$を大きくすることでよりパラメーターに近い値が得られる -->
+</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>厳密にいえば、大数の<strong>弱</strong>法則</p></li></ol></aside></section>
-<section id="参考バイアス" class="slide level2">
-<h2>参考：バイアス</h2>
-<p><span class="alert"><strong>バイアス</strong></span><span class="small">（偏り; bias）</span>：統計量の期待値とパラメーター間のずれ</p>
+</li>
+</ul></section><section id="参考バイアス" class="slide level2"><h2>参考：バイアス</h2>
+<p><span class="strong">バイアス</span><span class="small">（偏り; bias）</span>：推定量の期待値とパラメーター間のずれ</p>
 <ul>
-<li><span class="math inline">\(\mathbb{E}[\hat{\theta}] - \theta = 0\)</span>の場合、<span class="math inline">\(\hat{\theta}\)</span>は<span class="math inline">\(\theta\)</span>の<span class="alert">不偏推定量</span><span class="small">（unbiased estimator）</span></li>
+<li>
+<span class="math inline">\(\mathbb{E}[\hat{\theta}] - \theta = 0\)</span>の場合、<span class="math inline">\(\hat{\theta}\)</span>は<span class="math inline">\(\theta\)</span>の<span class="alert">不偏推定量</span><span class="small">（unbiased estimator）</span>
+</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
 <table class="caption-top">
 <caption>バイアス<strong>なし</strong>の例</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">調査</th>
 <th style="text-align: right;"><span class="math inline">\(n\)</span></th>
 <th style="text-align: right;">投票率</th>
 <th style="text-align: right;">誤差</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">調査A</td>
@@ -289,7 +297,8 @@
 <td style="text-align: right;">…</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">調査<span class="math inline">\(\infty\)</span></td>
+<td style="text-align: left;">調査<span class="math inline">\(\infty\)</span>
+</td>
 <td style="text-align: right;">2,400</td>
 <td style="text-align: right;">0.567</td>
 <td style="text-align: right;">0.029</td>
@@ -298,21 +307,19 @@
 <td style="text-align: left;">平均</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
-<td style="text-align: right;"><span class="alert"><strong>0.000</strong></span></td>
+<td style="text-align: right;"><span class="strong">0.000</span></td>
 </tr>
 </tbody>
 </table>
 </div><div class="column" style="width:50%;">
 <table class="caption-top">
 <caption>バイアス<strong>あり</strong>の例</caption>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">調査</th>
 <th style="text-align: right;"><span class="math inline">\(n\)</span></th>
 <th style="text-align: right;">投票率</th>
 <th style="text-align: right;">誤差</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">調査A</td>
@@ -345,7 +352,8 @@
 <td style="text-align: right;">…</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">調査<span class="math inline">\(\infty\)</span></td>
+<td style="text-align: left;">調査<span class="math inline">\(\infty\)</span>
+</td>
 <td style="text-align: right;">2,400</td>
 <td style="text-align: right;">0.585</td>
 <td style="text-align: right;">0.047</td>
@@ -354,123 +362,121 @@
 <td style="text-align: left;">平均</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
-<td style="text-align: right;"><span class="alert"><strong>0.050</strong></span></td>
+<td style="text-align: right;"><span class="strong">0.050</span></td>
 </tr>
 </tbody>
 </table>
 </div></div>
-</section>
-<section id="参考バイアス-neq-誤差" class="slide level2">
-<h2>参考：バイアス <span class="math inline">\(\neq\)</span> 誤差</h2>
+</section><section id="参考バイアス-neq-誤差" class="slide level2"><h2>参考：バイアス <span class="math inline">\(\neq\)</span> 誤差</h2>
 <ul>
-<li>誤差は観測値とパラメーター間のズレだから、一つひとつの<span class="alert"><strong>個体</strong></span>が持つ
+<li>誤差は観測値とパラメーター間のズレだから、一つひとつの<span class="strong">個体</span>が持つ
 <ul>
 <li>誤差項は特定の確率分布に従うと仮定するケースが多い（平均0の正規分布など）</li>
-</ul></li>
-<li>バイアスは個体でなく、特定の<span class="alert"><strong>統計量</strong></span>が持つ性質
+</ul>
+</li>
+<li>バイアスは個体でなく、特定の<span class="strong">推定量</span>が持つ性質
 <ul>
 <li>バイアスが大きい統計量でもそれを構成する一部の個体の誤差は小さい可能性もある</li>
-</ul></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="3">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[30,-5,30,-5,30]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-5-1.png" width="1500"></p>
-<figcaption>バイアス小</figcaption>
-</figure>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-5-1.png" width="1500"></p>
+<figcaption>バイアス小</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-5-2.png" width="1500"></p>
-<figcaption>バイアス大</figcaption>
-</figure>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-5-2.png" width="1500"></p>
+<figcaption>バイアス大</figcaption></figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-5-3.png" width="1500"></p>
-<figcaption>バイアス小</figcaption>
-</figure>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-5-3.png" width="1500"></p>
+<figcaption>バイアス小</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="内生性の発生メカニズム" class="slide level2">
-<h2>内生性の発生メカニズム</h2>
+</section><section id="内生性の発生メカニズム" class="slide level2"><h2>内生性の発生メカニズム</h2>
 <ul>
-<li>例1）割当メカニズム上に存在する変数（XとZ）が結果変数にも影響を与えている（ここではXのみ）</li>
-<li>例2）割当メカニズム上に存在する変数が観察されず、これらの変数が誤差項（<span class="math inline">\(\varepsilon\)</span>）の一部を占めている<sup>1</sup>
+<li>左の図）割当メカニズム上に存在する変数<span class="small">（XとZ）</span>が結果変数にも影響を与えている<span class="small">（X）</span>
+</li>
+<li>右の図）割当メカニズム上に存在する変数が観察されず、誤差項（<span class="math inline">\(\varepsilon\)</span>）の一部を占めている<sup>1</sup>
 <ul>
 <li>Xが誤差項に含まれることによって誤差項と処置変数間の相関が発生</li>
-</ul></li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+</li>
+</ul>
+<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-6-1.png" width="1500"></p>
-<figcaption>例1のみを満たす例</figcaption>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="sb_slide_files/figure-html/unnamed-chunk-6-2.png" width="1500"></p>
-<figcaption>例1と2両方を満たす例</figcaption>
+<figure><p><img data-src="sb_slide_files/figure-revealjs/unnamed-chunk-6-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>もし割当メカニズム上に存在する変数が観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。</p></li></ol></aside></section>
-<section id="内生性の原因" class="slide level2">
-<h2>内生性の原因</h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>もし割当メカニズム上に存在する変数すべてが観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。</p></li></ol></aside></section><section id="内生性の原因" class="slide level2"><h2>内生性の原因</h2>
 <p>処置変数と誤差項間の相関関係（内生性）は様々な理由から発生する</p>
 <ul>
-<li><span class="alert"><strong>セレクション・バイアス</strong></span>
+<li>
+<span class="strong">セレクション・バイアス</span><span class="small">（selection bias）</span>
 <ul>
-<li><span class="alert">セルフ</span>セレクション・バイアス、<span class="alert">サンプル</span>セレクション・バイアスなど</li>
-</ul></li>
+<li>
+<span class="alert">セルフ</span>セレクション・バイアス、<span class="alert">サンプル</span>セレクション・バイアスなど</li>
+</ul>
+</li>
 <li>欠落変数バイアス</li>
 <li>逆の因果</li>
 <li>同時性</li>
 <li>測定誤差など</li>
 </ul>
-<p>社会科学における因果推論上に存在する内生性は<span class="alert"><strong>セレクション・バイアス</strong></span>が原因<sup>1</sup>であるケースが多い</p>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>処置変数と誤差項間の相関という意味では同じであるが、その相関が生じる原因には様々な理由がある。</p></li></ol></aside></section></section>
-<section>
-<section id="セレクションバイアス" class="title-slide slide level1 center">
-<h1><strong>2</strong> <span class="small">セレクション・バイアス</span></h1>
+<p>社会科学における因果推論上に存在する内生性の多くは<span class="strong">セレクション・バイアス</span>が原因<sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>処置変数と誤差項間の相関という意味では同じであるが、その相関が生じる原因には様々な理由がある。</p></li></ol></aside></section></section><section><section id="セレクションバイアス" class="title-slide slide level1 center"><h1>
+<strong>2</strong> セレクション・バイアス</h1>
 
-</section>
-<section id="セレクションバイアスの定式化" class="slide level2">
-<h2>セレクション・バイアスの定式化</h2>
+</section><section id="セレクションバイアスの定式化" class="slide level2"><h2>セレクション・バイアスの定式化</h2>
 <ul>
 <li>セレクション・バイアスが存在する場合、推定された因果効果（処置効果）にはセレクションによりバイアスを含む
 <ul>
-<li>推定された処置効果 = 真の処置効果 <span class="alert">+ セレクション・バイアス</span></li>
-</ul></li>
+<li>推定された処置効果 = 真の処置効果 <span class="alert">+ セレクション・バイアス</span>
+</li>
+</ul>
+</li>
 <li>推定対象がATTかATCかによって想定されるセレクション・バイアスが異なる
 <ul>
 <li>ATT：処置群のおける処置効果（<span class="math inline">\(\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\)</span>）</li>
 <li>ATC：統制群のおける処置効果（<span class="math inline">\(\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]\)</span>）</li>
-</ul></li>
 </ul>
-</section>
-<section id="attとセレクションバイアス" class="slide level2">
-<h2>ATTとセレクション・バイアス</h2>
-<p>もともと優秀な人が宋さんの授業を取る（<span class="alert">自己</span>選択）</p>
+</li>
+</ul></section><section id="attとセレクションバイアス" class="slide level2"><h2>ATTとセレクション・バイアス</h2>
+<p>もともと優秀な人が宋さんの授業を取る（<span class="alert">セルフ</span>セレクション）</p>
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0) | D_i = 1]\)</span>：処置群がもし処置を受けなかった場合の結果変数の期待値</li>
-<li><span class="math inline">\(\mathbb{E}[Y_i(0) | D_i = 0]\)</span>：統制群における結果変数の期待値（観察可能）</li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0) | D_i = 1]\)</span>：処置群がもし処置を受けなかった場合の結果変数の期待値</li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(0) | D_i = 0]\)</span>：統制群における結果変数の期待値（観察可能）</li>
 </ul>
 <p><span class="math display">\[
 \begin{align}
@@ -480,13 +486,13 @@
 = &amp; \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]}_{\textsf{selection bias}}
 \end{align}
 \]</span></p>
-</section>
-<section id="atcとセレクションバイアス" class="slide level2">
-<h2>ATCとセレクション・バイアス</h2>
-<p>授業の効果が高そうな人が宋さんの授業を取る（<span class="alert">最適化</span>選択）</p>
+</section><section id="atcとセレクションバイアス" class="slide level2"><h2>ATCとセレクション・バイアス</h2>
+<p>授業の効果が高そうな人が宋さんの授業を取る（<span class="alert">最適化</span>セレクション）</p>
 <ul>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1]\)</span>：処置群における結果変数の期待値（観察可能）</li>
-<li><span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 0]\)</span>：統制群がもし処置を受けたら場合の結果変数の期待値</li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1]\)</span>：処置群における結果変数の期待値（観察可能）</li>
+<li>
+<span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 0]\)</span>：統制群がもし処置を受けたら場合の結果変数の期待値</li>
 </ul>
 <p><span class="math display">\[
 \begin{align}
@@ -496,53 +502,55 @@
 = &amp; \underbrace{\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(1) | D_i = 0]}_{\textsf{selection bias}} + \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]}_{\textsf{ATC}}
 \end{align}
 \]</span></p>
-</section>
-<section id="attatcの識別条件" class="slide level2">
-<h2>ATT、ATCの識別条件</h2>
+</section><section id="attatcの識別条件" class="slide level2"><h2>ATT、ATCの識別条件</h2>
 <p>以下の2つの条件が<strong>すべて</strong>満たされる場合、ATEが推定可能</p>
 <ul>
-<li>ATTの識別条件
+<li>ATTの識別条件：
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y_i(0) | D_i = 1] = \mathbb{E}[Y_i(0) | D_i = 0]\)</span></li>
-<li>この場合、ATT = <span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]\)</span></li>
-</ul></li>
-<li>ATCの識別条件
+<li>この場合、ATT = <span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]\)</span>
+</li>
+</ul>
+</li>
+<li>ATCの識別条件：
 <ul>
 <li><span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1] = \mathbb{E}[Y_i(1) | D_i = 0]\)</span></li>
-<li>この場合、ATC = <span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]\)</span></li>
-</ul></li>
-<li>これらは<span class="alert"><strong>経験的に観察できず、理論的に説得する</strong></span>必要がある
+<li>この場合、ATC = <span class="math inline">\(\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]\)</span>
+</li>
+</ul>
+</li>
+<li>これらは<span class="strong">経験的に観察できず、理論的に説得する</span>必要がある
 <ul>
 <li>前者の方が説得しやすいケースが多いので、ATTを推定するケースが多い</li>
-<li>「もともと優秀な人が宋さんの授業を取る」と「授業の効果が高そうな人が宋さんの授業を取る」</li>
-</ul></li>
+<li>「優秀な人が宋さんの授業を取る」と「授業の効果が高そうな人が宋さんの授業を取る」</li>
 </ul>
-</section>
-<section id="その他のセレクションの例" class="slide level2">
-<h2>その他のセレクションの例</h2>
-<p>手元のサンプルが「授業効果が高そうな学生<span class="small">（<span class="math inline">\(i \in \{1, 2, 4, 7, 8\}\)</span>）</span>」だけなら…?</p>
+</li>
+</ul></section><section id="その他のセレクションの例" class="slide level2"><h2>その他のセレクションの例</h2>
+<!--
+ここは世論調査における投票率のギャップを使用?
+-->
+<p>手元のサンプルが「授業効果が高そうな学生<span class="small">（<span class="math inline">\(i \in \{1, 2, 5\}\)</span>）</span>」だけなら…?</p>
 <ul>
 <li>真の処置効果は0だが、この場合、処置効果は必ず正になる</li>
-<li><span class="math inline">\(\Rightarrow\)</span> 偏ったサンプリングによるバイアス（サンプルセレクション・バイアス）</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 偏ったサンプリングによるバイアス（サンプルセレクション・バイアス）</li>
 </ul>
 <table class="caption-top">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(0)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(Y_i(1)\)</span></th>
 <th style="text-align: right;">ITE</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="alert"><strong>1</strong></span></td>
+<td style="text-align: center;"><span class="strong">1</span></td>
 <td style="text-align: right;">500</td>
 <td style="text-align: right;">550</td>
 <td style="text-align: right;">50</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="alert"><strong>2</strong></span></td>
+<td style="text-align: center;"><span class="strong">2</span></td>
 <td style="text-align: right;">200</td>
 <td style="text-align: right;">300</td>
 <td style="text-align: right;">100</td>
@@ -554,43 +562,19 @@
 <td style="text-align: right;">-50</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="alert"><strong>4</strong></span></td>
-<td style="text-align: right;">300</td>
-<td style="text-align: right;">400</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: right;">300</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">-100</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: right;">550</td>
 <td style="text-align: right;">450</td>
 <td style="text-align: right;">-100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="alert"><strong>7</strong></span></td>
+<td style="text-align: center;"><span class="strong">5</span></td>
 <td style="text-align: right;">700</td>
 <td style="text-align: right;">750</td>
 <td style="text-align: right;">50</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="alert"><strong>8</strong></span></td>
-<td style="text-align: right;">400</td>
-<td style="text-align: right;">600</td>
-<td style="text-align: right;">200</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
-<td style="text-align: right;">500</td>
-<td style="text-align: right;">300</td>
-<td style="text-align: right;">-200</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">10</td>
+<td style="text-align: center;">6</td>
 <td style="text-align: right;">600</td>
 <td style="text-align: right;">550</td>
 <td style="text-align: right;">-50</td>
@@ -603,52 +587,45 @@
 </tr>
 </tbody>
 </table>
-</section>
-<section id="セレクションへの対処" class="slide level2">
-<h2>セレクションへの対処</h2>
+<!--
+|[**4**]{.alert}|300|400|100|
+|5|300|200|-100|
+|[**8**]{.alert}|400|600|200|
+|9|500|300|-200|
+--></section><section id="セレクションへの対処" class="slide level2"><h2>セレクションへの対処</h2>
 <ul>
-<li><span class="alert"><strong>無作為抽出</strong></span><span class="small">（random sampling）</span>
+<li>
+<span class="strong">無作為抽出</span><span class="small">（random sampling）</span>
 <ul>
 <li>サンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合</li>
-</ul></li>
-<li><span class="alert"><strong>ランダム割り当て</strong></span><span class="small">（無作為割当; random assignment）</span>
+</ul>
+</li>
+<li>
+<span class="strong">ランダム割り当て</span><span class="small">（無作為割当; random assignment）</span>
 <ul>
-<li>あらゆる内生性を（理論上）完全に除去できる<span class="alert">因果推論の王道</span></li>
-</ul></li>
+<li>あらゆる内生性を（理論上）完全に除去できる<span class="alert">因果推論の王道</span>
+</li>
+</ul>
+</li>
 <li>統計的因果推論<span class="small">（statistical causal inference）</span>
 <ul>
-<li><span class="alert"><strong>共変量調整</strong></span></li>
-<li><span class="alert"><strong>自然実験</strong></span>、疑似実験など</li>
-</ul></li>
+<li><span class="strong">共変量調整</span></li>
+<li>
+<span class="strong">自然実験</span>、疑似実験など</li>
+</ul>
+</li>
 </ul>
 
 
 </section></section>
-
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p>内生性</p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="site_libs/revealjs/plugin/notes/notes.js"></script><script src="site_libs/revealjs/plugin/search/search.js"></script><script src="site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -806,7 +783,7 @@
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1600,
 
         height: 900,
 
@@ -839,8 +816,42 @@
           RevealZoom
         ]
       });
-    </script>
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -888,13 +899,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -973,6 +985,160 @@
             }
           });
         }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                trigger: 'click',
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                positionFixed: true,
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
         const findCites = (el) => {
           const parentEl = el.parentElement;
           if (parentEl) {
@@ -1012,6 +1178,6 @@
         }
       });
       </script>
-    
+
 
 </body></html>
