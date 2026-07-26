@@ -313,8 +313,19 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#パッケージ" id="toc-パッケージ" class="nav-link active" data-scroll-target="#パッケージ"><span class="header-section-number">1</span> パッケージ</a></li>
+  <li><a href="#データの読み込み" id="toc-データの読み込み" class="nav-link" data-scroll-target="#データの読み込み"><span class="header-section-number">2</span> データの読み込み</a></li>
+  <li><a href="#データハンドリング" id="toc-データハンドリング" class="nav-link" data-scroll-target="#データハンドリング"><span class="header-section-number">3</span> データハンドリング</a></li>
+  <li><a href="#記述統計量" id="toc-記述統計量" class="nav-link" data-scroll-target="#記述統計量"><span class="header-section-number">4</span> 記述統計量</a></li>
+  <li><a href="#バランスチェック" id="toc-バランスチェック" class="nav-link" data-scroll-target="#バランスチェック"><span class="header-section-number">5</span> バランスチェック</a></li>
+  <li><a href="#処置効果の推定" id="toc-処置効果の推定" class="nav-link" data-scroll-target="#処置効果の推定"><span class="header-section-number">6</span> 処置効果の推定</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -350,8 +361,8 @@ window.Quarto = {
     </div>
   
 <p><br></p>
-<section id="パッケージ" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="パッケージ"><span class="header-section-number">1</span> パッケージ</h2>
+<section id="パッケージ" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> パッケージ</h1>
 <p>　通常、Rでのパッケージのインストールとアップデートは<code>install.packages()</code>関数、読み込みは<code>library()</code>、または<code>require()</code>関数を使う。一つ注意すべき点は<code>install.packages()</code>の場合、R公式レポジトリであるCRANに登録されているパッケージのみが対象となっている点だ。しかし、今はCRANでなくGitHub上で公開されているパッケージも非常に多い。これらパッケージは{devtools}か{remote}パッケージを使う。これらの関数を使い分けることは面倒なので、本講義ではこれらの処理を統合した{pacman}パッケージを使用する。まずは、{pacman}パッケージをインストールする。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
@@ -366,7 +377,7 @@ window.Quarto = {
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               broom, </span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               cobalt)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）CRANでなく、GitHubで配布しているパッケージのインストール">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -386,8 +397,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="データの読み込み" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="データの読み込み"><span class="header-section-number">2</span> データの読み込み</h2>
+<section id="データの読み込み" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> データの読み込み</h1>
 <p>　<code>.csv</code>形式のデータを読み込むには<code>read_csv()</code>関数を使用する<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。<code>()</code>内には読み込むファイルのパスを<code>"</code>で囲んで記入する。<code>read_csv()</code>関数はファイルの読み込み<strong>のみ</strong>の機能しか持たない。現在の作業環境内に読み込んだデータを格納するためには代入演算子<code>&lt;-</code>を使う。ここでは<code>data</code>フォルダー内の<code>rct_data.csv</code>を読み込み<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>、<code>raw_df</code>という名のオブジェクトとしてく格納する。作業環境内のオブジェクトはRを再起動すると削除されるため、改めてパッケージ・データの読み込みが必要だ。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>raw_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"_data/GerberGreenLalimer_APSR_2008.csv"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
@@ -427,16 +438,16 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="データハンドリング" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="データハンドリング"><span class="header-section-number">3</span> データハンドリング</h2>
+<section id="データハンドリング" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> データハンドリング</h1>
 <p>　パイプ演算子には{magrittr}パッケージが提供する<code>%&gt;%</code>とR 4.1から提供されるネイティブパイプ演算子の<code>|&gt;</code>がある。現在の主流は古くから使われてきた<code>%&gt;%</code>であるが、今後、<code>|&gt;</code>が主流になると考えられるため、本講義では<code>|&gt;</code>を使用する。しかし、多くの場合、<code>|&gt;</code>の代わりに<code>%&gt;%</code>を使っても同じ結果が得られる。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled" title="パイプ演算子のショートカットキー">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">ノート</span>パイプ演算子のショートカットキー
+<span class="screen-reader-only">ヒント</span>パイプ演算子のショートカットキー
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -634,7 +645,7 @@ window.Quarto = {
 # ℹ 4,990 more rows</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）より効果的な書き方">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -657,8 +668,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="記述統計量" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="記述統計量"><span class="header-section-number">4</span> 記述統計量</h2>
+<section id="記述統計量" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 記述統計量</h1>
 <p>　記述統計量の計算には{summarytools}の<code>descr()</code>関数が便利だ。<code>descr(データ名)</code>を入力するだけで各変数の記述統計量が出力される。実際にやってみると分かるが、情報量がかなり多い。しかし、実際の論文では各変数の歪度や尖度まで報告することはあまりないだろう。ここでは<code>stats</code>引数を追加して、論文などでよく使う平均値（<code>"mean"</code>）、標準偏差（<code>"sd"</code>）、最小値（<code>"min"</code>）、最大値（<code>"max"</code>）、有効ケース数（<code>"n.valid"</code>）のみ出力する。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -928,7 +939,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -968,7 +979,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFgAAAA3CAQAAAAiPkUwAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoEIQx0rwi7AAAAkklEQVRo3u3YQQqAMAxE0UZ6Rw/hefQOPaVum4obQZMpf3alUN5iKCR2Fq0s0QDA2VL7w5Gy0Jv1rOov12jdLW04y1UCMGDAgAEDBpwqgAEDBjwZeJjp2rtXfoybSC1a85DeKFcJObDr8J5ykVJcV9MvUsaPQK4SgAEDBgwYMOBUAQwYMODJwNqLFIXIVQLw17kAVG8MXHQ8VQoAAAA9dEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IDIwMDcgQXBwbGUgSW5jLiwgYWxsIHJpZ2h0cyByZXNlcnZlZC6eZtwpAAAAI3RFWHRpY2M6ZGVzY3JpcHRpb24AR2VuZXJpYyBSR0IgUHJvZmlsZRqnOI4AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFgAAAA3CAQAAAAiPkUwAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoELCmKBaKxAAAAkklEQVRo3u3YQQqAMAxE0UZ6Rw/hefQOPaVum4obQZMpf3alUN5iKCR2Fq0s0QDA2VL7w5Gy0Jv1rOov12jdLW04y1UCMGDAgAEDBpwqgAEDBjwZeJjp2rtXfoybSC1a85DeKFcJObDr8J5ykVJcV9MvUsaPQK4SgAEDBgwYMOBUAQwYMODJwNqLFIXIVQLw17kAVG8MXHQ8VQoAAAA9dEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IDIwMDcgQXBwbGUgSW5jLiwgYWxsIHJpZ2h0cyByZXNlcnZlZC6eZtwpAAAAI3RFWHRpY2M6ZGVzY3JpcHRpb24AR2VuZXJpYyBSR0IgUHJvZmlsZRqnOI4AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -992,7 +1003,7 @@ N: 5000
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">74 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1075,7 +1086,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1115,7 +1126,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAH0AAAA3CAQAAACLSo2kAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoEIQx0rwi7AAAAnklEQVRo3u3ZsQ2AIBQAUTDu6A46j+7AlNqiiQ0REe9eR2O45GMBcQ9UQ+sNmG76m8Z8sf3+4M/xJj2EqfXeqkqnFXjgTScynch0ItOJTCcynch0ItOJTCe63M2lsq90KeaXsLH4M73Ia8EDD04/nfX1wSeI5fOnp9ITRA+/S/DAm05kOpHpRKYTmU5kOpHpRKYTmU7kEwQReOBNJzoAJacLx1TWcigAAAA9dEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IDIwMDcgQXBwbGUgSW5jLiwgYWxsIHJpZ2h0cyByZXNlcnZlZC6eZtwpAAAAI3RFWHRpY2M6ZGVzY3JpcHRpb24AR2VuZXJpYyBSR0IgUHJvZmlsZRqnOI4AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAH0AAAA3CAQAAACLSo2kAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoELCmKBaKxAAAAnklEQVRo3u3ZsQ2AIBQAUTDu6A46j+7AlNqiiQ0REe9eR2O45GMBcQ9UQ+sNmG76m8Z8sf3+4M/xJj2EqfXeqkqnFXjgTScynch0ItOJTCcynch0ItOJTCe63M2lsq90KeaXsLH4M73Ia8EDD04/nfX1wSeI5fOnp9ITRA+/S/DAm05kOpHpRKYTmU5kOpHpRKYTmU7kEwQReOBNJzoAJacLx1TWcigAAAA9dEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IDIwMDcgQXBwbGUgSW5jLiwgYWxsIHJpZ2h0cyByZXNlcnZlZC6eZtwpAAAAI3RFWHRpY2M6ZGVzY3JpcHRpb24AR2VuZXJpYyBSR0IgUHJvZmlsZRqnOI4AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1155,7 +1166,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGcAAAA3CAQAAAC7xpyFAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoEIQx0rwi7AAAAn0lEQVRo3u3YsQmAMBBA0UTc0R10Ht0hU2obBQtFyM/5f5dG8uBicXlPkRpaX0DOfzhjfdi6fEhzvuGkNLW+2+PK6RRs2OSQk0NODjk55OSQk0NODjk55OSQu+wKyruvYMr18ia//kzLakGwYQvGOb2dtdHacPlsygFrwy9/P8GGTQ45OeTkkJNDTg45OeTkkJNDTg65yGvD/gs2bHLIHZ/xC8eqwdIzAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGcAAAA3CAQAAAC7xpyFAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoELCmKBaKxAAAAn0lEQVRo3u3YsQmAMBBA0UTc0R10Ht0hU2obBQtFyM/5f5dG8uBicXlPkRpaX0DOfzhjfdi6fEhzvuGkNLW+2+PK6RRs2OSQk0NODjk55OSQk0NODjk55OSQu+wKyruvYMr18ia//kzLakGwYQvGOb2dtdHacPlsygFrwy9/P8GGTQ45OeTkkJNDTg45OeTkkJNDTg65yGvD/gs2bHLIHZ/xC8eqwdIzAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1195,7 +1206,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGQAAAA3CAQAAABQ8SeGAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoEIQx0rwi7AAAAn0lEQVRo3u3YsQ2AIBQAUTDu6A46j+7glNqCiYVYcPzc62gIl3xMJF8phqn3AQyJGjKXi2OwC7Pml5CUlt5n++CsVmFGyxAaQ2gMoTGExhAaQ2gMoTGExhCaxz/72bYLQC4fTnLzNn2UZw8zWmFCqjuyd32g235NNuaB7u9nJsxoGUJjCI0hNIbQGEJjCI0hNIbQGEIT84FuZGFGyxCaG7CeC8f804cVAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGQAAAA3CAQAAABQ8SeGAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoELCmKBaKxAAAAn0lEQVRo3u3YsQ2AIBQAUTDu6A46j+7glNqCiYVYcPzc62gIl3xMJF8phqn3AQyJGjKXi2OwC7Pml5CUlt5n++CsVmFGyxAaQ2gMoTGExhAaQ2gMoTGExhCaxz/72bYLQC4fTnLzNn2UZw8zWmFCqjuyd32g235NNuaB7u9nJsxoGUJjCI0hNIbQGEJjCI0hNIbQGEIT84FuZGFGyxCaG7CeC8f804cVAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1235,7 +1246,7 @@ N: 5000
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAHIAAAA3CAQAAAB6QdYpAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoEIQx0rwi7AAAAoElEQVRo3u3YwQmAMBAAwUTs0R60Hu3BKvUbBUGCGtnb+eUjWbj4uLwlvq71BYw08r6+PCygBzrmi8iUhtZ3e8h6OIUYVyMpjKQwksJICiMpjKQwksJICiMpTjuete4rP5fLBV2u/sz/lF0hxjVE5OFNzq8vl6cmL+LT5XKr31qIcTWSwkgKIymMpDCSwkgKIymMpDCSIt5ymSrEuBpJsQNizAvH5o0cewAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAHIAAAA3CAQAAAB6QdYpAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqBxoELCoTDPMLAAAAoElEQVRo3u3YwQmAMBAAwUTs0R60Hu3BKvUbBUGCGtnb+eUjWbj4uLwlvq71BYw08r6+PCygBzrmi8iUhtZ3e8h6OIUYVyMpjKQwksJICiMpjKQwksJICiMpTjuete4rP5fLBV2u/sz/lF0hxjVE5OFNzq8vl6cmL+LT5XKr31qIcTWSwkgKIymMpDCSwkgKIymMpDCSIt5ymSrEuBpJsQNizAvH5o0cewAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">5000 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -1247,8 +1258,8 @@ N: 5000
 </div>
 </div>
 </section>
-<section id="バランスチェック" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="バランスチェック"><span class="header-section-number">5</span> バランスチェック</h2>
+<section id="バランスチェック" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> バランスチェック</h1>
 <p>　バランスチェックの簡単な方法はグループごとに処置<strong>前</strong>変数（<em>pre</em>-treatment variables）の平均値を比較することである。無作為割当が成功しているのであれば、処置前に測定された変数の平均値は近似するはずである。ここではグループ（<code>treatment</code>）ごとに性別、誕生年、世帯規模、2000〜2004年の投票参加の平均値を比較してみる。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -1368,10 +1379,10 @@ All        580    2763       536       526  595</code></pre>
 </div>
 </div>
 </section>
-<section id="処置効果の推定" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="処置効果の推定"><span class="header-section-number">6</span> 処置効果の推定</h2>
-<section id="グループごとの応答変数の平均値" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="グループごとの応答変数の平均値"><span class="header-section-number">6.1</span> グループごとの応答変数の平均値</h3>
+<section id="処置効果の推定" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> 処置効果の推定</h1>
+<section id="グループごとの応答変数の平均値" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="グループごとの応答変数の平均値"><span class="header-section-number">6.1</span> グループごとの応答変数の平均値</h2>
 <p>　処置効果を確認するためには各グループごとの応答変数（ここでは<code>voted2006</code>）の平均値を計算し、処置群の平均値から統制群の平均値を引く必要がある。まずは、特定の変数の平均値を計算する方法について紹介する。データ内にある特定の変数の平均値を計算するためには<code>summarise()</code>関数内に平均値を求める<code>mean()</code>関数を入れる。たとえば、<code>df</code>の<code>voted2006</code>の平均値を計算するコードは以下の通りである。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -1429,7 +1440,7 @@ All        580    2763       536       526  595</code></pre>
 5 Self         0.328</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled" title="Tip）`group_by()`を使わないやり方">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1481,7 +1492,7 @@ All        580    2763       536       526  595</code></pre>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Civic Duty"</span>, <span class="st">"Hawthorne"</span>,</span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"Self"</span>, <span class="st">"Neighbors"</span>)))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled" title="Tip）より簡単なfactor化方法">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1626,8 +1637,8 @@ All        580    2763       536       526  595</code></pre>
 </div>
 </div>
 </section>
-<section id="統計的推定単回帰分析" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="統計的推定単回帰分析"><span class="header-section-number">6.2</span> 統計的推定（単回帰分析）</h3>
+<section id="統計的推定単回帰分析" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="統計的推定単回帰分析"><span class="header-section-number">6.2</span> 統計的推定（単回帰分析）</h2>
 <p>　これまでの作業はグループごとの応答変数の平均値であって、処置効果ではない。処置効果を計算するためには処置群の平均値から統制群の平均値を引く必要がある。たとえば、Civic Dutyはがき群の平均値は約0.331、統制群のそれは0.303であるため、Civic Dutyはがきの処置効果は約0.028である。しかし、これを各グループごとに計算することは面倒だし、何よりも得られた値が<strong>点推定値</strong>だという限界がある。得られた処置効果の不確実性は計算できない。</p>
 <p>　ここで有効なのが線形回帰分析である。回帰分析を行うことで処置効果の点推定値のみならず、不確実性の指標である標準誤差も計算され、区間推定や統計的仮説検定も可能となる。線形回帰分析の関数は<code>lm()</code>だ。第1引数としては回帰式であり、<code>応答変数 ~ 説明変数</code>と表記する。第2引数は<code>data</code>であり、回帰式で指定した変数が入っているデータ名を指定する。回帰分析の結果は名前を付けてオブジェクトとして格納し、<code>summary()</code>関数を使うと、詳細が確認できる。</p>
 <div class="cell" data-layout-align="center">
@@ -1666,19 +1677,19 @@ F-statistic: 6.209 on 4 and 4995 DF,  p-value: 5.575e-05</code></pre>
 <p>　Factor型、または文字型変数が説明変数の場合、自動的にダミー変数として処理され、factor型の場合、最初の水準（ここでは<code>"Control"</code>）がベースカテゴリとなる。もし説明変数が文字型なら、アルファベット順で最初の水準がベースカテゴリとなり、今回の例だと<code>"Civic Duty"</code>がベースカテゴリとなる。処置効果は「統制群に比べて〜」が重要となるので、数値型以外の説明変数は予めfactor化しておいた方が望ましい。</p>
 <p>　Civic Dutyの推定値は約0.028であり、これは統制群（Control）に比べ、Civic Duty群の<code>voted2006</code>の平均値は約0.028高いことを意味する。応答変数が0、1であるため、これを割合（= 投票率）で換算すると、約2.8pp<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>高いことを意味する。つまり、Civic Dutyのはがきをもらった被験者はそうでない被験者に比べて投票率が約2.8pp高いことを意味する。他の推定値も同じやり方で解釈すれば良い。</p>
 <p>　続いて、これらの処置効果が<strong><ruby>統計的<rt>・・・</rt></ruby>に有意</strong>なものかを確認してみよう。統計的有意か否かを判定するためには有意と非有意の境界線が必要である、これは通常、<strong>有意水準</strong>（significance level; <span class="math inline">\(\alpha\)</span>）と呼ばれる。この有意水準は分析者が決めるものではあるが、社会科学で広く使われる基準は<span class="math inline">\(\alpha\)</span> = 0.05、つまり5%だ。分析結果の画面には<code>Pr(&gt;|t|)</code>列が表示されているが、これが <em>p</em> 値と呼ばれるもので、これが0.05以下る場合、処置効果は<ruby>統計的<rt>・・・</rt></ruby>に有意だと判定する。もし、<span class="math inline">\(\alpha\)</span> = 0.1を採用するなら、 <em>p</em> <span class="math inline">\(\leq\)</span> 0.1の場合において<ruby>統計的<rt>・・・</rt></ruby>に有意と判定する。Civic Dutyの <em>p</em> 値は約0.183であり、0.05より大きいことから統計的に有意な処置効果と判定できない。一方、Neighborsはがきの処置効果の <em>p</em> 値は0.234で、0.05以下であることからNeighborsが投票率に与える影響は統計的に有意であると判定できる。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="「5.85e-12」のように表示されたら...">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">ノート</span>数字が「5.85e-12」のように表示されたら…
+<span class="screen-reader-only">ノート</span>「5.85e-12」のように表示されたら…
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Rでは0に非常に近い値を表示する際、「5.85e-12」のような表記を採用する。たとえば5.85e-12は、5.85 <span class="math inline">\(\times\)</span> 10<sup>-12</sup>を意味する。10<sup>-1</sup>は0.1、10<sup>-2</sup>は0.01であることを考えると、0に限りなく近い値である。こういう表記は特に <em>p</em> 値においてよく登場し、 <em>p</em> 値が一定値以下であれば<code>&lt; 2e-16</code>と表示される。このように非常に小さい <em>p</em> 値を論文等に掲載する際は、<code>&lt; 0.001</code>と表記するケースが多い。</p>
+<p>　Rでは0に非常に近い値を表示する際、「5.85e-12」のような表記を採用する。たとえば5.85e-12は、5.85 <span class="math inline">\(\times\)</span> 10<sup>-12</sup>を意味する。10<sup>-1</sup>は0.1、10<sup>-2</sup>は0.01であることを考えると、0に限りなく近い値である。こういう表記は特に <em>p</em> 値においてよく登場し、 <em>p</em> 値が一定値以下であれば<code>&lt; 2e-16</code>と表示される。このように非常に小さい <em>p</em> 値を論文等に掲載する際は、<code>&lt; 0.001</code>と表記するケースが多い。</p>
 </div>
 </div>
 </div>
@@ -1790,7 +1801,7 @@ F-statistic: 6.209 on 4 and 4995 DF,  p-value: 5.575e-05</code></pre>
 </div>
 </div>
 <p>　以上の作業は<code>term</code>列の各値から<code>"treatment"</code>文字を<code>""</code>に置換することなので、文字列を置換する関数である<code>str_replace()</code>を使えば、より短くすることができる[^str-remove]。</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled" title="Tip）文字列から特定の文字列を削除する">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1877,8 +1888,8 @@ F-statistic: 6.209 on 4 and 4995 DF,  p-value: 5.575e-05</code></pre>
 </div>
 <p>　これで処置効果の可視化もバッチリだ。</p>
 </section>
-<section id="多重比較の問題" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="多重比較の問題"><span class="header-section-number">6.3</span> 多重比較の問題</h3>
+<section id="多重比較の問題" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="多重比較の問題"><span class="header-section-number">6.3</span> 多重比較の問題</h2>
 <p>　グループが2つ、つまり統制群と統制群のみが存在する場合、我々が比較を行う回数は1回のみである（統制群 - 処置群）。しかし、今回のデータの場合、処置群は4つである。これは比較を4回行うことを意味する。具体的には「統制群 - 処置群1」、「統制群 - 処置群2」、「統制群 - 処置群3」、「統制群 - 処置群4」だ。比較を繰り返すほど、統計的に有意な結果が得られる可能性は高い。極端な話、1000回程度検定を繰り返せば、本当は効果がなくても<strong>たまたま</strong>統計的に有意な結果が何回かは得られるだろう。これが多重比較の問題（または、多重検定の問題）である。したがって、比較の回数が多くなるにつれ、統計的有意性検定にも何らかのペナルティーを課す必要がある。詳細は「<a href="./rct.html">ランダム化比較試験</a>」の講義資料を参照されたい。</p>
 <p>　多重比較におけるペナルティーの付け方はいくつかあるが、ここでは最も保守的な（=研究者にとって都合の悪い）補正法であるボンフェローニ補正（Bonferroni correction）を紹介する。これは非常に単純で、 <em>p</em> 値や信頼区間を計算する際、「統計的有意」と判定されるハードルを上げる方法である。予め決めておいた有意水準（<span class="math inline">\(\alpha\)</span>）が0.05で、比較の回数が4回であれば、 <em>p</em> 値が0.05 <span class="math inline">\(\times \frac{\sf 1}{\sf 4}\)</span> = 0.0125を下回る場合において「5%水準で有意である」と判定する。信頼区間でいえば通常の95%信頼区間（1 - 0.05）でなく、98.75%信頼区間（1 - 0.0125）を使うこととなる。補正を施してもなお統計的に有意な結果が得られたら「1.25%水準で〜」と解釈するのではなく、「5%水準で〜」と解釈する必要がある。</p>
 <p>　95%以外の信頼区間を求めるのは簡単で、<code>tidy()</code>関数内に<code>conf.level</code>を修正すれば良い。指定されていない場合はデフォルトで0.95が割り当てられているが、これを0.9875と修正する。</p>
@@ -1960,8 +1971,8 @@ F-statistic: 6.209 on 4 and 4995 DF,  p-value: 5.575e-05</code></pre>
 </div>
 <p>　全体的に信頼区間が広くなり、統計的有意な結果は得られにくくなったもののHawhtrone、Neighborsの処置効果はいずれも統計的に有意な結果が得られた。</p>
 </section>
-<section id="統計的推定重回帰分析" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="統計的推定重回帰分析"><span class="header-section-number">6.4</span> 統計的推定（重回帰分析）</h3>
+<section id="統計的推定重回帰分析" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="統計的推定重回帰分析"><span class="header-section-number">6.4</span> 統計的推定（重回帰分析）</h2>
 <p>　今回の例は無作為割当が失敗したという直接的な証拠もなく、共変量（処置前変数）の大きな偏りは見られなかった。しかし、何らかの理由で処置前変数の偏りが生じる場合がある。その何らかの理由でバランスが崩れた共変量が応答変数にまで影響を与えるのであれば、それは交絡変数（confounder）となり、バイアスの原因となる。たとえば、今回の例でいうと、なんらかの理由で年齢のバランスが崩れたとしよう。年齢と投票率の間には強い関連があると言われており、今まで通りに処置群のみの回帰分析を行うとバイアスが発生してしまう。この場合、偏りが生じている処置前変数を統制（control）することによってバイアスを小さくすることができる。今回はバランスチェックで問題は見られなかったから不要であるが、性別や誕生年などの共変量を統制した推定をしてみよう。</p>
 <p>　やり方は簡単で、<code>lm()</code>内の回帰式を<code>応答変数 ~ 説明変数1 + 説明変数2 + ...</code>のように説明変数を<code>+</code>で足していけば良い。</p>
 <div class="cell" data-layout-align="center">
@@ -2010,25 +2021,25 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_2vnir09thjkqvyt30ijk = TinyTable.createTableFunctions("tinytable_2vnir09thjkqvyt30ijk");
+      const tableFns_ddnz46tcb41p8u2lrn50 = TinyTable.createTableFunctions("tinytable_ddnz46tcb41p8u2lrn50");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '30', j: 2 } ], css_id: 'tinytable_css_byg4gz6crze0b2jigfhy',}, 
-          { positions: [ { i: '22', j: 2 } ], css_id: 'tinytable_css_fw7j405yyyrbexp2whrj',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 } ], css_id: 'tinytable_css_r4vhemsef5era0lgyngd',}, 
-          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_42qy836y3nshvikjfujm',}, 
-          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_f3uqcu99wuf3w428g19n',}, 
-          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_7ischaspsp7a39t4zz1c',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 } ], css_id: 'tinytable_css_sh56p3c3cvvr3kcskffh',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_j0dqjyyxrzue9q2avqr9',}, 
+          { positions: [ { i: '30', j: 2 } ], css_id: 'tinytable_css_l9v8fzpd2olmo7gwv1rq',}, 
+          { positions: [ { i: '22', j: 2 } ], css_id: 'tinytable_css_qhl323qk27qjqul79pqy',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 } ], css_id: 'tinytable_css_x6ms60tumt0667v9inpn',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_yopt4wtlqhx5rj2okntw',}, 
+          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_djziejoyjq9k5nenqj2h',}, 
+          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_tczvz2aubpnqlszi6v9l',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 } ], css_id: 'tinytable_css_7ysj83nb889nuplxycdz',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_jq0lqohds02sqi348jc9',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_2vnir09thjkqvyt30ijk.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_ddnz46tcb41p8u2lrn50.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2037,17 +2048,17 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_byg4gz6crze0b2jigfhy, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_byg4gz6crze0b2jigfhy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_fw7j405yyyrbexp2whrj, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_fw7j405yyyrbexp2whrj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_r4vhemsef5era0lgyngd, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_r4vhemsef5era0lgyngd { text-align: center }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_42qy836y3nshvikjfujm, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_42qy836y3nshvikjfujm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_f3uqcu99wuf3w428g19n, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_f3uqcu99wuf3w428g19n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_7ischaspsp7a39t4zz1c, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_7ischaspsp7a39t4zz1c {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_sh56p3c3cvvr3kcskffh, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_sh56p3c3cvvr3kcskffh { text-align: left }
-    #tinytable_2vnir09thjkqvyt30ijk td.tinytable_css_j0dqjyyxrzue9q2avqr9, #tinytable_2vnir09thjkqvyt30ijk th.tinytable_css_j0dqjyyxrzue9q2avqr9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_l9v8fzpd2olmo7gwv1rq, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_l9v8fzpd2olmo7gwv1rq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_qhl323qk27qjqul79pqy, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_qhl323qk27qjqul79pqy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_x6ms60tumt0667v9inpn, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_x6ms60tumt0667v9inpn { text-align: center }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_yopt4wtlqhx5rj2okntw, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_yopt4wtlqhx5rj2okntw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_djziejoyjq9k5nenqj2h, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_djziejoyjq9k5nenqj2h {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_tczvz2aubpnqlszi6v9l, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_tczvz2aubpnqlszi6v9l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_7ysj83nb889nuplxycdz, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_7ysj83nb889nuplxycdz { text-align: left }
+    #tinytable_ddnz46tcb41p8u2lrn50 td.tinytable_css_jq0lqohds02sqi348jc9, #tinytable_ddnz46tcb41p8u2lrn50 th.tinytable_css_jq0lqohds02sqi348jc9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_2vnir09thjkqvyt30ijk" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_ddnz46tcb41p8u2lrn50" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -2193,25 +2204,25 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_sxv535tpmitsr8bn6610 = TinyTable.createTableFunctions("tinytable_sxv535tpmitsr8bn6610");
+      const tableFns_vscrjcejn998u96puwev = TinyTable.createTableFunctions("tinytable_vscrjcejn998u96puwev");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '30', j: 2 }, { i: '30', j: 3 } ], css_id: 'tinytable_css_7efvxrkn771g7uxt8j4c',}, 
-          { positions: [ { i: '22', j: 2 }, { i: '22', j: 3 } ], css_id: 'tinytable_css_vm7eqfsmx3j93ky6l6bh',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 } ], css_id: 'tinytable_css_yz461llv99ks7orcqmia',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_qc10fprbu0cmin7w6a6x',}, 
-          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_kuprqkdkyc24o1bfscri',}, 
-          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_ojms7odb70bptk0ko3tf',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 } ], css_id: 'tinytable_css_5gq39d53tt1am1zj5khl',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_e4xoe2tpprf2oko31omk',}, 
+          { positions: [ { i: '30', j: 2 }, { i: '30', j: 3 } ], css_id: 'tinytable_css_zv2g84hb7cidyajg1oug',}, 
+          { positions: [ { i: '22', j: 2 }, { i: '22', j: 3 } ], css_id: 'tinytable_css_ro6xa0ylslzrovlp9vup',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 } ], css_id: 'tinytable_css_koflo1pnwk1usvyxay8z',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_up6f5kwvrbmca45ngmic',}, 
+          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_pts3ycxbjxxgcxy7pq1u',}, 
+          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_r49o4fvw58o0iimisxxr',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 } ], css_id: 'tinytable_css_wme04rkoi6gir4h5succ',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_2jyy0cdhprk0vl5pib4w',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_sxv535tpmitsr8bn6610.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_vscrjcejn998u96puwev.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2220,17 +2231,17 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_7efvxrkn771g7uxt8j4c, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_7efvxrkn771g7uxt8j4c {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_vm7eqfsmx3j93ky6l6bh, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_vm7eqfsmx3j93ky6l6bh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_yz461llv99ks7orcqmia, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_yz461llv99ks7orcqmia { text-align: center }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_qc10fprbu0cmin7w6a6x, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_qc10fprbu0cmin7w6a6x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_kuprqkdkyc24o1bfscri, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_kuprqkdkyc24o1bfscri {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_ojms7odb70bptk0ko3tf, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_ojms7odb70bptk0ko3tf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_5gq39d53tt1am1zj5khl, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_5gq39d53tt1am1zj5khl { text-align: left }
-    #tinytable_sxv535tpmitsr8bn6610 td.tinytable_css_e4xoe2tpprf2oko31omk, #tinytable_sxv535tpmitsr8bn6610 th.tinytable_css_e4xoe2tpprf2oko31omk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_zv2g84hb7cidyajg1oug, #tinytable_vscrjcejn998u96puwev th.tinytable_css_zv2g84hb7cidyajg1oug {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_ro6xa0ylslzrovlp9vup, #tinytable_vscrjcejn998u96puwev th.tinytable_css_ro6xa0ylslzrovlp9vup {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_koflo1pnwk1usvyxay8z, #tinytable_vscrjcejn998u96puwev th.tinytable_css_koflo1pnwk1usvyxay8z { text-align: center }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_up6f5kwvrbmca45ngmic, #tinytable_vscrjcejn998u96puwev th.tinytable_css_up6f5kwvrbmca45ngmic {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_pts3ycxbjxxgcxy7pq1u, #tinytable_vscrjcejn998u96puwev th.tinytable_css_pts3ycxbjxxgcxy7pq1u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_r49o4fvw58o0iimisxxr, #tinytable_vscrjcejn998u96puwev th.tinytable_css_r49o4fvw58o0iimisxxr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_wme04rkoi6gir4h5succ, #tinytable_vscrjcejn998u96puwev th.tinytable_css_wme04rkoi6gir4h5succ { text-align: left }
+    #tinytable_vscrjcejn998u96puwev td.tinytable_css_2jyy0cdhprk0vl5pib4w, #tinytable_vscrjcejn998u96puwev th.tinytable_css_2jyy0cdhprk0vl5pib4w {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_sxv535tpmitsr8bn6610" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_vscrjcejn998u96puwev" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -2411,25 +2422,25 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_ul89betjn8ftez3xossb = TinyTable.createTableFunctions("tinytable_ul89betjn8ftez3xossb");
+      const tableFns_mtuoxh5kuaioc85fdbpl = TinyTable.createTableFunctions("tinytable_mtuoxh5kuaioc85fdbpl");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_xduekotjrdlte425xwfy',}, 
-          { positions: [ { i: '11', j: 2 }, { i: '11', j: 3 } ], css_id: 'tinytable_css_e758oalsd94w1qg3m2n5',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_d51zzza9wga8v1l03ti9',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_7uj8sp0enrx7on1qqsb2',}, 
-          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_r6g6l85j9nlxxw8qs5hy',}, 
-          { positions: [ { i: '11', j: 1 } ], css_id: 'tinytable_css_h56rurj0y3dw17z7y921',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_znujih2h5gxaqk0ydkwd',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_gdo7ppm6c9mf5l3d4nk0',}, 
+          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_tjez9b95kv5zclq00eu4',}, 
+          { positions: [ { i: '11', j: 2 }, { i: '11', j: 3 } ], css_id: 'tinytable_css_a74zgmvczwige1btzcls',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_4nwdrj6w01iwyocur3zp',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_p1zmtcy7odr1hnqhhhrc',}, 
+          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_bxd6kpy5ixc0xdlh09oy',}, 
+          { positions: [ { i: '11', j: 1 } ], css_id: 'tinytable_css_vq1s3byj4p6ljqzq2159',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_029x4mdmxv4l82lxdrdg',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_yg8pb56xgv9uyux8j9ha',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_ul89betjn8ftez3xossb.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_mtuoxh5kuaioc85fdbpl.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2438,17 +2449,17 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_xduekotjrdlte425xwfy, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_xduekotjrdlte425xwfy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_e758oalsd94w1qg3m2n5, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_e758oalsd94w1qg3m2n5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_d51zzza9wga8v1l03ti9, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_d51zzza9wga8v1l03ti9 { text-align: center }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_7uj8sp0enrx7on1qqsb2, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_7uj8sp0enrx7on1qqsb2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_r6g6l85j9nlxxw8qs5hy, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_r6g6l85j9nlxxw8qs5hy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_h56rurj0y3dw17z7y921, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_h56rurj0y3dw17z7y921 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_znujih2h5gxaqk0ydkwd, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_znujih2h5gxaqk0ydkwd { text-align: left }
-    #tinytable_ul89betjn8ftez3xossb td.tinytable_css_gdo7ppm6c9mf5l3d4nk0, #tinytable_ul89betjn8ftez3xossb th.tinytable_css_gdo7ppm6c9mf5l3d4nk0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_tjez9b95kv5zclq00eu4, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_tjez9b95kv5zclq00eu4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_a74zgmvczwige1btzcls, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_a74zgmvczwige1btzcls {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_4nwdrj6w01iwyocur3zp, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_4nwdrj6w01iwyocur3zp { text-align: center }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_p1zmtcy7odr1hnqhhhrc, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_p1zmtcy7odr1hnqhhhrc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_bxd6kpy5ixc0xdlh09oy, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_bxd6kpy5ixc0xdlh09oy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_vq1s3byj4p6ljqzq2159, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_vq1s3byj4p6ljqzq2159 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_029x4mdmxv4l82lxdrdg, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_029x4mdmxv4l82lxdrdg { text-align: left }
+    #tinytable_mtuoxh5kuaioc85fdbpl td.tinytable_css_yg8pb56xgv9uyux8j9ha, #tinytable_mtuoxh5kuaioc85fdbpl th.tinytable_css_yg8pb56xgv9uyux8j9ha {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_ul89betjn8ftez3xossb" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_mtuoxh5kuaioc85fdbpl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -2583,25 +2594,25 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_cj81yecrqy8pmnp9ll60 = TinyTable.createTableFunctions("tinytable_cj81yecrqy8pmnp9ll60");
+      const tableFns_qy10hkaiz1rj8kqcdri9 = TinyTable.createTableFunctions("tinytable_qy10hkaiz1rj8kqcdri9");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_hg3xb91tgrbsvwn81p5o',}, 
-          { positions: [ { i: '11', j: 2 }, { i: '11', j: 3 } ], css_id: 'tinytable_css_jx21vqvn0ttgfmc0wsjn',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_ddealbazfcbdnw1z36pn',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_xo73n1ya5j9kuiud0cvf',}, 
-          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_wspnedq7ipfo419zdyis',}, 
-          { positions: [ { i: '11', j: 1 } ], css_id: 'tinytable_css_cpwwlwvsathp1bohxbv8',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_y01u8bbmv4oamzo9kvky',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_u7afmbvijr5lrk37u45u',}, 
+          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_eb8p2jyjvok7ycxej6eg',}, 
+          { positions: [ { i: '11', j: 2 }, { i: '11', j: 3 } ], css_id: 'tinytable_css_2sqii1tcymfzje72vi6c',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_g3xo85t08ydx5avi3k7e',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_75dkg9hpzlnquseo32gf',}, 
+          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_clgk4533kgaw3vl3pmhh',}, 
+          { positions: [ { i: '11', j: 1 } ], css_id: 'tinytable_css_vkhjb9e1g0bbzqkcgntn',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_w6w66wfbr9kprk27o68f',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_5pacv10pgb7yf7hqoppn',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_cj81yecrqy8pmnp9ll60.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_qy10hkaiz1rj8kqcdri9.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2610,17 +2621,17 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_hg3xb91tgrbsvwn81p5o, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_hg3xb91tgrbsvwn81p5o {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_jx21vqvn0ttgfmc0wsjn, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_jx21vqvn0ttgfmc0wsjn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_ddealbazfcbdnw1z36pn, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_ddealbazfcbdnw1z36pn { text-align: right }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_xo73n1ya5j9kuiud0cvf, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_xo73n1ya5j9kuiud0cvf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_wspnedq7ipfo419zdyis, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_wspnedq7ipfo419zdyis {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_cpwwlwvsathp1bohxbv8, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_cpwwlwvsathp1bohxbv8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_y01u8bbmv4oamzo9kvky, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_y01u8bbmv4oamzo9kvky { text-align: left }
-    #tinytable_cj81yecrqy8pmnp9ll60 td.tinytable_css_u7afmbvijr5lrk37u45u, #tinytable_cj81yecrqy8pmnp9ll60 th.tinytable_css_u7afmbvijr5lrk37u45u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_eb8p2jyjvok7ycxej6eg, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_eb8p2jyjvok7ycxej6eg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_2sqii1tcymfzje72vi6c, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_2sqii1tcymfzje72vi6c {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_g3xo85t08ydx5avi3k7e, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_g3xo85t08ydx5avi3k7e { text-align: right }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_75dkg9hpzlnquseo32gf, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_75dkg9hpzlnquseo32gf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_clgk4533kgaw3vl3pmhh, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_clgk4533kgaw3vl3pmhh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_vkhjb9e1g0bbzqkcgntn, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_vkhjb9e1g0bbzqkcgntn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_w6w66wfbr9kprk27o68f, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_w6w66wfbr9kprk27o68f { text-align: left }
+    #tinytable_qy10hkaiz1rj8kqcdri9 td.tinytable_css_5pacv10pgb7yf7hqoppn, #tinytable_qy10hkaiz1rj8kqcdri9 th.tinytable_css_5pacv10pgb7yf7hqoppn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_cj81yecrqy8pmnp9ll60" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_qy10hkaiz1rj8kqcdri9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -2734,11 +2745,8 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>　処置効果に注目すると、Civic Dutyは処置効果の点推定値が2.8ppから4.2ppへ1.5倍になり、（多重比較の補正をしなければ）統計的に有意な結果が得られた。ランダム化が完璧に成功すると、つまり標準化差分がすべて0であれば、これら2つのモデルの点推定値は変わらないはずであるが、 <a href="#fig-blc-3" class="quarto-xref">図&nbsp;3</a> を見ると、今回は若干のズレはある。この場合は、今回のように2つのモデルの推定結果は一致しない。どのモデルを採用するかは分析する側が決める問題であるが、宋の個人的な見解としては、バランスが完全に取れていないのであれば、やはり重回帰分析で共変量のしっかり統制したモデルを採用すべきだと考えている。しかし、今回の例だと、多重比較の問題まで考慮すれば、統計的に有意な処置効果が確認できた処置はHawthorneとNeighborsのみという点で変化はなかったとも言えよう（この後で紹介する可視化で確認できる）。</p>
 </section>
-</section>
-<section id="番外編" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="番外編"><span class="header-section-number">7</span> 番外編</h2>
-<section id="複数モデルの出力" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="複数モデルの出力"><span class="header-section-number">7.1</span> 複数モデルの出力</h3>
+<section id="複数モデルの可視化" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="複数モデルの可視化"><span class="header-section-number">6.5</span> 複数モデルの可視化</h2>
 <p>　<code>modelsummary()</code>を使えば、複数のモデルの推定結果を一つの表としてまとめられる。しかし、図の場合はどうだろう。共変量なしモデルとありモデルを <a href="#fig-intro-pointrange-5" class="quarto-xref">図&nbsp;14</a> のように一つにまとめることはできるだろうか。もちろん出来る。</p>
 <p>　まず、重回帰分析を行った結果（<code>fit2</code>）から処置効果の推定値情報を抽出し、<code>fit1_coef</code>と同じ構造のデータとしてまとめる。多重比較の問題に対応するために、ここでもボンフェローニ補正を施す。</p>
 <div class="cell" data-layout-align="center">
@@ -2886,528 +2894,95 @@ F-statistic: 46.51 on 10 and 4989 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="交互作用" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="交互作用"><span class="header-section-number">7.2</span> 交互作用</h3>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voted2006 <span class="sc">~</span> treatment <span class="sc">*</span> hh_size <span class="sc">+</span> female <span class="sc">+</span> yob <span class="sc">+</span> hh_size <span class="sc">+</span></span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>             voted2000 <span class="sc">+</span> voted2002 <span class="sc">+</span> voted2004, <span class="at">data =</span> df)</span>
-<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"w/o Interaction"</span> <span class="ot">=</span> fit2, <span class="st">"w/ Interaction"</span> <span class="ot">=</span> fit3),</span>
-<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">estimate  =</span> <span class="st">"{estimate} ({std.error})"</span>,</span>
-<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<!-- preamble start -->
+<!--
 
-    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+### 交互作用
 
-    <script>
-      // Create table-specific functions using external factory
-      const tableFns_ljz3bfm8l6brsu9ka96j = TinyTable.createTableFunctions("tinytable_ljz3bfm8l6brsu9ka96j");
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '23', j: 2 }, { i: '23', j: 3 } ], css_id: 'tinytable_css_5410xzshhdckxcxpry6x',}, 
-          { positions: [ { i: '15', j: 2 }, { i: '15', j: 3 } ], css_id: 'tinytable_css_rp4vr9d8lgz8722miwzm',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 } ], css_id: 'tinytable_css_x7wxe7gzdir8wje0y9mf',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_jouexvnwlvtcxpxpe20p',}, 
-          { positions: [ { i: '23', j: 1 } ], css_id: 'tinytable_css_df1ty2c52r9qvkrqvf51',}, 
-          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_rhnhs2o98uxcenuo88oz',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 } ], css_id: 'tinytable_css_04a6ite1ofr5q9ne2k9k',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ojcp9qajdzqllu1qs1z3',}, 
-          ];
 
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  tableFns_ljz3bfm8l6brsu9ka96j.styleCell(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script>
+::: {.cell layout-align="center"}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
-    <style>
-    /* tinytable css entries after */
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_5410xzshhdckxcxpry6x, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_5410xzshhdckxcxpry6x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_rp4vr9d8lgz8722miwzm, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_rp4vr9d8lgz8722miwzm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_x7wxe7gzdir8wje0y9mf, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_x7wxe7gzdir8wje0y9mf { text-align: center }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_jouexvnwlvtcxpxpe20p, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_jouexvnwlvtcxpxpe20p {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_df1ty2c52r9qvkrqvf51, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_df1ty2c52r9qvkrqvf51 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_rhnhs2o98uxcenuo88oz, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_rhnhs2o98uxcenuo88oz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_04a6ite1ofr5q9ne2k9k, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_04a6ite1ofr5q9ne2k9k { text-align: left }
-    #tinytable_ljz3bfm8l6brsu9ka96j td.tinytable_css_ojcp9qajdzqllu1qs1z3, #tinytable_ljz3bfm8l6brsu9ka96j th.tinytable_css_ojcp9qajdzqllu1qs1z3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    </style>
-    <div class="container">
-      <table class="tinytable" id="tinytable_ljz3bfm8l6brsu9ka96j" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        
-        <thead>
-              <tr>
-                <th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">w/o Interaction</th>
-                <th scope="col" data-row="0" data-col="3">w/ Interaction</th>
-              </tr>
-        </thead>
-        
-        <tbody>
-                <tr>
-                  <td data-row="1" data-col="1">(Intercept)</td>
-                  <td data-row="1" data-col="2">6.376 (0.903)</td>
-                  <td data-row="1" data-col="3">6.342 (0.904)</td>
-                </tr>
-                <tr>
-                  <td data-row="2" data-col="1">treatmentCivic Duty</td>
-                  <td data-row="2" data-col="2">0.042 (0.021)</td>
-                  <td data-row="2" data-col="3">0.085 (0.060)</td>
-                </tr>
-                <tr>
-                  <td data-row="3" data-col="1">treatmentHawthorne</td>
-                  <td data-row="3" data-col="2">0.058 (0.021)</td>
-                  <td data-row="3" data-col="3">0.150 (0.065)</td>
-                </tr>
-                <tr>
-                  <td data-row="4" data-col="1">treatmentSelf</td>
-                  <td data-row="4" data-col="2">0.029 (0.020)</td>
-                  <td data-row="4" data-col="3">0.038 (0.057)</td>
-                </tr>
-                <tr>
-                  <td data-row="5" data-col="1">treatmentNeighbors</td>
-                  <td data-row="5" data-col="2">0.114 (0.021)</td>
-                  <td data-row="5" data-col="3">0.140 (0.065)</td>
-                </tr>
-                <tr>
-                  <td data-row="6" data-col="1">female</td>
-                  <td data-row="6" data-col="2">-0.020 (0.013)</td>
-                  <td data-row="6" data-col="3">-0.020 (0.013)</td>
-                </tr>
-                <tr>
-                  <td data-row="7" data-col="1">yob</td>
-                  <td data-row="7" data-col="2">-0.003 (0.000)</td>
-                  <td data-row="7" data-col="3">-0.003 (0.000)</td>
-                </tr>
-                <tr>
-                  <td data-row="8" data-col="1">hh_size</td>
-                  <td data-row="8" data-col="2">0.000 (0.008)</td>
-                  <td data-row="8" data-col="3">0.009 (0.011)</td>
-                </tr>
-                <tr>
-                  <td data-row="9" data-col="1">voted2000</td>
-                  <td data-row="9" data-col="2">0.101 (0.015)</td>
-                  <td data-row="9" data-col="3">0.102 (0.015)</td>
-                </tr>
-                <tr>
-                  <td data-row="10" data-col="1">voted2002</td>
-                  <td data-row="10" data-col="2">0.138 (0.013)</td>
-                  <td data-row="10" data-col="3">0.138 (0.013)</td>
-                </tr>
-                <tr>
-                  <td data-row="11" data-col="1">voted2004</td>
-                  <td data-row="11" data-col="2">0.172 (0.013)</td>
-                  <td data-row="11" data-col="3">0.172 (0.013)</td>
-                </tr>
-                <tr>
-                  <td data-row="12" data-col="1">treatmentCivic Duty × hh_size</td>
-                  <td data-row="12" data-col="2"></td>
-                  <td data-row="12" data-col="3">-0.019 (0.026)</td>
-                </tr>
-                <tr>
-                  <td data-row="13" data-col="1">treatmentHawthorne × hh_size</td>
-                  <td data-row="13" data-col="2"></td>
-                  <td data-row="13" data-col="3">-0.041 (0.028)</td>
-                </tr>
-                <tr>
-                  <td data-row="14" data-col="1">treatmentSelf × hh_size</td>
-                  <td data-row="14" data-col="2"></td>
-                  <td data-row="14" data-col="3">-0.004 (0.024)</td>
-                </tr>
-                <tr>
-                  <td data-row="15" data-col="1">treatmentNeighbors × hh_size</td>
-                  <td data-row="15" data-col="2"></td>
-                  <td data-row="15" data-col="3">-0.012 (0.028)</td>
-                </tr>
-                <tr>
-                  <td data-row="16" data-col="1">Num.Obs.</td>
-                  <td data-row="16" data-col="2">5000</td>
-                  <td data-row="16" data-col="3">5000</td>
-                </tr>
-                <tr>
-                  <td data-row="17" data-col="1">R2</td>
-                  <td data-row="17" data-col="2">0.085</td>
-                  <td data-row="17" data-col="3">0.086</td>
-                </tr>
-                <tr>
-                  <td data-row="18" data-col="1">R2 Adj.</td>
-                  <td data-row="18" data-col="2">0.083</td>
-                  <td data-row="18" data-col="3">0.083</td>
-                </tr>
-                <tr>
-                  <td data-row="19" data-col="1">AIC</td>
-                  <td data-row="19" data-col="2">6189.2</td>
-                  <td data-row="19" data-col="3">6194.6</td>
-                </tr>
-                <tr>
-                  <td data-row="20" data-col="1">BIC</td>
-                  <td data-row="20" data-col="2">6267.4</td>
-                  <td data-row="20" data-col="3">6298.9</td>
-                </tr>
-                <tr>
-                  <td data-row="21" data-col="1">Log.Lik.</td>
-                  <td data-row="21" data-col="2">-3082.598</td>
-                  <td data-row="21" data-col="3">-3081.312</td>
-                </tr>
-                <tr>
-                  <td data-row="22" data-col="1">F</td>
-                  <td data-row="22" data-col="2">46.513</td>
-                  <td data-row="22" data-col="3">33.397</td>
-                </tr>
-                <tr>
-                  <td data-row="23" data-col="1">RMSE</td>
-                  <td data-row="23" data-col="2">0.45</td>
-                  <td data-row="23" data-col="3">0.45</td>
-                </tr>
-        </tbody>
-      </table>
-    </div>
-<!-- hack to avoid NA insertion in last line -->
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(marginaleffects)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="ot">&lt;-</span> <span class="fu">predictions</span>(fit3,</span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">treatment =</span> <span class="fu">c</span>(<span class="st">"Control"</span>,</span>
-<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>                                                          <span class="st">"Civic Duty"</span>,</span>
-<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>                                                          <span class="st">"Hawthorne"</span>,</span>
-<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>                                                          <span class="st">"Neighbors"</span>,</span>
-<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>                                                          <span class="st">"Self"</span>),</span>
-<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">hh_size   =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>)))</span>
-<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a>fit3_pred</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  treatment hh_size Estimate Std. Error      z Pr(&gt;|z|)    S   2.5 % 97.5 %
- Control          1  0.12975     0.0193 6.7403  &lt; 0.001 35.9  0.0920  0.167
- Control          4  0.15530     0.0240 6.4769  &lt; 0.001 33.3  0.1083  0.202
- Control          8  0.18936     0.0657 2.8803  0.00397  8.0  0.0605  0.318
- Civic Duty       1  0.19496     0.0356 5.4734  &lt; 0.001 24.4  0.1251  0.265
- Civic Duty       4  0.16214     0.0475 3.4119  &lt; 0.001 10.6  0.0690  0.255
- Civic Duty       8  0.11837     0.1390 0.8517  0.39439  1.3 -0.1540  0.391
- Hawthorne        1  0.23805     0.0381 6.2421  &lt; 0.001 31.1  0.1633  0.313
- Hawthorne        4  0.13950     0.0507 2.7489  0.00598  7.4  0.0400  0.239
- Hawthorne        8  0.00808     0.1495 0.0541  0.95687  0.1 -0.2849  0.301
- Self             1  0.16366     0.0338 4.8377  &lt; 0.001 19.5  0.0974  0.230
- Self             4  0.17781     0.0451 3.9465  &lt; 0.001 13.6  0.0895  0.266
- Self             8  0.19669     0.1297 1.5161  0.12949  2.9 -0.0576  0.451
- Neighbors        1  0.25809     0.0378 6.8242  &lt; 0.001 36.7  0.1840  0.332
- Neighbors        4  0.24759     0.0522 4.7407  &lt; 0.001 18.8  0.1452  0.350
- Neighbors        8  0.23358     0.1532 1.5244  0.12741  3.0 -0.0667  0.534
+:::
 
-Type: response</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="sc">|&gt;</span> </span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> Estimate)) <span class="sc">+</span></span>
-<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>hh_size)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `geom_col()`:
-! Problem while computing aesthetics.
-ℹ Error occurred in the 1st layer.
-Caused by error:
-! object 'Estimate' not found</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit3_pred, <span class="at">style =</span> <span class="st">"data.frame"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   rowid    estimate  std.error  statistic      p.value     s.value    conf.low conf.high female
-1      1 0.129751003 0.01925004 6.74029814 1.580620e-11 35.88071887  0.09202162 0.1674804      1
-2      2 0.155299142 0.02397754 6.47685789 9.365232e-11 33.31389430  0.10830402 0.2022943      1
-3      3 0.189363327 0.06574500 2.88026960 3.973352e-03  7.97542752  0.06050549 0.3182212      1
-4      4 0.194959559 0.03561967 5.47336752 4.415630e-08 24.43280541  0.12514628 0.2647728      1
-5      5 0.162135577 0.04752076 3.41188959 6.451424e-04 10.59809479  0.06899660 0.2552745      1
-6      6 0.118370268 0.13898420 0.85168150 3.943909e-01  1.34230185 -0.15403375 0.3907743      1
-7      7 0.238054909 0.03813685 6.24212365 4.316695e-10 31.10935384  0.16330806 0.3128018      1
-8      8 0.139496250 0.05074688 2.74886362 5.980226e-03  7.38558421  0.04003419 0.2389583      1
-9      9 0.008084705 0.14948694 0.05408302 9.568690e-01  0.06360664 -0.28490430 0.3010737      1
-10    10 0.163657605 0.03382950 4.83771890 1.313377e-06 19.53828744  0.09735301 0.2299622      1
-11    11 0.177812221 0.04505570 3.94649787 7.930263e-05 13.62227182  0.08950467 0.2661198      1
-12    12 0.196685043 0.12972790 1.51613528 1.294851e-01  2.94914145 -0.05757697 0.4509471      1
-13    13 0.258089912 0.03781976 6.82420805 8.841168e-12 36.71890022  0.18396454 0.3322153      1
-14    14 0.247587490 0.05222626 4.74067018 2.130124e-06 18.84063086  0.14522589 0.3499491      1
-15    15 0.233584262 0.15323174 1.52438564 1.274124e-01  2.97242235 -0.06674443 0.5339130      1
-   voted2000 voted2002 voted2004 voted2006  yob  treatment hh_size  df
-1          0         0         0         0 1956    Control       1 Inf
-2          0         0         0         0 1956    Control       4 Inf
-3          0         0         0         0 1956    Control       8 Inf
-4          0         0         0         0 1956 Civic Duty       1 Inf
-5          0         0         0         0 1956 Civic Duty       4 Inf
-6          0         0         0         0 1956 Civic Duty       8 Inf
-7          0         0         0         0 1956  Hawthorne       1 Inf
-8          0         0         0         0 1956  Hawthorne       4 Inf
-9          0         0         0         0 1956  Hawthorne       8 Inf
-10         0         0         0         0 1956       Self       1 Inf
-11         0         0         0         0 1956       Self       4 Inf
-12         0         0         0         0 1956       Self       8 Inf
-13         0         0         0         0 1956  Neighbors       1 Inf
-14         0         0         0         0 1956  Neighbors       4 Inf
-15         0         0         0         0 1956  Neighbors       8 Inf</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="sc">|&gt;</span> </span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>hh_size)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="sc">|&gt;</span> </span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hh_size =</span> <span class="fu">case_when</span>(hh_size <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Household size = 1"</span>,</span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Household size = 4"</span>,</span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Household size = 8"</span>),</span>
-<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">hh_size =</span> <span class="fu">fct_inorder</span>(hh_size)) <span class="sc">|&gt;</span> </span>
-<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
-<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groups"</span>, <span class="at">y =</span> <span class="st">"Predicted Turnout"</span>) <span class="sc">+</span></span>
-<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">n.dodge =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>hh_size)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="sc">|&gt;</span> </span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hh_size =</span> <span class="fu">case_when</span>(hh_size <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Household size = 1"</span>,</span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Household size = 4"</span>,</span>
-<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Household size = 8"</span>),</span>
-<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">hh_size =</span> <span class="fu">fct_inorder</span>(hh_size)) <span class="sc">|&gt;</span> </span>
-<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
-<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate, <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, estimate))) <span class="sc">+</span></span>
-<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groups"</span>, <span class="at">y =</span> <span class="st">"Predicted Turnout"</span>) <span class="sc">+</span></span>
-<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">n.dodge =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>hh_size)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>fit3_pred <span class="sc">|&gt;</span> </span>
-<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hh_size =</span> <span class="fu">case_when</span>(hh_size <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Household size = 1"</span>,</span>
-<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Household size = 4"</span>,</span>
-<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>                             hh_size <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Household size = 8"</span>),</span>
-<span id="cb119-5"><a href="#cb119-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">hh_size =</span> <span class="fu">fct_inorder</span>(hh_size)) <span class="sc">|&gt;</span> </span>
-<span id="cb119-6"><a href="#cb119-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb119-7"><a href="#cb119-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
-<span id="cb119-8"><a href="#cb119-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> estimate, <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, estimate)),</span>
-<span id="cb119-9"><a href="#cb119-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">vjust =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb119-10"><a href="#cb119-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groups"</span>, <span class="at">y =</span> <span class="st">"Predicted Turnout"</span>) <span class="sc">+</span></span>
-<span id="cb119-11"><a href="#cb119-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">n.dodge =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb119-12"><a href="#cb119-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>hh_size)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>fit3_ame <span class="ot">&lt;-</span> fit3 <span class="sc">|&gt;</span> </span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slopes</span>(<span class="at">variables =</span> <span class="st">"treatment"</span>,</span>
-<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">hh_size =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>))</span>
-<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit3_ame, <span class="at">style =</span> <span class="st">"data.frame"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   rowid      term             contrast     estimate  std.error   statistic      p.value
-1      1 treatment Civic Duty - Control  0.065208556 0.03711318  1.75701892 7.891458e-02
-2      2 treatment Civic Duty - Control  0.045751182 0.02110500  2.16778830 3.017480e-02
-3      3 treatment Civic Duty - Control  0.026293809 0.02936067  0.89554529 3.704957e-01
-4      4 treatment Civic Duty - Control  0.006836435 0.05125691  0.13337588 8.938961e-01
-5      5 treatment Civic Duty - Control -0.012620938 0.07576996 -0.16656915 8.677091e-01
-6      6 treatment Civic Duty - Control -0.032078312 0.10101236 -0.31756817 7.508125e-01
-7      7 treatment Civic Duty - Control -0.051535685 0.12654842 -0.40724084 6.838311e-01
-8      8 treatment Civic Duty - Control -0.070993059 0.15223043 -0.46635263 6.409631e-01
-9      1 treatment  Hawthorne - Control  0.108303906 0.03950008  2.74186569 6.109132e-03
-10     2 treatment  Hawthorne - Control  0.066934974 0.02194532  3.05007902 2.287812e-03
-11     3 treatment  Hawthorne - Control  0.025566041 0.03048245  0.83871356 4.016301e-01
-12     4 treatment  Hawthorne - Control -0.015802891 0.05387952 -0.29330052 7.692925e-01
-13     5 treatment  Hawthorne - Control -0.057171824 0.08001917 -0.71447662 4.749325e-01
-14     6 treatment  Hawthorne - Control -0.098540757 0.10690824 -0.92173207 3.566683e-01
-15     7 treatment  Hawthorne - Control -0.139909689 0.13409668 -1.04334942 2.967865e-01
-16     8 treatment  Hawthorne - Control -0.181278622 0.16143329 -1.12293211 2.614663e-01
-17     1 treatment  Neighbors - Control  0.128338909 0.03939055  3.25811434 1.121552e-03
-18     2 treatment  Neighbors - Control  0.116322055 0.02193318  5.30347541 1.136185e-07
-19     3 treatment  Neighbors - Control  0.104305202 0.03152967  3.30815991 9.391117e-04
-20     4 treatment  Neighbors - Control  0.092288349 0.05559483  1.66001689 9.691106e-02
-21     5 treatment  Neighbors - Control  0.080271495 0.08228643  0.97551312 3.293058e-01
-22     6 treatment  Neighbors - Control  0.068254642 0.10970386  0.62217177 5.338289e-01
-23     7 treatment  Neighbors - Control  0.056237788 0.13741333  0.40926007 6.823488e-01
-24     8 treatment  Neighbors - Control  0.044220935 0.16526802  0.26757103 7.890295e-01
-25     1 treatment       Self - Control  0.033906602 0.03526893  0.96137322 3.363645e-01
-26     2 treatment       Self - Control  0.030108761 0.02077487  1.44928759 1.472573e-01
-27     3 treatment       Self - Control  0.026310921 0.02844596  0.92494394 3.549951e-01
-28     4 treatment       Self - Control  0.022513080 0.04875069  0.46180023 6.442246e-01
-29     5 treatment       Self - Control  0.018715239 0.07165169  0.26119744 7.939403e-01
-30     6 treatment       Self - Control  0.014917398 0.09529523  0.15653877 8.756084e-01
-31     7 treatment       Self - Control  0.011119557 0.11924041  0.09325326 9.257024e-01
-32     8 treatment       Self - Control  0.007321716 0.14333614  0.05108074 9.592612e-01
-       s.value     conf.low  conf.high female treatment voted2000 voted2002 voted2004 voted2006
-1   3.66356425 -0.007531936 0.13794905      1   Control         0         0         0         0
-2   5.05051211  0.004386133 0.08711623      1   Control         0         0         0         0
-3   1.43247143 -0.031252045 0.08383966      1   Control         0         0         0         0
-4   0.16182091 -0.093625260 0.10729813      1   Control         0         0         0         0
-5   0.20471669 -0.161127333 0.13588546      1   Control         0         0         0         0
-6   0.41347538 -0.230058907 0.16590228      1   Control         0         0         0         0
-7   0.54828804 -0.299566032 0.19649466      1   Control         0         0         0         0
-8   0.64168676 -0.369359209 0.22737309      1   Control         0         0         0         0
-9   7.35481696  0.030885178 0.18572264      1   Control         0         0         0         0
-10  8.77181600  0.023922928 0.10994702      1   Control         0         0         0         0
-11  1.31606082 -0.034178456 0.08531054      1   Control         0         0         0         0
-12  0.37839593 -0.121404812 0.08979903      1   Control         0         0         0         0
-13  1.07420558 -0.214006510 0.09966286      1   Control         0         0         0         0
-14  1.48734491 -0.308077063 0.11099555      1   Control         0         0         0         0
-15  1.75250266 -0.402734346 0.12291497      1   Control         0         0         0         0
-16  1.93530292 -0.497682051 0.13512481      1   Control         0         0         0         0
-17  9.80028768  0.051134854 0.20554296      1   Control         0         0         0         0
-18 23.06929873  0.073333822 0.15931029      1   Control         0         0         0         0
-19 10.05641560  0.042508177 0.16610223      1   Control         0         0         0         0
-20  3.36719494 -0.016675506 0.20125220      1   Control         0         0         0         0
-21  1.60250019 -0.081006950 0.24154994      1   Control         0         0         0         0
-22  0.90555061 -0.146760964 0.28327025      1   Control         0         0         0         0
-23  0.55141866 -0.213087388 0.32556296      1   Control         0         0         0         0
-24  0.34184880 -0.279698430 0.36814030      1   Control         0         0         0         0
-25  1.57190245 -0.035219226 0.10303243      1   Control         0         0         0         0
-26  2.76358907 -0.010609236 0.07082676      1   Control         0         0         0         0
-27  1.49412912 -0.029442141 0.08206398      1   Control         0         0         0         0
-28  0.63436438 -0.073036515 0.11806267      1   Control         0         0         0         0
-29  0.33289765 -0.121719499 0.15914998      1   Control         0         0         0         0
-30  0.19164236 -0.171857818 0.20169261      1   Control         0         0         0         0
-31  0.11137969 -0.222587354 0.24482647      1   Control         0         0         0         0
-32  0.06000441 -0.273611962 0.28825539      1   Control         0         0         0         0
-    yob hh_size predicted_lo predicted_hi predicted
-1  1956       1    0.1297510  0.194959559        NA
-2  1956       2    0.1382670  0.184018231        NA
-3  1956       3    0.1467831  0.173076904        NA
-4  1956       4    0.1552991  0.162135577        NA
-5  1956       5    0.1638152  0.151194250        NA
-6  1956       6    0.1723312  0.140252923        NA
-7  1956       7    0.1808473  0.129311595        NA
-8  1956       8    0.1893633  0.118370268        NA
-9  1956       1    0.1297510  0.238054909        NA
-10 1956       2    0.1382670  0.205202023        NA
-11 1956       3    0.1467831  0.172349137        NA
-12 1956       4    0.1552991  0.139496250        NA
-13 1956       5    0.1638152  0.106643364        NA
-14 1956       6    0.1723312  0.073790478        NA
-15 1956       7    0.1808473  0.040937591        NA
-16 1956       8    0.1893633  0.008084705        NA
-17 1956       1    0.1297510  0.258089912        NA
-18 1956       2    0.1382670  0.254589105        NA
-19 1956       3    0.1467831  0.251088298        NA
-20 1956       4    0.1552991  0.247587490        NA
-21 1956       5    0.1638152  0.244086683        NA
-22 1956       6    0.1723312  0.240585876        NA
-23 1956       7    0.1808473  0.237085069        NA
-24 1956       8    0.1893633  0.233584262        NA
-25 1956       1    0.1297510  0.163657605        NA
-26 1956       2    0.1382670  0.168375811        NA
-27 1956       3    0.1467831  0.173094016        NA
-28 1956       4    0.1552991  0.177812221        NA
-29 1956       5    0.1638152  0.182530427        NA
-30 1956       6    0.1723312  0.187248632        NA
-31 1956       7    0.1808473  0.191966837        NA
-32 1956       8    0.1893633  0.196685043        NA</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>fit3_ame <span class="sc">|&gt;</span> </span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">x =</span> hh_size, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
-<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Household Size"</span>, <span class="at">y =</span> <span class="st">"Average Marginal Effects"</span>) <span class="sc">+</span></span>
-<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>contrast)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>fit3_ame <span class="sc">|&gt;</span> </span>
-<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">contrast =</span> <span class="fu">str_remove</span>(contrast, <span class="st">" - Control"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">x =</span> hh_size, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
-<span id="cb123-6"><a href="#cb123-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Household Size"</span>, <span class="at">y =</span> <span class="st">"Average Marginal Effects"</span>) <span class="sc">+</span></span>
-<span id="cb123-7"><a href="#cb123-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>contrast)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>fit3_ame <span class="sc">|&gt;</span> </span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">contrast =</span> <span class="fu">str_remove</span>(contrast, <span class="st">" - Control"</span>),</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig      =</span> <span class="fu">if_else</span>(p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="st">"sig"</span>, <span class="st">"insig"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">x =</span> hh_size, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high,</span>
-<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> sig)) <span class="sc">+</span></span>
-<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Household Size"</span>, <span class="at">y =</span> <span class="st">"Average Marginal Effects"</span>) <span class="sc">+</span></span>
-<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>contrast)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>fit3_ame <span class="sc">|&gt;</span> </span>
-<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">contrast =</span> <span class="fu">str_remove</span>(contrast, <span class="st">" - Control"</span>),</span>
-<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig      =</span> <span class="fu">if_else</span>(p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="st">"sig"</span>, <span class="st">"insig"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">x =</span> hh_size, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high,</span>
-<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> sig)) <span class="sc">+</span></span>
-<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Household Size"</span>, <span class="at">y =</span> <span class="st">"Average Marginal Effects"</span>) <span class="sc">+</span></span>
-<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"sig"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"insig"</span> <span class="ot">=</span> <span class="st">"gray80"</span>)) <span class="sc">+</span></span>
-<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>contrast) <span class="sc">+</span></span>
-<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="r_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
-</figure>
-</div>
-</div>
-</div>
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+
+::: {.cell layout-align="center"}
+
+:::
+
+
+-->
 
 
 </section>
