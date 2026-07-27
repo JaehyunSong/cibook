@@ -349,158 +349,260 @@ window.Quarto = {
   
 <section id="セットアップ" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> セットアップ</h1>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, ggdag, dagitty)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="欠落変数バイアス" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> 欠落変数バイアス</h1>
-<ul>
-<li>3つのモデル（真の処置効果は<span class="math inline">\(\tau^l\)</span>）
-<ul>
-<li>真のモデル（long regression）：<span class="math inline">\(Y_i = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i\)</span></li>
-<li>バイアス付きのモデル（short regression）：<span class="math inline">\(Y_i = \alpha^s + \tau^s D_i + \zeta_i\)</span></li>
-<li>XをDに回帰したモデル：<span class="math inline">\(X_i = \alpha_0 + \lambda D_i + \nu_i\)</span></li>
-</ul></li>
-</ul>
-<p><strong>真のモデルからXが消えたら…</strong></p>
+<p>　応答変数 <strong><em>Y</em></strong> の規定要因として <strong><em>D</em></strong> と <strong><em>X</em></strong> があり、また、 <strong><em>D</em></strong> は <strong><em>X</em></strong> に規定される以下のモデルを考えてみよう（<span class="math inline">\(e\)</span>と<span class="math inline">\(u\)</span>は平均0の正規分布に従う誤差項）。 <a href="#fig-ovb" class="quarto-xref">図&nbsp;1</a> は3つの変数間の関係を有向非巡回グラフ（directed acyclic graph; DAG）で示したものである。</p>
 <p><span class="math display">\[
-\begin{align}
-Y_i &amp; = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
-&amp; = \alpha^l + \tau^l D_i + \beta^l (\alpha_0 + \lambda D_i + \nu_i) + \varepsilon_i \\
-&amp; = \alpha^l + \tau^l D_i + \beta^l\alpha_0 + \beta^l \lambda D_i + \beta^l \nu_i + \varepsilon_i \\
-&amp; = \underbrace{(\alpha^l + \beta^l\alpha_0)}_{\alpha^s} + \underbrace{(\tau^l + \beta^l \lambda)}_{\tau^s} D_i + \underbrace{(\varepsilon_i + \beta^l \nu_i)}_{\varepsilon_i}
-\end{align}
+\begin{eqnarray}
+Y_i &amp; = &amp; 3 + 1 D_i - 3 X_i + e_i \\
+D_i &amp; = &amp; 1 + 2 X_i + u_i
+\end{eqnarray}
 \]</span></p>
-<p><span class="alert"><strong>欠落変数バイアス</strong></span>（omitted variable bias; <span class="alert"><strong>OVB</strong></span>）</p>
-<ul>
-<li><span class="math inline">\(\beta^l\)</span>：X <span class="math inline">\(\rightarrow\)</span> Yの係数</li>
-<li><span class="math inline">\(\lambda\)</span>：D <span class="math inline">\(\rightarrow\)</span> Xの係数</li>
-</ul>
-<p><span class="math display">\[
-\underbrace{\tau^s}_{\textsf{バイアス付きの推定値}} = \underbrace{\tau^l}_{\textsf{真の処置効果}} + \underbrace{\textcolor{red}{\beta^l \lambda}}_{\textsf{欠落変数バイアス}}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\beta^l = 0\)</span>、または<span class="math inline">\(\lambda = 0\)</span>ならOVBは発生しない</li>
-<li><span class="math inline">\(\beta^l \neq 0\)</span>、かつ<span class="math inline">\(\lambda \neq 0\)</span>の場合、Xは<span class="alert"><strong>交絡要因</strong></span>（confounder）である。
-<ul>
-<li><span class="alert"><strong>交絡要因を統制しないと、OVBが発生する</strong></span></li>
-</ul></li>
-</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-ovb" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ovb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="reg_files/figure-html/fig-ovb-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ovb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+図&nbsp;1: 確率変数D、X、Yの関係（Xが交絡変数）
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>　まず、確率変数 <strong><em>X</em></strong> 、 <strong><em>D</em></strong> 、 <strong><em>Y</em></strong> を作成し、真のモデルを推定してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19861008</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> D <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> D <span class="sc">+</span> X)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Y ~ D + X)
+
+Coefficients:
+(Intercept)            D            X  
+     3.0443       0.9897      -2.9831  </code></pre>
+</div>
+</div>
+<p>　<strong><em>D</em></strong> の傾き係数のパラメーター（真の値）は0.990である。もし、交絡要因である <strong><em>X</em></strong> をモデルから除外したら、 <strong><em>D</em></strong> の傾き係数の推定値はどうなるだろうか。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Y ~ D)
+
+Coefficients:
+(Intercept)            D  
+     2.7467      -0.4179  </code></pre>
+</div>
+</div>
+<p>　点推定値は-0.418であり、交絡要因が含まれていないモデルから推定された推定値だから、これはバイアス付きの推定値である。真の値との差は-1.408（= -0.418 - 0.990）であり、これが欠落変数バイアスの大きさである。このバイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の傾き係数と真のモデルにおける <strong><em>X</em></strong>の傾き係数の積と一致する（講義スライド参照）。まず、 <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰した場合の <strong><em>D</em></strong> の傾き係数を推定してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(X <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = X ~ D)
+
+Coefficients:
+(Intercept)            D  
+    0.09977      0.47185  </code></pre>
+</div>
+</div>
+<p>　<strong><em>X</em></strong> の傾き係数の点推定値は0.472である。この値と正しいモデル（ <strong><em>Y</em></strong> を <strong><em>D</em></strong> と <strong><em>X</em></strong> に回帰させたモデル）の <strong><em>X</em></strong> の傾き係数（= -2.983）の積を計算してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 正確には coef(lm(Y ~ D + X))[3] * coef(lm(X ~ D))[2] で計算</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.472</span> <span class="sc">*</span> <span class="sc">-</span><span class="fl">2.9831</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.408023</code></pre>
+</div>
+</div>
+<p>　結果は-1.408であり、欠落変数バイアスの大きさである。</p>
 </section>
 <section id="処置後変数バイアス" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> 処置後変数バイアス</h1>
-<ul>
-<li><span class="math inline">\(Y_i = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p\)</span></li>
-<li><span class="math inline">\(X_i = \alpha_0 + \lambda D_i + \nu_i\)</span></li>
-</ul>
+<p>　応答変数 <strong><em>Y</em></strong> の規定要因として <strong><em>D</em></strong> と <strong><em>X</em></strong> があり、また、 <strong><em>X</em></strong> は <strong><em>D</em></strong> に規定される以下のモデルを考えてみよう（<span class="math inline">\(e\)</span>と<span class="math inline">\(u\)</span>は平均0の正規分布に従う誤差項）。 <a href="#fig-post" class="quarto-xref">図&nbsp;2</a> は3つの変数間の関係をDAGで示したものである。</p>
 <p><span class="math display">\[
-\begin{align}
-Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
-&amp; = \alpha^p + \tau^p D_i + \beta^p (\alpha_0 + \lambda D_i + \nu_i) + \varepsilon_i^p \\
-&amp; = \alpha^p + \tau^p D_i + \beta^p \alpha_0 + \beta^p \lambda D_i + \beta^p \nu_i + \varepsilon_i^p \\
-&amp; = (\alpha^p + \beta^p \alpha_0) + \textcolor{red}{(\tau^p + \beta^p \lambda)} D_i + (\beta^p \nu_i + \varepsilon_i^p)
-\end{align}
+\begin{eqnarray}
+Y_i &amp; = &amp; 1 + 2 D_i - 4 X_i + e_i \\
+X_i &amp; = &amp; 2 + 0.25 D_i + u_i
+\end{eqnarray}
 \]</span></p>
-<ul>
-<li>YをDのみに回帰した場合の処置効果：<span class="math inline">\(\tau^p + \beta^p \lambda\)</span>（=<span class="alert"><strong>真の処置効果</strong></span>）
-<ul>
-<li>Xがモデル含まれている場合の処置効果の推定値：<span class="math inline">\(\tau^p\)</span></li>
-<li><span class="alert">処置後変数バイアス：<span class="math inline">\(-\beta^p \lambda\)</span></span></li>
-</ul></li>
-<li><span class="math inline">\(\lambda\)</span>か<span class="math inline">\(\beta^p\)</span>が0なら、処置後変数バイアスは発生しない
-<ul>
-<li><span class="math inline">\(\lambda\)</span> = 0なら、そもそもXはDの処置後変数ではない</li>
-</ul></li>
-</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-post" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-post-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="reg_files/figure-html/fig-post-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+図&nbsp;2: 確率変数D、X、Yの関係（Xが処置後変数）
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>　<strong><em>D</em></strong> が1増加すると <strong><em>Y</em></strong> はいくら増減するだろうか。答えは3である。まず、 <a href="#fig-post" class="quarto-xref">図&nbsp;2</a> の下の矢印に従い、 <strong><em>D</em></strong> が1増加すると <strong><em>Y</em></strong> は2増加し、これが<strong>直接効果</strong>（direct effect）である。しかし、 <strong><em>D</em></strong> が1上がると <strong><em>X</em></strong> も0.25増加し、 <strong><em>X</em></strong> が1増加すると <strong><em>Y</em></strong> は4増加する。つまり、 <strong><em>D</em></strong> が1増加すると <strong><em>X</em></strong> を経由して <strong><em>Y</em></strong> が1単位増加（= 0.25 <span class="math inline">\(\times\)</span> 4）ことになる。これが<strong>間接効果</strong>（indirect effect）である。結果として <strong><em>D</em></strong> が1増加すると <strong><em>Y</em></strong> は3単位分（= 直接効果 + 間接効果）増加する。因果推論において処置変数の効果量は一般的に直接効果と間接効果の和である<strong>総効果</strong>（total effect）が重視される。因果メカニズムに興味があれば、直接効果と間接効果は分解する必要があるが、我々が興味のあるものは「結局、これをやったら投票率・GDP・成績・血圧はどう変わるか」である。これら3つの変数が手元にある場合、どのようなモデルを推定すべきか。</p>
+<p>　まず、架空のデータを作成し、 <strong><em>Y</em></strong> を <strong><em>D</em></strong> と <strong><em>X</em></strong> に回帰させたモデルを推定してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19861008</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.25</span> <span class="sc">*</span> D <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> D <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> D <span class="sc">+</span> X)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Y ~ D + X)
+
+Coefficients:
+(Intercept)            D            X  
+      1.055        1.999        3.990  </code></pre>
+</div>
+</div>
+<p>　<strong><em>D</em></strong> の傾き係数は約1.999であり、これは <strong><em>D</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong> の直接効果である。また、 <strong><em>X</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong> の効果も推定されており、これは約3.990である。しかし、これだけでは総効果は分からない。総効果を推定するためには処置後変数である <strong><em>X</em></strong> をモデルから除外すべきである。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Y ~ D)
+
+Coefficients:
+(Intercept)            D  
+      9.106        2.980  </code></pre>
+</div>
+</div>
+<p>　総効果とは約2.980であり、先ほどのモデルにおける <strong><em>D</em></strong> の係数とは約0.981の差があり、これは処置後変数バイアスの大きさである。</p>
+<p>　処置後変数バイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の係数と最初のモデルにおける <strong><em>X</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong> の係数の積からも計算できる。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(X <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = X ~ D)
+
+Coefficients:
+(Intercept)            D  
+     2.0181       0.2458  </code></pre>
+</div>
+</div>
+<p>　処置後変数バイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の係数は約0.246である。最初のモデルから得られた推定値を利用し、処置後変数バイアスの大きさを計算してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 正確には coef(lm(X ~ D))[2] * coef(lm(Y ~ D + X))[3]</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.246</span> <span class="sc">*</span> <span class="fl">3.990</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.98154</code></pre>
+</div>
+</div>
 </section>
 <section id="dagと共変量選択" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> DAGと共変量選択</h1>
+<section id="dagの作り方" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="dagの作り方"><span class="header-section-number">4.1</span> DAGの作り方</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_dag_1 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_1) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>my_dag_1 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_1) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_dag_2 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_2) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>my_dag_2 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_2) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_dag_3 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X <span class="sc">+</span> Z,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  X <span class="sc">~</span> Z,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="fl">1.5</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_3) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>my_dag_3 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X <span class="sc">+</span> Z,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  X <span class="sc">~</span> Z,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="fl">1.5</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_3) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> X1 <span class="sc">+</span> X2,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  X1 <span class="sc">~</span> Z1 <span class="sc">+</span> Z2,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Z1 <span class="sc">+</span> Z3,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  X2 <span class="sc">~</span> Z2 <span class="sc">+</span> Z3,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  Z1 <span class="sc">~</span> W,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  Z2 <span class="sc">~</span> W,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  Z3 <span class="sc">~</span> W,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">4</span>, </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_4) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> X1 <span class="sc">+</span> X2,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  X1 <span class="sc">~</span> Z1 <span class="sc">+</span> Z2,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Z1 <span class="sc">+</span> Z3,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  X2 <span class="sc">~</span> Z2 <span class="sc">+</span> Z3,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  Z1 <span class="sc">~</span> W,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  Z2 <span class="sc">~</span> W,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  Z3 <span class="sc">~</span> W,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">4</span>, </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_4) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="共変量選択" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="共変量選択"><span class="header-section-number">4.2</span> 共変量選択</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adjustmentSets</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adjustmentSets</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{ X1, X2 }
 { X1, Z2, Z3 }
@@ -509,19 +611,20 @@ Y_i &amp; = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdag_adjustment_set</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdag_adjustment_set</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
 </figure>
 </div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
