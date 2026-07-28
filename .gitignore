@@ -9,7 +9,8 @@
 /resources/
 /.quarto/
 /_freeze/
-/data/
+/_data/
+/_data_slide/
 
 *
 !/docs
