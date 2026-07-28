@@ -987,7 +987,7 @@
 </ul>
 </div></aside></section><section id="サーベイ実験の例" class="slide level2"><h2>サーベイ実験の例</h2>
 <ul>
-<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか<span class="small">（Asaba et al.&nbsp;2020）</span>
+<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか<span class="small">（Asaba <em>et al.</em> 2020）</span>
 </li>
 <li>統制群：米豪合同軍事演習の動画を視聴</li>
 <li>処置群：<span class="alert">日米韓同軍事演習の動画</span>を視聴</li>
@@ -1010,7 +1010,7 @@
 <strong>4</strong> 処置効果の推定</h1>
 
 </section><section id="処置効果の推定-1" class="slide level2"><h2>処置効果の推定</h2>
-<p>結果変数の平均値をグループ間で比較</p>
+<p><strong>結果変数の平均値をグループ間で比較</strong></p>
 <ul>
 <li>ATE = <span class="math inline">\(\mathbb{E}[Y|D = 1] - \mathbb{E}[Y|D = 0]\)</span>
 <ul>
@@ -1018,11 +1018,11 @@
 </ul>
 </li>
 </ul>
-<p>使用可能な手法</p>
+<p><strong>使用可能な手法</strong></p>
 <ul>
 <li>平均値/比率の差の検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(z\)</span>検定）</span>
 <ul>
-<li>グループが3つ以上の場合、ペアごと<span class="small">（pairwise）</span>の検定を実施</li>
+<li>グループが3つ以上の場合、ペアごと<span class="small">（pairwise）</span>の検定を実施（非推奨）</li>
 </ul>
 </li>
 <li>分散分析<span class="small">（ANOVA、MANCOVAなど）</span>
@@ -1104,10 +1104,11 @@
 <li>
 <span class="math inline">\(\Rightarrow\)</span> <span class="alert">「処置効果がある」と判定される可能性は既存の<span class="math inline">\(m\)</span>倍</span>（<span class="math inline">\(m\)</span>は比較回数）</li>
 <li>
-<span class="math inline">\(\Rightarrow\)</span> <strong>解決策：</strong><span class="alert">統計的有意性の閾値（<span class="math inline">\(\alpha\)</span>）を<span class="math inline">\(m\)</span>分の1に変更</span>する</li>
+<span class="math inline">\(\Rightarrow\)</span> <strong>解決策：</strong><span class="alert">統計的有意性の閾値（<span class="math inline">\(\alpha\)</span>）を<span class="math inline">\(m\)</span>分の1に変更</span>する<sup>2</sup>
+</li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn9"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li></ol></aside></section><section id="ボンフェローニ補正の例" class="slide level2"><h2>ボンフェローニ補正の例</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn9"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li><li id="fn10"><p>または、得られた<span class="math inline">\(p\)</span>値を<span class="math inline">\(m\)</span>倍して解釈する。</p></li></ol></aside></section><section id="ボンフェローニ補正の例" class="slide level2"><h2>ボンフェローニ補正の例</h2>
 <ul>
 <li>例）<span class="math inline">\(\alpha = 0.05\)</span>、比較回数が2回の場合
 <ul>
@@ -1145,15 +1146,15 @@
 <li>1万円給付金の処置効果
 <ul>
 <li>高所得者：少額<span class="small">（…?）</span>の給付金で消費にあまり影響なし</li>
-<li>低所得者：生活必需品の購入が可能に <span class="math inline">\(\rightarrow\)</span> 実質的な効果大 &lt;!–</li>
+<li>低所得者：生活必需品の購入が可能に <span class="math inline">\(\rightarrow\)</span> 実質的な効果大</li>
 </ul>
 </li>
-<li>例2）新しい教授法の効果
-<ul>
-<li>すでに成績の良い生徒 vs 学習機会がなかった生徒 –&gt;</li>
 </ul>
-</li>
-</ul></section><section id="hteの推定" class="slide level2"><h2>HTEの推定</h2>
+<!---
+- 例2）新しい教授法の効果
+   - すでに成績の良い生徒 vs 学習機会がなかった生徒
+---></section><section id="hteの推定" class="slide level2"><h2>HTEの推定</h2>
+<p>条件付き平均処置効果<span class="small">（conditional average treatment efffect; <strong>CATE</strong>）</span>でHTE推定</p>
 <ul>
 <li>
 <span class="alert"><strong>交互作用項</strong></span>による推定
@@ -1168,16 +1169,11 @@
 </ul>
 </li>
 <li>
-<span class="alert"><strong>サブグループごと</strong></span>の推定<span class="small">（conditional average treatment efffect; <strong>CATE</strong>）</span>
+<span class="alert"><strong>サブグループごと</strong></span>の推定
 <ul>
 <li>年齢・性別・所得などで層別化してATEを推定</li>
 <li>
 <span class="math inline">\(\mathbb{E}[Y(1)−Y(0)|X=x]\)</span>：<span class="math inline">\(X = x\)</span>における平均処置効果</li>
-</ul>
-</li>
-<li>機械学習
-<ul>
-<li>Causal Forest<span class="small">（Athey and Imbens 2016; Jawadekar et al.&nbsp;2023）</span>、X-learner<span class="small">（Künzel et al.&nbsp;2019）</span>等</li>
 </ul>
 </li>
 </ul>
@@ -1185,9 +1181,31 @@
 <aside><div>
 <ul>
 <li>サブグループは<strong>予め設定した仮説に基いて選定</strong>すべきであり、<strong>多重検定</strong>の問題も考慮する必要がある。</li>
-<li>Athey, Susan and Guido Imbens. 2016. “<a href="https://doi.org/10.1073/pnas.1510489113">Recursive partitioning for heterogeneous causal effects</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 113(27): 7353-7360.</li>
+<li>Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. “<a href="https://doi.org/10.1093/pan/mpi014">Understanding Interaction Models: Improving Empirical Analyses.</a>” <em>Political Analysis</em> 14(1): 63–82.</li>
+<li>Hainmueller, Jens, Jonathan Mummolo, and Yiqing Xu. 2020. “<a href="https://doi.org/10.1017/pan.2018.46">How Much Should We Trust Estimates from Multiplicative Interaction Models? Noticeable Errors and Simple Remedies.</a>” <em>Political Analysis,</em> 27 (2): 173–92.</li>
+</ul>
+</div></aside></section><section id="参考機械学習を用いたhteの推定" class="slide level2"><h2>参考）機械学習を用いたHTEの推定</h2>
+<ul>
+<li>Causal Forest<span class="small">（Wagner and Athey 2018; Athey <em>et al.</em> 2019; Jawadekar <em>et al.</em> 2023）</span>
+</li>
+<li>Meta-learner<span class="small">（Künzel <em>et al.</em> 2019）</span>
+<ul>
+<li>S-learner</li>
+<li>T-learner</li>
+<li>X-learner</li>
+</ul>
+</li>
+<li>Double/Debiased Machine Learning<span class="small">（Chernozhukov <em>et al.</em> 2018）</span>
+</li>
+</ul>
+
+<aside><div>
+<ul>
+<li>Wager, Stefan, and Susan Athey. 2018. “<a href="https://doi.org/10.1080/01621459.2017.1319839">Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.</a>” <em>Journal of the American Statistical Association,</em> 113 (523): 1228–1242.</li>
+<li>Athey, Susan, Julie Tibshirani, and Stefan Wager. 2019. “<a href="https://www.jstor.org/stable/26581894">Generalized Random Forests.</a>” <em>The Annals of Statistics,</em> 47 (2): 1148–1178.</li>
 <li>Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “<a href="https://doi.org/10.1093/aje/kwad043">Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects</a>.” <em>American Journal of Epidemiology,</em> 192(7): 1155–1165.</li>
 <li>Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “<a href="https://doi.org/10.1073/pnas.1804597116">Metalearners for estimating heterogeneous treatment effects using machine learning</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 116(10): 4156-4165.</li>
+<li>Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. “<a href="https://doi.org/10.1111/ectj.12097">Double/Debiased Machine Learning for Treatment and Structural Parameters</a>.” <em>The Econometrics Journal,</em> 21 (1): C1–C68.</li>
 </ul>
 </div></aside></section></section><section><section id="実装時の注意点" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 実装時の注意点</h1>
@@ -1222,7 +1240,7 @@
 </ul>
 </li>
 </ul></section><section id="研究倫理違反の例1" class="slide level2"><h2>研究倫理違反の例（1）</h2>
-<p><strong>スタンフォード監獄実験</strong><span class="small">（Haney et al.&nbsp;2018）</span></p>
+<p><strong>スタンフォード監獄実験</strong><span class="small">（Haney <em>et al.</em> 2018）</span></p>
 <ul>
 <li>被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察
 <ul>
@@ -1241,7 +1259,7 @@
 <li>Haney, Craig, Curtis Banks, and Philip Zimbardo, 1973. “<a href="">A Study of Prisoners and Guards in a Simulated Prison</a>.” <em>Naval Research Reviews,</em> 9(1): 1–17.</li>
 </ul>
 </div></aside></section><section id="研究倫理違反の例2" class="slide level2"><h2>研究倫理違反の例（2）</h2>
-<p><strong>Facebook感情操作実験</strong><span class="small">（Kramer et al.&nbsp;2014）</span></p>
+<p><strong>Facebook感情操作実験</strong><span class="small">（Kramer <em>et al.</em> 2014）</span></p>
 <ul>
 <li>Facebookが約69万人のユーザーのニュースフィードを操作
 <ul>
@@ -1386,7 +1404,7 @@
 <li>給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など</li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn10"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section><section id="二重盲検法" class="slide level2"><h2>二重盲検法</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn11"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section><section id="二重盲検法" class="slide level2"><h2>二重盲検法</h2>
 <p><span class="alert"><strong>二重盲検法</strong></span><span class="small">（double-blind）</span>：被験者も研究者も、誰がどの処置を受けたかを知らない設計</p>
 <ul>
 <li>二重盲検 &gt; 単盲検 &gt; 非盲検</li>
@@ -1419,7 +1437,7 @@
 <li>実験データであってもバランスしていない可能性がある</li>
 </ul></section><section id="バランスチェックの方法" class="slide level2"><h2>バランスチェックの方法</h2>
 <ul>
-<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(\chi^2\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai et al.&nbsp;2008）</span>
+<li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(\chi^2\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai <em>et al.</em> 2008）</span>
 </li>
 <li>
 <span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
@@ -1427,7 +1445,7 @@
 <li><span class="alert"><strong>平均値の差分が「十分に」大きい = グループは不均質</strong></span></li>
 <li>バランスの閾値は研究者が任意で決める<span class="small">（主に<span class="alert"><strong>0.1</strong></span>）</span>
 <ul>
-<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho et al.&nbsp;2017）</span>
+<li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Ho <em>et al.</em> 2017）</span>
 </li>
 </ul>
 </li>
@@ -1441,7 +1459,7 @@
 <li>Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “<a href="https://doi.org/10.1111/j.1467-985X.2007.00527.x">Misunderstandings between experimentalists and observationalists about causal inference</a>.” <em>Journal of the Royal Statistical Society: Series A,</em> 171(2): 481-502.</li>
 <li>Ho, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “<a href="https://doi.org/10.1093/pan/mpl013">Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen</a>.” <em>Political Analysis,</em> 15(3): 199-236.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn11"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
+</div><ol class="aside-footnotes"><li id="fn12"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
 <li>左の図の場合、ほとんどの共変量がバランスしていない<span class="small">（閾値=0.1の場合）</span>
@@ -1483,7 +1501,7 @@
 <ul>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn12"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
+</div><ol class="aside-footnotes"><li id="fn13"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
