@@ -822,7 +822,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <li>サポートは「台」とも訳される。</li>
 </ul>
 </div><ol class="aside-footnotes"><li id="fn4"><p>処置変数が二値変数の場合、<span class="math inline">\(P(D = 0) = 1 - P(D = 1)\)</span>だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。</p></li></ol></aside></section><section id="ateが推定可能な例" class="slide level2"><h2>ATEが推定可能な例</h2>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -839,7 +839,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 </div>
 </div>
 </section><section id="att左かatc右が推定可能な例" class="slide level2"><h2>ATT（左）かATC（右）が推定可能な例</h2>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -856,7 +856,7 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 </div>
 </div>
 </section><section id="推定不可能な例" class="slide level2"><h2>推定不可能な例</h2>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -904,10 +904,74 @@ e_i(x) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <strong>4</strong> 推定：重み付け</h1>
 
 </section><section id="重み付けによる処置効果の推定" class="slide level2"><h2>重み付けによる処置効果の推定</h2>
-<p><ruby>各<rt>・</rt><ruby>個体の<span class="strong">重み</span><span class="small">（weight）</span>を計算し、加重平均を使った期待値の差分を計算</ruby></ruby></p>
+<p><ruby><strong>各</strong><rt>・</rt><ruby>個体の<span class="strong">重み</span><span class="small">（weight）</span>を計算し、加重平均を使った期待値の差分を計算</ruby></ruby></p>
 <ul>
 <li>重みは傾向スコアを使って計算するが、計算方法は推定したい対象<span class="small">（estimand）</span>に応じて異なる</li>
-</ul></section><section id="attatc推定のための重み付け" class="slide level2"><h2>ATT、ATC推定のための重み付け</h2>
+<li>重み計算の考え方
+<ol type="1">
+<li>ATTの場合は処置群、ATCの場合は統制群の<ruby><strong>全</strong><rt>・</rt><ruby>個体に同じ重み（= 1）を付ける。</ruby></ruby>
+</li>
+<li><strong>異常なケースにより高い重みを付ける</strong></li>
+</ol>
+</li>
+</ul>
+<div title="「異常なケース」とは?">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>「異常なケース」とは?</strong></p>
+</div>
+<div class="callout-content">
+<p>　傾向スコアが高い（= 処置を受ける可能性が高い）にもかかわらず統制群に割り当てられていたり、傾向スコアが低い（= 処置を受ける可能性が低い）にもかかわらず処置群に割り当てられていたりすることを「異常」とする。逆に、「低い傾向スコア &amp; 統制群」、または「高い傾向スコア &amp; 処置群」はあまり驚きではないから異常とは言いがたい。</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="重み付けの考え方1" class="slide level2"><h2>重み付けの考え方（1）</h2>
+<ul>
+<li>信頼できる因果効果を得るためにはグループは均質である必要がある</li>
+<li>無作為割り当て <span class="math inline">\(\leadsto\)</span> 均質なグループへ</li>
+</ul>
+
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"><div title="注意）これは単なるイメージであり、実際とは異なる">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>注意）これは単なるイメージであり、実際とは異なる</strong></p>
+</div>
+<div class="callout-content">
+<p>　この内容は理解を助けるためのイメージであり、厳密なものではない。具体的な重みの付け方（計算方法）は後ほど紹介する。</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="重み付けの考え方2" class="slide level2"><h2>重み付けの考え方（2）</h2>
+<p>観察データの場合、処置群と統制群が均質とは限らない</p>
+<ul>
+<li>これまでの投票率の低い自治体だからこそ啓発活動に積極的になるなら…
+<ul>
+<li>
+<span class="hl_red">▲</span>：啓発活動を実施する可能性が低い（= 低い傾向スコア）</li>
+<li>
+<span class="hl_blue">●</span>：啓発活動を実施する可能性が高い（= 高い傾向スコア）</li>
+</ul>
+</li>
+</ul>
+
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="重み付けの考え方3" class="slide level2"><h2>重み付けの考え方（3）</h2>
+<p>異常なケースに高い重みを与える</p>
+<ul>
+<li>例）統制群における<span class="hl_blue">●</span>の重みを2倍に <span class="math inline">\(\leadsto\)</span> 各群の<span class="hl_blue">●</span>が6つに</li>
+<li>例）処置群における<span class="hl_red">▲</span>の重みを2.5倍に <span class="math inline">\(\leadsto\)</span> 各群の<span class="hl_red">▲</span>が5つに</li>
+</ul>
+
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="attatc推定のための重み付け" class="slide level2"><h2>ATT、ATC推定のための重み付け</h2>
 <ul>
 <li>ATT：処置群には1を、統制群には<span class="math inline">\(\frac{e_i(X)}{1 - e_i(X)}\)</span>の重みを付ける</li>
 <li>ATC：処置群には<span class="math inline">\(\frac{1 - e_i(X)}{e_i(X)}\)</span>を、統制群には1の重みを付ける</li>
@@ -920,23 +984,56 @@ w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
 \end{eqnarray}
 \]</span></p>
 </section><section id="att推定のための重み付けのイメージ" class="slide level2"><h2>ATT推定のための重み付けのイメージ</h2>
-<ul>
-<li>ATT：処置群には1を、統制群には<span class="math inline">\(\frac{e_i(X)}{1 - e_i(X)}\)</span>の重みを付ける</li>
-<li>ATC：処置群には<span class="math inline">\(\frac{1 - e_i(X)}{e_i(X)}\)</span>を、統制群には1の重みを付ける</li>
-<li>処置群の方が統制群よりもsmall-<em>n</em>の傾向があるため、ATCが推定対象となることはあまりない</li>
-</ul>
-<p><span class="math display">\[
-\begin{eqnarray}
-w_i^{\tiny\mbox{ATT}} &amp; = &amp; D_i + (1 - D_i) \frac{e_i(X)}{1 - e_i(X)} \\
-w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
-\end{eqnarray}
-\]</span></p>
+<!---
+$\widehat{\textsf{ATT}}$ = 224.676 [-909.755, 1359.108]
+--->
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-13-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="ate推定のための重み付け" class="slide level2"><h2>ATE推定のための重み付け</h2>
 <p><span class="strong">逆確率重み付け</span><span class="small">（inverse probabilty weighting; <span class="strong">IPW</span>）</span></p>
 <p><span class="math display">\[
 w_i^{\tiny\mbox{ATE}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
 \]</span></p>
 </section><section id="ate推定のための重み付けのイメージ" class="slide level2"><h2>ATE推定のための重み付けのイメージ</h2>
+<!---
+$\widehat{\textsf{ATE}}$ = 224.676 [-909.755, 1359.108]
+--->
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-14-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="参考ato推定のための重み付け" class="slide level2"><h2>参考）ATO推定のための重み付け</h2>
 <p>ATO：<strong>A</strong>verage <strong>t</strong>reatment effect for the <strong>o</strong>verlap population<span class="small">（Li <em>et al.</em> 2018）</span></p>
 <ul>
