@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-929bbd502cf5e499379a5b3536fadc5a.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-5d6735f6b3e63bf98abef48cc79a08cd.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -143,10 +143,107 @@
 </div>
 </div>
 
-</section><section><section id="傾向スコア" class="title-slide slide level1 center"><h1>
-<strong>1</strong> 傾向スコア</h1>
+</section><section><section id="観察データと因果推論" class="title-slide slide level1 center"><h1>
+<strong>1</strong> 観察データと因果推論</h1>
 
-</section><section id="回帰分析の限界attの例" class="slide level2"><h2>回帰分析の限界（ATTの例）</h2>
+</section><section id="因果推論の基本枠組み-rubin-causal-model" class="slide level2"><h2>因果推論の基本枠組み (Rubin Causal Model)</h2>
+<p>個体<span class="math inline">\(i\)</span>に対する処置を<span class="math inline">\(D_i \in\)</span> {0, 1}とし、潜在的結果<span class="small">（Potential Outcomes）</span>を<span class="math inline">\(Y_i(1)\)</span>および<span class="math inline">\(Y_i(0)\)</span>と定義</p>
+<center>
+現実の観測値（事実） = <span class="math inline">\(Y_i\)</span> = <span class="math inline">\(D_i Y_i(1)\)</span> + <span class="math inline">\((1 - D_i) Y_i(0)\)</span>
+</center>
+<p>因果推論における推定対象<span class="small">（estimands）</span></p>
+<ul>
+<li>ATE (Average Treatment Effect): 全集団における平均処置効果
+<ul>
+<li>
+<span class="math inline">\(\tau_{\textsf{\tiny ATE}}\)</span> = <span class="math inline">\(\mathbb{E}[Y(1) - Y(0)]\)</span>
+</li>
+</ul>
+</li>
+<li>ATT (Average Treatment Effect on the Treated): 処置群における平均効果
+<ul>
+<li>
+<span class="math inline">\(\tau_{\textsf{\tiny ATE}}\)</span> = <span class="math inline">\(\mathbb{E}[Y(1) - Y(0) | D = 1]\)</span>
+</li>
+</ul>
+</li>
+<li>ATC (Average Treatment Effect on the Controls): 対照群における平均効果
+<ul>
+<li>
+<span class="math inline">\(\tau_{\textsf{\tiny ATE}}\)</span> = <span class="math inline">\(\mathbb{E}[Y(1) - Y(0) | D = 0]\)</span>
+</li>
+</ul>
+</li>
+<li>CATE (Conditional ATE): 共変量<span class="math inline">\(X\)</span> = <span class="math inline">\(x\)</span>条件付きの平均効果
+<ul>
+<li>
+<span class="math inline">\(\tau_{\textsf{\tiny ATE}}\)</span> = <span class="math inline">\(\mathbb{E}[Y(1) - Y(0) | X = x]\)</span>
+</li>
+</ul>
+</li>
+</ul></section><section id="因果推論の根本問題" class="slide level2"><h2>因果推論の根本問題</h2>
+<p><span class="strong">因果推論の根本問題</span><span class="small">（fundamental problem of causal inference）</span></p>
+<ul>
+<li>任意の個体<span class="math inline">\(i\)</span>について、<span class="math inline">\(Y_i(1)\)</span>と<span class="math inline">\(Y_i(0)\)</span>を同時に観測することは不可能
+<ul>
+<li>反実仮想<span class="small">（counterfactual）</span>の欠損</li>
+</ul>
+</li>
+<li>単純なグループ間平均の差<span class="small">（DiM estimator）</span>は… <span class="math display">\[
+\begin{align}
+&amp; \mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] \\
+= &amp; \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= &amp; \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 1] + \mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= &amp; \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]}_{\textsf{selection bias}}
+\end{align}
+\]</span>
+<ul>
+<li>セレクションバイアス<span class="small">（selection bias）</span>の解消するこそが因果推論の主目的となる。</li>
+</ul>
+</li>
+</ul></section><section id="条件付き独立仮定と共変量調整" class="slide level2"><h2>条件付き独立仮定と共変量調整</h2>
+<p><span class="strong">条件付き独立仮定</span><span class="small">（Conditional Independence Assumption: CIA）</span><sup>1</sup></p>
+<ul>
+<li>観察研究においてセレクションバイアスを除去するための最重要仮定</li>
+</ul>
+<p><span class="math display">\[
+\{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | X
+\]</span></p>
+<ul>
+<li>共変量ベクトル<span class="math inline">\(X\)</span>を一定<span class="small">（= 条件付け）</span>に保てば、処置割り当て<span class="math inline">\(D\)</span>は潜在的結果<span class="small"><span class="math inline">\((Y(0), Y(1))\)</span></span>と独立<span class="small">（あたかもランダム割り当てされたかのような状態）</span>になる
+<ul>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> <strong>共変量調整</strong>
+</li>
+</ul>
+</li>
+<li>この仮定のもとで、共変量<span class="math inline">\(X\)</span> = <span class="math inline">\(x\)</span>内のグループ間平均の差からCATE<sub>x</sub>が識別可能
+<ul>
+<li><span class="math inline">\(\mathbb{E}[Y(1) - Y(0) | X = x] = \mathbb{E}[Y | D = 1, X = x] - \mathbb{E}[Y | D = 0, X = x]\)</span></li>
+</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn1"><p>ここでの「独立」は「無視可能性（ignorability）」や「交換可能性（exchangeability）」と呼ばれることも多い。</p></li></ol></aside></section><section id="伝統的な共変量調整の方法" class="slide level2"><h2>伝統的な共変量調整の方法</h2>
+<ul>
+<li>
+<strong>サブクラス化</strong><span class="small">（sub-classification）</span>：<span class="math inline">\(X\)</span>のカテゴリごとにグループ化し、グループ内効果の加重平均を求める
+<ul>
+<li>例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均</li>
+</ul>
+</li>
+<li>
+<strong>正確マッチング</strong><span class="small">（exact matching）</span>：各処置個体に対し、全く同じ<span class="math inline">\(X\)</span>を持つ対照個体を割り当てる
+<ul>
+<li>次のスライド参照</li>
+</ul>
+</li>
+<li>
+<strong>回帰分析</strong><span class="small">（regression）</span>：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\)</span>をOLSで推定
+<ul>
+<li>前回のスライド参照</li>
+<li>参考）処置変数を含む全変数の交差項を入れた飽和モデル<span class="small">（saturated model）</span><sup>1</sup>は正確マッチングと等価</li>
+</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn2"><p>応答変数<span class="math inline">\(Y\)</span>、処置変数<span class="math inline">\(D\)</span>、共変量<span class="math inline">\(X_1\)</span>、<span class="math inline">\(X_2\)</span>がある場合、飽和モデルは<span class="math inline">\(Y = \alpha + \tau D + \beta_1 D \cdot X_1 + \beta_2 D \cdot X_2 + \beta_3 X_1 \cdot X_2 + \beta_4 D \cdot X_1 \cdot X_2\)</span>である。</p></li></ol></aside></section><section id="回帰分析の限界attの例" class="slide level2"><h2>回帰分析の限界（ATTの例）</h2>
 <p>すべての因果推論は<span class="alert"><strong>潜在的結果間の比較</strong></span></p>
 <p><span class="math display">\[
 \tau_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]
@@ -161,14 +258,14 @@
 <li>一般的に<span class="alert"><strong>パラメトリックモデル</strong></span>が使われる <span class="math inline">\(\Rightarrow\)</span> 回帰分析
 <ul>
 <li>
-<span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \beta_1 D_i + \beta_2 {X1}_i + \beta_3 {X2}_i + ...\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(Y_i(D_i = 0)\)</span>を予測する</li>
+<span class="math inline">\(Y_i\)</span>を<span class="math inline">\(\alpha + \tau D_i + \beta_1 {X1}_i + \beta_2 {X2}_i + \dots\)</span>のような特定の関数で表現できると仮定し、切片と傾きを推定することで<span class="math inline">\(Y_i(D_i = 0)\)</span>を予測する</li>
 <li>回帰分析に限らず、様々な手法が使える<span class="small">（ベイジアン、機械学習、最尤法、…）</span>
 </li>
 </ul>
 </li>
 <li>もし、モデルが間違ったら…? <span class="math inline">\(\leadsto\)</span> 間違った処置効果の推定量が得られる</li>
 </ul></section><section id="マッチングの考え方" class="slide level2"><h2>マッチングの考え方</h2>
-<p><strong>正確マッチング</strong><span class="small">（exact matching）</span>の例<sup>1</sup></p>
+<p><strong>正確マッチング</strong><span class="small">（exact matching）</span>の例</p>
 <ul>
 <li>例）<span class="alert"><span class="math inline">\(i\)</span>=4と7</span>は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能</li>
 <li>例）統制群の中に<span class="royalblue"><span class="math inline">\(i\)</span>=10</span>と共変量が完全に一致する個体がないため、分析から除外</li>
@@ -217,11 +314,11 @@
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="alert"><strong>4</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>4</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>0</strong></span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
@@ -231,11 +328,11 @@
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="tomato"><strong>6</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>3</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>6</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>3</strong></span></td>
 </tr>
 </tbody>
 </table>
@@ -259,11 +356,11 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;"><span class="alert"><strong>7</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="alert"><strong>3</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>7</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="hl_blue"><strong>3</strong></span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;"><strong>8</strong></td>
@@ -273,18 +370,18 @@
 <td style="text-align: right;"><strong>5</strong></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;"><span class="tomato"><strong>9</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="tomato"><strong>4</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>9</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>1</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>0</strong></span></td>
+<td style="text-align: right;"><span class="strong"><strong>4</strong></span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="royalblue"><strong>10</strong></span></td>
-<td style="text-align: right;"><span class="royalblue"><strong>1</strong></span></td>
-<td style="text-align: right;"><span class="royalblue"><strong>3</strong></span></td>
-<td style="text-align: right;"><span class="royalblue"><strong>0</strong></span></td>
-<td style="text-align: right;"><span class="royalblue"><strong>6</strong></span></td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
 </tr>
 </tbody>
 </table>
@@ -305,7 +402,7 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="alert"><strong>7 vs.&nbsp;4</strong></span></td>
+<td style="text-align: center;"><span class="hl_blue"><strong>7 vs.&nbsp;4</strong></span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -323,7 +420,7 @@
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="tomato"><strong>9 vs.&nbsp;6</strong></span></td>
+<td style="text-align: center;"><span class="strong"><strong>9 vs.&nbsp;6</strong></span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
@@ -352,207 +449,20 @@
 </tbody>
 </table>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>「厳格マッチング」と訳されることもある。</p></li></ol></aside></section><section id="マッチングによる因果推論の考え方" class="slide level2"><h2>マッチングによる因果推論の考え方</h2>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="2400"></p>
-</figure>
-</div>
-</div>
-</div>
-<center>
-<div class="quarto-layout-panel" data-layout-ncol="3">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<table class="caption-top">
-<caption>　</caption>
-<thead><tr class="header">
-<th style="text-align: center;">統制群</th>
-<th style="text-align: center;">vs</th>
-<th style="text-align: center;">処置群</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">?</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏿)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">?</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨🏼)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<table class="caption-top">
-<caption>回帰分析<sup>1</sup>
-</caption>
-<thead><tr class="header">
-<th style="text-align: center;">統制群</th>
-<th style="text-align: center;">vs</th>
-<th style="text-align: center;">処置群</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(\widehat{Y}\)</span>(👩🏿)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏿)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(\widehat{Y}\)</span>(👨🏼)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨🏼)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<table class="caption-top">
-<caption>マッチング<sup>2</sup>
-</caption>
-<thead><tr class="header">
-<th style="text-align: center;">統制群</th>
-<th style="text-align: center;">vs</th>
-<th style="text-align: center;">処置群</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏿)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨🏼)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏽)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-<td style="text-align: center;"><span class="math inline">\(\leftrightarrow\)</span></td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👨)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</center>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</p></li><li id="fn3"><p>正確マッチングの場合</p></li></ol></aside></section><section id="マッチングによる因果推論の考え方-1" class="slide level2"><h2>マッチングによる因果推論の考え方</h2>
+</section><section id="マッチングと線形回帰分析" class="slide level2"><h2>マッチングと線形回帰分析</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
+<p>観察不可能な反事実（「?」）をどう扱うか</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="1800"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="1800"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:40%;">
 <table class="caption-top">
-<caption>　</caption>
 <thead><tr class="header">
 <th style="text-align: center;">統制群</th>
 <th style="text-align: center;">vs</th>
@@ -577,6 +487,41 @@
 <td style="text-align: center;">?</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;">?</td>
 <td style="text-align: center;">
 <span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
@@ -585,15 +530,6 @@
 <span class="math inline">\(Y\)</span>(👩🏿)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-<td style="text-align: center;">
-<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
-</td>
-<td style="text-align: center;">
-<span class="math inline">\(Y\)</span>(👩🏻)</td>
-</tr>
-<tr class="odd">
 <td style="text-align: center;">?</td>
 <td style="text-align: center;">
 <span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
@@ -601,7 +537,69 @@
 <td style="text-align: center;">
 <span class="math inline">\(Y\)</span>(👨🏼)</td>
 </tr>
+</tbody>
+</table>
+</div></div>
+</section><section id="回帰分析による因果推論の考え方" class="slide level2"><h2>回帰分析による因果推論の考え方</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>推定したモデルに基づき、反事実を作り上げて比較する</p>
+<ul>
+<li>正確なモデルの設定が重要</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: center;">統制群</th>
+<th style="text-align: center;">vs</th>
+<th style="text-align: center;">処置群</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+</tr>
 <tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👨🏿)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👨🏻)</td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;">
 <span class="math inline">\(Y\)</span>(👩🏽)</td>
 <td style="text-align: center;">
@@ -610,7 +608,93 @@
 <td style="text-align: center;">
 <span class="math inline">\(Y\)</span>(👩🏽)</td>
 </tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨)</td>
+</tr>
 <tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👩🏿)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏿)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(\widehat{Y}\)</span>(👨🏼)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👨🏼)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<aside><div>
+<ul>
+<li>厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる</li>
+</ul>
+</div></aside></section><section id="正確マッチングによる因果推論の考え方" class="slide level2"><h2>正確マッチングによる因果推論の考え方</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>完全に比較可能た対象を反事実として使用</p>
+<ul>
+<li>モデルの設定は不要</li>
+<li>比較可能な対象がないなら、分析から除外</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: center;">統制群</th>
+<th style="text-align: center;">vs</th>
+<th style="text-align: center;">処置群</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏻)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+<td style="text-align: center;">
+<span class="math inline">\(\leftarrow\)</span> 比較 <span class="math inline">\(\rightarrow\)</span>
+</td>
+<td style="text-align: center;">
+<span class="math inline">\(Y\)</span>(👩🏽)</td>
+</tr>
+<tr class="even">
 <td style="text-align: center;">
 <span class="math inline">\(Y\)</span>(👨)</td>
 <td style="text-align: center;">
@@ -626,15 +710,37 @@
 <ul>
 <li>共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増<sup>1</sup>
 <ul>
-<li>例1）「男性 &amp; 大卒 &amp; 大阪府居住」</li>
-<li>例2）「男性 &amp; 176.5cm &amp; 大学院卒 &amp; 年収 352万円 &amp; 吹田市居住 &amp; 韓国人」</li>
-<li>
-<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>次元の呪い</strong></span>
+<li>例1）「男性 &amp; 博士 &amp; 大阪府在住」
+<ul>
+<li>めっちゃいる</li>
+</ul>
+</li>
+<li>例2）「男性 &amp; 博士 &amp; 吹田市在住」
+<ul>
+<li>まあまあいる</li>
+</ul>
+</li>
+<li>例3）「男性 &amp; 博士 &amp; 吹田市在住 &amp; 身長 175cm以上 &amp; 韓国人」
+<ul>
+<li>少ない</li>
+</ul>
+</li>
+<li>例4）「男性 &amp; 博士 &amp; 吹田市在住 &amp; 身長 176.5cm &amp; 韓国人 &amp; 年収 244万8,960円」
+<ul>
+<li>多分いない <span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>次元の呪い</strong></span>
 </li>
 </ul>
 </li>
-<li>妥協案
+</ul>
+</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>厳密にいえば正確マッチングの限界</p></li></ol></aside></section><section id="次元の呪いの克服方法" class="slide level2"><h2>次元の呪いの克服方法</h2>
+<p>次元の呪いにより、マッチングそのものが実行できない場合</p>
 <ul>
+<li>線形回帰分析等を使用し、<span class="alert">反事実を作り上げ</span>る
+<ul>
+<li>線形性や加法性の強固なパラメトリック仮定に頼った外挿<span class="small">（Extrapolation）</span>が行われ、処置効果推定値がモデル設定に極めて敏感に</li>
+</ul>
+</li>
 <li>共変量が一致するのではなく、<span class="alert">類似</span>したケース同士で比較
 <ul>
 <li>
@@ -644,35 +750,233 @@
 </li>
 <li>共変量ではなく、<span class="alert">処置を受ける確率</span>がほぼ同じケース同士で比較
 <ul>
-<li>処置を受ける確率 = <span class="alert"><strong>傾向スコア</strong></span>
+<li>処置を受ける確率 = <span class="strong">傾向スコア</span>
 </li>
 </ul>
 </li>
+</ul></section></section><section><section id="傾向スコア" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 傾向スコア</h1>
+
+</section><section id="傾向スコア-1" class="slide level2"><h2>傾向スコア</h2>
+<p><span class="strong">傾向スコア</span><span class="small">（propensity score）</span></p>
+<ul>
+<li>共変量ベクトル<span class="math inline">\(X\)</span>が与えられたもとでの、処置（<span class="math inline">\(D\)</span> = 1）に割り当てられる条件付き確率</li>
+<li>高次元の共変量<span class="math inline">\(X\)</span>を1次元に縮約したもの</li>
 </ul>
-</li>
-</ul><aside><ol class="aside-footnotes"><li id="fn4"><p>厳密にいえば正確マッチングの限界</p></li></ol></aside></section><section id="傾向スコア-1" class="slide level2"><h2>傾向スコア</h2>
 <p><span class="math display">\[
 e_i(x) = \mbox{Pr}(D_i = 1 | X = x)
 \]</span></p>
-<p>最近傍マッチング・共変量調整でも使われるが、ここれでは省略（マッチングは付録に）</p>
-</section></section><section><section id="仮定" class="title-slide slide level1 center"><h1>
-<strong>2</strong> 仮定</h1>
+</section><section id="傾向スコアの作り方" class="slide level2"><h2>傾向スコアの作り方</h2>
+<p>真の傾向スコア<span class="math inline">\(e(X)\)</span>は未知であるため、観測データから推計値<span class="math inline">\(\widehat{e}(X)\)</span>を推定</p>
+<p><span class="math display">\[
+e_i(x) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
+\]</span></p>
+<ul>
+<li>
+<span class="math inline">\(f(x) = x\)</span>なら線形回帰モデル、<span class="math inline">\(f(x) = \frac{e^x}{(1 + e^x)}\)</span>ならロジスティック回帰モデル
+<ul>
+<li>処置変数が二値変数の場合、<span class="strong">ロジスティック</span> or <span class="strong">プロビット</span>回帰が一般的に使われる
+<ul>
+<li>処置を受ける確率が推定できるなら、何でも良い<span class="small">（例：機械学習）</span>
+</li>
+</ul>
+</li>
+<li>正しい共変量選定、モデルの正しい定式化が重要</li>
+</ul>
+</li>
+<li>処置変数が連続変数の場合の考え方はHirano and Imbens（2004）を参照</li>
+</ul>
 
-</section><section id="条件付平均独立" class="slide level2"><h2>条件付（平均）独立</h2>
-</section><section id="共有サポート" class="slide level2"><h2>共有サポート</h2>
-<p>共有サポート（common support）</p>
-<p>サポートは「台」とも訳される</p>
-</section></section><section id="推定層化" class="title-slide slide level1 center"><h1>
+<aside><div>
+<ul>
+<li>Hirano, Keisuke. and Guido W. Imbens. 2004. “<a href="https://doi.org/10.1002/0470090456.ch7">The Propensity Score with Continuous Treatments</a>.” In Andrew Gelman and Xiaoli Meng. <em>Applied Bayesian Modeling and Causal Inference from Incomplete-Data Perspectives</em>.</li>
+</ul>
+</div></aside></section><section id="傾向スコアの仮定" class="slide level2"><h2>傾向スコアの仮定</h2>
+<p>傾向スコアを用いて普遍<span class="small">（unbiased）</span>な因果推計を行うために必要な仮定</p>
+<ol type="1">
+<li><span class="strong">条件付独立の仮定</span></li>
+<li><span class="strong">共通サポートの仮定</span></li>
+<li>傾向スコアモデルの正しい定式化</li>
+<li>SUTVA</li>
+</ol></section><section id="条件付独立の仮定" class="slide level2"><h2>条件付独立の仮定</h2>
+<p>結果<span class="small">（応答）</span>変数と処置割当に同時に影響を与える全ての交絡要因<span class="small">（confounders）</span>が観測され、<span class="math inline">\(X\)</span>に含まれている</p>
+<p><span class="math display">\[
+\{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | X
+\]</span></p>
+<ul>
+<li>未観測の交絡要因があってはならない</li>
+<li>あくまでも<strong>理論的</strong>な仮定であり、統計的に検証不可能な<strong>不可証</strong><span class="small">（untestable）</span>な仮定</li>
+</ul></section><section id="共通サポートcommon-supportの仮定" class="slide level2"><h2>共通サポート（common support）の仮定</h2>
+<p>すべての共変量の値において、処置を受ける（受けない）確率が正である<sup>1</sup> <span class="small">（0や1にならない）</span></p>
+<p><span class="math display">\[
+\forall x,\,\,0 &lt; P(D = 1 | X = x) &lt; 1
+\]</span></p>
+<ul>
+<li>任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する<span class="small">（逆も然り）</span>
+</li>
+<li>データから検証可能な仮定</li>
+</ul>
+
+<aside><div>
+<ul>
+<li>サポートは「台」とも訳される。</li>
+</ul>
+</div><ol class="aside-footnotes"><li id="fn4"><p>処置変数が二値変数の場合、<span class="math inline">\(P(D = 0) = 1 - P(D = 1)\)</span>だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。</p></li></ol></aside></section><section id="ateが推定可能な例" class="slide level2"><h2>ATEが推定可能な例</h2>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-6-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section><section id="att左かatc右が推定可能な例" class="slide level2"><h2>ATT（左）かATC（右）が推定可能な例</h2>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-7-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section><section id="推定不可能な例" class="slide level2"><h2>推定不可能な例</h2>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-8-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section><section id="傾向スコアの使い方" class="slide level2"><h2>傾向スコアの使い方</h2>
+<ul>
+<li>傾向スコア・マッチング<span class="small">（propensity score matching; PSM）</span>
+<ul>
+<li>1:1マッチング：最近傍マッチング</li>
+<li>1:kマッチング：<em>k</em>-最近傍マッチング、キャリパー・マッチング</li>
+<li>傾向スコアを使ったマッチングは推奨されない<span class="small">（King and Nielsen 2019）</span>
+</li>
+</ul>
+</li>
+<li>
+<span class="strong">層化</span><span class="small">（stratification / subclassification）</span>
+<ul>
+<li>k:kマッチングの一種として考えることも可</li>
+</ul>
+</li>
+<li>
+<span class="strong">重み付け</span><span class="small">（weighting; <strong>IPW</strong>）</span>
+</li>
+</ul>
+
+<aside><div>
+<ul>
+<li>King, Gary, and Richard Nielsen. 2019. “<a href="(https://doi.org/10.1017/pan.2019.11)">Why Propensity Scores Should Not Be Used for Matching</a>.” <em>Political Analysis</em> 27(4): 435–54.</li>
+</ul>
+</div></aside></section></section><section id="推定層化" class="title-slide slide level1 center"><h1>
 <strong>3</strong> 推定：層化</h1>
 
-</section><section id="推定重み付け" class="title-slide slide level1 center"><h1>
+</section><section><section id="推定重み付け" class="title-slide slide level1 center"><h1>
 <strong>4</strong> 推定：重み付け</h1>
 
-</section><section id="実装例" class="title-slide slide level1 center"><h1>
-<strong>5</strong> 実装例</h1>
+</section><section id="重み付けによる処置効果の推定" class="slide level2"><h2>重み付けによる処置効果の推定</h2>
+<p><ruby>各<rt>・</rt><ruby>個体の<span class="strong">重み</span><span class="small">（weight）</span>を計算し、加重平均を使った期待値の差分を計算</ruby></ruby></p>
+<ul>
+<li>重みは傾向スコアを使って計算するが、計算方法は推定したい対象<span class="small">（estimand）</span>に応じて異なる</li>
+</ul></section><section id="attatc推定のための重み付け" class="slide level2"><h2>ATT、ATC推定のための重み付け</h2>
+<ul>
+<li>ATT：処置群には1を、統制群には<span class="math inline">\(\frac{e_i(X)}{1 - e_i(X)}\)</span>の重みを付ける</li>
+<li>ATC：処置群には<span class="math inline">\(\frac{1 - e_i(X)}{e_i(X)}\)</span>を、統制群には1の重みを付ける</li>
+<li>処置群の方が統制群よりもsmall-<em>n</em>の傾向があるため、ATCが推定対象となることはあまりない</li>
+</ul>
+<p><span class="math display">\[
+\begin{eqnarray}
+w_i^{\tiny\mbox{ATT}} &amp; = &amp; D_i + (1 - D_i) \frac{e_i(X)}{1 - e_i(X)} \\
+w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
+\end{eqnarray}
+\]</span></p>
+</section><section id="att推定のための重み付けのイメージ" class="slide level2"><h2>ATT推定のための重み付けのイメージ</h2>
+<ul>
+<li>ATT：処置群には1を、統制群には<span class="math inline">\(\frac{e_i(X)}{1 - e_i(X)}\)</span>の重みを付ける</li>
+<li>ATC：処置群には<span class="math inline">\(\frac{1 - e_i(X)}{e_i(X)}\)</span>を、統制群には1の重みを付ける</li>
+<li>処置群の方が統制群よりもsmall-<em>n</em>の傾向があるため、ATCが推定対象となることはあまりない</li>
+</ul>
+<p><span class="math display">\[
+\begin{eqnarray}
+w_i^{\tiny\mbox{ATT}} &amp; = &amp; D_i + (1 - D_i) \frac{e_i(X)}{1 - e_i(X)} \\
+w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
+\end{eqnarray}
+\]</span></p>
+</section><section id="ate推定のための重み付け" class="slide level2"><h2>ATE推定のための重み付け</h2>
+<p><span class="strong">逆確率重み付け</span><span class="small">（inverse probabilty weighting; <span class="strong">IPW</span>）</span></p>
+<p><span class="math display">\[
+w_i^{\tiny\mbox{ATE}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
+\]</span></p>
+</section><section id="ate推定のための重み付けのイメージ" class="slide level2"><h2>ATE推定のための重み付けのイメージ</h2>
+</section><section id="参考ato推定のための重み付け" class="slide level2"><h2>参考）ATO推定のための重み付け</h2>
+<p>ATO：<strong>A</strong>verage <strong>t</strong>reatment effect for the <strong>o</strong>verlap population<span class="small">（Li <em>et al.</em> 2018）</span></p>
+<ul>
+<li>傾向スコアが重なる集団における平均処置効果
+<ul>
+<li>共有サポートの仮定が満たされなくても推定可能な推定対象<span class="small">（estimand）</span>
+</li>
+<li>自然実験（を含む観察研究）では共通サポートの仮定が満たされないことが多いため、ATOが一つの解決策になる得る<span class="small">（Liu and Quinn 2026?）</span>
+<ul>
+<li>ただし、推定対象がATOであることを明記し、慎重に解釈する必要がある</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>処置群には<span class="math inline">\(1 - e_i(X)\)</span>、統制群には<span class="math inline">\(e_i(X)\)</span>の重みをつける</li>
+</ul>
+<p><span class="math display">\[
+w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
+\]</span></p>
+
+<aside><div>
+<ul>
+<li>Li, Fan, Kari Lock Morgan, and Alan M. Zaslavsky. 2018. “<a href="https://doi.org/10.1080/01621459.2016.1260466">Balancing Covariates via Propensity Score Weighting</a>.” <em>Journal of the American Statistical Association</em> 113 (521): 390-400.</li>
+<li>Liu Guoer and Kevin M. Quinn. Online first. <a href="https://doi.org/10.1177/2755323X261465058">Why the Average Treatment Effect for the Overlap Population (ATO) Matters for Natural Experiments</a>. <em>Journal of Law &amp; Empirical Analysis</em>.</li>
+</ul>
+</div></aside></section></section><section><section id="実装" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 実装</h1>
+
+</section><section id="共有サポートの確認" class="slide level2"><h2>共有サポートの確認</h2>
+</section><section id="バランスチェック" class="slide level2"><h2>バランスチェック</h2>
+</section><section id="参考" class="slide level2"><h2>参考）</h2>
+</section><section id="参考共変量バランシング傾向スコア" class="slide level2"><h2>参考）共変量バランシング傾向スコア</h2>
+<p><span class="strong">共変量バランシング傾向スコア</span>（covariate balancing propensity score; <strong>CBPS</strong>）</p>
+<p>従来のMLEによる傾向スコア推計は「処置割当の予測」を最適化するが、「共変量のバランス」を直接保証するものではないという弱点を克服する手法。</p>
 
 
-</section>
+
+<aside><div>
+<p>Imai &amp; Ratkovic (2014)</p>
+</div></aside></section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

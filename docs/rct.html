@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7ac9241da4525f629cdadd87b350181d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7001dc1b4c4aa5cfc09e3ac2b96d9649.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f5538508b450d86ad241543b57290dc9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -396,7 +396,7 @@ mean of x mean of y
 </div>
 </div>
 <p>この <em>N</em> = 1,000を母集団とする。通常、我々は母集団を直接観察することはできず、母集団の一部である標本から母集団を推論することが多い。これからは各群で100個ずつ無作為に抽出したものを標本（ <em>n</em> = 200）とし、この標本を使って2群の差の検定を行う。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）`sample()`関数">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -408,7 +408,7 @@ mean of x mean of y
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>第1引数のベクトルから<code>size</code>個の行を無作為に抽出する関数である。<code>sample(my_vector, size = 100)</code>は<code>my_vector</code>から無作為に100個の要素を抽出するコードである。<code>replace = TRUE</code>を追加すると復元抽出を行う（既定値は<code>FALSE</code>であり、非復元抽出を行う）。</p>
+<p>　第1引数のベクトルから<code>size</code>個の行を無作為に抽出する関数である。<code>sample(my_vector, size = 100)</code>は<code>my_vector</code>から無作為に100個の要素を抽出するコードである。<code>replace = TRUE</code>を追加すると復元抽出を行う（既定値は<code>FALSE</code>であり、非復元抽出を行う）。</p>
 </div>
 </div>
 </div>
@@ -491,7 +491,7 @@ mean of x mean of y
 </div>
 </div>
 <p>続いて、<code>table()</code>関数を使用し、<code>TRUE</code>と<code>FALSE</code>の数を度数分布表で出力してみよう。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）`table()`関数">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -503,7 +503,7 @@ mean of x mean of y
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>第1引数のベクトルの度数分布表を返す関数である。連続変数（間隔尺度、または比率尺度で測定された変数）に対してはほぼ使わないが、離散変数（いわゆる名目変数、順序変数）の分布を知るには便利な関数だ。</p>
+<p>　第1引数のベクトルの度数分布表を返す関数である。連続変数（間隔尺度、または比率尺度で測定された変数）に対してはほぼ使わないが、離散変数（いわゆる名目変数、順序変数）の分布を知るには便利な関数だ。</p>
 </div>
 </div>
 </div>
@@ -526,7 +526,7 @@ FALSE  TRUE
 <section id="多重比較の問題を理解する" class="level2">
 <h2 class="anchored" data-anchor-id="多重比較の問題を理解する">多重比較の問題を理解する</h2>
 <p>まず、N = 1,000の架空の母集団（<code>pop_df</code>）を作成する。1,000名をランダムに5つのグループ（1つの統制群を含む）に分け、異なる刺激を与えた後、応答変数（<code>y</code>）を測定したデータである。母集団における処置効果（処置群1〜4の<code>y</code> - 統制群の<code>y</code>）はほぼ0のデータである。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）`tibble()`関数">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -538,7 +538,7 @@ FALSE  TRUE
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>表形式オブジェクト（<span class="math inline">\(\simeq\)</span> data.frame型）を作成する関数である。R内臓の<code>data.frame()</code>関数とほぼ同じ関数である。この関数を使用するためには事前に{tibble}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。</p>
+<p>　表形式オブジェクト（<span class="math inline">\(\simeq\)</span> data.frame型）を作成する関数である。R内臓の<code>data.frame()</code>関数とほぼ同じ関数である。この関数を使用するためには事前に{tibble}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。</p>
 </div>
 </div>
 </div>
@@ -590,7 +590,7 @@ F-statistic: 0.2553 on 4 and 995 DF,  p-value: 0.9065</code></pre>
 </div>
 <p>処置群1の処置効果の点推定値は-0.021、 <em>p</em> 値は1であり、統計的有意な処置効果は確認できない。処置群2、3、4も同様であり、処置効果は確認できない。</p>
 <p>しかし、通常、母集団のサイズは非常に大きく、直截観察することはできない。だから我々は母集団の一部である標本を抽出し、標本から母集団を推論する。ここでは母集団からn = 500の標本を抽出し、その標本を使用して処置効果を推定してみよう。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）`slice_sample()`関数">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -602,7 +602,7 @@ F-statistic: 0.2553 on 4 and 995 DF,  p-value: 0.9065</code></pre>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>表形式オブジェクトから<code>n</code>個の行を無作為に抽出する関数である。<code>slice_sample(pop_df, n = 100)</code>は<code>pop_df</code>から無作為に100行を抽出するコードである。<code>replace = TRUE</code>を追加すると復元抽出を行う（既定値は<code>FALSE</code>であり、非復元抽出を行う）。この関数を使用するためには事前に{dplyr}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。</p>
+<p>　表形式オブジェクトから<code>n</code>個の行を無作為に抽出する関数である。<code>slice_sample(pop_df, n = 100)</code>は<code>pop_df</code>から無作為に100行を抽出するコードである。<code>replace = TRUE</code>を追加すると復元抽出を行う（既定値は<code>FALSE</code>であり、非復元抽出を行う）。この関数を使用するためには事前に{dplyr}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。</p>
 </div>
 </div>
 </div>
@@ -649,7 +649,7 @@ F-statistic: 0.6553 on 4 and 495 DF,  p-value: 0.6234</code></pre>
 </div>
 </div>
 <p>一つでも統計的に処置効果が認められたら、つまり、一つでも<code>TRUE</code>が確認されたら「仮説は支持された」と解釈する場合、仮説の支持有無は<code>any()</code>関数で判定できる。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）`any()`関数">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -661,7 +661,7 @@ F-statistic: 0.6553 on 4 and 495 DF,  p-value: 0.6234</code></pre>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>TRUE</code>と<code>FALSE</code>のみで構成されたベクトルに対し、一つでも<code>TRUE</code>があったら<code>TRUE</code>を返す関数である。ベクトルのすべての要素が<code>FALSE</code>の場合<strong>のみ</strong>、<code>FALSE</code>を返す。</p>
+<p>　<code>TRUE</code>と<code>FALSE</code>のみで構成されたベクトルに対し、一つでも<code>TRUE</code>があったら<code>TRUE</code>を返す関数である。ベクトルのすべての要素が<code>FALSE</code>の場合<strong>のみ</strong>、<code>FALSE</code>を返す。</p>
 </div>
 </div>
 </div>
@@ -711,7 +711,7 @@ FALSE  TRUE
 </div>
 </div>
 <p>計1000回の試行中、202回の試行において一つ以上の統計的有意な処置効果が確認され、仮説が支持される結果が得られた。真の処置効果は0であるが、このように処置効果が統計的有意に0でない状況が約20%の割合で出現することを意味する。この20%ということは我々が統計的有意性検定に使用した基準（<span class="math inline">\(\alpha\)</span>）に比較回数の積である（後述するが、厳密には積ではない）。今回は<span class="math inline">\(\alpha\)</span> = 0.05、比較回数は4回<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>だから、0.05 <span class="math inline">\(\times\)</span> 4 = 0.2である。厳密には20%ではないが（後述）、重要なのは比較の回数と間違った判定を下ろす可能性は比例することだ。</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="参考）厳密には20%じゃない!">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -721,7 +721,7 @@ FALSE  TRUE
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>今回の例でいると、仮説が支持される結果が得られる割合の期待値は20%でなく、厳密には約18.5%である。計算式は1 - (1 - <span class="math inline">\(\alpha\)</span>)<sup>比較回数</sup>であり、今回は1 - (1 - 0.05)<sup>4</sup> <span class="math inline">\(\simeq\)</span> 0.185になる。比較回数が2回なら約9.75%、3回なら約14.3%、5回なら22.6%であり、本文に登場した積を使った計算はあくまでも簡易的な計算方法である。</p>
+<p>　今回の例でいると、仮説が支持される結果が得られる割合の期待値は20%でなく、厳密には約18.5%である。計算式は1 - (1 - <span class="math inline">\(\alpha\)</span>)<sup>比較回数</sup>であり、今回は1 - (1 - 0.05)<sup>4</sup> <span class="math inline">\(\simeq\)</span> 0.185になる。比較回数が2回なら約9.75%、3回なら約14.3%、5回なら22.6%であり、本文に登場した積を使った計算はあくまでも簡易的な計算方法である。</p>
 </div>
 </div>
 </section>
@@ -733,7 +733,7 @@ FALSE  TRUE
 <li><em>p</em> 値を <em>m</em> 倍し、 <em>p</em> <span class="math inline">\(\leq \alpha\)</span>の場合、「5%水準で統計的有意である」と判定する。</li>
 </ul>
 <p>2つは同じことであるが、ここでは両方やってみよう。まず、<span class="math inline">\(\alpha\)</span>を<span class="math inline">\(\frac{1}{\mathsfit{m}}\)</span>にする方法である。今回の例だと、<span class="math inline">\(\alpha\)</span> = 0.0125を採用し、 <em>p</em> 値が0.0125以下であれば「5%水準で統計的に有意である」と解釈する。処置群1〜4の処置効果の推定値の <em>p</em> 値は<code>t1_vec</code>、<code>t2_vec</code>、<code>t3_vec</code>、<code>t4_vec</code>に格納されている。一つでも <em>p</em> 値が0.0125以下であれば仮説は支持されたと解釈されるため、ペアごとに最も小さい <em>p</em> 値のみを抽出してみよう。</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="参考）`pmin()`関数">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -743,7 +743,7 @@ FALSE  TRUE
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>pmin()</code>は2つ以上の同じ長さのベクトルを受け付け、ペアごとに最小値を返す関数である。例えば、<code>x</code>の中身が1、3、5で、<code>y</code>の中身が2、2、4の場合、<code>pmax(x, y)</code>のようにコードを書く。まず、<code>x</code>の1番目の要素（=1）と<code>y</code>の1番目の要素（=2）を比較し、最小値である1を返す。続いて、<code>x</code>の2番目の要素（=3）と<code>y</code>の2番目の要素（=2）を比較し、最小値である1を返す。最後に、<code>x</code>の3番目の要素（=5）と<code>y</code>の3番目の要素（=4）を比較し、最小値である4を返す。</p>
+<p>　<code>pmin()</code>は2つ以上の同じ長さのベクトルを受け付け、ペアごとに最小値を返す関数である。例えば、<code>x</code>の中身が1、3、5で、<code>y</code>の中身が2、2、4の場合、<code>pmax(x, y)</code>のようにコードを書く。まず、<code>x</code>の1番目の要素（=1）と<code>y</code>の1番目の要素（=2）を比較し、最小値である1を返す。続いて、<code>x</code>の2番目の要素（=3）と<code>y</code>の2番目の要素（=2）を比較し、最小値である1を返す。最後に、<code>x</code>の3番目の要素（=5）と<code>y</code>の3番目の要素（=4）を比較し、最小値である4を返す。</p>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -790,7 +790,7 @@ FALSE  TRUE
 </div>
 <p>同じ結果が得られた。今回は約7.7%になったが、試行回数を増やせば増やすほど5%へ近づくと期待される。</p>
 <p>多重比較の問題を補正する方法はボンフェローニ法以外にもホルム法（Holm）、BH法（Benjamini-Hochberg）、ダネット検定（Dunnett’s test）などがあり、実は今回のケースだと、複数に比較にわたって一つの統制群が共有されているため、ダネット検定が最も適切と考えられる。ただし、ボンフェローニ補正は他の補正法よりも保守的、つまり統計的有意な結果が得られにくく、分析する側からみれば最も都合の悪い手法だから、ボンフェローニ補正を使えば文句は言われないだろう。</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="参考）厳密には5%じゃない!">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -800,10 +800,10 @@ FALSE  TRUE
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>今回の例でいると、ボンフェローニ補正後、仮説が支持される結果が得られる割合の期待値は5%でなく、厳密には約4.9%である。計算式は1 - (1 - <span class="math inline">\(\frac{\alpha}{\textsf{比較回数}}\)</span>)<sup>比較回数</sup>であり、今回は1 - (1 - 0.0125)<sup>4</sup> <span class="math inline">\(\simeq\)</span> 0.049、つまり約4.9%になる。</p>
+<p>　今回の例でいると、ボンフェローニ補正後、仮説が支持される結果が得られる割合の期待値は5%でなく、厳密には約4.9%である。計算式は1 - (1 - <span class="math inline">\(\frac{\alpha}{\textsf{比較回数}}\)</span>)<sup>比較回数</sup>であり、今回は1 - (1 - 0.0125)<sup>4</sup> <span class="math inline">\(\simeq\)</span> 0.049、つまり約4.9%になる。</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="参考）ダネット検定のやりかた">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -815,7 +815,7 @@ FALSE  TRUE
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>ダネット検定をRで実装するには{DescTools}か{multcomp}パッケージを使用する。{DescTools}の<code>DunnettTest()</code>関数は<code>lm()</code>関数と使い方が似ているため、ここでは{DescTools}を使用した例を紹介する。<code>lm()</code>関数とは違って、<code>control</code>引数を使って統制群のラベルを指定することができる。</p>
+<p>　ダネット検定をRで実装するには{DescTools}か{multcomp}パッケージを使用する。{DescTools}の<code>DunnettTest()</code>関数は<code>lm()</code>関数と使い方が似ているため、ここでは{DescTools}を使用した例を紹介する。<code>lm()</code>関数とは違って、<code>control</code>引数を使って統制群のラベルを指定することができる。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(DescTools)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>sample_500 <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(pop_df, <span class="at">n =</span> <span class="dv">500</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
@@ -860,7 +860,7 @@ Treatment4-Control 0.1818623 -0.18619538 0.5499200 0.5763
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>通常の線形回帰モデルから得られた<em>p</em>値よりも大きい<em>p</em>値が得られたことが分かる。</p>
+<p>　通常の線形回帰モデルから得られた<em>p</em>値よりも大きい<em>p</em>値が得られたことが分かる。</p>
 </div>
 </div>
 </div>
