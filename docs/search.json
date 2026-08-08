@@ -1033,7 +1033,7 @@
     "href": "rct_slide.html#バランスチェックの方法",
     "title": "社会科学における因果推論",
     "section": "バランスチェックの方法",
-    "text": "バランスチェックの方法\n\n統計的有意性検定（\\(t\\)検定、\\(\\chi^2\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n\n\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が「十分に」大きい = グループは不均質\nバランスの閾値は研究者が任意で決める（主に0.1）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Ho et al. 2017）\n\n\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nHo, Daniel E., Kosuke Imai, Gary King and Elizabeth A. Stuart. 2017. “Matching as Nonparametric Preprocessing for Reducing Model Dependence in Parametric Causal Inferen.” Political Analysis, 15(3): 199-236.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{0.5 (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
+    "text": "バランスチェックの方法\n\n統計的有意性検定（\\(t\\)検定、\\(\\chi^2\\)検定、ANOVAなど）は非推奨（Imai et al. 2008）\n\n\n平均値の差分（mean difference）1の使用を推奨\n\n平均値の差分が「十分に」大きい = グループは不均質\nバランスの閾値は研究者が任意で決めが、推奨は0.1（Austin 2011）\n\n傾向スコアのバランスチェックには0.25を採用する場合も（Stuart 2010）\n\n\n\nグループが3つ以上ならペアごとに（標準化した）平均値の差分を計算\n\n\n\n\n\n\nImai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. “Misunderstandings between experimentalists and observationalists about causal inference.” Journal of the Royal Statistical Society: Series A, 171(2): 481-502.\nAustin, Peter C. 2011. “An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies.” Multivariate Behavioral Research, 46(3): 399-424.\nStuart, Elizabeth A. 2010. “Matching methods for causal inference: A review and a look forward.” Statistical science: a review journal of the Institute of Mathematical Statistics, 25(1): 1-21.\n\n共変量が連続変数の場合、標準化した平均値の差分（standardized mean difference; 標準化平均差）を使用する。平均値の差分を\\(s^*\\)で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、\\(s^* = \\sqrt{0.5 (s_1^2 + s_0^2)}\\)であり、\\(s_1\\)と\\(s_0\\)はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら\\(s^* = s_1\\)、ATCなら\\(s^* = s_0\\)である。"
   },
   {
     "objectID": "rct_slide.html#バランスチェックの例",
@@ -1194,7 +1194,7 @@
     "href": "ps_slide.html#回帰分析の限界attの例",
     "title": "社会科学における因果推論",
     "section": "回帰分析の限界（ATTの例）",
-    "text": "回帰分析の限界（ATTの例）\nすべての因果推論は潜在的結果間の比較\n\\[\n\\tau_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\n\\]\n欠損している（=観察不可能）\\(Y_i(0)\\)を回帰分析を用いて代入（imputation）する\n\\[\n\\hat{\\tau}_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - \\textcolor{red}{\\widehat{Y_i}(0)} | D_i = 1]\n\\]\n\n\\(\\hat{Y_i}(0)\\)の推定方法\n\n一般的にパラメトリックモデルが使われる \\(\\Rightarrow\\) 回帰分析\n\n\n\\(Y_i\\)を\\(\\alpha + \\tau D_i + \\beta_1 {X1}_i + \\beta_2 {X2}_i + \\dots\\)のような特定の関数で表現できると仮定し、切片と傾きを推定することで\\(Y_i(D_i = 0)\\)を予測する\n回帰分析に限らず、様々な手法が使える（ベイジアン、機械学習、最尤法、…）\n\n\n\nもし、モデルが間違ったら…? \\(\\leadsto\\) 間違った処置効果の推定量が得られる"
+    "text": "回帰分析の限界（ATTの例）\nすべての因果推論は潜在的結果間の比較\n\\[\n\\tau_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\n\\]\n欠損している（=観察不可能）\\(Y_i(0)\\)を回帰分析を用いて代入（imputation）する\n\\[\n\\widehat{\\tau}_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - \\textcolor{red}{\\widehat{Y_i}(0)} | D_i = 1]\n\\]\n\\(\\widehat{Y_i}(0)\\)の推定方法\n\n一般的にパラメトリックモデルが使われる \\(\\Rightarrow\\) 回帰分析\n\n\n\\(Y_i\\)を\\(\\alpha + \\tau D_i + \\beta_1 {X1}_i + \\beta_2 {X2}_i + \\dots\\)のような特定の関数で表現できると仮定し、切片と傾きを推定することで\\(Y_i(D_i = 0)\\)を予測する\n回帰分析に限らず、様々な手法が使える（ベイジアン、機械学習、最尤法、…）\n\n\n\nもし、モデルが間違ったら…? \\(\\leadsto\\) 間違った処置効果の推定量が得られる"
   },
   {
     "objectID": "ps_slide.html#マッチングの考え方",
@@ -1229,7 +1229,7 @@
     "href": "ps_slide.html#傾向スコア-1",
     "title": "社会科学における因果推論",
     "section": "傾向スコア",
-    "text": "傾向スコア\n傾向スコア（propensity score）\n\n共変量ベクトル\\(X\\)が与えられたもとでの、処置（\\(D\\) = 1）に割り当てられる条件付き確率\n高次元の共変量\\(X\\)を1次元に縮約したもの\n\n\\[\ne_i(x) = \\mbox{Pr}(D_i = 1 | X = x)\n\\]"
+    "text": "傾向スコア\n傾向スコア（propensity score）\n\n共変量ベクトル\\(X\\)が与えられたもとでの、処置（\\(D\\) = 1）に割り当てられる条件付き確率\n高次元の共変量\\(X\\)を1次元に縮約したもの\n\n\\[\ne_i(X) = \\mbox{Pr}(D_i = 1 | X = x)\n\\]\n\n\n\n傾向スコアは\\(e(x)\\)という表記以外にも、\\(\\pi(x)\\)とも表記するケースもある。"
   },
   {
     "objectID": "ps_slide.html#条件付平均独立",
@@ -2027,7 +2027,7 @@
     "href": "ps.html",
     "title": "傾向スコア",
     "section": "",
-    "text": "View slides in full screen",
+    "text": "View slides in full screen\n       \n      \n    \n  \n\n\n\n\n\n\n\n\n変数名\n説明\n備考\n\n\n\n\ntreat\n\n\n\n\nre78\nreal earnings in 1978\n\n\n\nage\nmeasured in years\n\n\n\neducation\nmeasured in years\n\n\n\nrace\nindicating race\nblack, hispanic, white\n\n\nmarried\nindicating marital status (1 if married, 0 otherwise)\n\n\n\nnodegree\nindicating high school diploma (1 if no degree, 0 otherwise)\n\n\n\nre74\nreal earnings in 1974\n\n\n\nre75\nreal earnings in 1975",
     "crumbs": [
       "7/ 傾向スコア"
     ]
@@ -2247,7 +2247,7 @@
     "href": "ps_slide.html#因果推論の基本枠組み-rubin-causal-model",
     "title": "社会科学における因果推論",
     "section": "因果推論の基本枠組み (Rubin Causal Model)",
-    "text": "因果推論の基本枠組み (Rubin Causal Model)\n個体\\(i\\)に対する処置を\\(D_i \\in\\) {0, 1}とし、潜在的結果（Potential Outcomes）を\\(Y_i(1)\\)および\\(Y_i(0)\\)と定義\n\n現実の観測値（事実） = \\(Y_i\\) = \\(D_i Y_i(1)\\) + \\((1 - D_i) Y_i(0)\\)\n\n因果推論における推定対象（estimands）\n\nATE (Average Treatment Effect): 全集団における平均処置効果\n\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0)]\\)\n\n\n\nATT (Average Treatment Effect on the Treated): 処置群における平均効果\n\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 1]\\)\n\n\n\nATC (Average Treatment Effect on the Controls): 対照群における平均効果\n\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 0]\\)\n\n\n\nCATE (Conditional ATE): 共変量\\(X\\) = \\(x\\)条件付きの平均効果\n\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | X = x]\\)"
+    "text": "因果推論の基本枠組み (Rubin Causal Model)\n個体\\(i\\)に対する処置を\\(D_i\\) \\(\\in\\) {0, 1}とし、潜在的結果（Potential Outcomes）を\\(Y_i(1)\\)および\\(Y_i(0)\\)と定義\n\n現実の観測値（事実） = \\(Y_i\\) = \\(D_i Y_i(1)\\) + \\((1 - D_i) Y_i(0)\\)\n\n因果推論における推定対象（estimands）\n\nATE (Average Treatment Effect): 全集団における平均処置効果\n\n\n\\(\\tau_{\\tiny{\\textsf{ATE}}}\\) = \\(\\mathbb{E}[Y(1) - Y(0)]\\)\n\n\n\nATT (Average Treatment Effect on the Treated): 処置群における平均効果\n\n\n\\(\\tau_{\\tiny{\\textsf{ATT}}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 1]\\)\n\n\n\nATC (Average Treatment Effect on the Controls): 対照群における平均効果\n\n\n\\(\\tau_{\\tiny{\\textsf{ATC}}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 0]\\)"
   },
   {
     "objectID": "ps_slide.html#因果推論の根本問題-fundamental-problem",
@@ -2282,7 +2282,7 @@
     "href": "ps_slide.html#伝統的な共変量調整の方法",
     "title": "社会科学における因果推論",
     "section": "伝統的な共変量調整の方法",
-    "text": "伝統的な共変量調整の方法\n\n\nサブクラス化（sub-classification）：\\(X\\)のカテゴリごとにグループ化し、グループ内効果の加重平均を求める\n\n例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均\n\n\n\n正確マッチング（exact matching）：各処置個体に対し、全く同じ\\(X\\)を持つ対照個体を割り当てる\n\n次のスライド参照\n\n\n\n回帰分析（regression）：\\(Y_i = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\\)をOLSで推定\n\n前回のスライド参照\n参考）処置変数を含む全変数の交差項を入れた飽和モデル（saturated model）1は正確マッチングと等価\n\n\n応答変数\\(Y\\)、処置変数\\(D\\)、共変量\\(X_1\\)、\\(X_2\\)がある場合、飽和モデルは\\(Y = \\alpha + \\tau D + \\beta_1 D \\cdot X_1 + \\beta_2 D \\cdot X_2 + \\beta_3 X_1 \\cdot X_2 + \\beta_4 D \\cdot X_1 \\cdot X_2\\)である。"
+    "text": "伝統的な共変量調整の方法\n\n\nサブクラス化（sub-classification）：\\(X\\)のカテゴリごとにグループ化し、グループ内効果の加重平均を求める\n\n例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均\n\n\n\n正確マッチング（exact matching）：各処置個体に対し、全く同じ\\(X\\)を持つ対照個体を割り当てる\n\n回帰分析（regression）：\\(Y_i = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\\)をOLSで推定\n\n前回のスライド参照\n参考）処置変数を含む全変数の交差項を入れた飽和モデル（saturated model）1は正確マッチングと等価\n\n\n応答変数\\(Y\\)、処置変数\\(D\\)、共変量\\(X_1\\)、\\(X_2\\)がある場合、飽和モデルは\\(Y = \\alpha + \\tau D + \\beta_1 D \\cdot X_1 + \\beta_2 D \\cdot X_2 + \\beta_3 X_1 \\cdot X_2 + \\beta_4 D \\cdot X_1 \\cdot X_2\\)である。"
   },
   {
     "objectID": "ps_slide.html#マッチングと線形回帰分析",
@@ -2296,14 +2296,14 @@
     "href": "ps_slide.html#回帰分析による因果推論の考え方",
     "title": "社会科学における因果推論",
     "section": "回帰分析による因果推論の考え方",
-    "text": "回帰分析による因果推論の考え方\n\n\n推定したモデルに基づき、反事実を作り上げて比較する\n\n正確なモデルの設定が重要\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩)\n\n\n\n\\(Y\\)(👨🏿)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(\\widehat{Y}\\)(👨🏿)\n\n\n\n\\(Y\\)(👩🏻)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩🏻)\n\n\n\n\\(Y\\)(👨🏻)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(\\widehat{Y}\\)(👨🏻)\n\n\n\n\\(Y\\)(👩🏽)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩🏽)\n\n\n\n\\(Y\\)(👨)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👨)\n\n\n\n\\(\\widehat{Y}\\)(👩🏿)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩🏿)\n\n\n\n\\(\\widehat{Y}\\)(👨🏼)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👨🏼)\n\n\n\n\n\n\n\n厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる"
+    "text": "回帰分析による因果推論の考え方\n\n\n推定したモデルに基づき、反事実を作り上げて比較する\n\n正確なモデルの設定が重要\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩 )\n\n\n\n\\(Y\\)( 👨🏿 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(\\widehat{Y}\\)( 👨🏿 )\n\n\n\n\\(Y\\)( 👩🏻 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏻 )\n\n\n\n\\(Y\\)( 👨🏻 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(\\widehat{Y}\\)( 👨🏻 )\n\n\n\n\\(Y\\)( 👩🏽 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏽 )\n\n\n\n\\(Y\\)( 👨 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👨 )\n\n\n\n\\(\\widehat{Y}\\)( 👩🏿 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏿 )\n\n\n\n\\(\\widehat{Y}\\)( 👨🏼 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👨🏼 )\n\n\n\n\n\n\n\n厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる"
   },
   {
     "objectID": "ps_slide.html#正確マッチングによる因果推論の考え方",
     "href": "ps_slide.html#正確マッチングによる因果推論の考え方",
     "title": "社会科学における因果推論",
     "section": "正確マッチングによる因果推論の考え方",
-    "text": "正確マッチングによる因果推論の考え方\n\n\n完全に比較可能た対象を反事実として使用\n\nモデルの設定は不要\n比較可能な対象がないなら、分析から除外\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)(👩)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩)\n\n\n\n\\(Y\\)(👩🏻)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩🏻)\n\n\n\n\\(Y\\)(👩🏽)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👩🏽)\n\n\n\n\\(Y\\)(👨)\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)(👨)"
+    "text": "正確マッチングによる因果推論の考え方\n\n\n完全に比較可能た対象を反事実として使用\n\nモデルの設定は不要\n比較可能な対象がないなら、分析から除外\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩 )\n\n\n\n\\(Y\\)( 👩🏻 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏻 )\n\n\n\n\\(Y\\)( 👩🏽 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏽 )\n\n\n\n\\(Y\\)( 👨 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👨 )"
   },
   {
     "objectID": "ps_slide.html#次元の呪いの克服方法",
@@ -2352,7 +2352,7 @@
     "href": "ps_slide.html#ateが推定可能な例",
     "title": "社会科学における因果推論",
     "section": "ATEが推定可能な例",
-    "text": "ATEが推定可能な例"
+    "text": "ATEが推定可能な例\n\n統制群と処置群のサポートが同じ"
   },
   {
     "objectID": "ps_slide.html#attかatcが推定可能な例",
@@ -2366,35 +2366,35 @@
     "href": "ps_slide.html#推定不可能な例",
     "title": "社会科学における因果推論",
     "section": "推定不可能な例",
-    "text": "推定不可能な例"
+    "text": "推定不可能な例\n\n右の例の場合、ATO（後述）は推定可能"
   },
   {
     "objectID": "ps_slide.html#att左かatc右が推定可能な例",
     "href": "ps_slide.html#att左かatc右が推定可能な例",
     "title": "社会科学における因果推論",
     "section": "ATT（左）かATC（右）が推定可能な例",
-    "text": "ATT（左）かATC（右）が推定可能な例"
+    "text": "ATT（左）かATC（右）が推定可能な例\n\n左：ATT推定可　／　右：ATC推定可"
   },
   {
     "objectID": "ps_slide.html#傾向スコアの使い方",
     "href": "ps_slide.html#傾向スコアの使い方",
     "title": "社会科学における因果推論",
     "section": "傾向スコアの使い方",
-    "text": "傾向スコアの使い方\n\n傾向スコア・マッチング（propensity score matching; PSM）\n\n1:1マッチング：最近傍マッチング\n1:kマッチング：k-最近傍マッチング、キャリパー・マッチング\n傾向スコアを使ったマッチングは推奨されない（King and Nielsen 2019）\n\n\n\n\n層化（stratification / subclassification）\n\nk:kマッチングの一種として考えることも可\n\n\n\n重み付け（weighting; IPW）\n\n\n\n\n\nKing, Gary, and Richard Nielsen. 2019. “Why Propensity Scores Should Not Be Used for Matching.” Political Analysis 27(4): 435–54."
+    "text": "傾向スコアの使い方\n\n\nマッチング（propensity score matching; PSM）\n\n1:1マッチング：最近傍マッチング\n1:kマッチング：k-最近傍マッチング、キャリパー・マッチング\n傾向スコアを使ったマッチングは推奨されない（King and Nielsen 2019）\n\n\n\n\n層化（stratification / subclassification）\n\n傾向スコアを基準に個体を並べ、均等な数の個体が入るように\\(k\\)\n\nk:kマッチングの一種として考えることも可\n\n\n\n重み付け（weighting）\n\n\n\n\n\nKing, Gary, and Richard Nielsen. 2019. “Why Propensity Scores Should Not Be Used for Matching.” Political Analysis 27(4): 435–54."
   },
   {
     "objectID": "ps_slide.html#共有サポートの確認",
     "href": "ps_slide.html#共有サポートの確認",
     "title": "社会科学における因果推論",
     "section": "共有サポートの確認",
-    "text": "共有サポートの確認"
+    "text": "共有サポートの確認\n\n傾向スコアの分布を統制群—処置群間で確認\n\n箱ひげ図、ビースウォーム（Bee Swarm）図、ヒストグラムなど\n\n\n\n\n\n\n\n\n箱ひげ図\n\n\n\n\n\nビースウォーム図\n\n\n\n\n\n密度曲線（{cobalt}使用）\n\n\n\n\n\nヒストグラム（{cobalt}使用）"
   },
   {
     "objectID": "ps_slide.html#バランスチェック",
     "href": "ps_slide.html#バランスチェック",
     "title": "社会科学における因果推論",
     "section": "バランスチェック",
-    "text": "バランスチェック"
+    "text": "バランスチェック\n\n傾向スコアによる調整後に、処置群と統制群の間のバランスが改善したかを確かめる\n\n\n傾向スコアと各共変量、両方のバランスを確認する\n\n\nバランスの指標：標準化1平均差（standardized mean difference; \\(d\\)）\n\n\n\\(\\overline{X}_{\\sf treat}\\)：処置群における\\(X\\)の平均値　／　\\(s^2_{X_{\\sf treat}}\\)：処置群における\\(X\\)の分散\n\n\n\n\\[\nd_X = \\frac{\\overline{X}_{\\sf treat} - \\overline{X}_{\\sf control}}{\\sqrt{\\frac{1}{2}(s^2_{X_{\\sf treat}} + s^2_{X_{\\sf control}})}}\n\\]\n\n「バランス」の基準：\\(|d|\\) &lt; 0.1（厳しい基準; 推奨）、\\(|d|\\) &lt; 0.25（緩い基準）\n共変量が二値変数の場合、標準化は行わない。また、共変量が人種や性別のような名目変数も二値変数として扱われる。"
   },
   {
     "objectID": "ps_slide.html#参考",
@@ -2408,21 +2408,21 @@
     "href": "ps_slide.html#参考共変量バランシング傾向スコア",
     "title": "社会科学における因果推論",
     "section": "参考）共変量バランシング傾向スコア",
-    "text": "参考）共変量バランシング傾向スコア\n共変量バランシング傾向スコア（covariate balancing propensity score; CBPS）\n従来のMLEによる傾向スコア推計は「処置割当の予測」を最適化するが、「共変量のバランス」を直接保証するものではないという弱点を克服する手法。\n\n\n\n\nImai & Ratkovic (2014)"
+    "text": "参考）共変量バランシング傾向スコア\n共変量バランシング傾向スコア（covariate balancing propensity score; CBPS）（Imai and Ratkovic 2014）\n\n従来の最尤推定法（ロジットなど）による傾向スコア計算の限界\n\n「処置割当の予測」の最適化が目的であり、「共変量のバランス」を保証するものではない\nSmall-N、モデルの不適切な定式化によるバランスの不十分な改善\n\n\n\n\\(\\Rightarrow\\) CPBSは「傾向スコアの推計」と「共変量のバランス最適化」を同時に行う\nRの定番パッケージ（{MatchIt}、{WeightIt}）でも簡単に使用可能\n\n\n\n\n\nImai, Kosuke and Marc Ratkovic. 2014. “Covariate Balancing Propensity Score.” Journal of the Royal Statistical Society Series B: Statistical Methodology, 76(1):243-263."
   },
   {
     "objectID": "ps_slide.html#条件付独立の仮定",
     "href": "ps_slide.html#条件付独立の仮定",
     "title": "社会科学における因果推論",
     "section": "条件付独立の仮定",
-    "text": "条件付独立の仮定\n結果（応答）変数と処置割当に同時に影響を与える全ての交絡要因（confounders）が観測され、\\(X\\)に含まれている\n\\[\n\\{Y(0), Y(1)\\} \\mathop{\\perp\\!\\!\\!\\!\\perp} D | X\n\\]\n\n未観測の交絡要因があってはならない\nあくまでも理論的な仮定であり、統計的に検証不可能な不可証（untestable）な仮定"
+    "text": "条件付独立の仮定\n結果（応答）変数と処置割当に同時に影響を与える全ての交絡要因（confounders）が観測され、\\(X\\)に含まれている\n\\[\n\\begin{eqnarray}\n& \\{Y(0), Y(1)\\} \\mathop{\\perp\\!\\!\\!\\!\\perp} D | X & \\\\\n& \\Downarrow & \\\\\n& \\{Y(0), Y(1)\\} \\mathop{\\perp\\!\\!\\!\\!\\perp} D | e(X) &\n\\end{eqnarray}\n\\]\n\n未観測の交絡要因があってはならない\nあくまでも理論的な仮定であり、統計的に検証不可能な不可証（untestable）な仮定"
   },
   {
     "objectID": "ps_slide.html#共通サポートcommon-supportの仮定",
     "href": "ps_slide.html#共通サポートcommon-supportの仮定",
     "title": "社会科学における因果推論",
     "section": "共通サポート（common support）の仮定",
-    "text": "共通サポート（common support）の仮定\nすべての共変量の値において、処置を受ける（受けない）確率が正である1 （0や1にならない）\n\\[\n\\forall x,\\,\\,0 &lt; P(D = 1 | X = x) &lt; 1\n\\]\n\n任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する（逆も然り）\n\nデータから検証可能な仮定\n\n\n\n\nサポートは「台」とも訳される。\n\n処置変数が二値変数の場合、\\(P(D = 0) = 1 - P(D = 1)\\)だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。"
+    "text": "共通サポート（common support）の仮定\nすべての共変量の値において、処置を受ける（受けない）確率が正である1 （0や1にならない）\n\\[\n\\forall x,\\,\\,0 &lt; P(D = 1 | X = x) &lt; 1\n\\]\n\n任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する（逆も然り）\n\nデータから検証可能な仮定\n\n\n\n\n共「通」サポートとも呼ばれる。\nサポートは「台」とも訳される。\n\n処置変数が二値変数の場合、\\(P(D = 0) = 1 - P(D = 1)\\)だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。"
   },
   {
     "objectID": "ps_slide.html#重み付けによる処置効果の推定",
@@ -2450,7 +2450,7 @@
     "href": "ps_slide.html#ate推定のための重み付け",
     "title": "社会科学における因果推論",
     "section": "ATE推定のための重み付け",
-    "text": "ATE推定のための重み付け\n逆確率重み付け（inverse probabilty weighting; IPW）\n\\[\nw_i^{\\tiny\\mbox{ATE}} = D_i \\frac{1}{e_i(X)} + (1 - D_i) \\frac{1}{1 - e_i(X)}\n\\]"
+    "text": "ATE推定のための重み付け\n逆確率重み付け（inverse probabilty weighting; IPW）\n\n各群に割り当てられる確率（= 傾向スコア）の逆数で重み付け\n\n\\[\nw_i^{\\tiny\\mbox{ATE}} = D_i \\frac{1}{e_i(X)} + (1 - D_i) \\frac{1}{1 - e_i(X)}\n\\]\n\n各群におけるケースの「異常さ」と重みが比例\n\n統制群：傾向スコアが大きいほど、重み\\(\\uparrow\\)\n\n処置群：傾向スコアが小さいほど、重み\\(\\uparrow\\)"
   },
   {
     "objectID": "ps_slide.html#参考ato推定のための重み付け",
@@ -2492,7 +2492,7 @@
     "href": "ps_slide.html#重み付けの考え方1",
     "title": "社会科学における因果推論",
     "section": "重み付けの考え方（1）",
-    "text": "重み付けの考え方（1）\n\n信頼できる因果効果を得るためにはグループは均質である必要がある\n無作為割り当て \\(\\leadsto\\) 均質なグループへ\n\n\n\n\n\n\n\n\n\n注意）これは単なるイメージであり、実際とは異なる\n\n\n　この内容は理解を助けるためのイメージであり、厳密なものではない。具体的な重みの付け方（計算方法）は後ほど紹介する。"
+    "text": "重み付けの考え方（1）\n\n信頼できる因果効果を得るためにはグループは均質である必要がある\n無作為割り当て \\(\\leadsto\\) 均質なグループへ\n\n\n\n\n\n\n\n\n\n注意）これは単なるイメージであり、実際とは異なる\n\n\n　この内容は理解を助けるためのイメージであり、厳密なものではない。どちらかといえば逆確率重み付け（IPWでも）に近いイメージではあるが、厳密にはIPWでもない。具体的な重みの付け方（計算方法）は後ほど紹介する。"
   },
   {
     "objectID": "ps_slide.html#重み付けの考え方2",
@@ -2514,5 +2514,180 @@
     "title": "社会科学における因果推論",
     "section": "重み付けの考え方（3）",
     "text": "重み付けの考え方（3）\n異常なケースに高い重みを与える\n\n例）統制群における●の重みを2倍に \\(\\leadsto\\) 各群の●が6つに\n例）処置群における▲の重みを2.5倍に \\(\\leadsto\\) 各群の▲が5つに"
+  },
+  {
+    "objectID": "ps_slide.html#傾向スコアの作り方の例lalonde",
+    "href": "ps_slide.html#傾向スコアの作り方の例lalonde",
+    "title": "社会科学における因果推論",
+    "section": "傾向スコアの作り方の例（lalonde）",
+    "text": "傾向スコアの作り方の例（lalonde）\n\n応答変数：処置変数（\\(D\\)）\n説明変数：その他の変数\n\n\n\\(D\\)と\\(Y\\)両方に影響を与える変数（= 交絡要因[confounder]）\n\n\n\\(Y\\)に影響を与える変数\n\n\\(D\\)より時間的に先行する変数（ただし、\\(D\\)のみ・・に影響する変数は入れない）\n\n\n\n\\[\n\\mbox{Treat}_i =\n\\]"
+  },
+  {
+    "objectID": "ps_slide.html#感度分析",
+    "href": "ps_slide.html#感度分析",
+    "title": "社会科学における因果推論",
+    "section": "感度分析",
+    "text": "感度分析\n条件付き独立仮定と未観測交錯のリスク\n\n傾向スコア分析が抱える共通の前提\n\n条件付き独立仮定：「観測された共変量\\(X\\)をコントロールすれば、未観測バイアスは存在しない」\n\n\n感度分析（Sensitivity Analysis）の目的\n\n現実の観察データにおいて「未観測の交錯要因\\(U\\)」を完全に否定することは不可能\n「どの程度の強さの未観測バイアスが存在すると、得られた有意な効果（結論）が覆ってしまうか」を定量評価する\n\n\n\n代表的な感度分析の比較\n\nローゼンバウムの感度分析（Rosenbaum’s Bounds）\n\n感度パラメータ（\\(\\Gamma\\)）：未観測要因\\(U\\)によってペア間の処置オッズが何倍異なり得るかを示す\n評価：\\(\\Gamma\\)を1.0から徐々に大きくし、p 値が0.05を超える限界点（\\(\\Gamma_{\\text{critical}}\\)）を探す（数字が大きいほど頑健）\n\n\nE-Value（VanderWeele & Ding, 2017）\n\n概念：観測された効果を完全にゼロに打ち消すために必要な、「未観測要因-処置」および「未観測要因-成果」間の最小リスク比（RR）\n計算（リスク比 \\(RR\\) の場合）：\\(\\text{E-Value} = RR + \\sqrt{RR(RR - 1)}\\)\n\n解釈：処置と成果の両方に\\(E\\)倍以上影響する未観測要因がない限り結論は揺らがない"
+  },
+  {
+    "objectID": "ps_slide.html#傾向スコアの計算方法",
+    "href": "ps_slide.html#傾向スコアの計算方法",
+    "title": "社会科学における因果推論",
+    "section": "傾向スコアの計算方法",
+    "text": "傾向スコアの計算方法\n真の傾向スコア\\(e(X)\\)は未知であるため、観測データから推計値\\(\\widehat{e}(X)\\)を推定\n\\[\ne_i(X) = \\mbox{Pr}(D_i = 1 | X = x) = f(\\alpha + X^{\\prime}\\beta)\n\\]\n\n処置変数を応答変数とするモデルを推定\n\n\\(f(x) = x\\)なら線形回帰モデル、\\(f(x) = \\frac{e^x}{(1 + e^x)}\\)ならロジスティック回帰モデル\n\n処置変数が二値変数の場合、ロジスティック or プロビット回帰が一般的に使われる\n\n処置を受ける確率が推定できるなら、何でも良い（例：機械学習）\n\n\n\n正しい共変量選定、モデルの正しい定式化が重要\n\n\n処置変数が連続変数の場合の考え方はHirano and Imbens（2004）を参照\n\n\n\n\nHirano, Keisuke. and Guido W. Imbens. 2004. “The Propensity Score with Continuous Treatments.” In Andrew Gelman and Xiaoli Meng. Applied Bayesian Modeling and Causal Inference from Incomplete-Data Perspectives."
+  },
+  {
+    "objectID": "ps_slide.html#傾向スコアの計算の際に必要な変数",
+    "href": "ps_slide.html#傾向スコアの計算の際に必要な変数",
+    "title": "社会科学における因果推論",
+    "section": "傾向スコアの計算の際に必要な変数",
+    "text": "傾向スコアの計算の際に必要な変数\n入れるべき変数\n\n\n\\(D\\)と\\(Y\\)両方に影響を与える変数（= 交絡要因[confounder]）\n\n\n\\(Y\\)に影響を与える変数\n\n\\(D\\)より時間的に先行する変数（ただし、\\(D\\)のみ・・に影響する変数1は入れない）\n\n入れてはいけない変数\n\nすべての処置後変数：中間点（中間変数; 媒介変数; mediator）、合流点（collider）\n\n\n\\(D\\)より時間的に先行する変数のうち、\\(D\\)のみ・・に影響する変数\n\\(D\\)と\\(Y\\)より時間的に先行し、\\(D\\)のみに影響を与える変数のことは操作変数（instrumental variable）と呼ばれる。操作変数は因果推論を目的とする回帰分析だけでなく、傾向スコアの計算にも入れないのが鉄則である。"
+  },
+  {
+    "objectID": "ps_slide.html#参考極端な重みへの対応",
+    "href": "ps_slide.html#参考極端な重みへの対応",
+    "title": "社会科学における因果推論",
+    "section": "参考）極端な重みへの対応",
+    "text": "参考）極端な重みへの対応\n\n重みの「爆発」\n\n\n\\(e(X_i)\\) が0や1に極めて近づくと、重み（\\(1/e(X_i)\\)や\\(1/(1-e(X_i))\\)）の分母がゼロに近づき重みが極大化\n\n\\(\\leadsto\\) 推計精度の著しい悪化：わずか数個体のデータが全体推計値を支配し、標準誤差が著しく増大\n\n\n\n主な対処アプローチ\n\n重みのトリミング（Weight Trimming / Truncation）\n\n手法：重みの上位 1% / 5% を閾値で頭切り、または \\(0.1 \\le e(X_i) \\le 0.9\\) 外のサンプルをドロップ（Crump et al., 2009）。\nトレードオフ：分散を大幅に低減できるが、推計対象（母集団の定義）が変わりバイアスが生じるリスクがある。\n\n\nハジェク推定量（Hajek Estimator）\n\n手法：重みの合計値がサンプルサイズ \\(N\\) になるよう各群の重み和で正規化する。\nメリット：重みのスケール変動を滑らかに抑え、通常の IPW（Horvitz-Thompson）より小標本での挙動が安定する。\n\n\nオーバーラップ重み付け（Overlap Weighting: OW / ATO）\n\n手法：処置群に \\(1-e(X_i)\\)、対照群に \\(e(X_i)\\) の重みを与える（Li et al., 2018）。\nメリット：重みが常に 0〜1 に収まり構造的に爆発しない。\\(e(X_i) \\approx 0.5\\)（比較可能性が最も高い領域）に最大重みを与える。"
+  },
+  {
+    "objectID": "ps_slide.html#参考二重に頑健な推定法",
+    "href": "ps_slide.html#参考二重に頑健な推定法",
+    "title": "社会科学における因果推論",
+    "section": "参考）二重に頑健な推定法",
+    "text": "参考）二重に頑健な推定法\n二重に頑健な推定法（doubly robust estimation; DR/AIPW）\n\n「傾向スコアモデル」と「結果変数モデル」のどちらか片方でも正しく定式化されていれば、信頼できる処置効果が推定可能\n\n\\[\n\\widehat{\\tau}_{\\text{DR}} = \\frac{1}{N} \\sum_{i=1}^N \\left[ \\underbrace{\\mu_1(X_i) - \\mu_0(X_i)}_{\\textsf{回帰モデル（ベースライン）}} + \\underbrace{D_i \\frac{Y_i - \\mu_1(X_i)}{e(X_i)} - (1 - D_i) \\frac{Y_i - \\mu_0(X_i)}{1 - e(X_i)}}_{\\textsf{傾向スコアモデル（残差補正項）}} \\right]\n\\]\n\n\n\\(\\mu_1(X_i)\\) = \\(\\mathbb{E}[Y_i | D_i = 1, X_i]\\)、\\(\\mu_0(X_i)\\) = \\(\\mathbb{E}[Y_i | D_i = 0, X_i]\\)"
+  },
+  {
+    "objectID": "ps_slide.html#att推定のための層化",
+    "href": "ps_slide.html#att推定のための層化",
+    "title": "社会科学における因果推論",
+    "section": "ATT推定のための層化",
+    "text": "ATT推定のための層化\n処置群の個体数が\\(k\\)等分になるように層を決め、全個体を各層に割り当てる\n\n\n\n\n\n\n\n\n\n\n\n\n\n各群のn\n各群の重み\n\n\n\n\n\n層\n統制群のn\n\n処置群のn\n\n合計\n\n\n\n1\n356\n37\n393\n\n\n2\n19\n37\n56\n\n\n3\n25\n37\n62\n\n\n4\n18\n37\n55\n\n\n5\n11\n37\n48\n\n\n\n\n\n\n\n層\n統制群の重み\n処置群の重み\n\n\n\n1\n\n\\(\\frac{429}{185} \\times \\frac{37}{356}\\) = 0.241\n1.000\n\n\n2\n\n\\(\\frac{429}{185} \\times \\frac{37}{19}\\) = 4.516\n1.000\n\n\n3\n\n\\(\\frac{429}{185} \\times \\frac{37}{25}\\) = 3.432\n1.000\n\n\n4\n\n\\(\\frac{429}{185} \\times \\frac{37}{18}\\) = 4.767\n1.000\n\n\n5\n\n\\(\\frac{429}{185} \\times \\frac{37}{11}\\) = 7.800\n1.000"
+  },
+  {
+    "objectID": "ps_slide.html#atc推定のための層化",
+    "href": "ps_slide.html#atc推定のための層化",
+    "title": "社会科学における因果推論",
+    "section": "ATC推定のための層化",
+    "text": "ATC推定のための層化\n統制群の個体数が\\(k\\)等分になるように層を決め、全個体を各層に割り当てる\n\n\n\n\n\n\n\n\n\n\n\n\n\n各群のn\n各群の重み\n\n\n\n\n\n層\n統制群のn\n\n処置群のn\n\n合計\n\n\n\n1\n86\n1\n87\n\n\n2\n86\n2\n88\n\n\n3\n86\n7\n92\n\n\n4\n86\n20\n106\n\n\n5\n86\n155\n241\n\n\n\n\n\n\n\n層\n統制群の重み\n処置群の重み\n\n\n\n1\n1.000\n\n\\(\\frac{185}{429} \\times \\frac{86}{1}\\) = 37.086\n\n\n2\n1.000\n\n\\(\\frac{185}{429} \\times \\frac{86}{2}\\) = 18.543\n\n\n3\n1.000\n\n\\(\\frac{185}{429} \\times \\frac{86}{7}\\) = 5.236\n\n\n4\n1.000\n\n\\(\\frac{185}{429} \\times \\frac{86}{20}\\) = 1.854\n\n\n5\n1.000\n\n\\(\\frac{185}{429} \\times \\frac{86}{155}\\) = 0.239"
+  },
+  {
+    "objectID": "ps_slide.html#ate推定のための層化",
+    "href": "ps_slide.html#ate推定のための層化",
+    "title": "社会科学における因果推論",
+    "section": "ATE推定のための層化",
+    "text": "ATE推定のための層化\n処置群と統制群の個体数の合計が\\(k\\)等分になるように層を決め、全個体を各層に割り当てる\n\n\n\n\n\n\n\n\n\n\n\n\n\n各群のn\n各群の重み\n\n\n\n\n\n層\n統制群のn\n\n処置群のn\n\n合計\n\n\n\n1\n122\n1\n123\n\n\n2\n116\n7\n123\n\n\n3\n101\n21\n122\n\n\n4\n51\n71\n122\n\n\n5\n39\n85\n124\n\n\n\n\n\n\n\n\n\n\n\n\n層\n統制群の重み\n処置群の重み\n\n\n\n1\n\n\\(\\frac{429}{614} \\times \\frac{123}{122}\\) = 0.704\n\n\\(\\frac{185}{614} \\times \\frac{123}{1}\\) = 37.060\n\n\n2\n\n\\(\\frac{429}{614} \\times \\frac{123}{116}\\) = 0.741\n\n\\(\\frac{185}{614} \\times \\frac{123}{7}\\) = 5.294\n\n\n3\n\n\\(\\frac{429}{614} \\times \\frac{122}{101}\\) = 0.844\n\n\\(\\frac{185}{614} \\times \\frac{122}{21}\\) = 1.750\n\n\n4\n\n\\(\\frac{429}{614} \\times \\frac{122}{51}\\) = 1.671\n\n\\(\\frac{185}{614} \\times \\frac{122}{71}\\) = 0.518\n\n\n5\n\n\\(\\frac{429}{614} \\times \\frac{124}{390}\\) = 2.221\n\n\\(\\frac{185}{614} \\times \\frac{124}{85}\\) = 0.440"
+  },
+  {
+    "objectID": "ps_slide.html#観察不可能な反事実をどう扱うか",
+    "href": "ps_slide.html#観察不可能な反事実をどう扱うか",
+    "title": "社会科学における因果推論",
+    "section": "観察不可能な反事実をどう扱うか",
+    "text": "観察不可能な反事実をどう扱うか\n\n\n観察不可能な反事実（「?」）をどう扱うか\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩 )\n\n\n\n\\(Y\\)( 👨🏿 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n?\n\n\n\n\\(Y\\)( 👩🏻 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏻 )\n\n\n\n\\(Y\\)( 👨🏻 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n?\n\n\n\n\\(Y\\)( 👩🏽 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏽 )\n\n\n\n\\(Y\\)( 👨 )\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👨 )\n\n\n?\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👩🏿 )\n\n\n?\n\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\n\n\\(Y\\)( 👨🏼 )"
+  },
+  {
+    "objectID": "ps_slide.html#層化における重み",
+    "href": "ps_slide.html#層化における重み",
+    "title": "社会科学における因果推論",
+    "section": "層化における重み",
+    "text": "層化における重み\n\n\n\n\n\n\n\n推定対象\n統制群の重み\n処置群の重み\n\n\n\nATT\n\\(\\frac{N_\\sf{control}}{N_\\sf{treat}} \\times \\frac{N_\\sf{k, treat}}{N_\\sf{k, control}}\\)\n1\n\n\nATC\n1\n\\(\\frac{N_\\sf{treat}}{N_\\sf{control}} \\times \\frac{N_\\sf{k, control}}{N_\\sf{k, treat}}\\)\n\n\nATE\n\\(\\frac{N_\\sf{control}}{N} \\times \\frac{N_\\sf{k}}{N_\\sf{k, control}}\\)\n\\(\\frac{N_\\sf{treat}}{N} \\times \\frac{N_\\sf{k}}{N_\\sf{k, treat}}\\)"
+  },
+  {
+    "objectID": "ps_slide.html#層化における重みまとめ",
+    "href": "ps_slide.html#層化における重みまとめ",
+    "title": "社会科学における因果推論",
+    "section": "層化における重み（まとめ）",
+    "text": "層化における重み（まとめ）\n\n\n\\(N\\)：サンプルサイズ（全体）\n\n\\(N_\\sf{control}\\)、\\(N_\\sf{treat}\\)：統制群と処置群の個体数\n\n\\(N_\\sf{k}\\)：k 層の個体数\n\n\\(N_\\sf{k, control}\\)、\\(N_\\sf{k, treat}\\)：k 層の統制群と処置群の個体数\n\n\n\n\n\n\n\n\n\n推定対象\n統制群の重み\n処置群の重み\n\n\n\nATT\n\\(\\frac{N_\\sf{control}}{N_\\sf{treat}} \\times \\frac{N_\\sf{k, treat}}{N_\\sf{k, control}}\\)\n1\n\n\nATC\n1\n\\(\\frac{N_\\sf{treat}}{N_\\sf{control}} \\times \\frac{N_\\sf{k, control}}{N_\\sf{k, treat}}\\)\n\n\nATE\n\\(\\frac{N_\\sf{control}}{N} \\times \\frac{N_\\sf{k}}{N_\\sf{k, control}}\\)\n\\(\\frac{N_\\sf{treat}}{N} \\times \\frac{N_\\sf{k}}{N_\\sf{k, treat}}\\)"
+  },
+  {
+    "objectID": "ps_slide.html#層化の手順",
+    "href": "ps_slide.html#層化の手順",
+    "title": "社会科学における因果推論",
+    "section": "層化の手順",
+    "text": "層化の手順\n\n推定対象（estimand）を決める（ATT、ATC、ATE）\n層（stratum, subclass）の数（ k ）を決める\n\n一般的にk = 5を採用\n\n\n個体を各層に割り当てる\n個々の個体に重みを与える\n処置効果を推定する（加重平均、重み付き線形回帰分析[WLS]等）\n\n\n\n\n各層内で処置効果を計算し、得られた k 個の平均値の加重平均を計算する方法もある。しかし、各個体に重み付けする方法が様々な分析手法との相性が良いので、本講義ではこの方法で解説する。"
+  },
+  {
+    "objectID": "ps_slide.html#層化による推定",
+    "href": "ps_slide.html#層化による推定",
+    "title": "社会科学における因果推論",
+    "section": "層化による推定",
+    "text": "層化による推定\n\n\n\nhead(my_data, n = 13)\n\n##    treat     y stratum   weights\n## 1      0  1306       4 1.0000000\n## 2      1 13168       5 0.2392661\n## 3      0  4433       2 1.0000000\n## 4      0 12060       3 1.0000000\n## 5      1     0       5 0.2392661\n## 6      0  5345       2 1.0000000\n## 7      1  6457       5 0.2392661\n## 8      0  2862       4 1.0000000\n## 9      1     0       5 0.2392661\n## 10     0  6399       1 1.0000000\n## 11     0  8133       1 1.0000000\n## 12     0 14340       2 1.0000000\n## 13     0 12719       5 1.0000000\n\n\n\n\nmy_data |&gt; \n  reframe(y = weighted.mean(y, w = weights),\n          .by = treat)\n##   treat        y\n## 1     0 6984.198\n## 2     1 6334.135\n\n6334.135 - 6984.198 # 処置効果\n## [1] -650.063\n\nlm(y ~ treat, data = my_data, weights = weights)\n## \n## Call:\n## lm(formula = y ~ treat, data = my_data, weights = weights)\n## \n## Coefficients:\n## (Intercept)        treat  \n##      6984.2       -650.1"
+  },
+  {
+    "objectID": "ps_slide.html#層化による推定例",
+    "href": "ps_slide.html#層化による推定例",
+    "title": "社会科学における因果推論",
+    "section": "層化による推定（例）",
+    "text": "層化による推定（例）\n\n\n\nhead(my_data, n = 13)\n\n##    treat     y stratum  weight\n## 1      0  2752       3 1.00000\n## 2      1  2164       5 0.23927\n## 3      0  6821       4 1.00000\n## 4      1  5150       4 1.85431\n## 5      0 25514       1 1.00000\n## 6      0 15538       4 1.00000\n## 7      1 11143       4 1.85431\n## 8      0  2282       5 1.00000\n## 9      0 14146       1 1.00000\n## 10     0 17359       1 1.00000\n## 11     0   650       1 1.00000\n## 12     0  1454       2 1.00000\n## 13     0  6280       2 1.00000\n\n\n\n\nmy_data |&gt; \n  reframe(y   = weighted.mean(y, w = weight),\n          .by = treat)\n##   treat        y\n## 1     0 6984.198\n## 2     1 6334.135\n6334.135 - 6984.198 # 処置効果の点推定値\n## [1] -650.063\n\n\nlm(y ~ treat, data = my_data, weights = weight)\n\n## \n## Call:\n## lm(formula = y ~ treat, data = my_data, weights = weight)\n## \n## Coefficients:\n## (Intercept)        treat  \n##      6984.2       -650.1"
+  },
+  {
+    "objectID": "ps_slide.html#層化による処置効果推定の手順",
+    "href": "ps_slide.html#層化による処置効果推定の手順",
+    "title": "社会科学における因果推論",
+    "section": "層化による処置効果推定の手順",
+    "text": "層化による処置効果推定の手順\n\n推定対象（estimand）を決める（ATT、ATC、ATE）\n層（stratum, subclass）の数（ k ）を決める\n\n一般的にk = 5を採用\n\n\n個体を各層に割り当てる\n個々の個体に重みを与える\n処置効果を推定する（加重平均、重み付き線形回帰分析[WLS]等）\n\n\n\n\n各層内で処置効果を計算し、得られた k 個の平均値の加重平均を計算する方法もある。しかし、各個体に重み付けする方法が様々な分析手法との相性が良いので、本講義ではこの方法で解説する。"
+  },
+  {
+    "objectID": "ps_slide.html#重み付けによる処置効果の推定の手順",
+    "href": "ps_slide.html#重み付けによる処置効果の推定の手順",
+    "title": "社会科学における因果推論",
+    "section": "重み付けによる処置効果の推定の手順",
+    "text": "重み付けによる処置効果の推定の手順\n\n推定対象（estimand）を決める（ATT、ATC、ATE）\n個々の個体に重みを与える\n処置効果を推定する（加重平均、重み付き線形回帰分析[WLS]等）"
+  },
+  {
+    "objectID": "ps_slide.html#重み付けによる推定例",
+    "href": "ps_slide.html#重み付けによる推定例",
+    "title": "社会科学における因果推論",
+    "section": "重み付けによる推定（例）",
+    "text": "重み付けによる推定（例）\n\n\n\nhead(my_data, n = 13)\n\n##    treat     y      ps weight\n## 1      0  2752 0.05913 1.0628\n## 2      1  2164 0.77984 1.2823\n## 3      0  6821 0.10288 1.1147\n## 4      1  5150 0.13902 7.1935\n## 5      0 25514 0.02856 1.0294\n## 6      0 15538 0.16008 1.1906\n## 7      1 11143 0.26920 3.7147\n## 8      0  2282 0.71932 3.5627\n## 9      0 14146 0.02158 1.0221\n## 10     0 17359 0.02113 1.0216\n## 11     0   650 0.03185 1.0329\n## 12     0  1454 0.05003 1.0527\n## 13     0  6280 0.04382 1.0458\n\n\n\n\nmy_data |&gt; \n  reframe(y   = weighted.mean(y, w = weight),\n          .by = treat)\n##   treat        y\n## 1     0 6422.869\n## 2     1 6647.559\n6647.559 - 6422.869 # 処置効果の点推定値\n## [1] 224.69\n\n\nlm(y ~ treat, data = my_data, weights = weight)\n\n## \n## Call:\n## lm(formula = y ~ treat, data = my_data, weights = weight)\n## \n## Coefficients:\n## (Intercept)        treat  \n##      6422.9        224.7"
+  },
+  {
+    "objectID": "ps_slide.html",
+    "href": "ps_slide.html",
+    "title": "社会科学における因果推論",
+    "section": "",
+    "text": "個体\\(i\\)に対する処置を\\(D_i \\in\\) {0, 1}とし、潜在的結果（Potential Outcomes）を\\(Y_i(1)\\)および\\(Y_i(0)\\)と定義\n\n現実の観測値（事実） = \\(Y_i\\) = \\(D_i Y_i(1)\\) + \\((1 - D_i) Y_i(0)\\)\n\n因果推論における推定対象（estimands）\n\nATE (Average Treatment Effect): 全集団における平均処置効果\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0)]\\)\n\nATT (Average Treatment Effect on the Treated): 処置群における平均効果\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 1]\\)\n\nATC (Average Treatment Effect on the Controls): 対照群における平均効果\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | D = 0]\\)\n\nCATE (Conditional ATE): 共変量\\(X\\) = \\(x\\)条件付きの平均効果\n\n\\(\\tau_{\\textsf{\\tiny ATE}}\\) = \\(\\mathbb{E}[Y(1) - Y(0) | X = x]\\)\n\n\n\n\n\n因果推論の根本問題（fundamental problem of causal inference）\n\n任意の個体\\(i\\)について、\\(Y_i(1)\\)と\\(Y_i(0)\\)を同時に観測することは不可能\n\n反実仮想（counterfactual）の欠損\n\n単純なグループ間平均の差（DiM estimator）は… \\[\n\\begin{align}\n& \\mathbb{E}[Y_i | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 1] + \\mathbb{E}[Y_i(0) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0] \\\\\n= & \\underbrace{\\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\\textsf{ATT}} + \\underbrace{\\mathbb{E}[Y_i(0) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0]}_{\\textsf{selection bias}}\n\\end{align}\n\\]\n\nセレクションバイアス（selection bias）の解消するこそが因果推論の主目的となる。\n\n\n\n\n\n条件付き独立仮定（Conditional Independence Assumption: CIA）1\n\n観察研究においてセレクションバイアスを除去するための最重要仮定\n\n\\[\n\\{Y(0), Y(1)\\} \\mathop{\\perp\\!\\!\\!\\!\\perp} D | X\n\\]\n\n共変量ベクトル\\(X\\)を一定（= 条件付け）に保てば、処置割り当て\\(D\\)は潜在的結果\\((Y(0), Y(1))\\)と独立（あたかもランダム割り当てされたかのような状態）になる\n\n\\(\\Rightarrow\\) 共変量調整\n\nこの仮定のもとで、共変量\\(X\\) = \\(x\\)内のグループ間平均の差からCATExが識別可能\n\n\\(\\mathbb{E}[Y(1) - Y(0) | X = x] = \\mathbb{E}[Y | D = 1, X = x] - \\mathbb{E}[Y | D = 0, X = x]\\)\n\n\n\n\n\n\nサブクラス化（sub-classification）：\\(X\\)のカテゴリごとにグループ化し、グループ内効果の加重平均を求める\n\n例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均\n\n正確マッチング（exact matching）：各処置個体に対し、全く同じ\\(X\\)を持つ対照個体を割り当てる\n回帰分析（regression）：\\(Y_i = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\\)をOLSで推定\n\n前回のスライド参照\n参考）処置変数を含む全変数の交差項を入れた飽和モデル（saturated model）2は正確マッチングと等価\n\n\n\n\n\n正確マッチング（exact matching）の例\n\n例）\\(i\\)=4と7は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能\n例）統制群の中に\\(i\\)=10と共変量が完全に一致する個体がないため、分析から除外\n\n\n\n\n\n\n\n統制群\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n1\n0\n1\n1\n0\n\n\n2\n0\n3\n1\n3\n\n\n3\n0\n2\n0\n2\n\n\n4\n0\n0\n1\n0\n\n\n5\n0\n2\n1\n3\n\n\n6\n0\n1\n0\n3\n\n\n\n\n\n\n処置群\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y\\)\n\n\n\n\n7\n1\n0\n1\n3\n\n\n8\n1\n3\n1\n5\n\n\n9\n1\n1\n0\n4\n\n\n10\n1\n3\n0\n6\n\n\n\n\n\n\n\n\nマッチングの例（ATT）\n\n\n\\(i\\)\n\\(D\\)\n\\(X1\\)\n\\(X2\\)\n\\(Y(0)\\)\n\\(Y(1)\\)\nITE\n\n\n\n\n7 vs. 4\n1\n0\n1\n0\n3\n3\n\n\n8 vs. 2\n1\n3\n1\n3\n5\n2\n\n\n9 vs. 6\n1\n1\n0\n3\n4\n1\n\n\n10\n1\n2\n0\n?\n6\n?\n\n\nATT\n\n\n\n\n\n2\n\n\n\n\n\n\n\n\n\n\n観察不可能な反事実（「?」）をどう扱うか\n\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩 )\n\n\n\\(Y\\)( 👨🏿 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n?\n\n\n\\(Y\\)( 👩🏻 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏻 )\n\n\n\\(Y\\)( 👨🏻 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n?\n\n\n\\(Y\\)( 👩🏽 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏽 )\n\n\n\\(Y\\)( 👨 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👨 )\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏿 )\n\n\n?\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👨🏼 )\n\n\n\n\n\n\n\n\n\n\n推定したモデルに基づき、反事実を作り上げて比較する\n\n正確なモデルの設定が重要\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩 )\n\n\n\\(Y\\)( 👨🏿 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(\\widehat{Y}\\)( 👨🏿 )\n\n\n\\(Y\\)( 👩🏻 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏻 )\n\n\n\\(Y\\)( 👨🏻 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(\\widehat{Y}\\)( 👨🏻 )\n\n\n\\(Y\\)( 👩🏽 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏽 )\n\n\n\\(Y\\)( 👨 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👨 )\n\n\n\\(\\widehat{Y}\\)( 👩🏿 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏿 )\n\n\n\\(\\widehat{Y}\\)( 👨🏼 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👨🏼 )\n\n\n\n\n\n\n\n\n厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる\n\n\n\n\nすべての因果推論は潜在的結果間の比較\n\\[\n\\tau_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\n\\]\n欠損している（=観察不可能）\\(Y_i(0)\\)を回帰分析を用いて代入（imputation）する\n\\[\n\\widehat{\\tau}_{\\tiny \\mbox{ATT}} = \\mathbb{E}[Y_i(1) - \\textcolor{red}{\\widehat{Y_i}(0)} | D_i = 1]\n\\]\n\\(\\widehat{Y_i}(0)\\)の推定方法\n\n一般的にパラメトリックモデルが使われる \\(\\Rightarrow\\) 回帰分析\n\n\\(Y_i\\)を\\(\\alpha + \\tau D_i + \\beta_1 {X1}_i + \\beta_2 {X2}_i + \\dots\\)のような特定の関数で表現できると仮定し、切片と傾きを推定することで\\(Y_i(D_i = 0)\\)を予測する\n回帰分析に限らず、様々な手法が使える（ベイジアン、機械学習、最尤法、…）\n\nもし、モデルが間違ったら…? \\(\\leadsto\\) 間違った処置効果の推定量が得られる\n\n\n\n\n\n\n完全に比較可能た対象を反事実として使用\n\nモデルの設定は不要\n比較可能な対象がないなら、分析から除外\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n統制群\nvs\n処置群\n\n\n\n\n\\(Y\\)( 👩 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩 )\n\n\n\\(Y\\)( 👩🏻 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏻 )\n\n\n\\(Y\\)( 👩🏽 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👩🏽 )\n\n\n\\(Y\\)( 👨 )\n\\(\\leftarrow\\) 比較 \\(\\rightarrow\\)\n\\(Y\\)( 👨 )\n\n\n\n\n\n\n\n\n\n共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増3\n\n例1）「男性 & 博士 & 大阪府在住」\n\nめっちゃいる\n\n例2）「男性 & 博士 & 吹田市在住」\n\nまあまあいる\n\n例3）「男性 & 博士 & 吹田市在住 & 身長 175cm以上 & 韓国人」\n\n少ない\n\n例4）「男性 & 博士 & 吹田市在住 & 身長 176.5cm & 韓国人 & 年収 244万8,960円」\n\n多分いない \\(\\Rightarrow\\) 次元の呪い\n\n\n\n\n\n\n次元の呪いにより、マッチングそのものが実行できない場合\n\n線形回帰分析等を使用し、反事実を作り上げる\n\n線形性や加法性の強固なパラメトリック仮定に頼った外挿（Extrapolation）が行われ、処置効果推定値がモデル設定に極めて敏感に\n\n共変量が一致するのではなく、類似したケース同士で比較\n\n\\(\\Rightarrow\\) 最近傍マッチング（nearest neighbor matching）\n\n共変量ではなく、処置を受ける確率がほぼ同じケース同士で比較\n\n処置を受ける確率 = 傾向スコア"
+  },
+  {
+    "objectID": "ps_slide.html#footnotes",
+    "href": "ps_slide.html#footnotes",
+    "title": "社会科学における因果推論",
+    "section": "脚注",
+    "text": "脚注\n\n\nここでの「独立」は「無視可能性（ignorability）」や「交換可能性（exchangeability）」と呼ばれることも多い。↩︎\n応答変数\\(Y\\)、処置変数\\(D\\)、共変量\\(X_1\\)、\\(X_2\\)がある場合、飽和モデルは\\(Y = \\alpha + \\tau D + \\beta_1 D \\cdot X_1 + \\beta_2 D \\cdot X_2 + \\beta_3 X_1 \\cdot X_2 + \\beta_4 D \\cdot X_1 \\cdot X_2\\)である。↩︎\n厳密にいえば正確マッチングの限界↩︎\n\\(D\\)と\\(Y\\)より時間的に先行し、\\(D\\)のみに影響を与える変数のことは操作変数（instrumental variable）と呼ばれる。操作変数は因果推論を目的とする回帰分析だけでなく、傾向スコアの計算にも入れないのが鉄則である。↩︎\n処置変数が二値変数の場合、\\(P(D = 0) = 1 - P(D = 1)\\)だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。↩︎"
+  },
+  {
+    "objectID": "ps_slide.html#バランスチェックの可視化",
+    "href": "ps_slide.html#バランスチェックの可視化",
+    "title": "社会科学における因果推論",
+    "section": "バランスチェックの可視化",
+    "text": "バランスチェックの可視化\n以下は{cobalt}パッケージを使用したバランスチェックの例\n\n\n\n\n\n\n\n\n傾向スコアを用いた調整はバランスの改善を保証しない\n\n\n　傾向スコアは共変量のバランスではなく、（大雑把にいえば）予測精度を基準で計算されたものであるため、バランスが改悪されることもあり得る。共変量のバランス改善の程度を基準に計算される傾向スコアとして「共変量バランシング傾向スコア（CBPS）」というものがある。"
+  },
+  {
+    "objectID": "ps_slide.html#極端な重みの弊害",
+    "href": "ps_slide.html#極端な重みの弊害",
+    "title": "社会科学における因果推論",
+    "section": "極端な重みの弊害",
+    "text": "極端な重みの弊害\n重みの「爆発」\n\n傾向スコアが0や1に極めて近づくと、重み（\\(\\frac{1}{e(X)}\\)や\\(\\frac{1}{1 - e(X)}\\)）が極大化\n\n\n\\(e(X)\\) = 0.001の場合、\\(\\frac{1}{e(X)}\\)は100 \\(\\Rightarrow\\) 100倍の重み\n\n\\(\\leadsto\\) 推計精度の悪化：わずか数個体のデータが全体推計値を支配し、標準誤差が著しく増大\n\n\n傾向スコアの計算後、極端な傾向スコアがあるかを確認する\n\n極端な重みへの対処\n\nトリミング（trimming） or クリッピング（clipping） or ウィンザー化（Winsorizing）\n\n重みの上位1〜5%の削除、傾向スコアが0.1〜0.9の個体のみを使用（Crump et al. 2009）\n\n\n 分散を大幅に低減できるが、新たなバイアスが生じるリスク\n\n\n他にもハジェク推定量（Hajek estimator）、推定対象をATOにするなど\n\n\n\n\n\n\n\nCrump, Richard K., V. Joseph Hotz, Guido W. Imbens, Oscar A. Mitnik. 2009. “Dealing with limited overlap in estimation of average treatment effects,” Biometrika, 96(1): 187-199."
+  },
+  {
+    "objectID": "ps_slide.html#極端な重みへの対処",
+    "href": "ps_slide.html#極端な重みへの対処",
+    "title": "社会科学における因果推論",
+    "section": "極端な重みへの対処",
+    "text": "極端な重みへの対処\n\n重みのトリミング（Weight Trimming / Truncation）\n\n手法：重みの上位 1% / 5% を閾値で頭切り、または \\(0.1 \\le e(X_i) \\le 0.9\\) 外のサンプルをドロップ（Crump et al., 2009）。\nトレードオフ：分散を大幅に低減できるが、推計対象（母集団の定義）が変わりバイアスが生じるリスクがある。\n\n\nハジェク推定量（Hajek Estimator）\n\n手法：重みの合計値がサンプルサイズ \\(N\\) になるよう各群の重み和で正規化する。\nメリット：重みのスケール変動を滑らかに抑え、通常の IPW（Horvitz-Thompson）より小標本での挙動が安定する。\n\n\nオーバーラップ重み付け（Overlap Weighting: OW / ATO）\n\n手法：処置群に \\(1-e(X_i)\\)、対照群に \\(e(X_i)\\) の重みを与える（Li et al., 2018）。\nメリット：重みが常に 0〜1 に収まり構造的に爆発しない。\\(e(X_i) \\approx 0.5\\)（比較可能性が最も高い領域）に最大重みを与える。"
+  },
+  {
+    "objectID": "ps_slide.html#att推定のための層化-1",
+    "href": "ps_slide.html#att推定のための層化-1",
+    "title": "社会科学における因果推論",
+    "section": "ATT推定のための層化",
+    "text": "ATT推定のための層化\n処置群の個体数が\\(k\\)等分になるように層を決め、全個体を各層に割り当てる\n\n\n\n\n\n\n\n\n\n\n\n\n\n各群のn\n各群の重み\n\n\n\n\n\n層\n統制群のn\n\n処置群のn\n\n合計\n\n\n\n1\n356\n37\n393\n\n\n2\n19\n37\n56\n\n\n3\n25\n37\n62\n\n\n4\n18\n37\n55\n\n\n5\n11\n37\n48\n\n\n\n\n\n\n\n層\n統制群の重み\n処置群の重み\n\n\n\n1\n\n\\(\\frac{429}{185} \\times \\frac{37}{356}\\) = 0.241\n1.000\n\n\n2\n\n\\(\\frac{429}{185} \\times \\frac{37}{19}\\) = 4.516\n1.000\n\n\n3\n\n\\(\\frac{429}{185} \\times \\frac{37}{25}\\) = 3.432\n1.000\n\n\n4\n\n\\(\\frac{429}{185} \\times \\frac{37}{18}\\) = 4.767\n1.000\n\n\n5\n\n\\(\\frac{429}{185} \\times \\frac{37}{11}\\) = 7.800\n1.000"
+  },
+  {
+    "objectID": "ps_slide.html#att推定のための層化-2",
+    "href": "ps_slide.html#att推定のための層化-2",
+    "title": "社会科学における因果推論",
+    "section": "ATT推定のための層化",
+    "text": "ATT推定のための層化\n処置群の個体数が\\(k\\)等分になるように層を決め、全個体を各層に割り当てる\n\n\n\n\n\n\n\n\n\n\n\n\n\n各群のn\n各群の重み\n\n\n\n\n\n層\n統制群のn\n\n処置群のn\n\n合計\n\n\n\n1\n122\n1\n123\n\n\n2\n116\n7\n123\n\n\n3\n101\n21\n122\n\n\n4\n51\n71\n122\n\n\n5\n39\n85\n124\n\n\n\n\n\n\n\n\n\n\n\n\n層\n統制群の重み\n処置群の重み\n\n\n\n1\n\n\\(\\frac{429}{614} \\times \\frac{123}{122}\\) = 0.704\n\n\\(\\frac{185}{614} \\times \\frac{123}{1}\\) = 37.060\n\n\n2\n\n\\(\\frac{429}{614} \\times \\frac{123}{116}\\) = 0.741\n\n\\(\\frac{185}{614} \\times \\frac{123}{7}\\) = 5.294\n\n\n3\n\n\\(\\frac{429}{614} \\times \\frac{122}{101}\\) = 0.844\n\n\\(\\frac{185}{614} \\times \\frac{122}{21}\\) = 1.750\n\n\n4\n\n\\(\\frac{429}{614} \\times \\frac{122}{51}\\) = 1.671\n\n\\(\\frac{185}{614} \\times \\frac{122}{71}\\) = 0.518\n\n\n5\n\n\\(\\frac{429}{614} \\times \\frac{124}{390}\\) = 2.221\n\n\\(\\frac{185}{614} \\times \\frac{124}{85}\\) = 0.440"
   }
 ]
