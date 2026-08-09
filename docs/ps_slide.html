@@ -815,7 +815,94 @@
 </ul></section></section><section><section id="傾向スコア" class="title-slide slide level1 center"><h1>
 <strong>2</strong> 傾向スコア</h1>
 
-</section><section id="傾向スコア-1" class="slide level2"><h2>傾向スコア</h2>
+</section><section id="職業訓練プログラムの効果検証" class="slide level2"><h2>職業訓練プログラムの効果検証</h2>
+<p>職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか。</p>
+<p><strong>単純比較の例</strong></p>
+<ul>
+<li>受講群（処置群）の平均年収：300万円</li>
+<li>未受講群（統制群）の平均年収：350万円</li>
+<li>
+<span class="math inline">\(\leadsto\)</span> 受講群の方が年収が50万円も低い。この職業訓練は<strong>有害</strong>だ!</li>
+</ul>
+<p><strong>なぜこの結論は間違いなのか</strong></p>
+<ul>
+<li>現実には、職業訓練への参加はランダムではない
+<ul>
+<li>もともと就労経験が乏しい人や、年収が低い人が自発的に参加しやすい</li>
+<li>もともと自力で高年収を得られる人は、職業訓練を受ける必要がない</li>
+</ul>
+</li>
+<li>職業訓練のお陰で年収の差が50万円まで縮んだ可能性も十分にあり得る</li>
+</ul>
+<blockquote>
+<p>効果がなかったのではなく、比較してはいけない集団を比較していただけ</p>
+</blockquote>
+</section><section id="背景にある違いを揃える" class="slide level2"><h2>背景にある違いを揃える</h2>
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">受講群（処置群）</th>
+<th style="text-align: left;">未受講群（統制群）</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">平均年齢</td>
+<td style="text-align: left;">若い</td>
+<td style="text-align: left;">高い</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">過去の就労経験</td>
+<td style="text-align: left;">少ない</td>
+<td style="text-align: left;">豊富</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">受講前の年収</td>
+<td style="text-align: left;">非常に低い</td>
+<td style="text-align: left;">平均的</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>問題点
+<ul>
+<li>受講群の年収が低く見えたのは、訓練のせいではなく「受講前の年齢や就労経験の差」が原因の可能性</li>
+<li>職業訓練を受けた宋 vs.&nbsp;職業訓練を受けなかったイーロン・マスク</li>
+</ul>
+</li>
+<li>解決策：属性が似ている人同士<span class="small">（年齢・就労経験・受講前の年収が同じくらい）</span>を比較
+<ul>
+<li>職業訓練を受けた品田先生 vs.&nbsp;職業訓練を受けなかった大西先生</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>公平な比較をするための適切な反事実<span class="small">（counterfactual; もし受講していなかったら）</span>は「似たもの」</p>
+</blockquote>
+</section><section id="類似度を1つの数値で集約する傾向スコア" class="slide level2"><h2>類似度を1つの数値で集約する：傾向スコア</h2>
+<ul>
+<li>共変量が多いときの壁（<strong>次元の呪い</strong>）
+<ul>
+<li>年齢、過去の年収、学歴、居住地域、就労経験、…</li>
+<li>揃えたい条件が増えるほど、すべての属性が完全に一致するペアを見つけるのが困難に</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 共変量は少なければ少ないほど似たものが見つかりやすくなる</li>
+</ul>
+</li>
+<li>
+<span class="strong">傾向スコア</span><span class="small">（propensity score）</span>
+<ul>
+<li>多次元の属性<span class="small">（共変量）</span>を、「職業訓練に参加する確率」という1つの指標に凝縮した数値</li>
+<li>例：年齢、過去の年収、学歴から傾向スコアを算出したら…
+<ul>
+<li>受講したAさん：確率 0.75（受講しやすい背景を持っていた）</li>
+<li>受講しなかったBさん：確率 0.72（本当は受講しやすかったが、今回は未受講だった）</li>
+</ul>
+</li>
+<li><span class="alert">傾向スコアが近い <span class="math inline">\(\Rightarrow\)</span> 背景属性が「似たもの同士」</span></li>
+<li>傾向スコアを揃えて比較することで、RCTに近い擬似的な比較状態を作り出すことが可能</li>
+</ul>
+</li>
+</ul></section><section id="傾向スコア-1" class="slide level2"><h2>傾向スコア</h2>
 <p><span class="strong">傾向スコア</span><span class="small">（propensity score）</span></p>
 <ul>
 <li>共変量ベクトル<span class="math inline">\(X\)</span>が与えられたもとでの、処置（<span class="math inline">\(D\)</span> = 1）に割り当てられる条件付き確率</li>
@@ -911,7 +998,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>統制群と処置群のサポートが同じ</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -931,7 +1018,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>左：ATT推定可　／　右：ATC推定可</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -951,7 +1038,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>右の例の場合、ATO（後述）は推定可能</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1774,7 +1861,7 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 </ul>
 </li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="4" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="4">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
