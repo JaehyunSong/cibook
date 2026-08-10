@@ -1307,7 +1307,7 @@
 </div></aside></section><section id="sutva" class="slide level2"><h2>SUTVA</h2>
 <p><span class="alert"><strong>Stable Unit Treatment Value Assumption</strong></span>（Rubin 1980）</p>
 <blockquote>
-<p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の携帯敵・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
+<p>　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の形態的・内容的な変動はない。（インベンス・ルービン 2023: 11）</p>
 </blockquote>
 <ul>
 <li>以下の2つの仮定で構成
@@ -1440,16 +1440,16 @@
 <li>統計的有意性検定<span class="small">（<span class="math inline">\(t\)</span>検定、<span class="math inline">\(\chi^2\)</span>検定、ANOVAなど）</span>は<span class="alert"><strong>非推奨</strong></span><span class="small">（Imai <em>et al.</em> 2008）</span>
 </li>
 <li>
-<span class="alert"><strong>平均値の差分</strong></span><span class="small">（mean difference）</span><sup>1</sup>の使用を推奨
+<span class="alert"><strong>標準化平均差</strong></span><span class="small">（standardized mean difference; <strong>SMD</strong>）</span><sup>1</sup>の使用を推奨
 <ul>
-<li><span class="strong"><strong>平均値の差分が「十分に」大きい = グループは不均質</strong></span></li>
+<li><span class="strong"><strong>SMDが0から大きく離れている = SMDの絶対値が「十分に」大きい = グループは不均質</strong></span></li>
 <li>バランスの閾値は研究者が任意で決めが、推奨は<span class="strong"><strong>0.1</strong></span><span class="small">（Austin 2011）</span>
 <ul>
 <li>傾向スコアのバランスチェックには0.25を採用する場合も<span class="small">（Stuart 2010）</span>
 </li>
 </ul>
 </li>
-<li>グループが3つ以上ならペアごとに<span class="small">（標準化した）</span>平均値の差分を計算</li>
+<li>グループが3つ以上ならペアごとにSMDを計算</li>
 </ul>
 </li>
 </ul>
@@ -1460,7 +1460,7 @@
 <li>Austin, Peter C. 2011. “<a href="https://doi.org/10.1080/00273171.2011.568786">An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies</a>.” <em>Multivariate Behavioral Research,</em> 46(3): 399-424.</li>
 <li>Stuart, Elizabeth A. 2010. “<a href="https://doi.org/10.1214/09-STS313">Matching methods for causal inference: A review and a look forward</a>.” <em>Statistical science: a review journal of the Institute of Mathematical Statistics,</em> 25(1): 1-21.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn12"><p>共変量が連続変数の場合、標準化した平均値の差分<span class="small">（standardized mean difference; 標準化平均差）</span>を使用する。平均値の差分を<span class="math inline">\(s^*\)</span>で割ることで標準化した平均値の差分が計算できる。ATEを推定する場合、<span class="math inline">\(s^* = \sqrt{0.5 (s_1^2 + s_0^2)}\)</span>であり、<span class="math inline">\(s_1\)</span>と<span class="math inline">\(s_0\)</span>はそれぞれ処置群と統制群の標準偏差である。ちなみに、推定対象がATTなら<span class="math inline">\(s^* = s_1\)</span>、ATCなら<span class="math inline">\(s^* = s_0\)</span>である。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
+</div><ol class="aside-footnotes"><li id="fn12"><p>標準化した変数<span class="math inline">\(X\)</span>を<span class="math inline">\(X_z\)</span>とする場合、<span class="math inline">\(X_z = \frac{X - \overline{X}}{s_X}\)</span>である（<span class="math inline">\(\overline{X}\)</span>は<span class="math inline">\(X\)</span>の平均値、<span class="math inline">\(s_X\)</span>は<span class="math inline">\(X\)</span>の標準偏差）。ただし、共変量が二値変数の場合は標準化をせず、単純に平均差を計算する。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
 <li>左の図の場合、ほとんどの共変量がバランスしていない<span class="small">（閾値=0.1の場合）</span>
