@@ -1722,7 +1722,7 @@ w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
 <!---
 $\widehat{\textsf{ATT}}$ = 224.676 [-909.755, 1359.108]
 --->
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
+<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1762,7 +1762,7 @@ w_i^{\tiny\mbox{ATE}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
 <!---
 $\widehat{\textsf{ATE}}$ = 224.676 [-909.755, 1359.108]
 --->
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
+<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1968,25 +1968,46 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
 <ul>
 <li>Imai, Kosuke and Marc Ratkovic. 2014. “<a href="https://doi.org/10.1111/rssb.12027">Covariate Balancing Propensity Score</a>.” <em>Journal of the Royal Statistical Society Series B: Statistical Methodology,</em> 76(1):243-263.</li>
 </ul>
-</div></aside></section><section id="処置効果推定時の共変量について要検討" class="slide level2"><h2>処置効果推定時の共変量について<span class="strong">（要検討）</span>
-</h2>
+</div></aside></section><section id="処置効果推定時の共変量について" class="slide level2"><h2>処置効果推定時の共変量について</h2>
 <p>傾向スコア計算時に使用した共変量を結果変数モデル<sup>1</sup>にも入れるべきか</p>
 <ul>
-<li><p>傾向スコア・モデル：<span class="math inline">\(D \propto \gamma_0 + \gamma_1 X_1 + \gamma_2 X_2\)</span></p></li>
-<li><p>アウトカム・モデル（1）：<span class="math inline">\(Y = \alpha + \beta D\)</span></p></li>
-<li><p>アウトカム・モデル（2）：<span class="math inline">\(Y = \alpha + \beta_1 D + \beta_2 X_1 + \beta_3 X_2\)</span></p></li>
-<li>
-<p>結論：必須ではないが、<span class="strong">共変量を投入することが合理的</span></p>
+<li>層化、重み付け等の主目的は統制群・処置群の共変量バランスを改善すること<span class="small">（Austin 2011）</span>
 <ul>
-<li>メリット：精度向上、残存する不均衡<sup>2</sup>の補正<span class="small">（Austin 2011）</span>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 十分なバランスしていれば、<span class="math inline">\(Y = \alpha + \beta D\)</span>で十分</li>
+</ul>
 </li>
+<li>傾向スコアの計算に使用した共変量を結果モデルにもう一度投入する?<span class="small">（double adjustment）</span>
+<ul>
+<li><span class="math inline">\(Y = \alpha + \beta_1 D + \beta_2 X_1 + \beta_3 X_2\)</span></li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 必須ではないが、<span class="strong">共変量を投入することが合理的</span>
+<ul>
+<li>（場合によっては）精度向上、残存する不均衡<sup>2</sup>の補正<span class="small">（Nguyen <em>et al.</em> 2017）</span>
+</li>
+<li>どの共変量を入れるかはNguyen <em>et al.</em>（2017）を参照</li>
 </ul>
 </li>
 </ul>
-
+</li>
+</ul>
+<!---
+- 入れる候補
+   - 処置前に測定された変数
+   - 標準化平均差が大きい変数
+   - 結果変数にを強く予測する変数
+   - 因果関係・ドメイン知識に基づき事前に選択
+- 注意
+   - 「PSに入れた変数を全部入れる」は必須ではない
+   - 処置後変数・媒介変数・合流点は入れない
+   - 小標本では過剰な共変量投入による推定不安定化に注意
+   - PS調整後はSMD等でcovariate balanceを確認
+   - logistic等では、共変量調整後の処置効果が条件付き効果になってしまう場合があり、estimandが変わってしまう可能性も
+--->
 <aside><div>
 <ul>
 <li>Austin, Peter C. 2011. “<a href="https://doi.org/10.1080/00273171.2011.568786">An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies</a>.” <em>Multivariate Behavioral Research,</em> 46(3): 399-424.</li>
+<li>Nguyen, Tri-Long, Gary S. Collins, Jessica Spence, Jean-Pierre Daurès, P. J. Devereaux, Paul Landais, and Yannick Le Manach. 2017. “<a href="https://doi.org/10.1186/s12874-017-0338-0">Double-adjustment in propensity score matching analysis: choosing a threshold for considering residual imbalance</a>,” <em>BMC Medical Research Methodology</em>, 17: 78.</li>
 </ul>
 </div><ol class="aside-footnotes"><li id="fn7"><p>ATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル</p></li><li id="fn8"><p>傾向スコアによる重み調整後でも、バランスが100%とれるのは極稀（というか、基本的にあり得ない）</p></li></ol></aside></section><section id="極端な重みの弊害" class="slide level2"><h2>極端な重みの弊害</h2>
 <p><strong>重みの「爆発」</strong></p>

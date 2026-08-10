@@ -1415,11 +1415,11 @@
     "text": "参考）共変量バランシング傾向スコア\n共変量バランシング傾向スコア（covariate balancing propensity score; CBPS）（Imai and Ratkovic 2014）\n\n従来の最尤推定法（ロジットなど）による傾向スコア計算の限界\n\n「処置割当の予測」の最適化が目的であり、「共変量のバランス」を保証するものではない\nSmall-N、モデルの不適切な定式化によるバランスの不十分な改善\n\n\n\n\\(\\Rightarrow\\) CPBSは「傾向スコアの推計」と「共変量のバランス最適化」を同時に行う\nRの定番パッケージ（{MatchIt}、{WeightIt}）でも簡単に使用可能\n\n\n\n\n\nImai, Kosuke and Marc Ratkovic. 2014. “Covariate Balancing Propensity Score.” Journal of the Royal Statistical Society Series B: Statistical Methodology, 76(1):243-263."
   },
   {
-    "objectID": "ps_slide.html#処置効果推定時の共変量について要検討",
-    "href": "ps_slide.html#処置効果推定時の共変量について要検討",
+    "objectID": "ps_slide.html#処置効果推定時の共変量について",
+    "href": "ps_slide.html#処置効果推定時の共変量について",
     "title": "社会科学における因果推論",
-    "section": "処置効果推定時の共変量について（要検討）\n",
-    "text": "処置効果推定時の共変量について（要検討）\n\n傾向スコア計算時に使用した共変量を結果変数モデル1にも入れるべきか\n\n傾向スコア・モデル：\\(D \\propto \\gamma_0 + \\gamma_1 X_1 + \\gamma_2 X_2\\)\nアウトカム・モデル（1）：\\(Y = \\alpha + \\beta D\\)\nアウトカム・モデル（2）：\\(Y = \\alpha + \\beta_1 D + \\beta_2 X_1 + \\beta_3 X_2\\)\n\n結論：必須ではないが、共変量を投入することが合理的\n\nメリット：精度向上、残存する不均衡2の補正（Austin 2011）\n\n\n\n\n\n\n\nAustin, Peter C. 2011. “An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies.” Multivariate Behavioral Research, 46(3): 399-424.\n\nATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル傾向スコアによる重み調整後でも、バランスが100%とれるのは極稀（というか、基本的にあり得ない）"
+    "section": "処置効果推定時の共変量について",
+    "text": "処置効果推定時の共変量について\n傾向スコア計算時に使用した共変量を結果変数モデル1にも入れるべきか\n\n層化、重み付け等の主目的は統制群・処置群の共変量バランスを改善すること（Austin 2011）\n\n\n\\(\\Rightarrow\\) 十分なバランスしていれば、\\(Y = \\alpha + \\beta D\\)で十分\n\n\n傾向スコアの計算に使用した共変量を結果モデルにもう一度投入する?（double adjustment）\n\n\\(Y = \\alpha + \\beta_1 D + \\beta_2 X_1 + \\beta_3 X_2\\)\n\n\\(\\Rightarrow\\) 必須ではないが、共変量を投入することが合理的\n\n（場合によっては）精度向上、残存する不均衡2の補正（Nguyen et al. 2017）\n\nどの共変量を入れるかはNguyen et al.（2017）を参照\n\n\n\n\n\n\n\n\nAustin, Peter C. 2011. “An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies.” Multivariate Behavioral Research, 46(3): 399-424.\nNguyen, Tri-Long, Gary S. Collins, Jessica Spence, Jean-Pierre Daurès, P. J. Devereaux, Paul Landais, and Yannick Le Manach. 2017. “Double-adjustment in propensity score matching analysis: choosing a threshold for considering residual imbalance,” BMC Medical Research Methodology, 17: 78.\n\nATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル傾向スコアによる重み調整後でも、バランスが100%とれるのは極稀（というか、基本的にあり得ない）"
   },
   {
     "objectID": "ps_slide.html#極端な重みの弊害",
