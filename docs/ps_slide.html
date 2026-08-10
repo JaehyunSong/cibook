@@ -1968,92 +1968,27 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
 <ul>
 <li>Imai, Kosuke and Marc Ratkovic. 2014. “<a href="https://doi.org/10.1111/rssb.12027">Covariate Balancing Propensity Score</a>.” <em>Journal of the Royal Statistical Society Series B: Statistical Methodology,</em> 76(1):243-263.</li>
 </ul>
-</div></aside></section><section id="処置効果推定時の共変量について" class="slide level2"><h2>処置効果推定時の共変量について</h2>
+</div></aside></section><section id="処置効果推定時の共変量について要検討" class="slide level2"><h2>処置効果推定時の共変量について<span class="strong">（要検討）</span>
+</h2>
 <p>傾向スコア計算時に使用した共変量を結果変数モデル<sup>1</sup>にも入れるべきか</p>
 <ul>
-<li>結論：傾向スコア作成時に使用した共変量も投入しても良い
+<li><p>傾向スコア・モデル：<span class="math inline">\(D \propto \gamma_0 + \gamma_1 X_1 + \gamma_2 X_2\)</span></p></li>
+<li><p>アウトカム・モデル（1）：<span class="math inline">\(Y = \alpha + \beta D\)</span></p></li>
+<li><p>アウトカム・モデル（2）：<span class="math inline">\(Y = \alpha + \beta_1 D + \beta_2 X_1 + \beta_3 X_2\)</span></p></li>
+<li>
+<p>結論：必須ではないが、<span class="strong">共変量を投入することが合理的</span></p>
 <ul>
-<li>メリット：精度向上、残存するバイアス<sup>2</sup>の補正<span class="small">（Austin 2011）</span>
+<li>メリット：精度向上、残存する不均衡<sup>2</sup>の補正<span class="small">（Austin 2011）</span>
 </li>
 </ul>
 </li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<!-- preamble start -->
-
-    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
-      // Create table-specific functions using external factory
-      const tableFns_h7ra212u5jm9wgtiyxmq = TinyTable.createTableFunctions("tinytable_h7ra212u5jm9wgtiyxmq");
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '3', j: 2 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_zjlt8bayw8z7oisk05qw',}, 
-          { positions: [ { i: '2', j: 2 }, { i: '2', j: 3 } ], css_id: 'tinytable_css_m0c1wjp3qo78ezkps2wz',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_95bylz9gu5l1pzrhiuun',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_tvcze2t1rip8io5xpfyd',}, 
-          { positions: [ { i: '3', j: 1 } ], css_id: 'tinytable_css_klnof5d9zssb2ope4ski',}, 
-          { positions: [ { i: '2', j: 1 } ], css_id: 'tinytable_css_sfo65nfvlxxby82v0vmk',}, 
-          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_5xa9h2izajfwn82tkvhq',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_56gxk8mpd2wg1gncgwmo',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  tableFns_h7ra212u5jm9wgtiyxmq.styleCell(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
-<style>
-    /* tinytable css entries after */
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_zjlt8bayw8z7oisk05qw, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_zjlt8bayw8z7oisk05qw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_m0c1wjp3qo78ezkps2wz, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_m0c1wjp3qo78ezkps2wz { text-align: center }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_95bylz9gu5l1pzrhiuun, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_95bylz9gu5l1pzrhiuun {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_tvcze2t1rip8io5xpfyd, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_tvcze2t1rip8io5xpfyd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_klnof5d9zssb2ope4ski, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_klnof5d9zssb2ope4ski {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_sfo65nfvlxxby82v0vmk, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_sfo65nfvlxxby82v0vmk { text-align: left }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_5xa9h2izajfwn82tkvhq, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_5xa9h2izajfwn82tkvhq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_h7ra212u5jm9wgtiyxmq td.tinytable_css_56gxk8mpd2wg1gncgwmo, #tinytable_h7ra212u5jm9wgtiyxmq th.tinytable_css_56gxk8mpd2wg1gncgwmo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    </style>
-<div class="container">
-      <table class="tinytable" id="tinytable_h7ra212u5jm9wgtiyxmq" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
-<th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">共変量なし</th>
-                <th scope="col" data-row="0" data-col="3">共変量あり</th>
-              </tr></thead>
-<tfoot><tr><td colspan="3">注：カッコ内は標準誤差</td></tr></tfoot>
-<tbody>
-<tr>
-<td data-row="1" data-col="1">処置効果（ATE）</td>
-                  <td data-row="1" data-col="2">224.676 (577.657)</td>
-                  <td data-row="1" data-col="3">712.743 (552.508)</td>
-                </tr>
-<tr>
-<td data-row="2" data-col="1">Num.Obs.</td>
-                  <td data-row="2" data-col="2">614</td>
-                  <td data-row="2" data-col="3">614</td>
-                </tr>
-<tr>
-<td data-row="3" data-col="1">R2 Adj.</td>
-                  <td data-row="3" data-col="2">-0.001</td>
-                  <td data-row="3" data-col="3">0.114</td>
-                </tr>
-</tbody>
-</table>
-</div>
-<!-- hack to avoid NA insertion in last line -->
-</div>
-</div>
 
 <aside><div>
 <ul>
 <li>Austin, Peter C. 2011. “<a href="https://doi.org/10.1080/00273171.2011.568786">An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies</a>.” <em>Multivariate Behavioral Research,</em> 46(3): 399-424.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn7"><p>ATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル</p></li><li id="fn8"><p>傾向スコアによる重み調整後、バランスが100%とれるのは極稀（というか、基本的にあり得ない）</p></li></ol></aside></section><section id="極端な重みの弊害" class="slide level2"><h2>極端な重みの弊害</h2>
+</div><ol class="aside-footnotes"><li id="fn7"><p>ATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル</p></li><li id="fn8"><p>傾向スコアによる重み調整後でも、バランスが100%とれるのは極稀（というか、基本的にあり得ない）</p></li></ol></aside></section><section id="極端な重みの弊害" class="slide level2"><h2>極端な重みの弊害</h2>
 <p><strong>重みの「爆発」</strong></p>
 <ul>
 <li>傾向スコアが0や1に極めて近づくと、重み（<span class="math inline">\(\frac{1}{e(X)}\)</span>や<span class="math inline">\(\frac{1}{1 - e(X)}\)</span>）が極大化
