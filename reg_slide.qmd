@@ -1,0 +1,1778 @@
+---
+subtitle: "5/ 回帰分析"
+modified-date: today
+format: 
+  revealjs:
+    footer: "回帰分析"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse,
+               gt,
+               modelsummary,
+               ggdag,
+               dagitty,
+               latex2exp,
+               estimatr,
+               marginaleffects)
+
+cia_df <- read_csv("_data_slide/reg/cia.csv")
+```
+
+{{< include _common.qmd >}}
+
+# **1** 回帰分析
+
+## 単回帰分析
+
+[単回帰分析]{.strong}[（simple regression）]{.small}：説明変数が1つのみの線形回帰分析
+
+- $Y$を$D$に回帰する[（regress $Y$ on $D$）]{.small}
+
+$$
+\begin{eqnarray}
+Y_i & = & \mathbb{E}[Y_i|D_i] + \varepsilon_i & = & \alpha + \tau D_i + \varepsilon_i \\
+\widehat{Y}_i & = & \mathbb{E}[Y_i|D_i] & = & \widehat{\alpha} + \widehat{\tau} D_i
+\end{eqnarray}
+$$
+
+- 推定対象：$\widehat{\alpha}$、$\widehat{\tau}$
+- 推定方法：[最小二乗法]{.strong}[（ordinary least squares; OLS）]{.small}
+
+## 最小二乗法
+
+- [残差の二乗和を最小とする$\widehat{\alpha}$と$\widehat{\tau}$を推定]{.strong}
+   - 残差[（residuals）]{.small}：$u_i = Y_i - \widehat{Y}_i = Y_i - \widehat{\alpha} - \widehat{\tau} D_i$
+      - $u_i$は$\varepsilon_i$の推定値（$\widehat{\varepsilon}$）
+   - 残差自乗和の平方根は「**RMSE**」[（root mean square error）]{.small}とも呼ばれる
+
+$$
+(\widehat{\alpha}, \widehat{\tau}) = \mathop{\arg \min}_{\alpha, \tau} \sum_{i}^{n}(Y_i - \alpha - \tau D_i)^2
+$$
+
+## 最小二乗法の例
+
+- 残差の二乗和は141.13（左）、[58.82]{.alert}（中）、66.55（右）
+   - RMSEはそれぞれ3.76、[2.43]{.alert}、2.85
+
+```{r}
+#| fig-width: 7
+#| fig-height: 3.5
+#res_df |> mutate(u2 = (y - yend)^2) |> reframe(u2 = sqrt(sum(u2) / 10), .by = example)
+#res_df |> mutate(u2 = (y - yend)^2) |> reframe(u2 =sum(u2), .by = example) |> as.data.frame()
+
+set.seed(1986)
+ols_df <- tibble(x = 0:10,
+                 y = 1 * x + rnorm(11, 0, 3))
+
+ols_df <- list("例1" = ols_df,
+               "例2" = ols_df,
+               "例3" = ols_df)
+  
+reg_df <- tibble(example = c("例1", 
+                             "例2", 
+                             "例3"),
+                 x       = c(0, 0, 0),
+                 xend    = c(10, 10, 10),
+                 y       = c(5.0000 + 0 * 0,
+                             0.1386 + 0.8390 * 0,
+                             0.0000 + 1.1 * 0),
+                 yend    = c(5.0000 + 0 * 10,
+                             0.1386 + 0.8390 * 10,
+                             0.0000 + 1.1 * 10))
+
+res_df1 <- tibble(x    = 0:10,
+                  xend = x,
+                  y    = ols_df[[1]]$y,
+                  yend = 5.0000 + 0 * x)
+
+res_df2 <- tibble(x    = 0:10,
+                  xend = x,
+                  y    = ols_df[[2]]$y,
+                  yend = 0.1386 + 0.8390 * x)
+
+res_df3 <- tibble(x    = 0:10,
+                  xend = x,
+                  y    = ols_df[[3]]$y,
+                  yend = 0.0000 + 1.1 * x)
+
+res_df <- list("例1" = res_df1,
+               "例2" = res_df2,
+               "例3" = res_df3) |> 
+  bind_rows(.id = "example")
+
+ols_df |> 
+  bind_rows(.id = "example") |> 
+  ggplot() +
+  geom_point(aes(x = x, y = y), size = 3) +
+  geom_segment(data = res_df,
+               aes(x = x, xend = xend, y = y, yend = yend)) +
+  geom_segment(data = reg_df,
+               aes(x = x, xend = xend, y = y, yend = yend),
+               linewidth = 1, color = "tomato") +
+  scale_x_continuous(breaks = c(0, 5, 10)) +
+  labs(x = "X", y = "Y") +
+  facet_wrap(~example) +
+  theme_bw(base_size = 16) +
+  theme(
+    panel.background      = element_rect(fill = 'transparent'),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 単回帰分析と因果推論
+
+[処置変数が外生変数、かつ二値変数なら$D_i$の係数の推定値はATEの推定値]{.strong}
+
+- 処置変数$D$が二値変数の場合、$\widehat{\tau}$は二群間の平均値の差分
+   - $\widehat{\tau}$ = ATT + セレクションバイアス
+
+$$
+\small
+\begin{align}
+\widehat{\tau} & = \mathbb{E}[Y_i(1)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 0] \\
+& = \underbrace{\mathbb{E}[Y_i(1)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0)|D_i = 1] - \mathbb{E}[Y_i(0)|D_i = 0]}_{\textsf{selection bias}}
+\end{align}
+$$
+
+- 処置変数が外生変数（=交換可能性/平均独立が成立）なら...[^exovar1][^exovar2]
+
+[^exovar1]: 交換可能性、または平均独立が成立する場合、$\mathbb{E}[Y_i(1)|D_i = 1] = \mathbb{E}[Y_i(1)|D_i = 0]$、かつ$\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]$だから
+
+[^exovar2]: セレクションバイアスが0なら（$\mathbb{E}[Y_i(0)|D_i = 1] = \mathbb{E}[Y_i(0)|D_i = 0]$）、$\widehat{\tau}$はATEでなく、ATT
+
+$$
+\widehat{\tau} = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)] = \textsf{ATE}
+$$
+
+## 誤差に関する仮定
+
+- 回帰分析における誤差の仮定
+   - 誤差の期待値は0（$\mathbb{E}[\varepsilon_i]$ = 0）
+   - [**誤差と説明変数は独立**]{.alert}（$\textsf{Cov}(D, \varepsilon)$ = $\mathbb{E}[D \times \varepsilon]$ = 0）
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+dagify(Y ~ D + e,
+       #D ~ e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(xend = if_else(xend == 2 & y == 0, xend - 0.05, xend),
+         yend = if_else(y == 0 & yend == 0, yend - 0.15, yend),
+         y    = if_else(y == 0, y - 0.15, y)) |> 
+  mutate(error = if_else(name == "e", "error", "observed"),
+         name  = recode(name,
+                        "e" = "e",
+                        "D" = "D",
+                        "Y" = "Y")) |>
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(size = error, shape = error)) +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  annotate("text", x = 1, y = 0, label = expression(tau),
+           size = 8, vjust = 0) +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 処置変数が内生変数の場合
+
+- 誤差と説明変数は独立しない場合、$\widehat{\tau}$はバイアス付きのATT
+   - $\textsf{Cov}(D, \varepsilon) \neq$ 0
+   - $\mathbb{E}[D \times \varepsilon] \neq$ 0
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+dagify(Y ~ D + e,
+       D ~ e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(xend = if_else(xend == 2 & y == 0, xend - 0.05, xend),
+         yend = if_else(y == 0 & yend == 0, yend - 0.15, yend),
+         y    = if_else(y == 0, y - 0.15, y)) |> 
+  mutate(error = if_else(name == "e", "error", "observed"),
+         name  = recode(name,
+                        "e" = "e",
+                        "D" = "D",
+                        "Y" = "Y")) |>
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(size = error, shape = error)) +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  annotate("text", x = 1, y = 0, label = expression(tau),
+           size = 8, vjust = 0) +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 交絡要因が既知の場合
+
+- 観察済みの変数$X$が唯一の交絡要因ある場合
+   - 単回帰分析では$X$は$\varepsilon$の一部だったが、$X$が観察済みなら$\varepsilon \rightarrow X$のパスを消せる
+   - そのためには、内生性の原因である$X$を考慮したモデリングが必要
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+dagify(Y ~ D + X + e,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1, e = 2),
+                     y = c(Y = 0, D = 0, X = 1.95, e = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(xend = if_else(xend == 2 & y == 0, xend - 0.05, xend),
+         yend = if_else(y == 0 & yend == 0, yend - 0.15, yend),
+         y    = if_else(y == 0, y - 0.15, y)) |> 
+  mutate(error = if_else(name == "e", "error", "observed"),
+         name  = recode(name,
+                        "e" = "e",
+                        "D" = "D",
+                        "Y" = "Y",
+                        "X" = "X")) |>
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(size = error, shape = error)) +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "X", "Y", expression(epsilon))) +
+  annotate("text", x = 1, y = 0, label = expression(tau),
+           size = 8, vjust = 0) +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 重回帰分析
+
+統制変数$X$を追加した回帰モデル
+
+$$
+\begin{align}
+Y_i & = \mathbb{E}[Y_i|D_i, X_i] + \varepsilon_i \\
+& = \alpha + \tau D_i + \beta X_i + \varepsilon_i
+\end{align}
+$$
+
+- [**残差の二乗和を最小とする$\widehat{\alpha}$と$\widehat{\tau}$、$\widehat{\beta}$を推定**]{.alert}
+   - 残差[（residuals）]{.small}：$Y_i - \alpha - \tau D_i - \beta X_i$
+
+$$
+(\widehat{\alpha}, \widehat{\tau}, \widehat{\beta}) = \mathop{\arg \min}_{\alpha, \tau, \beta} \sum_{i}^{n}(Y_i - \alpha - \tau D_i - \beta X_i)^2
+$$
+
+## 統制変数の役割
+
+$X_i = x$における傾き（$\tau$）の推定
+
+- ただし、$X_i = x$における傾きと$X_i = x^{\prime}$における傾きは同じと仮定[^control-interaction]（$x \neq x^{\prime}$）
+
+[^control-interaction]: この仮定を緩和するためには交互作用を考慮したモデリングが必要
+
+```{r}
+#| include: false
+set.seed(1986)
+game_df_m <- tibble(game = rnorm(50, mean = 3, sd = 0.75),
+                    height = rnorm(50, mean = 170, sd = 7))
+
+game_df_f <- tibble(game = rnorm(50, mean = 1, sd = 0.75),
+                    height = rnorm(50, mean = 159, sd = 7)) |> 
+  mutate(game = abs(game))
+
+game_df <- list("男性" = game_df_m,
+                "女性" = game_df_f) |> 
+  bind_rows(.id = "gender")
+```
+
+```{r}
+#| layout: [[-5,40,-10,40,-5]]
+#| fig-width: 5
+#| fig-height: 4.5
+game_df |> 
+  ggplot(aes(x = game, y = height)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "black", linewidth = 1) +
+  labs(x = "ゲームのプレイ時間（1日平均）",
+       y = "身長（cm）")
+
+game_df |> 
+  ggplot(aes(x = game, y = height, color = gender)) +
+  geom_point(size = 3) +
+  annotate("segment", x = 0, xend = 2.75,
+           y = 159.0148, yend = 158.0435, linewidth = 1) +
+  annotate("segment", x = 1.75, xend = 5,
+           y = 171.2424, yend = 170.0945, linewidth = 1) +
+  guides(color = guide_legend(position = "inside")) +
+  labs(x = "ゲームのプレイ時間（1日平均）",
+       y = "身長（cm）", color = "") +
+  theme(legend.position.inside = c(1, 1),
+        legend.justification   = c(1, 0.65))
+```
+
+## 統制変数とブロッキング
+
+重回帰分析における係数は通常、「[**他の変数が一定**]{.alert}であれば...」と解釈される。
+
+- $\Rightarrow$ 重回帰分析の推定値 = ブロック内処置効果の加重平均
+
+#### **手順**
+
+1. ブロックごとに処置効果（A）を推定する
+1. （A）の加重平均を計算する。各ブロックの重みは、
+   - $Pr(X_i = x)$（ATEを推定する場合）
+   - $Pr(X_i = x, D_i = 1)$（ATTを推定する場合）
+   - $Pr(X_i = x, D_i = 0)$（ATCを推定する場合）
+
+- $\Rightarrow$ [統制変数をうまく使えば因果推論ができそう]{.alert}
+   - どうすれば回帰分析で信頼できる処置効果が推定できるか
+   - $\Rightarrow$ [**ブロック内で処置群と統制群が交換可能（or 平均独立）**]{.alert}であれば...?
+
+# **2** 仮定
+
+## 条件付き独立の仮定
+
+[**条件付き独立の仮定**]{.alert}[（conditional independence assumption; **CIA**）]{.small}
+
+- 統制変数（X）で条件づけた場合、処置変数（D）と結果変数（Y）の潜在的結果は独立する
+- 条件付き独立 = 条件付き交換可能性 = 条件付き無視可能性
+
+$$
+\{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | X
+$$
+
+- 全体では交換可能性が成立しないものの、統制変数Xで条件づけた下位グループ内では交換可能性が成立
+- [**観察データを用いた回帰分析で因果推論を行うための仮定**]{.alert}
+
+## 条件付き平均独立性
+
+CIAが成立すると[**条件付き平均独立性**]{.alert}が成り立つ
+
+- 平均独立性が成り立つとATEが推定可能となる
+
+$$
+\mathbb{E}[Y_i(1)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(1)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(1)|X_i = x]
+$$
+
+<center>かつ</center>
+
+$$
+\mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(0)|X_i = x]
+$$
+
+## 条件付き平均独立の例
+
+:::: {.columns}
+::: {.column width=25%}
+```{r}
+cia_df |> 
+  gt() |> 
+  tab_options(table.font.size        = 18,
+              table.background.color = "transparent")
+```
+:::
+
+::: {.column width=75%}
+
+### 真のATE
+
+$$
+\underbrace{\mathbb{E}[Y_i(1)]}_{\textsf{3.5}} - \underbrace{\mathbb{E}[Y_i(0)]}_{\textsf{1.5}} = 2
+$$
+
+<br/>
+
+### ATEの推定値
+
+Difference-in-means（DiM）推定量
+
+$$
+\underbrace{\mathbb{E}[Y_i|D_i = 1]}_{\textsf{2.9}} - \underbrace{\mathbb{E}[Y_i|D_i = 0]}_{\textsf{2.1}} = 0.8
+$$
+
+:::
+::::
+
+## 平均独立性は成立するか
+
+:::: {.columns}
+::: {.column width=25%}
+```{r}
+cia_df |> 
+  gt() |> 
+  tab_options(table.font.size        = 18,
+              table.background.color = "transparent")
+```
+:::
+
+::: {.column width=75%}
+
+||$\mathbb{E}[Y_i(0)|D_i]$|$\mathbb{E}[Y_i(1)|D_i]$|
+|:---|---:|---:|
+|$D_i = 0$|[**2.1**]{.alert}|**4.1**|
+|$D_i = 1$|**0.9**|[**2.9**]{.alert}|
+
+::: {.panel-tabset}
+#### ケース1
+
+平均独立性$\times$
+
+- もし、現在の処置群が統制群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 1]$ = 0.9
+- もし、現在の統制群が統制群になったら...（事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 0]$ = 2.1
+
+#### ケース2
+
+平均独立性$\times$
+
+- もし、現在の処置群が処置群になったら...（事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 1]$ = 2.9
+- もし、現在の統制群が処置群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 0]$ = 4.1
+:::
+
+<!-- もし処置群と統制群が逆になったらATEの推定値は 4.1 - 0.9 = 3.2になる -->
+:::
+::::
+
+## $X_i = 0$の場合
+
+:::: {.columns}
+::: {.column width=25%}
+```{r}
+cia_df |> 
+  filter(X == 0) |> 
+  gt() |> 
+  tab_options(table.font.size        = 24,
+              table.background.color = "transparent")
+```
+:::
+
+::: {.column width=75%}
+
+||$\mathbb{E}[Y_i(0)|D_i, X_i = 0]$|$\mathbb{E}[Y_i(1)|D_i, X_i = 0]$|
+|:---|---:|---:|
+|$D_i = 0$|[**0.0**]{.alert}|**2.0**|
+|$D_i = 1$|**0.0**|[**2.0**]{.alert}|
+
+::: {.panel-tabset}
+#### ケース1
+
+平均独立性$\times$
+
+- もし、現在の処置群が統制群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 1]$ = 0
+- もし、現在の統制群が統制群になったら...（事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 0]$ = 0
+
+#### ケース2
+
+平均独立性$\times$
+
+- もし、現在の処置群が処置群になったら...（事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 1]$ = 2
+- もし、現在の統制群が処置群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 0]$ = 2
+:::
+
+:::
+::::
+
+## $X_i = 1$の場合
+
+:::: {.columns}
+::: {.column width=25%}
+```{r}
+cia_df |> 
+  filter(X == 1) |> 
+  gt() |> 
+  tab_options(table.font.size        = 24,
+              table.background.color = "transparent")
+```
+:::
+
+::: {.column width=75%}
+
+||$\mathbb{E}[Y_i(0)|D_i, X_i = 1]$|$\mathbb{E}[Y_i(1)|D_i, X_i = 1]$|
+|:---|---:|---:|
+|$D_i = 0$|[**3.0**]{.alert}|**5.0**|
+|$D_i = 1$|**3.0**|[**5.0**]{.alert}|
+
+::: {.panel-tabset}
+#### ケース1
+
+平均独立性$\times$
+
+- もし、現在の処置群が統制群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 1]$ = 3
+- もし、現在の統制群が統制群になったら...（事実）
+   - $\mathbb{E}[Y_i(0)|D_i = 0]$ = 3
+
+#### ケース2
+
+平均独立性$\times$
+
+- もし、現在の処置群が処置群になったら...（事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 1]$ = 5
+- もし、現在の統制群が処置群になったら...（**反**事実）
+   - $\mathbb{E}[Y_i(1)|D_i = 0]$ = 5
+:::
+
+:::
+::::
+
+## 条件付き平均独立と回帰分析
+
+[条件付き平均独立が成立する場合、重回帰分析でバイアスのないATEが推定可能]{.strong}
+
+<!-- - CIAが成り立ったらさらに良い -->
+
+```{r}
+list("統制変数なし" = lm_robust(Y ~ D, data = cia_df),
+     "統制変数あり" = lm_robust(Y ~ D + X, data = cia_df)) |> 
+  modelsummary(estimate    = "{estimate} ({std.error})",
+               statistic   = NULL,
+               coef_rename = c("(Intercept)" = "切片"),
+               gof_map     = c("nobs", "r.squared"),
+               notes       = "注：カッコ内はHC2頑健標準誤差")
+```
+
+- 統制変数**なし**（単回帰分析）のATEの推定値：0.8
+   - 処置群と統制群を交換する場合、ATEの推定値は3.2
+- 統制変数**あり**（重回帰分析）のATEの推定値：2.0
+<!--   - {$X_i = 0$におけるATE} = {$X_i = 1$におけるATE} = 2 -->
+   - $X_i = x$で処置群と統制群を交換してもATEの推定値は2
+
+## CIA/条件付き平均独立性は確認可能か
+
+条件付き平均独立性
+
+$$
+\mathbb{E}[Y_i(1)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(1)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(1)|X_i = x]
+$$
+
+<center>かつ</center>
+
+$$
+\mathbb{E}[Y_i(0)|D_i = 1, X_i = x] = \mathbb{E}[Y_i(0)|D_i = 0, X_i = x] = \mathbb{E}[Y_i(0)|X_i = x]
+$$
+
+
+- $\mathbb{E}[Y_i(1)|D_i = 0, X_i = x]$、$\mathbb{E}[Y_i(0)|D_i = 1, X_i = x]$は観察不可
+   - $\Rightarrow$ [**平均独立性が成り立っているかどうかは確認できない**]{.alert}
+      - 平均独立性よりも厳しいCIAの確認はさらに難しい
+   - 「$X$で条件付ければ平均独立性が成り立つだろう」と仮定するしかない
+   - [非実験データ]{.alert}であれば、変数選択&モデリングを慎重に行う必要がある
+- もし、間違った条件付けをしてしまったら...?
+
+# **3** 欠落変数バイアス
+
+## 欠落変数バイアスの定式化
+
+- 3つのモデル（真の処置効果は$\tau^l$）
+   - 真のモデル（long regression）：$Y_i = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i$
+   - バイアス付きのモデル（short regression）：$Y_i = \alpha^s + \tau^s D_i + \zeta_i$
+   - XをDに回帰したモデル：$X_i = \alpha_0 + \lambda D_i + \nu_i$
+
+**真のモデルからXが消えたら...**
+
+$$
+\begin{align}
+Y_i & = \alpha^l + \tau^l D_i + \beta^l X_i + \varepsilon_i \\
+& = \alpha^l + \tau^l D_i + \beta^l (\alpha_0 + \lambda D_i + \nu_i) + \varepsilon_i \\
+& = \alpha^l + \tau^l D_i + \beta^l\alpha_0 + \beta^l \lambda D_i + \beta^l \nu_i + \varepsilon_i \\
+& = \underbrace{(\alpha^l + \beta^l\alpha_0)}_{\alpha^s} + \underbrace{(\tau^l + \beta^l \lambda)}_{\tau^s} D_i + \underbrace{(\varepsilon_i + \beta^l \nu_i)}_{\varepsilon_i}
+\end{align}
+$$
+
+## 欠落変数バイアス
+
+[**欠落変数バイアス**]{.alert}（omitted variable bias; [**OVB**]{.alert}）
+
+- $\beta^l$：X $\rightarrow$ Yの係数
+- $\lambda$：D $\rightarrow$ Xの係数
+
+$$
+\underbrace{\tau^s}_{\textsf{バイアス付きの推定値}} = \underbrace{\tau^l}_{\textsf{真の処置効果}} + \underbrace{\textcolor{red}{\beta^l \lambda}}_{\textsf{欠落変数バイアス}}
+$$
+
+- $\beta^l = 0$、または$\lambda = 0$ならOVBは発生しない
+- $\beta^l \neq 0$、かつ$\lambda \neq 0$の場合、Xは[**交絡要因**]{.alert}（confounder）である。
+   - [**交絡要因を統制しないと、OVBが発生する**]{.alert}
+
+## 欠落変数バイアスの可視化（1）
+
+職業訓練（D）は将来の年収（Y）にどのような影響を与えるか
+
+- 負の効果?効果なし?内生性（自己選択）は?
+
+```{r}
+set.seed(1986)
+ovb_df <- tibble(inc_b = rep(c("低", "中", "高"), each = 20)) |> 
+  rowwise() |> 
+  mutate(month = case_when(inc_b == "低" ~ sample(15:24, 1, replace = TRUE),
+                           inc_b == "中" ~ sample(5:20,  1, replace = TRUE),
+                           inc_b == "高" ~ sample(1:10,   1, replace = TRUE))) |> 
+  mutate(inc_a = case_when(inc_b == "低" ~ 100 + month * 10 + rnorm(1, 0, 50),
+                           inc_b == "中" ~ 300 + month * 10 + rnorm(1, 0, 50),
+                           inc_b == "高" ~ 500 + month * 10 + rnorm(1, 0, 50))) |> 
+  mutate(inc_b = fct_inorder(inc_b))
+```
+
+```{r}
+#| layout: [[-5,40,-10,40,-5]]
+#| fig-width: 5
+#| fig-height: 5
+dagify(Y ~ D + X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 1.95))) |> 
+  tidy_dagitty() |> 
+  mutate(name  = recode(name,
+                        "D" = "D",
+                        "Y" = "Y",
+                        "X" = "?")) |>
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(size = 18) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10, col = "white") +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+ovb_df |> 
+  ggplot(aes(x = month, y = inc_a)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 2) +
+  labs(x = "D：職業訓練の期間（ヶ月）", y = "Y：訓練後の年収（万円）")
+```
+
+## 欠落変数バイアスの可視化（2）
+
+交絡要因として職業訓練前の年収（X）
+
+- 職業訓練前の年収を考慮したモデル：実は正の効果があるかも?
+
+```{r}
+#| layout: [[-5,40,-10,40,-5]]
+#| fig-width: 5
+#| fig-height: 5
+dagify(Y ~ D + X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 1.95))) |> 
+  tidy_dagitty() |> 
+  mutate(name  = recode(name,
+                        "D" = "D",
+                        "Y" = "Y",
+                        "X" = "X")) |>
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(size = 18) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10, col = "white") +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+ovb_df |> 
+  ggplot(aes(x = month, y = inc_a, color = inc_b)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 2) +
+  labs(x = "D：職業訓練の期間（ヶ月）", y = "Y：訓練後の年収（万円）",
+       color = "X：訓練前の年収") +
+  theme(legend.position = "bottom")
+```
+
+# **4** 処置後変数バイアス
+
+## 処置後変数とは
+
+[**処置後変数**]{.alert}（post-treatment variable）
+
+:::: {.columns}
+::: {.column width=40%}
+```{r}
+#| fig-width: 3
+#| fig-height: 3
+dagify(Y ~ D + X,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 1.95))) |> 
+  tidy_dagitty() |> 
+  mutate(eff = c("royalblue", "tomato", "royalblue", "black")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(aes(edge_color = eff), edge_width = 2) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+:::
+
+::: {.column width=60%}
+- XはDの処置後変数
+   - DがYに直接与える処置効果（[直接効果]{.tomato}）
+   - DがXを経由してYに与える処置効果（[間接効果]{.royalblue}）
+   - 総効果 = [直接効果]{.tomato} + [間接効果]{.royalblue}
+
+- 因果推論において主に注目するのは[**総効果**]{.alert}
+   - この場合、Xを統制してはいけない
+   - 説明変数がDのみの単回帰分析を採用すべき
+:::
+::::
+
+:::: {.aside}
+参考）XがYに与える影響を推定したい場合、Dを統制すべきである。なぜならXを処置変数と考えると、Dは交絡要因になるからだ。
+::::
+
+## 直接効果、間接効果、総効果
+
+:::: {.columns}
+::: {.column width=50%}
+```{r}
+#| fig-width: 3.5
+#| fig-height: 3.5
+dagify(Y ~ D + X + e,
+       X ~ D + n,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1, e = 2, n = 0),
+                     y = c(Y = 0, D = 0, X = 1.95, e = 1.95, n = 1.95))) |> 
+  tidy_dagitty() |> 
+  mutate(eff = c("royalblue", "tomato", "royalblue", 
+                 "black", "black", "black")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(aes(edge_color = eff), edge_width = 2) +
+  geom_dag_text(size  = 10,
+                col   = "white",
+                parse = TRUE,
+                label = c("D", "X", "Y", 
+                          TeX("$\\epsilon$"), 
+                          TeX("$\\nu"))) +
+  annotate("label", x = 1, y = 0, size = 7,
+           label = TeX("$\\tau^p$")) +
+  annotate("label", x = 1.5, y = 1, size = 7,
+           label = TeX("$\\beta^p$")) +
+  annotate("label", x = 0.5, y = 1, size = 7,
+           label = TeX("$\\lambda$")) +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+:::
+
+::: {.column width=50%}
+- [直接効果]{.tomato}：$\tau^p$
+- [間接効果]{.royalblue}：$\lambda \times \beta^p$
+   - Dが1単位上がると、Xが$\lambda$分増加するため
+- 総効果：$\tau^p + \lambda \beta^p$
+
+<br/>
+
+- $\widehat{y} = \beta_0 + \beta_1 D + \beta_2 X$のモデル
+   - $\beta_1$：直接効果（$\tau^p$）
+   - $\beta_2$：間接効果の一部（$\beta^p$）
+- $\widehat{y} = \beta_0 + \beta_1 D$のモデル
+   - $\beta_1$：総効果（$\tau^p + \lambda \beta^p$）
+:::
+::::
+
+## 処置後変数バイアスの数式化
+
+- $Y_i = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p$
+- $X_i = \alpha_0 + \lambda D_i + \nu_i$
+
+$$
+\begin{align}
+Y_i & = \alpha^p + \tau^p D_i + \beta^p X_i + \varepsilon_i^p \\
+& = \alpha^p + \tau^p D_i + \beta^p (\alpha_0 + \lambda D_i + \nu_i) + \varepsilon_i^p \\
+& = \alpha^p + \tau^p D_i + \beta^p \alpha_0 + \beta^p \lambda D_i + \beta^p \nu_i + \varepsilon_i^p \\
+& = (\alpha^p + \beta^p \alpha_0) + \textcolor{red}{(\tau^p + \beta^p \lambda)} D_i + (\beta^p \nu_i + \varepsilon_i^p)
+\end{align}
+$$
+
+- YをDのみに回帰した場合の処置効果：$\tau^p + \beta^p \lambda$（=[**真の処置効果**]{.alert}）
+   - Xがモデル含まれている場合の処置効果の推定値：$\tau^p$
+   - [処置後変数バイアス：$-\beta^p \lambda$]{.alert}
+- $\lambda$か$\beta^p$が0なら、処置後変数バイアスは発生しない
+   - $\lambda$ = 0なら、そもそもXはDの処置後変数ではない
+
+# **5** 変数選択
+
+## DAG
+
+[**有向非巡回グラフ**]{.alert}（Directed acyclic graph, [**DAG**]{.alert}）
+
+- サイクルが存在しない有向グラフ（無向グラフは常にサイクルが存在）
+   - 右グラフはサイクルが存在（D $\rightarrow$ Y $\rightarrow$ X $\rightarrow$ D $\rightarrow$ Y $\rightarrow$...）
+- [ノード]{.alert}[（点; node or vertex）]{.small}と[エッジ]{.alert}[（線; edge）]{.small}で構成
+- 因果推論での活用[（詳細は[Pearl et al. [2016=2019]](https://amzn.asia/d/iRY9OPO)などを参照）]{.smal}
+
+```{r}
+#| layout: [[-10, 35, -10, 35, -10]]
+#| fig-width: 4
+#| fig-height: 3
+dagify(Y ~ D + X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D,
+       D ~ X,
+       X ~ Y,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+:::: {.aside}
+- Pearl, Judea, Madelyn Glymour, and Nicholas P. Jewell. 2016. [*Causal Inference in Statistics: A Primer.*](https://amzn.asia/d/9GIXD1J) Wiley.
+::::
+
+## バックドア経路
+
+[バックドア経路[（backdoor path）]{.small}]{.strong}：原因と結果[（DとY）]{.small}間のすべての経路中、原因[（D）]{.small}へ向かう矢印を含む経路
+
+- ただし、$D \rightarrow Y$のパスを除く
+- 左：バックドア経路が存在（D $\leftarrow$ [**X**]{.alert} $\rightarrow$ W $\rightarrow$ Y）
+- 右：バックドア経路が存在しない
+   - D $\rightarrow$ [**X**]{.alert} $\rightarrow$ W $\rightarrow$ YはDへ向かう矢印を含まない
+
+```{r}
+#| layout: [[-10, 35, -10, 35, -10]]
+#| fig-width: 4
+#| fig-height: 3
+dagify(Y ~ D + W,
+       W ~ X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(highlight = c("black", "tomato", "tomato", "tomato", "black")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(aes(edge_color = highlight), edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D + W,
+       X ~ D,
+       W ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 分岐点
+
+[**分岐点**]{.alert}（confounder）：原因（D）と結果（Y）両方にたどり着ける変数
+
+- バックドア経路に分岐点が存在するとそのバックドア経路は「**開いている**」
+- 左：開いたバックドア経路がある（D $\leftarrow$ [**X**]{.tomato} $\rightarrow$ W $\rightarrow$ Y）
+- 右：分岐点が存在しない
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + W,
+       W ~ X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(highlight = c("n", "n", "y", "y", "n")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(color = highlight)) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none", color = "none") +
+  scale_color_manual(values = c("n" = "black", "y" = "tomato")) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D + W,
+       W ~ X,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 分岐点への対処
+
+バックドア経路が開いている場合、バックドア経路上の変数をモデルに投入するとバックドア経路は閉ざされる
+
+:::: {.columns}
+::: {.column width=50%}
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + W,
+       W ~ X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+:::
+
+::: {.column width=50%}
+- 経路上の全変数を統制する必要はない
+   - バックドア経路さえ無くせば良い
+   - 経路上のすべての変数がなくても良い
+- どのモデルでも$\bigcirc$
+   - Xのみ統制
+   - Wのみ統制
+   - XとW両方統制
+- バックドア経路が開いたままだと、[欠落変数バイアス]{.alert}が発生
+:::
+::::
+
+## 合流点
+
+[**合流点**]{.alert}[（collider）]{.small}：原因[（D）]{.small}と結果[（Y）]{.small}両方からたどり着ける変数
+
+- バックドア経路に合流点が存在するとそのバックドア経路は「**閉じている**」
+- 左：バックドア経路が開いている（D $\leftarrow$ [**X**]{.tomato} $\rightarrow$ W $\rightarrow$ Y）
+- 右：バックドア経路が閉じている（経路上に合流点が存在する; D $\rightarrow$ X $\rightarrow$ [**W**]{.tomato} $\leftarrow$ Y）
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + W,
+       W ~ X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D,
+       W ~ X + Y,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(highlight = c("n", "n", "y", "n", "n")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(color = highlight)) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none", color = "none") +
+  scale_color_manual(values = c("n" = "black", "y" = "tomato")) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 中間点（[**要検討**]{.alert}）
+
+[**中間点**]{.alert}[（mediator）]{.small}：原因[（D）]{.small}から結果[（Y）]{.small}へ向かう経路上に存在する変数
+
+- バックドア経路に中間点が存在するとそのバックドア経路は「**閉じている**」
+- 左：バックドア経路が開いている（D $\leftarrow$ [**X**]{.tomato} $\rightarrow$ W $\rightarrow$ Y）
+- 右：バックドア経路が閉じている（経路上に中間点が存在する; D $\rightarrow$ [**X**]{.tomato} $\rightarrow$ [**W**]{.tomato} $\rightarrow$ Y）
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + W,
+       W ~ X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D + W,
+       W ~ X,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  mutate(highlight = c("n", "n", "y", "y", "n")) |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(aes(color = highlight)) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none", color = "none") +
+  scale_color_manual(values = c("n" = "black", "y" = "tomato")) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 合流点・中間点への対処
+
+合流点、中間点はいずれも[**処置後変数**]{.alert}（処置後変数バイアスの原因）
+
+- モデルに投入すると新しいバックドア経路が開く（右はXを統制した例）
+   - $\Rightarrow$ 合流点と中間点はモデルに投入しない！
+   - $\Rightarrow$ 合流点はそもそも「結果の結果」だから投入しない！
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + W,
+       W ~ X,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  annotate("text", x = 1, y = 0.5, label = "中間点Xを統制すると...", size = 5, color = "red") +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D + W,
+       W ~ X,
+       X ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, W = 2),
+                     y = c(Y = 0, D = 0, X = 2, W = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  annotate("text", x = 0, y = 1, label = "X", size = 15, color = "red") +
+  annotate("text", x = 1, y = 2, label = "X", size = 15, color = "red") +
+  annotate("text", x = 1, y = 0.5, label = "新しいバックドア経路", size = 5, color = "red") +
+  annotate("curve", x = 0.15, xend = 1.85, y = 0.15, yend = 0.15, curvature = -0.25,
+           color = "red", linewidth = 1,
+           arrow = arrow(ends = "both", type = "closed")) +
+  guides(shape = "none", size = "none") +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 応用
+
+:::: {.columns}
+::: {.column width=50%}
+```{r}
+#| fig-width: 3
+#| fig-height: 4.5
+#| out-width: 500px
+dagify(Y ~ D + V + X + P + Q,
+       V ~ W,
+       D ~ W + X + Z,
+       U ~ D + Y,
+       Q ~ D,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c("Y" = 2, "D" = 0, "W" = 0, "V" = 2, "X" = 1, "Z" = 0, "P" = 2, "U" = 1, "Q" = 1),
+                     y = c("Y" = 0, "D" = 0, "W" = 2, "V" = 2, "X" = 0.75, "Z" = -1, "P" = -1, "U" = -1, "Q" = 1.5))
+       ) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point(size = 15) +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 8.5,
+                col   = "white") +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+:::
+
+::: {.column width=50%}
+分岐点を持つバックドア経路は計2つ
+
+- D $\leftarrow$ [**W**]{.tomato} $\rightarrow$ [**V**]{.tomato} $\rightarrow$ Y
+- D $\leftarrow$ [**X**]{.tomato} $\rightarrow$ Y
+- 2つの経路すべてを閉じる
+   - [{W, X}]{.alert}か[{V, X}]{.alert}、{W, V, X}を統制
+:::
+::::
+
+## DAGの書き方
+
+DAGの作成および変数選択のためのRパッケージ：{[dagitty](https://cran.r-project.org/web/packages/dagitty/index.html)} + {[ggdag](https://r-causal.github.io/ggdag/)}
+
+```{r}
+#| echo: true
+#| eval: false
+#| fig-width: 8
+#| fig-height: 3.5
+my_dag <- dagify(
+  Y ~ D + V + X + P + Q,
+  V ~ W,
+  D ~ W + X + Z,
+  U ~ D + Y,
+  Q ~ D,
+  exposure = "D",
+  outcome  = "Y",
+  coords = list(x = c("Y" = 2, "D" = 0, "W" = 0, "V" = 2, "X" = 1, "Z" = 0, "P" = 2, "U" = 1, "Q" = 1),
+                y = c("Y" = 0, "D" = 0, "W" = 2, "V" = 2, "X" = 0.75, "Z" = -1, "P" = -1, "U" = -1, "Q" = 1.5))
+)
+
+ggdag(my_dag)
+```
+
+## 統制変数の提案
+
+```{r}
+my_dag <- dagify(
+  Y ~ D + V + X + P + Q,
+  V ~ W,
+  D ~ W + X + Z,
+  U ~ D + Y,
+  Q ~ D,
+  exposure = "D",
+  outcome  = "Y",
+  coords = list(x = c("Y" = 2, "D" = 0, "W" = 0, "V" = 2, "X" = 1, "Z" = 0, "P" = 2, "U" = 1, "Q" = 1),
+                y = c("Y" = 0, "D" = 0, "W" = 2, "V" = 2, "X" = 0.75, "Z" = -1, "P" = -1, "U" = -1, "Q" = 1.5))
+)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+my_dag |>
+  ggdag_adjustment_set(shadow = TRUE) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+# **6** 交互作用
+
+## 交互作用とは
+
+[交互作用]{.strong}[（Interaction）]{.small}：D $\rightarrow$ Yの影響がXの値に依存する
+
+- 左：Xが交絡要因・分岐点[（confounder）]{.small}
+- 右：Xが[調整変数]{.alert}[^dag-mediator][（mediator）]{.small}
+
+[^dag-mediator]: DAGにおけるエッジはノードとノードを繋ぐ役割だけを果たすため、このような表記はできなが、便宜上、右の図のように表現している。実際、DAGで効果修飾（effect modification）は表現できない。つまり、右の図はDAGではない。
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 3
+dagify(Y ~ D + X,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 1.95))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges(edge_width = 1.5) +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+
+dagify(Y ~ D + X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1),
+                     y = c(Y = 0, D = 0, X = 1.95))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  annotate("segment", x = 1, xend = 1, y = 1.7, yend = 0.05,
+           linewidth = 1.5, color = "tomato",
+           arrow = arrow(type = "closed", length = unit(0.1, "inches"))) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+
+## 交互作用の例
+
+Dの処置効果がXに値によって異なる場合
+
+- [不均一な処置効果]{.alert}[（heterogeneous treatment effect）]{.small}
+  - または[条件付きATE]{.alert}[（conditional average treatment effect; [**CATE**]{.alert}）]{.small}
+
+:::: {.columns}
+::: {.column width=50%}
+- 例）薬の効き目が性別によって異なる
+   - 直線は単回帰分析に基づく回帰直線
+:::
+
+::: {.column width=50%}
+```{r}
+#| fig-width: 5
+#| fig-height: 3.5
+set.seed(1986)
+cate_df <- tibble(gender = sample(c("男性", "女性"), 100, replace = TRUE),
+                  treat  = sample(1:100, 100, replace = TRUE)) |> 
+  rowwise() |> 
+  mutate(outcome = if_else(gender == "男性", 
+                           rnorm(1, 36.5 + treat * 0.025, 1),
+                           rnorm(1, 36.5 - treat * 0.005, 1))) |> 
+  ungroup()
+
+cate_df |> 
+  ggplot(aes(x = treat, y = outcome)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 2, color = "tomato") +
+  labs(x = "投薬量（mg）", y = "接種後の体温（摂氏）")
+```
+:::
+::::
+
+## 交互作用のモデリング
+
+通常の重回帰モデルに[**交差項**]{.alert}[（interaction term）]{.small}を投入
+
+- 交差項：2つ以上の変数の**積**（以下の$D_i X_i$）
+- DとXの交互作用なし：$Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i$
+- DとXの交互作用あり：$Y_i = \alpha + \tau D_i + \beta X_i~ +$ $\gamma$  [$D_i X_i$]{.alert} $+~ \varepsilon_i$
+
+## 重回帰分析との比較（図）
+
+- 重回帰分析（左）：男女の[傾きが同じ]{.alert}
+- 交互作用モデル（右）：男女の[**傾きが異なる**]{.alert}
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+cate_df |> 
+  ggplot(aes(x = treat, y = outcome)) +
+  geom_point(aes(color = gender), size = 3, alpha = 0.5) +
+  geom_segment(aes(x = 0, xend = 100,
+                   y = 35.834768, yend = 35.834768 + 0.009594 * 100,
+                   color = "女性"), linewidth = 2) +
+  geom_segment(aes(x = 0, xend = 100,
+                   y = 37.4184, yend = 37.4184 + 0.009594 * 100,
+                   color = "男性"), linewidth = 2) +
+  guides(fill  = guide_legend(position = "inside"),
+         color = "none") +
+  labs(x = "投薬量（mg）", y = "接種後の体温（摂氏）", color = "", fill = "") +
+  theme(legend.position.inside = c(0, 1),
+        legend.justification   = c(0, 0.65))
+
+cate_df |> 
+  ggplot(aes(x = treat, y = outcome, color = gender)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_segment(aes(x = 0, xend = 100, y = 36.41856, yend = 36.18102, color = "女性"), 
+               linewidth = 2) +
+  geom_segment(aes(x = 0, xend = 100, y = 36.86804, yend = 38.91077, color = "男性"), 
+               linewidth = 2) +
+  guides(fill  = guide_legend(position = "inside"),
+         color = "none") +
+  labs(x = "投薬量（mg）", y = "接種後の体温（摂氏）", color = "", fill = "") +
+  theme(legend.position.inside = c(0, 1),
+        legend.justification   = c(0, 0.65))
+```
+
+## 重回帰分析との比較（表）
+
+```{r}
+list("交互作用なし" = lm_robust(outcome ~ treat + gender, data = cate_df),
+     "交互作用あり" = lm_robust(outcome ~ treat * gender, data = cate_df)) |> 
+  modelsummary(coef_rename = c("(Intercept)" = "切片",
+                               "treat"       = "投薬量",
+                               "gender男性"  = "男性ダミー"),
+               estimate    = "{estimate} ({std.error})",
+               statistic   = NULL,
+               note        = "注：カッコ内はHC2頑健標準誤差",
+               gof_map     = c("nobs", "r.squared", "adj.r.squared"), 
+               output      = "gt") |> 
+  data_color(columns = 3, rows = 2, palette = "gray80") |> 
+  tab_options(table.font.size        = 24,
+              table.background.color = "transparent")
+```
+
+- **係数の解釈：**他の条件が同じであれば投薬量が1単位[（= 1mg）]{.small}増えると体温の期待値は0.002単位[（0.002℃）]{.small}下がる
+   - これで大丈夫?
+   - 何か忘れていませんか?[回帰式に処置変数[（投薬量）]{.small}は2回登場する]{.alert}はず
+
+## 交互作用の解釈
+
+処置効果は$\tau$でなく、[$\tau + \gamma X_i$]{.alert}
+
+$$
+\begin{align}
+Y_i & = \alpha + \tau D_i + \beta X_i + \gamma D_i X_i + \varepsilon_i \\
+& = \alpha + (\tau + \gamma X_i) D_i + \beta X_i + \varepsilon_i
+\end{align}
+$$
+
+- $X_i = 0$の時の処置効果、$X_i = 1$の時の処置効果、$X_i = 3$の時の処置効果、...
+   - [**限界効果**]{.alert}[（marginal effect）]{.small}
+- [交互作用は**予測値**と**限界効果**に基づいて解釈すべき]{.alert}[（回帰係数にこだわらない）]{.small}
+- 詳細は[Brambor（2006）](https://doi.org/10.1093/pan/mpi014)を参照
+
+:::: {.aside}
+- Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. "[Understanding Interaction Models: Improving Empirical Analyses](https://doi.org/10.1093/pan/mpi014)." *Political Analysis,* 14(1): 63–82.
+::::
+
+## 予測値（左）と限界効果（右）
+
+男性の場合、投薬量が1mg増えると体温は約0.02℃上がる。一方、女性の場合、統計的有意な処置効果は確認できない[^null-interp]。
+
+[^null-interp]: 「処置効果はない」と解釈してはいけない。伝統的な統計的仮説検定において帰無仮説が正しいことは示せないからだ。
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 4
+cate_df |> 
+  ggplot(aes(x = treat, y = outcome, color = gender)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth(method = "lm", linewidth = 1.5) +
+  guides(color = guide_legend(position = "inside")) +
+  labs(x = "投薬量（mg）", y = "接種後の体温（摂氏）", color = "") +
+  theme(legend.position.inside = c(0, 1),
+        legend.justification   = c(0, 0.65))
+
+lm_robust(outcome ~ treat * gender, data = cate_df) |> 
+  slopes(variables = "treat", newdata = datagrid(gender = c("男性", "女性"))) |> 
+  mutate(sig = if_else(conf.low * conf.high >= 0, "sig", "insig")) |> 
+  ggplot() +
+  geom_hline(yintercept = 0) +
+  geom_pointrange(aes(x = gender, y = estimate,
+                      ymin = conf.low, ymax = conf.high,
+                      alpha = sig)) +
+  labs(x = "性別", y = "限界効果と95%信頼区間\n（投薬量1mgが体温に与える影響）") +
+  guides(alpha = "none") +
+  scale_alpha_manual(values = c("sig" = 1, "insig" = 0.35))
+```
+
+# **7** 実装
+
+## 推定
+
+#### **共通**
+
+- 予測値、効果量を示すことで実質科学的な議論へ
+- 交差項を含むモデルの場合、限界効果も示すこと
+
+#### **実験データの場合**
+
+- 処置変数は外生変数[（の可能性が非常に高い）]{.small}であるため、統制変数は不要
+- 統制変数を入れても良い
+   - <i class="bi bi-emoji-smile"></i> 標準誤差が小さくなる
+   - <i class="bi bi-emoji-dizzy"></i> 処置後変数は投入しない!
+- 実験でも処置の自己選択が生じるケースもあるため、統制変数が必要な場合も
+
+#### **観察データの場合**
+
+- 処置変数は内生変数[（の可能性が非常に高い）]{.small}であるため、統制変数が必要
+- 慎重な変数選択が必要
+
+## 実験データと重回帰分析
+
+- Freedman（2008a, 2008b）の問題提起
+   - 内生性の問題が多く解決されているはずの実験データであっても、共変量調整は場合によって[精度の低下、バイアスの導入、信頼できない標準誤差の原因]{.alert}になる
+- Lin（2013）の提案
+   - Freedmanの議論は正しいが、以下の2つを採用することで解決可能（大標本を前提とする）
+   1. 処置変数と共変量間の交差項を投入（共変量が複数なら**すべて**の共変量との交差項を投入）
+   1. 頑健標準誤差[（Huber–White sandwich standard error）]{.small}を使用
+
+:::: {.aside}
+- Freedman, David A. 2008a. "[On Regression Adjustments in Experiments with Several Treatments](https://doi.org/10.1214/07-AOAS143)." *The Annals of Applied Statistics.* 2(1): 176-96.
+- Freedman, David A. 2008b. "[Randomization Does Not Justify Logistic Regression](https://doi.org/10.1214/08-STS262)." *Statistical Science.* 23(2): 237-249.
+- Lin, Winston. 2013. "[Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman's Critique](https://doi.org/10.1214/12-AOAS583)." *The Annals of Applied Statistics* 7(1): 295-318.
+::::
+
+## 効果量
+
+処置効果の大きさを数値化し、評価する（[**ドメイン知識**]{.alert}が必要）
+
+- 統制群と処置群間の結果変数の差
+   - [差]{.alert}はいくらか、または[何SD分]{.alert}かなど
+- 処置変数が連続の場合は、最小値 $\rightarrow$ 最大値、平均を中心とした $\pm$ 1 or 2SDなど
+
+心理学を中心とした効果量の議論
+
+- Standardized mean difference
+- Cohen's *d*
+
+## 効果量の例：Cohen's *d*
+
+幅広く使われる効果量（[Cohen 1980](https://amzn.asia/d/f1tdgqC)）
+
+- $s_{\cdot}^2$は不偏分散
+
+$$
+\begin{align}
+d & = \frac{\bar{x}_1 - \bar{x}_2}{s} \\
+s & = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
+\end{align}
+$$
+
+[Cohen（1980）](https://amzn.asia/d/f1tdgqC)の基準[（すべての学問分野に適用される基準ではない）]{.small}
+
+- 小さい効果量：*d* = 0.2
+- 中程度の効果量：*d* = 0.5
+- 大きい効果量：*d* = 0.8
+
+:::: {.aside}
+- Cohen, Jacob. 1988. [*Statistical Power Analysis for the Behavioral Sciences*](https://amzn.asia/d/f1tdgqC). Routledge.
+::::
+
+## 統制変数の解釈について
+
+基本的に統制変数の係数は[解釈しない]{.alert}
+
+:::: {.columns}
+::: {.column width=40%}
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+dagify(Y ~ D + X + e,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 1, e = 2),
+                     y = c(Y = 0, D = 0, X = 2, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(size  = 10,
+                col   = "white") +
+  guides(shape = "none", size = "none") +
+  annotate("label", x = 1, y = 0, label = TeX("$\\tau$"), size = 10) +
+  annotate("label", x = 1.5, y = 1, label = TeX("$\\beta$"), size = 8) +
+  scale_size_manual(values = c("observed" = 25, "error" = 20)) +
+  scale_shape_manual(values = c("observed" = 19, "error" = 15)) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(
+    panel.background      = element_rect(fill = 'transparent', color = NA),
+    plot.background       = element_rect(fill = 'transparent', color = NA),
+    legend.background     = element_rect(fill = 'transparent', color = NA),
+    legend.box.background = element_rect(fill = 'transparent', color = NA),
+    panel.grid            = element_blank()
+  )
+```
+:::
+
+::: {.column width=50%}
+信頼できる$\tau$を推定するために、交絡要因[（分岐点）]{.small}であるXを統制
+
+- $\tau$：DがYに与える効果
+- $\beta$：XがYに与える効果?
+   - X $\rightarrow$ Yの関係においてDは中間点[（媒介変数）]{.small}
+   - [中間点は統制しない]{.alert}のが原則
+   - XがYに与える効果を推定するためにはモデルからDを除外すべき
+:::
+::::
+
+:::: {.aside}
+- 「Dが同じ場合、XがYに与える効果」（= XからYへの直接効果）を推定する場合、DとX両方を投入したモデルは正しい。しかし、Xが変わるとDが必ず変わるため、「Dを固定したら...」という前提はそもそも現実的ではない。
+::::

@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7ac9241da4525f629cdadd87b350181d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-25bb3ae6aff17ed1c80f1a0839a24e83.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ca21eab4249f8dd8b62a7aa862475134.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -360,8 +360,13 @@ window.Quarto = {
   
 <section id="セットアップ" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> セットアップ</h1>
+<p>　今回使用するパッケージを読み込んでおく。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, ggdag, dagitty)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  tidyverse, <span class="co"># Rの必須パッケージ</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  ggdag,     <span class="co"># DAGの可視化</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  dagitty    <span class="co"># DAGから統制変数を計算</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="欠落変数バイアス" class="level1" data-number="2">
@@ -418,7 +423,7 @@ Coefficients:
      2.7467      -0.4179  </code></pre>
 </div>
 </div>
-<p>　点推定値は-0.418であり、交絡要因が含まれていないモデルから推定された推定値だから、これはバイアス付きの推定値である。真の値との差は-1.408（= -0.418 - 0.990）であり、これが欠落変数バイアスの大きさである。このバイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の傾き係数と真のモデルにおける <strong><em>X</em></strong>の傾き係数の積と一致する（講義スライド参照）。まず、 <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰した場合の <strong><em>D</em></strong> の傾き係数を推定してみよう。</p>
+<p>　点推定値は-0.418であり、交絡要因が含まれていないモデルから推定された推定値だから、これはバイアス付きの推定値である。真の値との差は<span class="bg" style="--col:tomato;">-1.408</span>（= -0.418 - 0.990）であり、これが欠落変数バイアスの大きさである。このバイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の傾き係数と真のモデルにおける <strong><em>X</em></strong>の傾き係数の積と一致する（講義スライド参照）。まず、 <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰した場合の <strong><em>D</em></strong> の傾き係数を推定してみよう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(X <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -496,7 +501,7 @@ Coefficients:
       9.106        2.980  </code></pre>
 </div>
 </div>
-<p>　総効果とは約2.980であり、先ほどのモデルにおける <strong><em>D</em></strong> の係数とは約0.981の差があり、これは処置後変数バイアスの大きさである。</p>
+<p>　総効果とは約2.980であり、先ほどのモデルにおける <strong><em>D</em></strong> の係数とは約<span class="bg" style="--col:tomato;">0.981</span>の差があり、これは処置後変数バイアスの大きさである。</p>
 <p>　処置後変数バイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の係数と最初のモデルにおける <strong><em>X</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong> の係数の積からも計算できる。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(X <span class="sc">~</span> D)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
@@ -513,16 +518,19 @@ Coefficients:
 <p>　処置後変数バイアスの大きさは <strong><em>X</em></strong> を <strong><em>D</em></strong> に回帰させた場合の <strong><em>D</em></strong> の係数は約0.246である。最初のモデルから得られた推定値を利用し、処置後変数バイアスの大きさを計算してみよう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 正確には coef(lm(X ~ D))[2] * coef(lm(Y ~ D + X))[3]</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.246</span> <span class="sc">*</span> <span class="fl">3.990</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.2458</span> <span class="sc">*</span> <span class="fl">3.990</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.98154</code></pre>
+<pre><code>[1] 0.980742</code></pre>
 </div>
 </div>
+<p>　0.981に見覚えはないだろうか。見覚えがないなら、画面をすくし上にスクロールしてみよう。</p>
 </section>
 <section id="dagと共変量選択" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> DAGと共変量選択</h1>
 <section id="dagの作り方" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="dagの作り方"><span class="header-section-number">4.1</span> DAGの作り方</h2>
+<p>　共変量選択においてDAGは便利なツールだ。RではDAGを描くのはむろん、統制すべき変数を自動的に選別することもできる。まずは、DAGを描いてみよう。まず（1）<code>dagify()</code>関数でDAGの中身を記述し、（2）それを<code>ggdag()</code>関数で作図する順でDAGを描く。いずれも{ggdag}パッケージが提供する関数だ。</p>
+<p>　DAGを分解していくと結局DAGというのは「変数1 <span class="math inline">\(\rightarrow\)</span> 変数2」の関係の集合だ<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。これを<code>dagify()</code>内に<code>変数1 ~ 変数2</code>のように表記し、カンマ区切りで入れるだけだ。たとえば、<strong><em>X</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong> <span class="math inline">\(\leftarrow\)</span> <strong><em>Z</em></strong>であれば、<code>dagify(Y ~ X, Y ~ Z)</code>と書く。これだけでもDAGは描けるが、今度、調整すべき共変量を計算するためには<code>exposure</code>と<code>outcome</code>引数でDAGにおける処置変数と結果変数を指定しておく必要がある。以下は<strong><em>X</em></strong>（処置変数） <span class="math inline">\(\rightarrow\)</span> <strong><em>Y</em></strong>（結果変数） <span class="math inline">\(\leftarrow\)</span> <strong><em>Z</em></strong> のDAGを<code>my_dag_1</code>と名付けたコードの例だ。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>my_dag_1 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
@@ -531,114 +539,217 @@ Coefficients:
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_1) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
-</figure>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>my_dag_1</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dag {
+X [exposure]
+Y [outcome]
+Z
+X -&gt; Y
+Z -&gt; Y
+}</code></pre>
 </div>
 </div>
-</div>
+<p>　<code>my_dag_1</code>だけだとよく分からない。これを<code>ggdag()</code>関数に渡してみよう。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>my_dag_2 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_2) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_1)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>　簡単にDAGが描けてしまった。しかし、背景や軸タイトルなどが邪魔なので、<code>theme_dag()</code>レイヤーを追加しよう。これは{ggdag}が提供しているDAG専用のggplotテーマだ。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>my_dag_3 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X <span class="sc">+</span> Z,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  X <span class="sc">~</span> Z,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="fl">1.5</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_3) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_1) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>　<strong><em>X</em></strong>、<strong><em>Y</em></strong>、<strong><em>Z</em></strong> の丸は「ノード」（node）と呼ばれ、ノードはエッジ（edge）と呼ばれる矢印で繋がっている。このノードの位置は{ggdag}が自動的に決めてくれるが、自分でカスタマイズしたい場合は、<code>coords</code>引数でノードの座標を書けば良い。具体的には<code>coords = list()</code>の形と表記し、<code>list()</code>の中に<code>x = c()</code>と<code>y = c()</code>で座標を指定する。以下は基本的に<code>my_dag_1</code>と同じDAGをベースに、 <strong><em>X</em></strong> の位置を（x = 1, y = 1）、<strong><em>Y</em></strong> の位置を（x = 2, y = 1）、<strong><em>Z</em></strong> の位置を（x = 1, y = 1.5）にし、<code>my_dag_2</code>という名で格納するコードだ。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> X1 <span class="sc">+</span> X2,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  X1 <span class="sc">~</span> Z1 <span class="sc">+</span> Z2,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Z1 <span class="sc">+</span> Z3,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  X2 <span class="sc">~</span> Z2 <span class="sc">+</span> Z3,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  Z1 <span class="sc">~</span> W,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  Z2 <span class="sc">~</span> W,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  Z3 <span class="sc">~</span> W,</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">4</span>, </span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_4) <span class="sc">+</span> <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_dag_2 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> Z,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="fl">1.5</span>))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_2) <span class="sc">+</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300"></p>
 </figure>
+</div>
+</div>
+</div>
+<p>　<code>my_dag_1</code>と<code>my_dag_2</code>では <strong><em>Y</em></strong> に向かっているノードが <strong><em>X</em></strong> と <strong><em>Z</em></strong> の2つだ。 <strong><em>Y</em></strong> <span class="math inline">\(\leftarrow\)</span> <strong><em>X</em></strong> と <strong><em>Y</em></strong> <span class="math inline">\(\leftarrow\)</span> <strong><em>Z</em></strong> だから<code>Y ~ X, Y ~ Z</code>と表記したが、チルダ（<code>~</code>）の左辺が同じノードであれば、<code>Y ~ X + Z</code>と表記してもよい。<code>my_dag_2</code>に <strong><em>Z</em></strong> <span class="math inline">\(\rightarrow\)</span> <strong><em>X</em></strong> のエッジを追加し、<code>my_dag_3</code>と名付けてみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>my_dag_3 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X <span class="sc">+</span> Z,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  X <span class="sc">~</span> Z,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"X"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords   =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="fl">1.5</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"X"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_3) <span class="sc">+</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="reg_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="300"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　最後に、以下のDAG（<code>my_dag_4</code>）を作ってみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="reg_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="答え">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">ヒント</span>答え
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> X1 <span class="sc">+</span> X2,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  X1 <span class="sc">~</span> Z1 <span class="sc">+</span> Z2,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Z1,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  X2 <span class="sc">~</span> Z2 <span class="sc">+</span> Z3,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  Z1 <span class="sc">~</span> W,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  Z2 <span class="sc">~</span> W,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  Z3 <span class="sc">~</span> W,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"D"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome  =</span> <span class="st">"Y"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">2</span>, </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Y"</span> <span class="ot">=</span> <span class="dv">4</span>, </span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"X1"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"X2"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Z1"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Z3"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"W"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(my_dag_4) <span class="sc">+</span> </span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 </div>
 </section>
 <section id="共変量選択" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="共変量選択"><span class="header-section-number">4.2</span> 共変量選択</h2>
+<p>　{dagitty}の<code>adjustmentSets()</code>を使えば、与えられたDAGから処置効果の推定に必要な統制変数が求められる。たとめば、<code>my_dag_3</code>の場合、 <strong><em>X</em></strong> が処置変数、 <strong><em>Y</em></strong> が結果変数、 <strong><em>Z</em></strong> が交絡変数となっており、処置効果を推定するためには <strong><em>Z</em></strong> を統制すれば良い。これを<code>adjustmentSets()</code>を使って検証してみよう。<code>my_dag_3</code>にはどの変数が処置・結果変数化が明記されているため、今回は引数として<code>my_dag_3</code>だけで十分だが、もし、指定していない場合は<code>adjustmentSets(my_dag_3, exposure = "X", outcome = "Y")</code>のように別途指定する必要がある。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adjustmentSets</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(my_dag_3)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{ X1, X2 }
-{ X1, Z2, Z3 }
-{ X2, Z1, Z2 }
-{ Z1, Z3 }</code></pre>
+<pre><code>{ Z }</code></pre>
 </div>
 </div>
+<p>　このように <strong><em>Z</em></strong> を統制すべきという結果が得られた。それではより複雑な<code>my_dag_4</code>でやってみよう。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdag_adjustment_set</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(my_dag_4)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ W, X1, Z2 }
+{ Z1 }</code></pre>
+</div>
+</div>
+<p>　今回は結果が2行も出力されたが、これはどのやり方でも良いという意味である。「 <strong><em>W</em></strong> と <strong><em>X2</em></strong> 、 <strong><em>Z2</em></strong> 」を統制しても良いし、 <strong><em>Z1</em></strong> のみを統制しても良い。実際は、手元のデータに含まれている変数でできそうな案を採用すれば良いだろう。</p>
+<p>　実は他にも統制案はたくさんある。たとえば、「 <strong><em>W</em></strong> と <strong><em>Z1</em></strong> 」を統制しても処置効果（総効果）は推定できる。なぜ、これは表示されなかったのか。それは「 <strong><em>W</em></strong> と <strong><em>Z1</em></strong> 」の案が <strong><em>Z1</em></strong> のみの案に比べて非効率的だからだ。 <strong><em>Z1</em></strong> だけ統制すれば十分なものをわざわざ <strong><em>W</em></strong> まで入れる必要はなかろう（同じパフォーマンスを出すモデルなら単純なモデルの方が望ましい）。もし、<strong>すべて</strong>の統制案を確認したいなら、第2引数以降に<code>type = "all"</code>を追加してみよう。</p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(my_dag_4)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ W, X1, Z2 }
+{ Z1 }</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(my_dag_4, <span class="at">type =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ Z1 }
+{ W, Z1 }
+{ X1, Z1 }
+{ W, X1, Z1 }
+{ W, X1, Z2 }
+{ Z1, Z2 }
+{ W, Z1, Z2 }
+{ X1, Z1, Z2 }
+{ W, X1, Z1, Z2 }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>　また、{ggdag}パッケージの<code>ggdag_adjustment_set()</code>関数を使えば、可視化もできる。<code>shadow = TRUE</code>引数は任意だが、これを付けておくと統制された変数から出発する矢印がグレーになる。既定値（<code>shadow = FALSE</code>）のままだと統制変数から出発する矢印が表示されない。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>my_dag_4 <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdag_adjustment_set</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="reg_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+<p><img src="reg_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>　2つの統制案が出力される。赤い四角形が統制すべき変数だ。</p>
+<p>　因果推論において直接効果よりは総効果の方がより重視されるが、直接効果を推定するための共変量調整案も<code>adjustmentSets()</code>関数でできる。第2引数以降に<code>effect = "direct"</code>を追加してみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(my_dag_4, <span class="at">effect =</span> <span class="st">"direct"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ X1, X2 }
+{ X2, Z1, Z2 }
+{ X1, Z2, Z3 }
+{ Z1, Z2, Z3 }
+{ W, Z1, Z3 }</code></pre>
+</div>
+</div>
+<p>　計5つの案が提案された。</p>
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p>「変数1 <span class="math inline">\(\leftrightarrow\)</span> 変数2」でも同じことが言える。これは「変数1 <span class="math inline">\(\leftarrow\)</span> 変数2」と「変数1 <span class="math inline">\(\rightarrow\)</span> 変数2」が同時に存在することと同じだ。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

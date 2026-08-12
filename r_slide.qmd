@@ -1,0 +1,277 @@
+---
+subtitle: "5/ Lab session"
+modified-date: today
+format: 
+  revealjs:
+    footer: "Lab session"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse, 
+               summarytools,
+               modelsummary,
+               gt,
+               gtExtras,
+               cobalt)
+```
+
+{{< include _common.qmd >}}
+
+# **1** 本日の内容
+
+## 本日の内容
+
+1. Rの導入（省略）
+1. データハンドリング
+1. 可視化
+1. 記述統計量の計算
+1. 平均処置効果の推定
+   - 線形回帰分析
+   - 多重比較
+1. 推定結果の可視化
+
+# **2** データ操作
+
+## データ操作の手順
+
+1. 必要なパッケージの読み込み
+1. データの読み込み
+1. 列の整理
+1. 欠損値処理
+1. 変数の計算
+1. 列の整理
+
+## パイプ演算子
+
+パイプ演算子（`|>`）：オブジェクトを関数の第一引数として渡す演算子
+
+- `func(x, y)`は`x |> func(y)`と同じ
+   - パイプなし：`print(mean(x, na.rm = TRUE))`
+   - パイプあり：`x |> mean(na.rm = TRUE) |> print()`
+- コーディングを考える順番（or コードを読む順番）と書く順番が一致
+   - $\therefore$ コーディングミスが少なく、メンテナンスしやすい
+
+## パイプ演算子の例（1）
+
+![](figs/r/wo_pipe.png){.nostretch fig-align="center"}
+
+```{r}
+#| echo: true
+x <- c(2, NA, 5, 7, 11)
+print(mean(x, na.rm = TRUE))
+```
+
+## パイプ演算子の例（2）
+
+![](figs/r/w_pipe.png)
+
+```{r}
+#| echo: true
+x <- c(2, NA, 5, 7, 11)
+# 必須ではないが、パイプ演算子の後は改行が推奨される。
+x |> 
+  mean(na.rm = TRUE) |> 
+  print()
+```
+
+## 列の整理
+
+- 列の抽出：`select()`
+   - 列名の変更：`rename()`
+   - 列の位置変更：`relocate()`
+- 行の抽出：`filter()`
+
+## 欠損値の処理
+
+欠損値（missing value）：本来あるべき値が記録されていないこと
+
+- 調査の無回答、観測機器の不具合、入力ミス、政治的な理由などで発生する
+- 分析に使用する変数が1つ以上欠損した行（ケース）は分析から除外される^[一部の関数やパッケージは欠損した箇所を当該変数の平均値や中央値で勝手に埋めるケースがある。]ため、予め除外しておく^[多重代入法（multiple imputation）等の手法で欠損値を埋めて分析に使うことも可能。詳細は高橋・渡辺（2017）等を参照されたい。]
+
+#### 欠損値処理の手順
+
+同じデータセットでも欠損値の表記方法は複数あり得るため、自分が生産したデータでない場合はコードブックを参照すること
+
+1. **Step 1：**`999`や`-9`などの数値、`""`（空欄）が欠損値を意味する場合、これらの値をRの欠損値（`NA`）に置換
+1. **Step 2：**`drop_na()`や`filter()`で欠損値を含む行を除去
+
+:::: {.aside}
+- 高橋将宜・渡辺美智子. 2017. 『欠測データ処理: Rによる単一代入法と多重代入法』共立出版.
+::::
+
+## 値の置換
+
+特定の値を`NA`に置換する`replace_with_na()`関数（要{naniar}パッケージ）
+
+- 例）`age`は999、`educ`は-9と-10が欠損値（`female`は欠損値が既に`NA`になっている）
+
+:::: {.columns}
+::: {.column width=30%}
+```{r}
+df <- tibble(id     = 1:6,
+             female = c(0, 1, 1, 1, 0, NA),
+             age    = c(18, 55, 24, 999, 24, 39),
+             educ   = c(4, 3, -9, -10, 5, 4 ))
+```
+
+```{r}
+gt(df) |> 
+  tab_options(table.font.size = 32) |> 
+  tab_header(title = md("`df`の中身"))
+```
+:::
+
+::: {.column width=70%}
+```{r}
+#| echo: true
+#| code-line-numbers: false
+library(naniar)
+df |> 
+  replace_with_na(list(age  = 999,
+                       educ = c(-9, -10)))
+```
+:::
+::::
+
+## 欠損値を含む行の削除
+
+1. `filter()`関数
+   - a
+1. `drop_na()`関数
+   - a
+
+# **3** 可視化
+
+## {ggplot2}の考え方
+
+# **4** 記述統計
+
+## 記述統計量
+
+必ず分析に使用するデータの記述統計量を報告すること
+
+- **分析に使われるケース（個体）、変数のみ**で十分
+- 分析に使われないケース（個体）、クリーニング前の変数は載せない。
+- よく使う記述統計量は**平均値**、**標準偏差**、**最小値**、**最大値**
+   - **中央値**も入れるとなおさら良い
+- 実験データの場合、グループごとに掲載する場合もあるが、別途バランスチェックを行うなら不要
+
+## 記述統計表の例
+
+```{r}
+#| include: false
+descr_df <- lalonde |> 
+  mutate(black  = if_else(race == "black", 1, 0),
+         hispan = if_else(race == "hispan", 1, 0),
+         white  = if_else(race == "white", 1, 0)) |> 
+  select(treat, educ, black:white, re74, re75, re78)
+
+descr_df |> 
+  descr(stats = c("mean", "med", "sd", "min", "max"),
+        transpose = TRUE, order = "p") |> 
+  as.data.frame() |> 
+  gt(rownames_to_stub = TRUE) |> 
+  fmt_number(decimals = 3)
+```
+
+|変数名|平均値|中央値|標準偏差|最小値|最大値|
+|:---|---:|---:|---:|---:|---:|
+|女性|0.503|1|0.500|0|1|
+|年齢|47.340|47|15.628|18|75|
+|投票有無||||||
+|　投票|0.736|1|0.441|0|1|
+|　棄権|0.229|0|0.420|0|1|
+|　参政権なし|0.035|0|0.184|0|1|
+|感情温度||||||
+|　自民党|41.130|50|28.015|0|100|
+|　立憲民主党|34.248|40|25.947|0|100|
+
+## 記述統計量の計算方法
+
+- **方法1：**R内蔵関数を利用する
+   - `mean()`、`median()`、`sd()`、`min()`、`max()`
+   - {dplyr}の`summarise()`との組み合わせが効率的
+   - 複数の変数の記述統計量を計算する場合、更に`across()`と組み合わせるか、別途のパッケージ（{summarytools}など）を使った方が効率的
+- **方法2：**{[summarytools](https://cran.r-project.org/web/packages/summarytools/index.html)}の`descr()`を利用する（**推奨**）
+
+:::: {.aside}
+注：名目変数の記述統計量（最頻値を除く）を計算する場合、`if_else()`や{fastDummies}パッケージ等を使って、予めダミー変数に変換しておくこと。
+::::
+
+## バランスチェック
+
+{[cobalt](https://ngreifer.github.io/cobalt/index.html)}パッケージの`bal.tab()`を利用した標準化平均差の計算
+
+```{r}
+lalonde |> 
+  bal.tab(treat ~ age + educ + race + married + re74 + re75, 
+          s.d.denom = "pooled", thresholds = 0.1, data = _)
+```
+
+## バランスチェック（可視化）
+
+`bal.tab()` + `love.plot()`を利用した可視化
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+lalonde |> 
+  bal.tab(treat ~ age + educ + race + married + re74 + re75, 
+          s.d.denom = "pooled",
+          data = _) |> 
+  love.plot(abs = TRUE, thresholds = 0.25, stars = "raw", grid = TRUE,
+            var.names = c("age"  = "年齢",
+                          "educ" = "教育年数",
+                          "race_black"  = "人種：黒人",
+                          "race_hispan" = "人種：ヒスパニック",
+                          "race_white"  = "人種：白人",
+                          "married"     = "既婚",
+                          "re74"        = "年収（1974年）",
+                          "re75"        = "年収（1975年）")) +
+  labs(x       = "標準化平均値差の絶対値",
+       title   = "",
+       caption = "注：「*」は非標準化変数を意味する。") +
+  theme(legend.position = "none")
+```
+
+# **4** 推定
+
+## 線形回帰モデル
+
+```r
+lm(formula, data, weights)
+```
+
+- `formula`：`結果変数 ~ 説明変数1 + 説明変数2 + ...`
+- `data`：結果変数および説明変数が格納されているデータフレーム名
+   - パイプ演算子を使用する場合、`データフレーム名 |> lm(formula, data = _)`
+- `weights`：重み付け回帰分析の場合、重み変数の列名
+
+## 処置効果
+
+```r
+lm(結果変数 ~ 処置変数 + 統制変数1 + 統制変数2 + ..., data = データフレーム名)
+```
+
+## 予測値
+
+## 限界効果
+
+# **5** 可視化
+
+## 棒グラフ
+
+- 幾何オブジェクト：`geom_bar()`、または`geom_col()`
+- マッピング
+   - 必須：`x`、`y`
+   - その他：`fill`など
+
+## 点―範囲グラフ
+
+- 幾何オブジェクト：`geom_pointrange()`
+- マッピング
+   - 必須：`x`、`y`、`ymin`、`ymax`（または、`x`、`xmin`、`xmax`、`y`）
+   - その他：`color`、`alpha`、`shpae`など

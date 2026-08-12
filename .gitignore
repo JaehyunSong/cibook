@@ -3,22 +3,15 @@
 .RData
 .Ruserdata
 
-/.htaccess
-/.htpasswd
-
 /resources/
 /.quarto/
 /_freeze/
 /_data/
 /_data_slide/
 
-*
-!/docs
-!/docs/**
-!.gitignore
-!README.md
+*_cache/
+*_files/
+site_libs/
 
-/docs/.htaccess
-/docs/.htpasswd
 /docs/.DS_Store
 **/*.quarto_ipynb

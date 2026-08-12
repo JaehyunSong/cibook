@@ -1,0 +1,22 @@
+---
+subtitle: "11/ マッチング"
+modified-date: today
+format: 
+  revealjs:
+    footer: "マッチング"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse)
+```
+
+{{< include _common.qmd >}}
+
+# **1** にゃー！
+
+## 位置づけ
+
+本ページの構成上の位置づけとしては回帰分析と傾向スコアの間

@@ -1,0 +1,1615 @@
+---
+subtitle: "7/ 傾向スコア"
+modified-date: today
+format: 
+  revealjs:
+    footer: "傾向スコア"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse,
+               ggforce,
+               broom,
+               gt,
+               ggbeeswarm,
+               cobalt,
+               MatchIt,
+               WeightIt,
+               modelsummary)
+
+data("lalonde", package = "MatchIt")
+df <- lalonde
+```
+
+{{< include _common.qmd >}}
+
+# **1** 観察データと因果推論
+
+## 因果推論の基本枠組み (Rubin Causal Model)
+
+個体$i$に対する処置を$D_i$ [$\in$ {0, 1}]{.small}とし、潜在的結果[（Potential Outcomes）]{.small}を$Y_i(1)$および$Y_i(0)$と定義
+
+<center>現実の観測値（事実） = $Y_i$ = $D_i Y_i(1)$ + $(1 - D_i) Y_i(0)$</center>
+
+**因果推論における推定対象**[（estimands）]{.small}
+
+- ATE (Average Treatment Effect): 全集団における平均処置効果
+   - $\tau_{\tiny{\textsf{ATE}}}$ = $\mathbb{E}[Y(1) - Y(0)]$
+- ATT (Average Treatment Effect on the Treated): 処置群における平均効果
+   - $\tau_{\tiny{\textsf{ATT}}}$ = $\mathbb{E}[Y(1) - Y(0) | D = 1]$
+- ATC (Average Treatment Effect on the Controls): 対照群における平均効果
+   - $\tau_{\tiny{\textsf{ATC}}}$ = $\mathbb{E}[Y(1) - Y(0) | D = 0]$
+
+<!---
+- CATE (Conditional ATE): 共変量$X$ = $x$条件付きの平均効果
+   - $\tau_{\tiny{\textsf{CATE}}}$ = $\mathbb{E}[Y(1) - Y(0) | X = x]$
+--->
+
+## 因果推論の根本問題 
+
+[因果推論の根本問題]{.strong}[（fundamental problem of causal inference）]{.small}
+
+- 任意の個体$i$について、$Y_i(1)$と$Y_i(0)$を同時に観測することは不可能
+   - 反実仮想[（counterfactual）]{.small}の欠損
+- 単純なグループ間平均の差[（DiM estimator）]{.small}は...
+$$
+\begin{align}
+& \mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 1] + \mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]}_{\textsf{selection bias}}
+\end{align}
+$$
+   - セレクションバイアス[（selection bias）]{.small}の解消するこそが因果推論の主目的となる。
+
+## 条件付き独立仮定と共変量調整
+
+[条件付き独立仮定]{.strong}[（Conditional Independence Assumption: CIA）]{.small}^[ここでの「独立」は「無視可能性（ignorability）」や「交換可能性（exchangeability）」と呼ばれることも多い。]
+
+- 観察研究においてセレクションバイアスを除去するための最重要仮定
+
+$$
+\{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | X
+$$
+
+- 共変量ベクトル$X$を一定[（= 条件付け）]{.small}に保てば、処置割り当て$D$は潜在的結果[$(Y(0), Y(1))$]{.small}と独立[（あたかもランダム割り当てされたかのような状態）]{.small}になる
+   - $\Rightarrow$ **共変量調整**
+- この仮定のもとで、共変量$X$ = $x$内のグループ間平均の差からCATE<sub>x</sub>が識別可能
+   - $\mathbb{E}[Y(1) - Y(0) | X = x] = \mathbb{E}[Y | D = 1, X = x] - \mathbb{E}[Y | D = 0, X = x]$
+
+## 伝統的な共変量調整の方法
+
+- **サブクラス化**[（sub-classification）]{.small}：$X$のカテゴリごとにグループ化し、グループ内効果の加重平均を求める
+   - 例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均
+- **正確マッチング**[（exact matching）]{.small}：各処置個体に対し、全く同じ$X$を持つ対照個体を割り当てる
+- **回帰分析**[（regression）]{.small}：$Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i$をOLSで推定
+   - 前回のスライド参照
+   - 参考）処置変数を含む全変数の交差項を入れた飽和モデル[（saturated model）]{.small}[^saturated]は正確マッチングと等価
+
+[^saturated]: 応答変数$Y$、処置変数$D$、共変量$X_1$、$X_2$がある場合、飽和モデルは$Y = \alpha + \tau D + \beta_1 D \cdot X_1 + \beta_2 D \cdot X_2 + \beta_3 X_1 \cdot X_2 + \beta_4 D \cdot X_1 \cdot X_2$である。
+
+## マッチングの考え方
+
+**正確マッチング**[（exact matching）]{.small}の例
+
+- 例）[$i$=4と7]{.alert}は処置有無を除く共変量の値が一致するため、お互い潜在的結果として使用可能
+- 例）統制群の中に[$i$=10]{.royalblue}と共変量が完全に一致する個体がないため、分析から除外
+
+:::: {.columns}
+::: {.column width=50%}
+:::: {layout-ncol=2}
+|$i$|$D$|$X1$|$X2$|$Y$|
+|---:|---:|---:|---:|---:|
+|1|0|1|1|0|
+|**2**|**0**|**3**|**1**|**3**|
+|3|0|2|0|2|
+|[**4**]{.hl_blue}|[**0**]{.hl_blue}|[**0**]{.hl_blue}|[**1**]{.hl_blue}|[**0**]{.hl_blue}|
+|5|0|2|1|3|
+|[**6**]{.strong}|[**0**]{.strong}|[**1**]{.strong}|[**0**]{.strong}|[**3**]{.strong}|
+: 統制群
+
+|$i$|$D$|$X1$|$X2$|$Y$|
+|---:|---:|---:|---:|---:|
+|[**7**]{.hl_blue}|[**1**]{.hl_blue}|[**0**]{.hl_blue}|[**1**]{.hl_blue}|[**3**]{.hl_blue}|
+|**8**|**1**|**3**|**1**|**5**|
+|[**9**]{.strong}|[**1**]{.strong}|[**1**]{.strong}|[**0**]{.strong}|[**4**]{.strong}|
+|10|1|3|0|6|
+: 処置群
+::::
+:::
+
+::: {.column width=50%}
+|$i$|$D$|$X1$|$X2$|$Y(0)$|$Y(1)$|ITE|
+|:---:|---:|---:|---:|---:|---:|---:|
+|[**7 vs. 4**]{.hl_blue}|1|0|1|0|3|3|
+|**8 vs. 2**|1|3|1|3|5|2|
+|[**9 vs. 6**]{.strong}|1|1|0|3|4|1|
+|10|1|2|0|?|6|?|
+|ATT||||||2|
+: マッチングの例（ATT）
+:::
+::::
+
+## 観察不可能な反事実をどう扱うか
+
+:::: {.columns}
+::: {.column width=60%}
+観察不可能な反事実（「?」）をどう扱うか
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+mat_reg_ex <- ggplot() +
+  annotate("text", x = -4, y = 1, label = "👨", size = 8) +
+  annotate("text", x = -5, y = 1, label = "👩🏽", size = 8) +
+  annotate("text", x = -6, y = 1, label = "👨🏻", size = 8) +
+  annotate("text", x = -4, y = 2, label = "👩🏻", size = 8) +
+  annotate("text", x = -5, y = 2, label = "👨🏿", size = 8) +
+  annotate("text", x = -6, y = 2, label = "👩", size = 8) +
+  annotate("text", x = 6, y = 1, label = "👨", size = 8) +
+  annotate("text", x = 5, y = 1, label = "👩🏽", size = 8) +
+  annotate("text", x = 4, y = 1, label = "👩🏿", size = 8) +
+  annotate("text", x = 6, y = 2, label = "👩🏻", size = 8) +
+  annotate("text", x = 5, y = 2, label = "👨🏼", size = 8) +
+  annotate("text", x = 4, y = 2, label = "👩", size = 8) +
+  annotate("curve", x = -6, xend = 4, y = 2.5, yend = 2.5, curvature = -0.35,
+           arrow = arrow(type = "closed", ends = "both", length = unit(0.15, "inches"))) +
+  annotate("curve", x = -4, xend = 6, y = 2.5, yend = 2.5, curvature = -0.35,
+           arrow = arrow(type = "closed", ends = "both", length = unit(0.15, "inches"))) +
+  annotate("curve", x = -5, xend = 5, y = 0.5, yend = 0.5, curvature = 0.35,
+           arrow = arrow(type = "closed", ends = "both", length = unit(0.15, "inches"))) +
+  annotate("curve", x = -4, xend = 6, y = 0.5, yend = 0.5, curvature = 0.35,
+           arrow = arrow(type = "closed", ends = "both", length = unit(0.15, "inches"))) +
+  annotate("text", x = -5, y = 4, label = "統制群", size = 5) +
+  annotate("text", x =  5, y = 4, label = "処置群", size = 5) +
+  geom_circle(aes(x0 = 5, y0 = 1.5, r = 2), linewidth = 1.5) +
+  geom_circle(aes(x0 = -5, y0 = 1.5, r = 2), linewidth = 1.5) +
+  coord_fixed(ylim = c(-1, 4)) +
+  theme_void()
+
+plot(mat_reg_ex)
+```
+:::
+
+::: {.column width=40%}
+|統制群|vs|処置群|
+|:---:|:---:|:---:|
+|$Y$( 👩 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩 )|
+|$Y$( 👨🏿 )|$\leftarrow$ 比較 $\rightarrow$|?|
+|$Y$( 👩🏻 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏻 )|
+|$Y$( 👨🏻 )|$\leftarrow$ 比較 $\rightarrow$|?|
+|$Y$( 👩🏽 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏽 )|
+|$Y$( 👨 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👨 )|
+|?|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏿 )|
+|?|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👨🏼 )|
+:::
+::::
+
+## 回帰分析による因果推論の考え方
+
+:::: {.columns}
+::: {.column width=60%}
+推定したモデルに基づき、反事実を作り上げて比較する
+
+- 正確なモデルの設定が重要
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+plot(mat_reg_ex)
+```
+:::
+
+::: {.column width=40%}
+|統制群|vs|処置群|
+|:---:|:---:|:---:|
+|$Y$( 👩 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩 )|
+|$Y$( 👨🏿 )|$\leftarrow$ 比較 $\rightarrow$|$\widehat{Y}$( 👨🏿 )|
+|$Y$( 👩🏻 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏻 )|
+|$Y$( 👨🏻 )|$\leftarrow$ 比較 $\rightarrow$|$\widehat{Y}$( 👨🏻 )|
+|$Y$( 👩🏽 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏽 )|
+|$Y$( 👨 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👨 )|
+|$\widehat{Y}$( 👩🏿 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏿 )|
+|$\widehat{Y}$( 👨🏼 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👨🏼 )|
+:::
+::::
+
+:::: {.aside}
+- 厳密にいえば比較可能なペアであっても予測値ベースの比較が行われる
+::::
+
+## 回帰分析の限界（ATTの例）
+
+すべての因果推論は[**潜在的結果間の比較**]{.alert}
+
+$$
+\tau_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]
+$$
+
+欠損している[（=観察不可能）]{.small}$Y_i(0)$を回帰分析を用いて[**代入**]{.alert}[（imputation）]{.small}する
+
+$$
+\widehat{\tau}_{\tiny \mbox{ATT}} = \mathbb{E}[Y_i(1) - \textcolor{red}{\widehat{Y_i}(0)} | D_i = 1]
+$$
+
+**$\widehat{Y_i}(0)$の推定方法**
+
+- 一般的に[**パラメトリックモデル**]{.alert}が使われる $\Rightarrow$ 回帰分析
+   - $Y_i$を$\alpha + \tau D_i + \beta_1 {X1}_i + \beta_2 {X2}_i + \dots$のような特定の関数で表現できると仮定し、切片と傾きを推定することで$Y_i(D_i = 0)$を予測する
+   - 回帰分析に限らず、様々な手法が使える[（ベイジアン、機械学習、最尤法、...）]{.small}
+- もし、モデルが間違ったら...? $\leadsto$ 間違った処置効果の推定量が得られる
+
+
+## 正確マッチングによる因果推論の考え方
+
+:::: {.columns}
+::: {.column width=60%}
+完全に比較可能た対象を反事実として使用
+
+- モデルの設定は不要
+- 比較可能な対象がないなら、分析から除外
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+plot(mat_reg_ex)
+```
+:::
+
+::: {.column width=40%}
+|統制群|vs|処置群|
+|:---:|:---:|:---:|
+|$Y$( 👩 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩 )|
+|$Y$( 👩🏻 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏻 )|
+|$Y$( 👩🏽 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👩🏽 )|
+|$Y$( 👨 )|$\leftarrow$ 比較 $\rightarrow$|$Y$( 👨 )|
+:::
+::::
+
+## マッチングの限界
+
+- 共変量が取り得る値が多い（連続変数など）、または複数の場合、マッチングされず分析から除外されるケースが急増[^exact-disadv]
+   - 例1）「男性 & 博士 & 大阪府在住」
+      - めっちゃいる
+   - 例2）「男性 & 博士 & 吹田市在住」
+      - まあまあいる
+   - 例3）「男性 & 博士 & 吹田市在住 & 身長 175cm以上 & 韓国人」
+      - 少ない
+   - 例4）「男性 & 博士 & 吹田市在住 & 身長 176.5cm & 韓国人 & 年収 244万8,960円」
+      - 多分いない $\Rightarrow$ [**次元の呪い**]{.alert}
+
+[^exact-disadv]: 厳密にいえば正確マッチングの限界
+
+## 次元の呪いの克服方法
+
+次元の呪いにより、マッチングそのものが実行できない場合
+
+- 線形回帰分析等を使用し、[反事実を作り上げ]{.alert}る
+   - 線形性や加法性の強固なパラメトリック仮定に頼った外挿[（Extrapolation）]{.small}が行われ、処置効果推定値がモデル設定に極めて敏感に
+- 共変量が一致するのではなく、[類似]{.alert}したケース同士で比較
+   - $\Rightarrow$ 最近傍マッチング[（nearest neighbor matching）]{.small}
+- 共変量ではなく、[処置を受ける確率]{.alert}がほぼ同じケース同士で比較
+   - 処置を受ける確率 = [傾向スコア]{.strong}
+
+# **2** 傾向スコア
+
+## 職業訓練プログラムの効果検証
+
+職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか。
+
+**単純比較の例**
+
+- 受講群（処置群）の平均年収：300万円
+- 未受講群（統制群）の平均年収：350万円
+- $\leadsto$ 受講群の方が年収が50万円も低い。この職業訓練は**有害**だ!
+
+**なぜこの結論は間違いなのか**
+
+- 現実には、職業訓練への参加はランダムではない
+   - もともと就労経験が乏しい人や、年収が低い人が自発的に参加しやすい
+   - もともと自力で高年収を得られる人は、職業訓練を受ける必要がない
+- 職業訓練のお陰で年収の差が50万円まで縮んだ可能性も十分にあり得る
+
+> 効果がなかったのではなく、比較してはいけない集団を比較していただけ
+
+## 背景にある違いを揃える
+
+|属性|受講群（処置群）|未受講群（統制群）|
+|:---|:---|:---|
+|平均年齢|若い|高い|
+|過去の就労経験|少ない|豊富|
+|受講前の年収|非常に低い|平均的|
+
+- 問題点
+   - 受講群の年収が低く見えたのは、訓練のせいではなく「受講前の年齢や就労経験の差」が原因の可能性
+   - 職業訓練を受けた宋 vs. 職業訓練を受けなかったイーロン・マスク
+- 解決策：属性が似ている人同士[（年齢・就労経験・受講前の年収が同じくらい）]{.small}を比較
+   - 職業訓練を受けた品田先生 vs. 職業訓練を受けなかった大西先生
+
+> 公平な比較をするための適切な反事実[（counterfactual; もし受講していなかったら）]{.small}は「似たもの」
+
+## 類似度を1つの数値で集約する：傾向スコア
+
+- 共変量が多いときの壁（**次元の呪い**）
+   - 年齢、過去の年収、学歴、居住地域、就労経験、...
+   - 揃えたい条件が増えるほど、すべての属性が完全に一致するペアを見つけるのが困難に
+   - $\Rightarrow$ 共変量は少なければ少ないほど似たものが見つかりやすくなる
+- [傾向スコア]{.strong}[（propensity score）]{.small}
+   - 多次元の属性[（共変量）]{.small}を、「職業訓練に参加する確率」という1つの指標に凝縮した数値
+   - 例：年齢、過去の年収、学歴から傾向スコアを算出したら...
+      - 受講したAさん：確率 0.75（受講しやすい背景を持っていた）
+      - 受講しなかったBさん：確率 0.72（本当は受講しやすかったが、今回は未受講だった）
+   - [傾向スコアが近い $\Rightarrow$ 背景属性が「似たもの同士」]{.alert}
+   - 傾向スコアを揃えて比較することで、RCTに近い擬似的な比較状態を作り出すことが可能
+
+## 傾向スコア
+
+[傾向スコア]{.strong}[（propensity score）]{.small}
+
+- 共変量ベクトル$X$が与えられたもとでの、処置（$D$ = 1）に割り当てられる条件付き確率
+- 高次元の共変量$X$を1次元に縮約したもの
+
+$$
+e_i(X) = \mbox{Pr}(D_i = 1 | X = x)
+$$
+
+:::: {.aside}
+- 傾向スコアは$e(x)$という表記以外にも、$\pi(x)$とも表記するケースもある。
+::::
+
+## 傾向スコアの計算方法
+
+真の傾向スコア$e(X)$は未知であるため、観測データから推計値$\widehat{e}(X)$を推定
+
+$$
+e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
+$$
+
+- 処置変数を応答変数とするモデルを推定
+- $f(x) = x$なら線形回帰モデル、$f(x) = \frac{e^x}{(1 + e^x)}$ならロジスティック回帰モデル
+   - 処置変数が二値変数の場合、[ロジスティック]{.strong} or [プロビット]{.strong}回帰が一般的に使われる
+      -  処置を受ける確率が推定できるなら、何でも良い[（例：機械学習）]{.small}
+   - 正しい共変量選定、モデルの正しい定式化が重要
+- 処置変数が連続変数の場合の考え方はHirano and Imbens（2004）を参照
+
+:::: {.aside}
+- Hirano, Keisuke. and Guido W. Imbens. 2004. "[The Propensity Score with Continuous Treatments](https://doi.org/10.1002/0470090456.ch7)." In Andrew Gelman and Xiaoli Meng. *Applied Bayesian Modeling and Causal Inference from Incomplete-Data Perspectives*.
+::::
+
+## 傾向スコアの計算の際に必要な変数
+
+**入れるべき変数**
+
+- $D$と$Y$両方に影響を与える変数[（= 交絡要因[confounder]）]{.small}
+- $Y$に影響を与える変数
+- $D$より時間的に先行する変数（ただし、$D$<ruby>のみ<rt>・・</rt></ruby>に影響する変数^[$D$と$Y$より時間的に先行し、$D$**のみ**に影響を与える変数のことは操作変数（instrumental variable）と呼ばれる。操作変数は因果推論を目的とする回帰分析だけでなく、傾向スコアの計算にも入れないのが鉄則である。]は入れない）
+
+**入れてはいけない変数**
+
+- すべての処置**後**変数：中間点[（中間変数; 媒介変数; mediator）]{.small}、合流点[（collider）]{.small}
+- $D$より時間的に先行する変数のうち、$D$<ruby>のみ<rt>・・</rt></ruby>に影響する変数
+
+## 傾向スコアの仮定
+
+傾向スコアを用いて普遍[（unbiased）]{.small}な因果推計を行うために必要な仮定
+
+1. [条件付独立の仮定]{.strong}
+2. [共通サポートの仮定]{.strong}
+3. 傾向スコアモデルの正しい定式化
+4. SUTVA
+
+## 条件付独立の仮定
+
+結果[（応答）]{.small}変数と処置割当に同時に影響を与える全ての交絡要因[（confounders）]{.small}が観測され、$X$に含まれている
+
+$$
+\begin{eqnarray}
+& \{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | X & \\
+& \Downarrow & \\
+& \{Y(0), Y(1)\} \mathop{\perp\!\!\!\!\perp} D | e(X) & 
+\end{eqnarray}
+$$
+
+- 未観測の交絡要因があってはならない
+- あくまでも**理論的**な仮定であり、統計的に検証不可能な**不可証**[（untestable）]{.small}な仮定
+
+## 共通サポート（common support）の仮定
+
+すべての共変量の値において、処置を受ける（受けない）確率が正である^[処置変数が二値変数の場合、$P(D = 0) = 1 - P(D = 1)$だから、処置を受ける確率が0か1にならない限り、処置を受ける確率、受けない確率はいずれも正になる。] [（0や1にならない）]{.small}
+
+$$
+\forall x,\,\,0 < P(D = 1 | X = x) < 1
+$$
+
+- 任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する[（逆も然り）]{.small}
+- データから検証可能な仮定
+
+:::: {.aside}
+- 共「通」サポートとも呼ばれる。
+- サポートは「台」とも訳される。
+::::
+
+## ATEが推定可能な例
+
+- 統制群と処置群のサポートが同じ
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 4.5
+set.seed(19861008)
+tibble(統制群 = rnorm(1000, 0.5, 0.1),
+       処置群 = rnorm(1000, 0.5, 0.1)) |> 
+  mutate(統制群 = 統制群 - min(統制群),
+         統制群 = 統制群 / max(統制群),
+         処置群 = 処置群 - min(処置群),
+         処置群 = 処置群 / max(処置群)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0),
+                             xend = c(1, 1)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -7.5, yend = -7.5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all", scale = "free_y") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+
+set.seed(19861009)
+tibble(統制群 = rnorm(1000, 0.5, 0.1),
+       処置群 = rnorm(1000, 0.5, 0.1)) |> 
+  mutate(統制群 = 統制群^3,
+         統制群 = 統制群 - min(統制群),
+         統制群 = 統制群 / max(統制群),
+         処置群 = log(処置群, 50),
+         処置群 = 処置群 - min(処置群),
+         処置群 = 処置群 / max(処置群)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0),
+                             xend = c(1, 1)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -7.5, yend = -7.5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all", scale = "free_y") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+```
+
+## ATT（左）かATC（右）が推定可能な例
+
+- 左：ATT推定可　／　右：ATC推定可
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 4.5
+set.seed(19861008)
+tibble(統制群 = rnorm(1000, 0.5, 0.25),
+       処置群 = rnorm(1000, 0.7, 0.1)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(value = value - min(value),
+         value = value / max(value)) |> #reframe(min = min(value), max = max(value), .by = name)
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0.35),
+                             xend = c(1, 0.7)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -7.5, yend = -7.5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all", scale = "free_y") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+
+set.seed(19861008)
+tibble(統制群 = rnorm(1000, 0.3, 0.15),
+       処置群 = rnorm(1000, 0.5, 0.25)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(value = value - min(value),
+         value = value / max(value)) |># reframe(min = min(value), max = max(value), .by = name)
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0),
+                             xend = c(0.8, 1)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -7.5, yend = -7.5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all", scale = "free_y") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+```
+
+## 推定不可能な例
+
+- 右の例の場合、ATO（後述）は推定可能
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 4.5
+set.seed(19861008)
+tibble(統制群 = rnorm(1000, 0.25, 0.05),
+       処置群 = rnorm(1000, 0.7, 0.05)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(value = value - min(value),
+         value = value / max(value)) |> #reframe(min = min(value), max = max(value), .by = name)
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0.6),
+                             xend = c(0.5, 1)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -7.5, yend = -7.5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+
+set.seed(19861008)
+tibble(統制群 = rnorm(1000, 0.4, 0.05),
+       処置群 = rnorm(1000, 0.6, 0.05)) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(value = value - min(value),
+         value = value / max(value)) |> #reframe(min = min(value), max = max(value), .by = name)
+  mutate(name = fct_inorder(name)) |> 
+  ggplot() +
+  geom_histogram(aes(x = value), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_segment(data = tibble(name = c("統制群", "処置群"),
+                             x    = c(0, 0.425),
+                             xend = c(0.75, 1)) |> 
+                 mutate(name = fct_inorder(name)),
+               aes(x = x, xend = xend, y = -5, yend = -5, color = name),
+               linewidth = 3) +
+  labs(x = "傾向スコア") +
+  scale_color_brewer(name = "サポート", palette = "Set1") +
+  facet_wrap(~name, nrow = 2, axes = "all") +
+  theme(legend.position = "none",
+        axis.ticks.y          = element_blank(),
+        axis.text.y           = element_blank(),
+        axis.title.y          = element_blank())
+```
+
+## 傾向スコアの使い方
+
+- **マッチング**[（propensity score matching; PSM）]{.small}
+   - 1:1マッチング：最近傍マッチング
+   - 1:kマッチング：*k*-最近傍マッチング、キャリパー・マッチング
+   - 傾向スコアを使ったマッチングは推奨されない[（King and Nielsen 2019）]{.small}
+- **層化**[（stratification / subclassification）]{.small}
+   - 傾向スコアを基準に個体を並べ、均等な数の個体が入るように$k$
+   - k:kマッチングの一種として考えることも可
+- [重み付け]{.strong}[（weighting）]{.small}
+
+:::: {.aside}
+- King, Gary, and Richard Nielsen. 2019. "[Why Propensity Scores Should Not Be Used for Matching]((https://doi.org/10.1017/pan.2019.11))." *Political Analysis* 27(4): 435–54. 
+::::
+
+# **3** 推定：層化
+
+## 層化による処置効果推定の手順
+
+1. 推定対象[（estimand）]{.small}を決める（ATT、ATC、ATE）
+1. 層[（stratum, subclass）]{.small}の数（ *k* ）を決める
+   - 一般的に*k* = 5を採用[（Thoemmes and Kim 2011）]{.small}
+1. 個体を各層に割り当てる
+1. 個々の個体に重みを与える
+1. 処置効果を推定する（加重平均、重み付き線形回帰分析[WLS]等）
+
+:::: {.aside}
+- 各層内で処置効果を計算し、得られた *k* 個の平均値の加重平均を計算する方法もある。しかし、各個体に重み付けする方法が様々な分析手法との相性が良いので、本講義ではこの方法で解説する。
+- Thoemmes, Felix J., and Eun Sook Kim. 2011. "[A Systematic Review of Propensity Score Methods in the Social Sciences](https://doi.org/10.1080/00273171.2011.540475)." *Multivariate Behavioral Research,* 46(1): 90-118.
+::::
+
+## ATT推定のための層化
+
+**処置**群の個体数が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| include: false
+strat_att <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "att", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_att |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+:::: {.columns}
+::: {.column width=45%}
+```{r}
+#| fig-width: 5
+#| fig-height: 5.5
+strat_att |> 
+  ggplot() +
+  geom_beeswarm(aes(y = distance, x = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 2, alpha = 0.35) +
+  geom_hline(yintercept = c(0.439, 0.618, 0.688, 0.746)) +
+  annotate("text", y = c(0.2234, 0.5285, 0.654, 0.717, 0.7995), x = 0.5, label = 1:5) + 
+  labs(y = "傾向スコア") +
+  scale_x_continuous(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(ylim = c(0, 1)) +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+```
+:::
+
+::: {.column width=55%}
+:::: {.panel-tabset}
+##### 各群の*n*
+
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|356|37|393|
+|2|19|37|56|
+|3|25|37|62|
+|4|18|37|55|
+|5|11|37|48|
+
+##### 各群の重み
+
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|$\frac{429}{185} \times \frac{37}{356}$ = 0.241|1.000|
+|2|$\frac{429}{185} \times \frac{37}{19}$ = 4.516|1.000|
+|3|$\frac{429}{185} \times \frac{37}{25}$ = 3.432|1.000|
+|4|$\frac{429}{185} \times \frac{37}{18}$ = 4.767|1.000|
+|5|$\frac{429}{185} \times \frac{37}{11}$ = 7.800|1.000|
+::::
+:::
+::::
+
+<!---
+## ATT推定のための層化
+
+**処置**群の個体数が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| echo: false
+#| eval: false
+#| include: false
+strat_att <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "att", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_att |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+```{r}
+#| echo: false
+#| eval: false
+#| fig-width: 8
+#| fig-height: 2
+strat_att |> 
+  ggplot() +
+  geom_point(aes(x = distance, y = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 3, alpha = 0.35) +
+  geom_vline(xintercept = c(0.439, 0.618, 0.688, 0.746)) +
+  annotate("text", x = c(0.2234, 0.5285, 0.654, 0.717, 0.7995), y = 0.5, label = 1:5) + 
+  labs(x = "傾向スコア") +
+  scale_y_reverse(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(-0.5, 1.5)) +
+  theme(legend.position = "none",
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+:::: {.columns}
+::: {.column width=40%}
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|356|37|393|
+|2|19|37|56|
+|3|25|37|62|
+|4|18|37|55|
+|5|11|37|48|
+:::
+
+::: {.column width=60%}
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|$\frac{429}{185} \times \frac{37}{356}$ = 0.241|1.000|
+|2|$\frac{429}{185} \times \frac{37}{19}$ = 4.516|1.000|
+|3|$\frac{429}{185} \times \frac{37}{25}$ = 3.432|1.000|
+|4|$\frac{429}{185} \times \frac{37}{18}$ = 4.767|1.000|
+|5|$\frac{429}{185} \times \frac{37}{11}$ = 7.800|1.000|
+:::
+::::
+--->
+
+## ATC推定のための層化
+
+**統制**群の個体数が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| include: false
+strat_atc <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "atc", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_atc |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+:::: {.columns}
+::: {.column width=45%}
+```{r}
+#| fig-width: 5
+#| fig-height: 5.5
+strat_atc |> 
+  ggplot() +
+  geom_beeswarm(aes(y = distance, x = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 2, alpha = 0.35) +
+  geom_hline(yintercept = c(0.0319, 0.0569, 0.0956, 0.331)) +
+  annotate("text", y =  c(0.02004, 0.04435, 0.07605, 0.19755, 0.6075), x = 0.5, label = 1:5) + 
+  labs(y = "傾向スコア") +
+  scale_x_continuous(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(ylim = c(0, 1)) +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+:::
+
+::: {.column width=55%}
+:::: {.panel-tabset}
+##### 各群の*n*
+
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|86|1|87|
+|2|86|2|88|
+|3|86|7|92|
+|4|86|20|106|
+|5|86|155|241|
+
+##### 各群の重み
+
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|1.000|$\frac{185}{429} \times \frac{86}{1}$ = 37.086|
+|2|1.000|$\frac{185}{429} \times \frac{86}{2}$ = 18.543|
+|3|1.000|$\frac{185}{429} \times \frac{86}{7}$ = 5.236|
+|4|1.000|$\frac{185}{429} \times \frac{86}{20}$ = 1.854|
+|5|1.000|$\frac{185}{429} \times \frac{86}{155}$ = 0.239|
+::::
+:::
+::::
+
+<!---
+## ATC推定のための層化
+
+**統制**群の個体数が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| include: false
+strat_atc <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "atc", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_atc |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+strat_atc |> 
+  ggplot() +
+  geom_point(aes(x = distance, y = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 3, alpha = 0.35) +
+  geom_vline(xintercept = c(0.0319, 0.0569, 0.0956, 0.331)) +
+  annotate("text", x = c(0.02004, 0.04435, 0.07605, 0.19755, 0.6075), y = 0.5, label = 1:5) + 
+  labs(x = "傾向スコア") +
+  scale_y_reverse(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(-0.5, 1.5)) +
+  theme(legend.position = "none",
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+:::: {.columns}
+::: {.column width=40%}
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|86|1|87|
+|2|86|2|88|
+|3|86|7|92|
+|4|86|20|106|
+|5|86|155|241|
+:::
+
+::: {.column width=60%}
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|1.000|$\frac{185}{429} \times \frac{86}{1}$ = 37.086|
+|2|1.000|$\frac{185}{429} \times \frac{86}{2}$ = 18.543|
+|3|1.000|$\frac{185}{429} \times \frac{86}{7}$ = 5.236|
+|4|1.000|$\frac{185}{429} \times \frac{86}{20}$ = 1.854|
+|5|1.000|$\frac{185}{429} \times \frac{86}{155}$ = 0.239|
+:::
+::::
+--->
+
+## ATE推定のための層化
+
+処置群と統制群の個体数の**合計**が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| include: false
+strat_ate <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "ate", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_ate |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+:::: {.columns}
+::: {.column width=45%}
+```{r}
+#| fig-width: 5
+#| fig-height: 5.5
+strat_ate |> 
+  ggplot() +
+  geom_beeswarm(aes(y = distance, x = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 2, alpha = 0.35) +
+  geom_hline(yintercept = c(0.0401, 0.0874, 0.269, 0.670)) +
+  annotate("text", y = c(0.02505, 0.06505, 0.17835, 0.4700, 0.7620), x = 0.5, label = 1:5) + 
+  labs(y = "傾向スコア") +
+  scale_x_continuous(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(ylim = c(0, 1)) +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+:::
+
+::: {.column width=55%}
+:::: {.panel-tabset}
+##### 各群の*n*
+
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|122|1|123|
+|2|116|7|123|
+|3|101|21|122|
+|4|51|71|122|
+|5|39|85|124|
+
+##### 各群の重み
+
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|$\frac{429}{614} \times \frac{123}{122}$ = 0.704|$\frac{185}{614} \times \frac{123}{1}$ = 37.060|
+|2|$\frac{429}{614} \times \frac{123}{116}$ = 0.741|$\frac{185}{614} \times \frac{123}{7}$ = 5.294|
+|3|$\frac{429}{614} \times \frac{122}{101}$ = 0.844|$\frac{185}{614} \times \frac{122}{21}$ = 1.750|
+|4|$\frac{429}{614} \times \frac{122}{51}$ = 1.671|$\frac{185}{614} \times \frac{122}{71}$ = 0.518|
+|5|$\frac{429}{614} \times \frac{124}{390}$ = 2.221|$\frac{185}{614} \times \frac{124}{85}$ = 0.440|
+::::
+:::
+::::
+
+<!---
+## ATE推定のための層化
+
+処置群と統制群の個体数の**合計**が$k$等分になるように層を決め、全個体を各層に割り当てる
+
+```{r}
+#| echo: false
+#| eval: false
+#| include: false
+strat_ate <- df |> 
+  matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+          data = _, method = "subclass", subclass = 5,
+          estimand = "ate", distance = "glm", link = "logit") |> 
+  match_data()
+
+strat_ate |> 
+  group_by(subclass) |> 
+  select(distance, subclass) |> 
+  filter(distance == min(distance) | distance == max(distance)) |> 
+  arrange(subclass, distance)
+```
+
+```{r}
+#| echo: false
+#| eval: false
+#| fig-width: 8
+#| fig-height: 2
+strat_ate |> 
+  ggplot() +
+  geom_point(aes(x = distance, y = treat, fill = factor(subclass)), 
+             shape = 21, color = "black", size = 3, alpha = 0.35) +
+  geom_vline(xintercept = c(0.0401, 0.0874, 0.269, 0.670)) +
+  annotate("text", x = c(0.02505, 0.06505, 0.17835, 0.4700, 0.7620), y = 0.5, label = 1:5) + 
+  labs(x = "傾向スコア") +
+  scale_y_reverse(breaks = 0:1, labels = c("統制群", "処置群")) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(-0.5, 1.5)) +
+  theme(legend.position = "none",
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+:::: {.columns}
+::: {.column width=40%}
+|層|統制群の*n*|処置群の*n*|合計|
+|:---:|---:|---:|---:|
+|1|122|1|123|
+|2|116|7|123|
+|3|101|21|122|
+|4|51|71|122|
+|5|39|85|124|
+:::
+
+::: {.column width=60%}
+|層|統制群の重み|処置群の重み|
+|:---:|--------:|--------:|
+|1|$\frac{429}{614} \times \frac{123}{122}$ = 0.704|$\frac{185}{614} \times \frac{123}{1}$ = 37.060|
+|2|$\frac{429}{614} \times \frac{123}{116}$ = 0.741|$\frac{185}{614} \times \frac{123}{7}$ = 5.294|
+|3|$\frac{429}{614} \times \frac{122}{101}$ = 0.844|$\frac{185}{614} \times \frac{122}{21}$ = 1.750|
+|4|$\frac{429}{614} \times \frac{122}{51}$ = 1.671|$\frac{185}{614} \times \frac{122}{71}$ = 0.518|
+|5|$\frac{429}{614} \times \frac{124}{390}$ = 2.221|$\frac{185}{614} \times \frac{124}{85}$ = 0.440|
+:::
+::::
+--->
+
+## 層化における重み（まとめ）
+
+- $N$：サンプルサイズ（全体）
+- $N_\sf{control}$、$N_\sf{treat}$：統制群と処置群の個体数
+- $N_\sf{k}$：*k* 層の個体数
+- $N_\sf{k, control}$、$N_\sf{k, treat}$：*k* 層の統制群と処置群の個体数
+
+<div style="width: 800px; margin: 0 auto;">
+|推定対象|統制群の重み|処置群の重み|
+|:---|:---:|:---:|
+|ATT|$\frac{N_\sf{control}}{N_\sf{treat}} \times \frac{N_\sf{k, treat}}{N_\sf{k, control}}$|1|
+|ATC|1|$\frac{N_\sf{treat}}{N_\sf{control}} \times \frac{N_\sf{k, control}}{N_\sf{k, treat}}$|
+|ATE|$\frac{N_\sf{control}}{N} \times \frac{N_\sf{k}}{N_\sf{k, control}}$|$\frac{N_\sf{treat}}{N} \times \frac{N_\sf{k}}{N_\sf{k, treat}}$|
+</div>
+
+## 層化による推定（例）
+
+:::: {.columns}
+::: {.column width=43%}
+```{r}
+set.seed(19861009)
+
+my_data <- strat_atc |> 
+  select(treat, y = re78, stratum = subclass, weight = weights) |> 
+  slice_sample(n = 614) |> 
+  mutate(y = round(y, 0)) |> 
+  remove_rownames()
+
+options(digits = 5)
+```
+
+```{r}
+#| echo: true
+#| collapse: false
+#| code-line-numbers: false
+head(my_data, n = 13)
+```
+
+```{r}
+options(digits = 7)
+```
+:::
+
+::: {.column width=57%}
+```{r}
+#| echo: true
+#| code-line-numbers: false
+my_data |> 
+  reframe(y   = weighted.mean(y, w = weight),
+          .by = treat)
+6334.135 - 6984.198 # 処置効果の点推定値
+```
+
+```{r}
+#| echo: true
+#| collapse: false
+#| code-line-numbers: false
+lm(y ~ treat, data = my_data, weights = weight)
+```
+:::
+::::
+
+# **4** 推定：重み付け
+
+## 重み付けによる処置効果の推定
+
+<ruby>**各**<rt>・</rt><ruby>個体の[重み]{.strong}[（weight）]{.small}を計算し、加重平均を使った期待値の差分を計算
+
+- 重みは傾向スコアを使って計算するが、計算方法は推定したい対象[（estimand）]{.small}に応じて異なる
+- 重み計算の考え方
+   1. ATTの場合は処置群、ATCの場合は統制群の<ruby>**全**<rt>・</rt><ruby>個体に同じ重み（= 1）を付ける。
+   1. **異常なケースにより高い重みを付ける**
+
+:::: {.callout-note title="「異常なケース」とは?"}
+　傾向スコアが高い（= 処置を受ける可能性が高い）にもかかわらず統制群に割り当てられていたり、傾向スコアが低い（= 処置を受ける可能性が低い）にもかかわらず処置群に割り当てられていたりすることを「異常」とする。逆に、「低い傾向スコア & 統制群」、または「高い傾向スコア & 処置群」はあまり驚きではないから異常とは言いがたい。
+::::
+
+## 重み付けの考え方（1）
+
+- 信頼できる因果効果を得るためにはグループは均質である必要がある
+- 無作為割り当て $\leadsto$ 均質なグループへ
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+list("啓発活動なし" = expand_grid(x = 1:4, y = 1:2),
+     "啓発活動あり" = expand_grid(x = 1:4, y = 1:2)) |> 
+  bind_rows(.id = "group") |> 
+  mutate(turnout = c("低", "低", "低", "低",
+                     "高", "高", "高", "高",
+                     "高", "低", "高", "低", 
+                     "高", "低", "高", "低"),
+         group   = fct_relevel(group, "啓発活動なし"),
+         turnout = fct_relevel(turnout, "低")) |> 
+  ggplot() +
+  geom_point(aes(x = x, y = y, color = turnout, shape = turnout), size = 5) +
+  scale_color_brewer(palette = "Set1", direction = -1) +
+  labs(color = "これまでの投票率", shape = "これまでの投票率") +
+  facet_wrap(~group) +
+  coord_cartesian(xlim = c(0, 5), ylim = c(0, 3)) +
+  theme_void(base_size = 14) +
+  theme(legend.position = "bottom") +
+  theme(panel.background = element_rect(fill = "transparent"),
+        panel.border     = element_rect(color = "black", linewidth = 1),
+        plot.background  = element_rect(fill = "transparent", color = "black"),
+        strip.text       = element_text(size = 18))
+```
+
+:::: {.callout-warning title="注意）これは単なるイメージであり、実際とは異なる"}
+　この内容は理解を助けるためのイメージであり、厳密なものではない。どちらかといえば逆確率重み付け（IPWでも）に近いイメージではあるが、厳密にはIPWでもない。具体的な重みの付け方（計算方法）は後ほど紹介する。
+::::
+
+## 重み付けの考え方（2）
+
+観察データの場合、処置群と統制群が均質とは限らない
+
+- これまでの投票率の低い自治体だからこそ啓発活動に積極的になるなら...
+   - [▲]{.hl_red}：啓発活動を実施する可能性が低い（= 低い傾向スコア）
+   - [●]{.hl_blue}：啓発活動を実施する可能性が高い（= 高い傾向スコア）
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+list("啓発活動なし" = expand_grid(x = 1:4, y = 1:2),
+     "啓発活動あり" = expand_grid(x = 1:4, y = 1:2)) |> 
+  bind_rows(.id = "group") |> 
+  mutate(turnout = c("低", "低", "高", "低",
+                     "高", "高", "高", "高",
+                     "高", "低", "低", "低", 
+                     "低", "低", "高", "低"),
+         group   = fct_relevel(group, "啓発活動なし"),
+         turnout = fct_relevel(turnout, "低")) |> 
+  ggplot() +
+  geom_point(aes(x = x, y = y, color = turnout, shape = turnout), size = 5) +
+  scale_color_brewer(palette = "Set1", direction = -1) +
+  labs(color = "これまでの投票率", shape = "これまでの投票率") +
+  facet_wrap(~group) +
+  coord_cartesian(xlim = c(0, 5), ylim = c(0, 3)) +
+  theme_void(base_size = 14) +
+  theme(legend.position = "bottom") +
+  theme(panel.background = element_rect(fill = "transparent"),
+        panel.border     = element_rect(color = "black", linewidth = 1),
+        plot.background  = element_rect(fill = "transparent", color = "black"),
+        strip.text       = element_text(size = 18))
+```
+
+## 重み付けの考え方（3）
+
+異常なケースに高い重みを与える
+
+- 例）統制群における[●]{.hl_blue}の重みを2倍に $\leadsto$ 各群の[●]{.hl_blue}が6つに
+- 例）処置群における[▲]{.hl_red}の重みを2.5倍に $\leadsto$ 各群の[▲]{.hl_red}が5つに
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+list("啓発活動なし" = expand_grid(x = 1:4, y = 1:2),
+     "啓発活動あり" = expand_grid(x = 1:4, y = 1:2)) |> 
+  bind_rows(.id = "group") |> 
+  mutate(turnout = c("低", "低", "高", "低",
+                     "高", "高", "高", "高",
+                     "高", "低", "低", "低", 
+                     "低", "低", "高", "低"),
+         group   = fct_relevel(group, "啓発活動なし"),
+         turnout = fct_relevel(turnout, "低"),
+         weight  = case_when(group == "啓発活動なし" & turnout == "低" ~ "big",
+                             group == "啓発活動あり" & turnout == "高" ~ "big2",
+                             .default = "normal")) |> 
+  ggplot() +
+  geom_point(aes(x = x, y = y, color = turnout, shape = turnout, size = weight)) +
+  guides(size = "none",
+         color = guide_legend(override.aes = list(size = 5))) +
+  scale_size_manual(values = c("big" = 10, "normal" = 5, "big2" = 12.5)) +
+  scale_color_brewer(palette = "Set1", direction = -1) +
+  labs(color = "これまでの投票率", shape = "これまでの投票率") +
+  facet_wrap(~group) +
+  coord_cartesian(xlim = c(0, 5), ylim = c(0, 3)) +
+  theme_void(base_size = 14) +
+  theme(legend.position = "bottom") +
+  theme(panel.background = element_rect(fill = "transparent"),
+        panel.border     = element_rect(color = "black", linewidth = 1),
+        plot.background  = element_rect(fill = "transparent", color = "black"),
+        strip.text       = element_text(size = 18))
+```
+
+## 重み付けによる処置効果の推定の手順
+
+1. 推定対象[（estimand）]{.small}を決める（ATT、ATC、ATE）
+1. 個々の個体に重みを与える
+1. 処置効果を推定する（加重平均、重み付き線形回帰分析[WLS]等）
+
+## ATT、ATC推定のための重み付け
+
+```{r}
+ps_fit <- glm(treat ~ age + educ + race + married + nodegree + re74 + re75,
+              data = df, family = binomial("logit"))
+df <- df |> 
+  mutate(ps = predict(ps_fit, type = "response"),
+         treat2 = factor(treat, levels = 0:1, labels = c("統制群", "処置群")),
+         att_w  = treat + (1 - treat) * (ps / (1 - ps)),
+         atc_w  = treat * ((1 - ps) / ps) + (1 - treat),
+         ate_w  = treat * (1 / ps) + (1 - treat) * (1 / (1 - ps)),
+         ato_w  = treat * (1 - ps) + (1 - treat) * ps)
+```
+
+- ATT：処置群には1を、統制群には$\frac{e_i(X)}{1 - e_i(X)}$の重みを付ける
+- ATC：処置群には$\frac{1 - e_i(X)}{e_i(X)}$を、統制群には1の重みを付ける
+- 処置群の方が統制群よりもsmall-*n*の傾向があるため、ATCが推定対象となることはあまりない
+
+$$
+\begin{eqnarray}
+w_i^{\tiny\mbox{ATT}} & = & D_i + (1 - D_i) \frac{e_i(X)}{1 - e_i(X)} \\
+w_i^{\tiny\mbox{ATC}} & = & D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
+\end{eqnarray}
+$$
+
+## ATT推定のための重み付けのイメージ
+
+<!---
+$\widehat{\textsf{ATT}}$ = `r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$estimate[2])` [`r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$conf.low[2])`, `r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$conf.high[2])`]
+--->
+
+```{r}
+#| layout: [[45, -10, 45]]
+#| fig-width: 5
+#| fig-height: 5
+df |> 
+  ggplot() +
+  geom_histogram(aes(x = ps), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_line(aes(x = ps, y = att_w * 30), 
+            linewidth = 1, color = "tomato") +
+  labs(x = "傾向スコア", y = "度数", title = "重み付け前") +
+  facet_wrap(. ~ treat2, nrow = 2, scale = "free_y") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+df |> 
+  ggplot() +
+  geom_histogram(aes(x = ps, weight = att_w), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  labs(x = "傾向スコア", y = "度数", title = "重み付け後") +
+  facet_wrap(. ~ treat2, nrow = 2, scale = "free_y") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## ATE推定のための重み付け
+
+[逆確率重み付け]{.strong}[（inverse probabilty weighting; [IPW]{.strong}）]{.small}
+
+- 各群に割り当てられる確率[（= 傾向スコア）]{.small}の**逆数**で重み付け
+
+$$
+w_i^{\tiny\mbox{ATE}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
+$$
+
+- 各群におけるケースの「異常さ」と重みが比例
+   - 統制群：傾向スコアが大きいほど、重み$\uparrow$
+   - 処置群：傾向スコアが小さいほど、重み$\uparrow$
+
+## ATE推定のための重み付けのイメージ
+
+<!---
+$\widehat{\textsf{ATE}}$ = `r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$estimate[2])` [`r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$conf.low[2])`, `r sprintf("%.3f", tidy(lm(re78 ~ treat, data = df, weights = ate_w), conf.int = TRUE)$conf.high[2])`]
+--->
+
+```{r}
+#| layout: [[45, -10, 45]]
+#| fig-width: 5
+#| fig-height: 5
+df |> 
+  mutate(w2 = if_else(treat == 1, ate_w, ate_w * 30 - 30)) |> 
+  ggplot() +
+  geom_histogram(aes(x = ps), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  geom_line(aes(x = ps, y = w2 * 1), 
+            linewidth = 1, color = "tomato") +
+  labs(x = "傾向スコア", y = "度数", title = "重み付け前") +
+  facet_wrap(. ~ treat2, nrow = 2, scale = "free_y") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+df |> 
+  ggplot() +
+  geom_histogram(aes(x = ps, weight = ate_w), boundary = 0, binwidth = 0.05,
+                 color = "gray20", fill = "gray80") +
+  labs(x = "傾向スコア", y = "度数", title = "重み付け後") +
+  facet_wrap(. ~ treat2, nrow = 2, scale = "free_y") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## 参考）ATO推定のための重み付け
+
+ATO：**A**verage **t**reatment effect for the **o**verlap population[（Li *et al.* 2018）]{.small}
+
+- 傾向スコアが重なる集団における平均処置効果
+   - 共有サポートの仮定が満たされなくても推定可能な推定対象[（estimand）]{.small}
+   - 自然実験（を含む観察研究）では共通サポートの仮定が満たされないことが多いため、ATOが一つの解決策になる得る[（Liu and Quinn 2026?）]{.small}
+      - ただし、推定対象がATOであることを明記し、慎重に解釈する必要がある
+- 処置群には$1 - e_i(X)$、統制群には$e_i(X)$の重みをつける
+
+$$
+w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
+$$
+
+:::: {.aside}
+- Li, Fan, Kari Lock Morgan, and Alan M. Zaslavsky. 2018. "[Balancing Covariates via Propensity Score Weighting](https://doi.org/10.1080/01621459.2016.1260466)." *Journal of the American Statistical Association* 113 (521): 390-400.
+- Liu Guoer and Kevin M. Quinn. Online first. [Why the Average Treatment Effect for the Overlap Population (ATO) Matters for Natural Experiments](https://doi.org/10.1177/2755323X261465058). *Journal of Law & Empirical Analysis*.
+::::
+
+## 重み付けによる推定（例）
+
+:::: {.columns}
+::: {.column width=43%}
+```{r}
+set.seed(19861009)
+
+my_data <- df |> 
+  select(treat, y = re78, ps, weight = ate_w) |> 
+  slice_sample(n = 614) |> 
+  mutate(y  = round(y, 0),
+         ps = round(ps, 5)) |> 
+  remove_rownames()
+
+options(digits = 5)
+```
+
+```{r}
+#| echo: true
+#| collapse: false
+#| code-line-numbers: false
+head(my_data, n = 13)
+```
+
+```{r}
+options(digits = 7)
+```
+:::
+
+::: {.column width=57%}
+```{r}
+#| echo: true
+#| code-line-numbers: false
+my_data |> 
+  reframe(y   = weighted.mean(y, w = weight),
+          .by = treat)
+6647.559 - 6422.869 # 処置効果の点推定値
+```
+
+```{r}
+#| echo: true
+#| collapse: false
+#| code-line-numbers: false
+lm(y ~ treat, data = my_data, weights = weight)
+```
+:::
+::::
+
+# **5** 実践上の注意点
+
+## 共有サポートの確認
+
+- 傾向スコアの分布を統制群---処置群間で確認
+   - 箱ひげ図、ビースウォーム[（Bee Swarm）]{.small}図、ヒストグラムなど
+
+```{r}
+#| layout-ncol: 4
+#| fig-width: 5
+#| fig-height: 5
+#| fig-subcap: 
+#|   - 箱ひげ図
+#|   - ビースウォーム図
+#|   - 密度曲線（{cobalt}使用）
+#|   - ヒストグラム（{cobalt}使用）
+df |> 
+  ggplot() +
+  geom_boxplot(aes(x = treat2, y = ps, fill = treat2)) +
+  labs(x = "グループ", y = "傾向スコア") +
+  guides(fill = "none")
+
+df |> 
+  ggplot() +
+  geom_beeswarm(aes(x = treat2, y = ps, fill = treat2), shape = 21) +
+  labs(x = "グループ", y = "傾向スコア") +
+  guides(fill = "none")
+
+bal.plot(treat2 ~ ps, data = df) +
+  labs(x = "傾向スコア", y = "密度") +
+  guides(fill = guide_legend(position = "inside")) +
+  theme(plot.title = element_blank(),
+        strip.text = element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.85, 0.9),
+        panel.background = element_rect(fill = "transparent"))
+
+bal.plot(treat2 ~ ps, data = df,
+         type = "histogram", mirror = TRUE) +
+  labs(x = "傾向スコア", y = "割合") +
+  guides(fill = guide_legend(position = "inside")) +
+  theme(plot.title = element_blank(),
+        strip.text = element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.85, 0.1),
+        panel.background = element_rect(fill = "transparent"))
+```
+
+## バランスチェック
+
+- 傾向スコアによる調整後に、処置群と統制群の間のバランスが改善したかを確かめる
+   - **傾向スコア**と各**共変量**、両方のバランスを確認する
+- バランスの指標：[標準化^[共変量が二値変数の場合、標準化は行わない。また、共変量が人種や性別のような名目変数も二値変数として扱われる。]平均差]{.strong}[（standardized mean difference; $d$）]{.small}
+   - $\overline{X}_{\sf treat}$：処置群における$X$の平均値　／　$s^2_{X_{\sf treat}}$：処置群における$X$の分散
+
+$$
+d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1}{2}(s^2_{X_{\sf treat}} + s^2_{X_{\sf control}})}}
+$$
+
+- 「バランス」の基準：$|d|$ < 0.1（厳しい基準; 推奨）、$|d|$ < 0.25（緩い基準）
+
+## バランスチェックの可視化
+
+以下は{cobalt}パッケージを使用したバランスチェックの例
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+#| out-width: 600px
+bal.tab(treat ~ ps + age + educ + race + married + nodegree + re74 + re75,
+        data = df, weights = "att_w") |> 
+  love.plot(abs = TRUE, thresholds = 0.1) +
+  labs(x = "標準化平均差の絶対値", color = "") +
+  guides(color = guide_legend(position = "inside")) +
+  scale_y_discrete(labels = c("ps" = "傾向スコア",
+                              "age" = "年齢", "educ" = "教育水準",
+                              "race_black" = "人種：黒人", "race_hispan" = "人種：ヒスパニック", "race_white" = "人種：白人",
+                              "married" = "既婚", "nodegree" = "高校卒業",
+                              "re74" = "年収（1974年）", "re75" = "年収（1975年）")) +
+  scale_color_brewer(palette = "Set1", direction = -1, 
+                     labels = c("Unadjusted" = "重み付け前", "Adjusted" = "重み付け済")) +
+  theme(plot.title       = element_blank(),
+        panel.background = element_rect(fill = "transparent"),
+        legend.position.inside = c(0.8, 0.14),
+        legend.box.background = element_rect(fill = "transparent", color = "black"),
+        legend.title = element_blank())
+```
+
+:::: {.callout-important title="傾向スコアを用いた調整はバランスの改善を保証**しない**"}
+　傾向スコアは共変量のバランスではなく、（大雑把にいえば）予測精度を基準で計算されたものであるため、バランスが改悪されることもあり得る。共変量のバランス改善の程度を基準に計算される傾向スコアとして「共変量バランシング傾向スコア（CBPS）」というものがある。
+::::
+
+## 参考）共変量バランシング傾向スコア
+
+[共変量バランシング傾向スコア]{.strong}[（covariate balancing propensity score; **CBPS**）（Imai and Ratkovic 2014）]{.small}
+
+- 従来の最尤推定法[（ロジットなど）]{.small}による傾向スコア計算の限界
+   - 「処置割当の予測」の最適化が目的であり、「共変量のバランス」を保証するものではない
+   - Small-*N*、モデルの不適切な定式化によるバランスの不十分な改善
+- $\Rightarrow$ CPBSは「傾向スコアの推計」と「共変量のバランス最適化」を同時に行う
+- Rの定番パッケージ（{MatchIt}、{WeightIt}）でも簡単に使用可能
+
+:::: {.aside}
+- Imai, Kosuke and Marc Ratkovic. 2014. "[Covariate Balancing Propensity Score](https://doi.org/10.1111/rssb.12027)." *Journal of the Royal Statistical Society Series B: Statistical Methodology,* 76(1):243-263.
+::::
+
+<!---
+## 感度分析
+
+**条件付き独立仮定と未観測交錯のリスク**
+
+- 傾向スコア分析が抱える共通の前提
+   - 条件付き独立仮定：観測された共変量$X$をコントロールすれば、未観測バイアスは存在しない
+- 感度分析（Sensitivity Analysis）の目的
+   - 現実の観察データにおいて「未観測の交錯要因$U$」を完全に否定することは不可能
+   - 「どの程度の強さの未観測バイアスが存在すると、得られた有意な効果（結論）が覆ってしまうか」を定量評価
+
+**代表的な感度分析の比較**
+
+1. ローゼンバウムの感度分析（Rosenbaum's Bounds）
+   - 感度パラメータ（$\Gamma$）：未観測要因$U$によってペア間の処置オッズが何倍異なり得るかを示す
+   - 評価：$\Gamma$を1.0から徐々に大きくし、*p* 値が0.05を超える限界点（$\Gamma_{\text{critical}}$）を探す（数字が大きいほど頑健）
+2. E-Value（VanderWeele & Ding, 2017）
+   - 概念：観測された効果を完全にゼロに打ち消すために必要な、「未観測要因-処置」および「未観測要因-成果」間の最小リスク比（RR）
+   - 計算（リスク比$RR$の場合）：$\text{E-Value} = RR + \sqrt{RR(RR - 1)}$
+   - 解釈：処置と成果の両方に$E$倍以上影響する未観測要因がない限り結論は揺らがない
+--->
+
+## 処置効果の推定方法
+
+[結果変数モデル]{.strong}[（outcome model; ATE/ATT/$/dots$）]{.small}：推定対象[（estimand）]{.small}を推定するモデル
+
+- **傾向スコア・モデル**[（propensity score mode; 傾向スコアを推定するためのモデル）]{.small}ではない!
+
+1. 荷重平均の差分：処置効果の不確実性[（標準誤差、信頼区間、*p* 値等）]{.small}が計算が難しいから非推奨
+1. 重み付け回帰分析[（推奨）]{.strong}
+   - 単回帰分析
+   - 重回帰分析（次のスライド）
+   - *G*-computation[（Snowden *et al.* 2011）]{.small}
+      - <ruby>**全員**<rt>・・</rt></ruby>が処置/統制群の場合の潜在的結果を計算し、潜在的結果の平均値から処置効果を推定
+      - 処置変数と共変量間の交互作用を想定する場合に推奨される方法^[もし、結果変数モデルに交互作用項が含まれないなら、*G*-computationと通常の重回帰分析の結果は一致する。]
+
+:::: {.aside}
+- Snowden, Jonathan M., Sherri Rose, Kathleen M. Mortimer. 2011. "[Implementation of G-Computation on a Simulated Data Set: Demonstration of a Causal Inference Technique](https://doi.org/10.1093/aje/kwq472)," *American Journal of Epidemiology,* 173(7): 731-738.
+::::
+
+## 処置効果推定時の共変量について
+
+傾向スコア計算時に使用した共変量を結果変数モデル^[ATE、ATT、ATC等を推定するために、データの結果変数をモデルの結果変数として使用するモデル]にも入れるべきか
+
+- 層化、重み付け等の主目的は統制群・処置群の共変量バランスを改善すること[（Austin 2011）]{.small}
+   - $\Rightarrow$ 十分なバランスしていれば、$Y = \alpha + \beta D$で十分
+- 傾向スコアの計算に使用した共変量を結果モデルにもう一度投入する?[（double adjustment）]{.small}
+   - $Y = \alpha + \beta_1 D + \beta_2 X_1 + \beta_3 X_2$
+   - $\Rightarrow$ 必須ではないが、[共変量を投入することが合理的]{.strong}
+      - （場合によっては）精度向上、残存する不均衡^[傾向スコアによる重み調整後でも、バランスが100%とれるのは極稀（というか、基本的にあり得ない）]の補正[（Nguyen *et al.* 2017）]{.small}
+      - どの共変量を入れるかはNguyen *et al.*（2017）を参照
+
+<!---
+- 入れる候補
+   - 処置前に測定された変数
+   - 標準化平均差が大きい変数
+   - 結果変数にを強く予測する変数
+   - 因果関係・ドメイン知識に基づき事前に選択
+- 注意
+   - 「PSに入れた変数を全部入れる」は必須ではない
+   - 処置後変数・媒介変数・合流点は入れない
+   - 小標本では過剰な共変量投入による推定不安定化に注意
+   - PS調整後はSMD等でcovariate balanceを確認
+   - logistic等では、共変量調整後の処置効果が条件付き効果になってしまう場合があり、estimandが変わってしまう可能性も
+--->
+
+```{r}
+#| eval: false
+#| echo: false
+ipw_obj <- df |> 
+  weightit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+           data = _, estimand = "ATE", distance = "glm", link = "logit")
+
+list("共変量なし" = lm(re78 ~ treat, data = df, weights = ipw_obj$weights),
+     "共変量あり" = lm(re78 ~ treat + age + educ + race + married + nodegree + re74 + re75, data = df, weights = ipw_obj$weights)) |> 
+  msummary(estimate = "{estimate} ({std.error})",
+           statistic = NULL,
+           coef_map = c("treat" = "処置効果（ATE）"),
+           gof_map = c("nobs", "adj.r.squared"),
+           notes = "注：カッコ内は標準誤差")
+```
+
+:::: {.aside}
+- Austin, Peter C. 2011. "[An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies](https://doi.org/10.1080/00273171.2011.568786)." *Multivariate Behavioral Research,* 46(3): 399-424.
+- Nguyen, Tri-Long, Gary S. Collins, Jessica Spence, Jean-Pierre Daurès, P. J. Devereaux, Paul Landais, and Yannick Le Manach. 2017. "[Double-adjustment in propensity score matching analysis: choosing a threshold for considering residual imbalance](https://doi.org/10.1186/s12874-017-0338-0)," *BMC Medical Research Methodology*, 17: 78.
+::::
+
+## 極端な重みの弊害
+
+**重みの「爆発」**
+
+- 傾向スコアが0や1に極めて近づくと、重み（$\frac{1}{e(X)}$や$\frac{1}{1 - e(X)}$）が極大化
+   - $e(X)$ = 0.001の場合、$\frac{1}{e(X)}$は100 $\Rightarrow$ 100倍の重み
+   - $\leadsto$ 推計精度の悪化：わずか数個体のデータが全体推計値を支配し、標準誤差が著しく増大
+- 傾向スコアの計算後、極端な傾向スコアがあるかを確認する
+
+**極端な重みへの対処**
+
+- トリミング[（trimming）]{.small} or クリッピング[（clipping）]{.small} or ウィンザー化[（Winsorizing）]{.small}
+   - 重みの上位1〜5%の削除、傾向スコアが0.1〜0.9の個体のみを使用[（Crump *et al.* 2009）]{.small}
+   - <i class="bi bi-emoji-frown"></i> 分散を大幅に低減できるが、新たなバイアスが生じるリスク
+- 他にもハジェク推定量[（Hajek estimator）]{.small}、推定対象をATOにするなど
+
+<!---
+1. ハジェク推定量（Hajek Estimator）
+   - 手法：重みの合計値がサンプルサイズ $N$ になるよう各群の重み和で正規化する。
+   - メリット：重みのスケール変動を滑らかに抑え、通常の IPW（Horvitz-Thompson）より小標本での挙動が安定する。
+   - ただし、「Weights are normalized but no longer unbiased（重みは正規化されるが、もはや不偏ではなくなる）」
+1. オーバーラップ重み付け（Overlap Weighting: OW / ATO）
+   - 手法：処置群に $1-e(X_i)$、対照群に $e(X_i)$ の重みを与える（Li et al., 2018）。
+   - メリット：重みが常に 0〜1 に収まり構造的に爆発しない。$e(X_i) \approx 0.5$（比較可能性が最も高い領域）に最大重みを与える。
+--->
+
+:::: {.aside}
+- Crump, Richard K., V. Joseph Hotz, Guido W. Imbens, Oscar A. Mitnik. 2009. "[Dealing with limited overlap in estimation of average treatment effects](https://doi.org/10.1093/biomet/asn055)," *Biometrika,* 96(1): 187-199.
+::::
+
+<!---
+## 参考）二重に頑健な推定法
+
+[二重に頑健な推定法]{.strong}[（doubly robust estimation; **DR**/**AIPW**）]{.small}
+
+- 「傾向スコアモデル」と「結果変数モデル」の**どちらか**片方でも正しく定式化されていれば、信頼できる処置効果が推定可能
+
+$$
+\widehat{\tau}_{\text{DR}} = \frac{1}{N} \sum_{i=1}^N \left[ \underbrace{\mu_1(X_i) - \mu_0(X_i)}_{\textsf{回帰モデル（ベースライン）}} + \underbrace{D_i \frac{Y_i - \mu_1(X_i)}{e(X_i)} - (1 - D_i) \frac{Y_i - \mu_0(X_i)}{1 - e(X_i)}}_{\textsf{傾向スコアモデル（残差補正項）}} \right]
+$$
+
+- $\mu_1(X_i)$ = $\mathbb{E}[Y_i | D_i = 1, X_i]$、$\mu_0(X_i)$ = $\mathbb{E}[Y_i | D_i = 0, X_i]$
+--->

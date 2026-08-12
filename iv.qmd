@@ -1,0 +1,12 @@
+---
+title: "操作変数法"
+modified-date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 1
+metadata-files: 
+  - "_style/exercise.yml"
+---
+
+{{< revealjs file="iv_slide.html" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}

@@ -1,0 +1,365 @@
+---
+title: "回帰分析"
+modified-date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 1
+metadata-files: 
+  - "_style/exercise.yml"
+---
+
+{{< revealjs file="reg_slide.html" width="1200px" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}
+
+# セットアップ
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse,
+               ggdag,
+               dagitty)
+
+cia_df <- read_csv("_data_slide/reg/cia.csv")
+```
+
+　今回使用するパッケージを読み込んでおく。
+
+```{r}
+pacman::p_load(
+  tidyverse, # Rの必須パッケージ
+  ggdag,     # DAGの可視化
+  dagitty    # DAGから統制変数を計算
+)
+```
+
+# 欠落変数バイアス
+
+　応答変数 ***Y*** の規定要因として ***D*** と ***X*** があり、また、 ***D*** は ***X*** に規定される以下のモデルを考えてみよう（$e$と$u$は平均0の正規分布に従う誤差項）。 @fig-ovb は3つの変数間の関係を有向非巡回グラフ（directed acyclic graph; DAG）で示したものである。
+
+$$
+\begin{eqnarray}
+Y_i & = & 3 + 1 D_i - 3 X_i + e_i \\
+D_i & = & 1 + 2 X_i + u_i
+\end{eqnarray}
+$$
+
+```{r}
+#| echo: false
+#| label: fig-ovb
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 500px
+#| fig-cap: 確率変数D、X、Yの関係（Xが交絡変数）
+dag_ovb <- dagify(
+  Y ~ D + X,
+  D ~ X,
+  exposure = "D",
+  outcome = "Y",
+  coords = list(x = c(D = 0, X = 1, Y = 2),
+                y = c(D = 0, X = 1, Y = 0))
+)
+
+ggdag(dag_ovb)  +
+  annotate("text", x = 1, y = 0, vjust = -0.5, label = 1, size = 7) +
+  annotate("text", x = 1.5, y = 0.5, vjust = -1, label = -3, size = 7) +
+  annotate("text", x = 0.5, y = 0.5, vjust = -1, label = 2, size = 7) +
+  coord_cartesian(xlim = c(0, 2), ylim = c(-0.1, 1.1)) +
+  theme_dag() 
+```
+
+　まず、確率変数 ***X*** 、 ***D*** 、 ***Y*** を作成し、真のモデルを推定してみよう。
+
+```{r}
+set.seed(19861008)
+X <- rnorm(1000, 10, 2)
+D <- 1 + 2 * X + rnorm(1000, 0, 1)
+Y <- 3 + 1 * D - 3 * X + rnorm(1000, 0, 1)
+
+lm(Y ~ D + X)
+```
+
+　***D*** の傾き係数のパラメーター（真の値）は`r sprintf("%.3f", coef(lm(Y ~ D + X))[2])`である。もし、交絡要因である ***X*** をモデルから除外したら、 ***D*** の傾き係数の推定値はどうなるだろうか。
+
+```{r}
+lm(Y ~ D)
+```
+
+　点推定値は`r sprintf("%.3f", coef(lm(Y ~ D))[2])`であり、交絡要因が含まれていないモデルから推定された推定値だから、これはバイアス付きの推定値である。真の値との差は[`r sprintf("%.3f", coef(lm(Y ~ D))[2] - coef(lm(Y ~ D + X))[2])`]{.bg style="--col:tomato;"}（= `r sprintf("%.3f", coef(lm(Y ~ D))[2])` - `r sprintf("%.3f", coef(lm(Y ~ D + X))[2])`）であり、これが欠落変数バイアスの大きさである。このバイアスの大きさは ***X*** を ***D*** に回帰させた場合の ***D*** の傾き係数と真のモデルにおける ***X***の傾き係数の積と一致する（講義スライド参照）。まず、 ***X*** を ***D*** に回帰した場合の ***D*** の傾き係数を推定してみよう。
+
+```{r}
+lm(X ~ D)
+```
+
+　***X*** の傾き係数の点推定値は`r sprintf("%.3f", coef(lm(X ~ D))[2])`である。この値と正しいモデル（ ***Y*** を ***D*** と ***X*** に回帰させたモデル）の ***X*** の傾き係数（= `r sprintf("%.3f", coef(lm(Y ~ D + X))[3])`）の積を計算してみよう。
+
+```{r}
+# 正確には coef(lm(Y ~ D + X))[3] * coef(lm(X ~ D))[2] で計算
+0.472 * -2.9831
+```
+
+　結果は`r sprintf("%.3f", 0.472 * -2.9831)`であり、欠落変数バイアスの大きさである。
+
+# 処置後変数バイアス
+
+　応答変数 ***Y*** の規定要因として ***D*** と ***X*** があり、また、 ***X*** は ***D*** に規定される以下のモデルを考えてみよう（$e$と$u$は平均0の正規分布に従う誤差項）。 @fig-post は3つの変数間の関係をDAGで示したものである。
+
+$$
+\begin{eqnarray}
+Y_i & = & 1 + 2 D_i - 4 X_i + e_i \\
+X_i & = & 2 + 0.25 D_i + u_i
+\end{eqnarray}
+$$
+
+```{r}
+#| label: fig-post
+#| echo: false
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 500px
+#| fig-cap: 確率変数D、X、Yの関係（Xが処置後変数）
+dag_post <- dagify(
+  Y ~ D + X,
+  X ~ D,
+  exposure = "D",
+  outcome = "Y",
+  coords = list(x = c(D = 0, X = 1, Y = 2),
+                y = c(D = 0, X = 1, Y = 0))
+)
+
+ggdag(dag_post)  +
+  annotate("text", x = 1, y = 0, vjust = -0.5, label = 2, size = 7) +
+  annotate("text", x = 1.5, y = 0.5, vjust = -1, label = 4, size = 7) +
+  annotate("text", x = 0.5, y = 0.5, vjust = -1, label = 0.25, size = 7) +
+  coord_cartesian(xlim = c(0, 2), ylim = c(-0.1, 1.1)) +
+  theme_dag() 
+```
+
+　***D*** が1増加すると ***Y*** はいくら増減するだろうか。答えは3である。まず、 @fig-post の下の矢印に従い、 ***D*** が1増加すると ***Y*** は2増加し、これが**直接効果**（direct effect）である。しかし、 ***D*** が1上がると ***X*** も0.25増加し、 ***X*** が1増加すると ***Y*** は4増加する。つまり、 ***D*** が1増加すると ***X*** を経由して ***Y*** が1単位増加（= 0.25 $\times$ 4）ことになる。これが**間接効果**（indirect effect）である。結果として ***D*** が1増加すると ***Y*** は3単位分（= 直接効果 + 間接効果）増加する。因果推論において処置変数の効果量は一般的に直接効果と間接効果の和である**総効果**（total effect）が重視される。因果メカニズムに興味があれば、直接効果と間接効果は分解する必要があるが、我々が興味のあるものは「結局、これをやったら投票率・GDP・成績・血圧はどう変わるか」である。これら3つの変数が手元にある場合、どのようなモデルを推定すべきか。
+
+　まず、架空のデータを作成し、 ***Y*** を ***D*** と ***X*** に回帰させたモデルを推定してみよう。
+
+```{r}
+set.seed(19861008)
+D <- rnorm(1000, 10, 2)
+X <- 2 + 0.25 * D + rnorm(1000, 0, 1)
+Y <- 1 + 2 * D + 4 * X + rnorm(1000, 0, 1)
+
+lm(Y ~ D + X)
+```
+
+　***D*** の傾き係数は約`r sprintf("%.3f", coef(lm(Y ~ D + X))[2])`であり、これは ***D*** $\rightarrow$ ***Y*** の直接効果である。また、 ***X*** $\rightarrow$ ***Y*** の効果も推定されており、これは約`r sprintf("%.3f", coef(lm(Y ~ D + X))[3])`である。しかし、これだけでは総効果は分からない。総効果を推定するためには処置後変数である ***X*** をモデルから除外すべきである。
+
+```{r}
+lm(Y ~ D)
+```
+
+　総効果とは約`r sprintf("%.3f", coef(lm(Y ~ D))[2])`であり、先ほどのモデルにおける ***D*** の係数とは約[`r sprintf("%.3f", coef(lm(Y ~ D))[2] - coef(lm(Y ~ D + X))[2])`]{.bg style="--col:tomato;"}の差があり、これは処置後変数バイアスの大きさである。
+
+　処置後変数バイアスの大きさは ***X*** を ***D*** に回帰させた場合の ***D*** の係数と最初のモデルにおける ***X*** $\rightarrow$ ***Y*** の係数の積からも計算できる。
+
+```{r}
+lm(X ~ D)
+```
+
+　処置後変数バイアスの大きさは ***X*** を ***D*** に回帰させた場合の ***D*** の係数は約`r sprintf("%.3f", coef(lm(X ~ D))[2])`である。最初のモデルから得られた推定値を利用し、処置後変数バイアスの大きさを計算してみよう。
+
+```{r}
+# 正確には coef(lm(X ~ D))[2] * coef(lm(Y ~ D + X))[3]
+0.2458 * 3.990
+```
+
+　`r round(coef(lm(X ~ D))[2] * coef(lm(Y ~ D + X))[3], 3)`に見覚えはないだろうか。見覚えがないなら、画面をすくし上にスクロールしてみよう。
+
+# DAGと共変量選択
+
+## DAGの作り方
+
+　共変量選択においてDAGは便利なツールだ。RではDAGを描くのはむろん、統制すべき変数を自動的に選別することもできる。まずは、DAGを描いてみよう。まず（1）`dagify()`関数でDAGの中身を記述し、（2）それを`ggdag()`関数で作図する順でDAGを描く。いずれも{ggdag}パッケージが提供する関数だ。
+
+　DAGを分解していくと結局DAGというのは「変数1 $\rightarrow$ 変数2」の関係の集合だ^[「変数1 $\leftrightarrow$ 変数2」でも同じことが言える。これは「変数1 $\leftarrow$ 変数2」と「変数1 $\rightarrow$ 変数2」が同時に存在することと同じだ。]。これを`dagify()`内に`変数1 ~ 変数2`のように表記し、カンマ区切りで入れるだけだ。たとえば、***X*** $\rightarrow$ ***Y*** $\leftarrow$ ***Z***であれば、`dagify(Y ~ X, Y ~ Z)`と書く。これだけでもDAGは描けるが、今度、調整すべき共変量を計算するためには`exposure`と`outcome`引数でDAGにおける処置変数と結果変数を指定しておく必要がある。以下は***X***（処置変数） $\rightarrow$ ***Y***（結果変数） $\leftarrow$ ***Z*** のDAGを`my_dag_1`と名付けたコードの例だ。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 300px
+my_dag_1 <- dagify(
+  Y ~ X,
+  Y ~ Z,
+  exposure = "X",
+  outcome  = "Y"
+)
+
+my_dag_1
+```
+
+　`my_dag_1`だけだとよく分からない。これを`ggdag()`関数に渡してみよう。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 300px
+ggdag(my_dag_1)
+```
+
+　簡単にDAGが描けてしまった。しかし、背景や軸タイトルなどが邪魔なので、`theme_dag()`レイヤーを追加しよう。これは{ggdag}が提供しているDAG専用のggplotテーマだ。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 300px
+ggdag(my_dag_1) +
+  theme_dag()
+```
+
+　***X***、***Y***、***Z*** の丸は「ノード」（node）と呼ばれ、ノードはエッジ（edge）と呼ばれる矢印で繋がっている。このノードの位置は{ggdag}が自動的に決めてくれるが、自分でカスタマイズしたい場合は、`coords`引数でノードの座標を書けば良い。具体的には`coords = list()`の形と表記し、`list()`の中に`x = c()`と`y = c()`で座標を指定する。以下は基本的に`my_dag_1`と同じDAGをベースに、 ***X*** の位置を（x = 1, y = 1）、***Y*** の位置を（x = 2, y = 1）、***Z*** の位置を（x = 1, y = 1.5）にし、`my_dag_2`という名で格納するコードだ。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 300px
+my_dag_2 <- dagify(
+  Y ~ X,
+  Y ~ Z,
+  exposure = "X",
+  outcome  = "Y",
+  coords   = list(x = c("X" = 1, "Z" = 1, "Y" = 2),
+                  y = c("X" = 1, "Z" = 2, "Y" = 1.5))
+)
+
+ggdag(my_dag_2) + 
+  theme_dag()
+```
+
+　`my_dag_1`と`my_dag_2`では ***Y*** に向かっているノードが ***X*** と ***Z*** の2つだ。 ***Y*** $\leftarrow$ ***X*** と ***Y*** $\leftarrow$ ***Z*** だから`Y ~ X, Y ~ Z`と表記したが、チルダ（`~`）の左辺が同じノードであれば、`Y ~ X + Z`と表記してもよい。`my_dag_2`に ***Z*** $\rightarrow$ ***X*** のエッジを追加し、`my_dag_3`と名付けてみよう。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 300px
+my_dag_3 <- dagify(
+  Y ~ X + Z,
+  X ~ Z,
+  exposure = "X",
+  outcome  = "Y",
+  coords   = list(x = c("X" = 1, "Z" = 1.5, "Y" = 2),
+                  y = c("X" = 1, "Z" = 2, "Y" = 1))
+)
+
+ggdag(my_dag_3) + 
+  theme_dag()
+```
+
+　最後に、以下のDAG（`my_dag_4`）を作ってみよう。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 500px
+#| echo: false
+my_dag_4 <- dagify(
+  Y ~ D + X1 + X2,
+  X1 ~ Z1 + Z2,
+  D ~ Z1,
+  X2 ~ Z2 + Z3,
+  Z1 ~ W,
+  Z2 ~ W,
+  Z3 ~ D + W,
+  exposure = "D",
+  outcome  = "Y",
+  coords = list(x = c("Y" = 2, 
+                      "X1" = 1, "D" = 2, "X2" = 3,
+                      "Z1" = 1, "Z2" = 2, "Z3" = 3,
+                      "W" = 2),
+                y = c("Y" = 4, 
+                      "X1" = 3, "D" = 3, "X2" = 3,
+                      "Z1" = 2, "Z2" = 2, "Z3" = 2,
+                      "W" = 1))
+)
+
+ggdag(my_dag_4) + 
+  theme_dag()
+```
+
+:::: {.callout-tip title="答え" collapse=true}
+```{r}
+#| eval: false
+my_dag_4 <- dagify(
+  Y ~ D + X1 + X2,
+  X1 ~ Z1 + Z2,
+  D ~ Z1,
+  X2 ~ Z2 + Z3,
+  Z1 ~ W,
+  Z2 ~ W,
+  Z3 ~ W,
+  exposure = "D",
+  outcome  = "Y",
+  coords = list(x = c("Y" = 2, 
+                      "X1" = 1, "D" = 2, "X2" = 3,
+                      "Z1" = 1, "Z2" = 2, "Z3" = 3,
+                      "W" = 2),
+                y = c("Y" = 4, 
+                      "X1" = 3, "D" = 3, "X2" = 3,
+                      "Z1" = 2, "Z2" = 2, "Z3" = 2,
+                      "W" = 1))
+)
+
+ggdag(my_dag_4) + 
+  theme_dag()
+```
+::::
+
+## 共変量選択
+
+　{dagitty}の`adjustmentSets()`を使えば、与えられたDAGから処置効果の推定に必要な統制変数が求められる。たとめば、`my_dag_3`の場合、 ***X*** が処置変数、 ***Y*** が結果変数、 ***Z*** が交絡変数となっており、処置効果を推定するためには ***Z*** を統制すれば良い。これを`adjustmentSets()`を使って検証してみよう。`my_dag_3`にはどの変数が処置・結果変数化が明記されているため、今回は引数として`my_dag_3`だけで十分だが、もし、指定していない場合は`adjustmentSets(my_dag_3, exposure = "X", outcome = "Y")`のように別途指定する必要がある。
+
+```{r}
+adjustmentSets(my_dag_3)
+```
+
+　このように ***Z*** を統制すべきという結果が得られた。それではより複雑な`my_dag_4`でやってみよう。
+
+```{r}
+adjustmentSets(my_dag_4)
+```
+
+　今回は結果が2行も出力されたが、これはどのやり方でも良いという意味である。「 ***W*** と ***X2*** 、 ***Z2*** 」を統制しても良いし、 ***Z1*** のみを統制しても良い。実際は、手元のデータに含まれている変数でできそうな案を採用すれば良いだろう。
+
+　実は他にも統制案はたくさんある。たとえば、「 ***W*** と ***Z1*** 」を統制しても処置効果（総効果）は推定できる。なぜ、これは表示されなかったのか。それは「 ***W*** と ***Z1*** 」の案が ***Z1*** のみの案に比べて非効率的だからだ。 ***Z1*** だけ統制すれば十分なものをわざわざ ***W*** まで入れる必要はなかろう（同じパフォーマンスを出すモデルなら単純なモデルの方が望ましい）。もし、**すべて**の統制案を確認したいなら、第2引数以降に`type = "all"`を追加してみよう。
+
+:::: {.columns}
+::: {.column width=48%}
+```{r}
+adjustmentSets(my_dag_4)
+```
+:::
+
+::: {.column width=4%}
+:::
+
+::: {.column width=48%}
+```{r}
+adjustmentSets(my_dag_4, type = "all")
+```
+:::
+::::
+
+
+　また、{ggdag}パッケージの`ggdag_adjustment_set()`関数を使えば、可視化もできる。`shadow = TRUE`引数は任意だが、これを付けておくと統制された変数から出発する矢印がグレーになる。既定値（`shadow = FALSE`）のままだと統制変数から出発する矢印が表示されない。
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+my_dag_4 |>
+  ggdag_adjustment_set(shadow = TRUE) +
+  theme_dag()
+```
+
+　2つの統制案が出力される。赤い四角形が統制すべき変数だ。
+
+　因果推論において直接効果よりは総効果の方がより重視されるが、直接効果を推定するための共変量調整案も`adjustmentSets()`関数でできる。第2引数以降に`effect = "direct"`を追加してみよう。
+
+```{r}
+adjustmentSets(my_dag_4, effect = "direct")
+```
+
+　計5つの案が提案された。

@@ -1,0 +1,16 @@
+---
+title: セッション情報
+date-modified: today
+---
+
+```{r}
+#| echo: false
+pacman::p_load(sessioninfo)
+session_info(
+  pkgs = "installed",
+  include_base = TRUE,
+  info = "all",
+  dependencies = NA,
+  to_file = FALSE
+)
+```

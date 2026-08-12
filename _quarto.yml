@@ -1,0 +1,70 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - "*.qmd"
+  resources:
+    - "robots.txt"
+
+lang: ja
+
+website:
+  title: "困菓唯倫 with R"
+  page-footer: 
+    right: "(c) 2015-2025 Jaehyun Song"
+  sidebar: 
+    style: floating
+    search: true
+    collapse-level: 1
+    contents:
+      - text: "1/ イントロダクション"
+        href: intro.qmd
+      - text: "2/ 因果関係と因果推論"
+        href: ci.qmd
+      - text: "3/ 内生性"
+        href: sb.qmd
+      - text: "4/ ランダム化比較試験"
+        href: rct.qmd
+      - text: "5/ Rの復習"
+        href: r.qmd
+      - text: "6/ 回帰分析"
+        href: reg.qmd
+      - text: "7/ 傾向スコア"
+        href: ps.qmd
+      - text: "8/ 差分の差分法"
+        href: did.qmd
+      - text: "9/ 回帰不連続デザイン"
+        href: rdd.qmd
+      - text: "10/ 操作変数法"
+        href: iv.qmd
+      - section: "資料"
+        contents:
+          - text: "11/マッチング"
+            href: matching.qmd
+          - text: "私たちのR"
+            href: https://www.jaysong.net/RBook
+            target: _blank
+          - text: "JDCat分析ツール"
+            href: https://jupyter.cs.rcos.nii.ac.jp/
+            target: _blank
+      - section: "本講義について"
+        contents:
+          - text: "シラバス（関大）"
+            href: "#"
+          - text: "シラバス（神大）"
+            href: "#"
+          - text: "実習環境の構築"
+            href: "#"
+      - text: "セッション情報"
+        href: session.qmd
+
+format:
+  html:
+    theme: a11y
+    grid:
+      sidebar-width: 250px
+    number-sections: true
+    toc-depth: 3
+    link-external-newwindow: true
+
+freeze: auto

@@ -1,0 +1,25 @@
+title: "社会科学における因果推論"
+author: "宋財泫（関西大学）"
+lang: ja
+knitr: 
+  opts_chunk: 
+    dev: "ragg_png"
+    dev.args:
+      background: transparent
+    dpi: 300
+    fig.align: "center"
+    fig.width: 6
+    fig.height: 3
+    echo: true
+    message: false
+    warning: false
+    error: true
+    R.options:
+      width: 100
+format:
+  html:
+    theme: [default, _style/exercise.scss]
+    linestretch: 1.75
+html-math-method:
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"

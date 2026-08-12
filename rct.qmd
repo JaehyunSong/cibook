@@ -1,0 +1,392 @@
+---
+title: "ランダム化比較試験"
+modified-date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 1
+    number-sections: false
+metadata-files: 
+  - "_style/exercise.yml"
+---
+
+{{< revealjs file="rct_slide.html" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse, summarytools)
+```
+
+# 多重比較の問題をシミュレーションで理解する
+
+## *p* 値の性質を理解する
+
+ここでは多重比較の問題をシミュレーションで示す。我々が統計的仮説検定に使用する代表的な指標として *p* 値が挙げられるが、 *p* 値とは（ざっくりいうと）「帰無仮説が正しいと仮定した場合、今回得られた検定統計量と同じか、それ以上に帰無仮説から離れている確率」を意味する。 *p* 値が小さいということは「帰無仮説が正しいというには、今回の結果は異常すぎる。だから、帰無仮説が間違っていると考えた方がより自然だよね」ということになる。その異常さの指標が *p* 値であり、社会科学では通常、0.05（5%）を基準とする。この基準は「有意水準」（または、$\alpha$）と呼ばれる^[有意**確率**とは別の概念である。そもそも有意確率という表現は避けるべきである。]。$\alpha$ = 0.05の場合、 *p* 値が0.05を下回ったら我々は「仮説は支持された」と表現する。しかし、 *p* 値の意味を考えると、 *p* 値が0でない限り、実際に因果効果がないにも関わらず、因果効果があるかのような結果がたまたま得られる可能性は存在する。
+
+```{r}
+# 結果を再現するためにシードを固定する
+set.seed(19861009)
+# 平均 = 171.4、標準偏差 = 5.8の正規分布から500個の数字を無作為に抽出
+group1 <- rnorm(500, mean = 171.4, sd = 5.8)
+# group1と全く同じgroup2を作成
+group2 <- group1
+```
+
+`group1`と`group2`は全く同じものだから、平均値も同じく約`r round(mean(group1), 1)`である。
+
+```{r}
+mean(group1)
+mean(group2)
+```
+
+2群の平均値の差が0であることを帰無仮説とする検定をしてみると、 *p* = 1の結果が得られる。ざっくりいうと「帰無仮説が正しいとした場合、今回のような結果はめっちゃあり得る」ことをだ。
+
+```{r}
+t.test(group1, group2)
+```
+
+*p* 値だけ抽出したい場合、`t.test()$p.value`を使えば良い。
+
+```{r}
+t.test(group1, group2)$p.value
+```
+
+この *N* = 1,000を母集団とする。通常、我々は母集団を直接観察することはできず、母集団の一部である標本から母集団を推論することが多い。これからは各群で100個ずつ無作為に抽出したものを標本（ *n* = 200）とし、この標本を使って2群の差の検定を行う。
+
+:::: {.callout-note collapse=true title="参考）`sample()`関数"}
+　第1引数のベクトルから`size`個の行を無作為に抽出する関数である。`sample(my_vector, size = 100)`は`my_vector`から無作為に100個の要素を抽出するコードである。`replace = TRUE`を追加すると復元抽出を行う（既定値は`FALSE`であり、非復元抽出を行う）。
+::::
+
+```{r}
+group1_sub_1 <- sample(group1, size = 100, replace = TRUE)
+group2_sub_1 <- sample(group2, size = 100, replace = TRUE)
+t.test(group1_sub_1, group2_sub_1)
+```
+
+今回の *p* 値は約`r round(t.test(group1_sub_1, group2_sub_1)$p.value, 3)`である。*p*  > 0.05であるため、母集団において2群間に差があるとは言えない。これをもう一度やってみよう。
+
+```{r}
+group1_sub_2 <- sample(group1, size = 100, replace = TRUE)
+group2_sub_2 <- sample(group2, size = 100, replace = TRUE)
+t.test(group1_sub_2, group2_sub_2)
+```
+
+今回は *p*  $\simeq$ `r round(t.test(group1_sub_2, group2_sub_2)$p.value, 3)`であり、今回も *p*  > 0.05であるため、母集団において2群間に差があるとは言えない。同じ結論であるが、 *p* 値には変動が生じた。もし、これを無数に繰り返したら、何回かは *p*  $\leq$ 0.05の結果が得られるかも知れない。
+
+以上の作業を1,000回繰り返してみる。ここでは`for()`関数を利用したループ構文を使うが、`for()`関数の使い方については[『私たちのR』の「Rプログラミングの基礎」](https://www.jaysong.net/RBook/programming.html){target="_blank"}を参照すること。
+
+```{r}
+trials     <- 1000            # 試行回数
+result_vec <- rep(NA, trials) # 結果を格納する長さ1000の空ベクトルを用意する
+
+# iを1ずつ増やしながら「{}」内の作業を繰り返す（iの初期値は1）
+# iがtrialsに達するまで繰り返す（ここだとtrials = 1000）
+for (i in 1:trials) {
+  # group1から無作為に100個の要素を反復抽出すし、group1_subに格納
+  group1_sub <- sample(group1, size = 100, replace = TRUE)
+  # group2から無作為に100個の要素を反復抽出すし、group2_subに格納
+  group2_sub <- sample(group2, size = 100, replace = TRUE)
+  
+  # 結果ベクトルのi番目に平均値の差の検定のp値を格納
+  result_vec[i] <- t.test(group1_sub, group2_sub)$p.value
+}
+```
+
+結果が格納されている`result_vec`の中身を確認してみよう。計1,000個の数字が入っているので、すべて出力せず、`head()`関数を使って最初の50ケースだけを出力してみよう^[`n = 30`を省略すると最初の6個まで出力される]。
+
+```{r}
+head(result_vec, n = 50)
+```
+
+これらの数字が0.05以下がどうか一つ一つ確認するのは面倒だから、関係演算子を使ってみよう。`result_vec <= 0.05`を入力すると、`result_vec`の要素が0.05以下かどうかを一つずつ判定し、`TRUE`か`FALSE`を返す。ここでは紙幅の関係上（?）、最初の50個のみ出力するが、`result_vec <= 0.05`のみでも良い。
+
+```{r}
+head(result_vec <= 0.05, n = 50)
+```
+
+続いて、`table()`関数を使用し、`TRUE`と`FALSE`の数を度数分布表で出力してみよう。
+
+:::: {.callout-note collapse=true title="参考）`table()`関数"}
+　第1引数のベクトルの度数分布表を返す関数である。連続変数（間隔尺度、または比率尺度で測定された変数）に対してはほぼ使わないが、離散変数（いわゆる名目変数、順序変数）の分布を知るには便利な関数だ。
+::::
+
+```{r}
+table(result_vec <= 0.05)
+```
+
+計1,000回の試行中、`r table(result_vec <= 0.05)[2]`回の試行において *p*  $\leq$ 0.05の結果が得られた。%で換算すると`r table(result_vec <= 0.05)[2] / trials * 100`%である。母集団においては`group1`と`group2`の間に差がないにも関わらず、標本を用いた推論では約`r table(result_vec <= 0.05)[2] / trials * 100`%の割合で「`group1`と`group2`の間に差がある」と判定されたのである。これが1,000回でなく、100万回、1億回なら5%に近づく。つまり、$\alpha$ = 0.05を採用した場合、帰無仮説が正しくても、約5%の割合で帰無仮説が棄却され、対立仮説（$\simeq$ 自分が推したい仮説）が支持される結果になる。
+
+## 多重比較（多重検定）とは何か
+
+*p* 値は直感的な指標ではないが、その意味を理解した上で使ったら大変便利な指標ではある。しかし、以上の説明は2群間の比較（ここでは`group1`と`group2`）で有効な話である。たとえば、「啓発メッセージは投票率を上げる」という仮説を検証したいとしよう。そこで啓発メッセージ4種を用意し、5つのグループに無作為に割り当てられた被験者グループに異なる啓発メッセージを呈示したとする（啓発メッセージを呈示していないグループも含めて5群である）。この場合、統制群が1つ、処置群が4つとなる。
+
+啓発メッセージの効果を測定するためには何と何を比較すべきか。それは「処置群の投票率 - 統制群の投票率」である。しかし、問題は、今回のケースだとその処置群が4つもあるということだ。つまり、我々は「処置群**1**の投票率 - 統制群の投票率」、「処置群**2**の投票率 - 統制群の投票率」、「処置群**3**の投票率 - 統制群の投票率」、「処置群**4**の投票率 - 統制群の投票率」を計算する。つまり、比較の回数は4回である。そして、一つでも差分が統計的有意に0でないという結果が得られたら「啓発メッセージは投票率を上げる!」と結論づけることになる。3つの*p*値が0.05より大きくても1つでも *p*  $\leq$ 0.05で仮説を支持してしまう。
+
+これはちょっと卑怯ではないだろうか。実際そうだ。そして、これには「**多重比較の問題**」（multiple comparisons problme）という名前が付いている。つづいて、多重比較の問題がどれほど深刻な問題かをシミュレーションで確認してみよう。
+
+## 多重比較の問題を理解する
+
+まず、N = 1,000の架空の母集団（`pop_df`）を作成する。1,000名をランダムに5つのグループ（1つの統制群を含む）に分け、異なる刺激を与えた後、応答変数（`y`）を測定したデータである。母集団における処置効果（処置群1〜4の`y` - 統制群の`y`）はほぼ0のデータである。
+
+:::: {.callout-note collapse=true title="参考）`tibble()`関数"}
+　表形式オブジェクト（$\simeq$ data.frame型）を作成する関数である。R内臓の`data.frame()`関数とほぼ同じ関数である。この関数を使用するためには事前に{tibble}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。
+::::
+
+```{r}
+pacman::p_load(tidyverse)
+set.seed(19861008)
+pop_df <- tibble(treat = rep(c("Control", "Treatment1", "Treatment2",
+                               "Treatment3", "Treatment4"), each = 200),
+                 y     = rnorm(1000))
+
+head(pop_df)
+```
+
+線形回帰モデル（`lm()`）を使用し、母集団における処置効果（真の因果効果; パラメーター）を確認してみよう。
+
+```{r}
+pop_fit <- lm(y ~ treat, data = pop_df)
+summary(pop_fit)
+```
+
+処置群1の処置効果の点推定値は-0.021、 *p* 値は1であり、統計的有意な処置効果は確認できない。処置群2、3、4も同様であり、処置効果は確認できない。
+
+しかし、通常、母集団のサイズは非常に大きく、直截観察することはできない。だから我々は母集団の一部である標本を抽出し、標本から母集団を推論する。ここでは母集団からn = 500の標本を抽出し、その標本を使用して処置効果を推定してみよう。
+
+:::: {.callout-note collapse=true title="参考）`slice_sample()`関数"}
+　表形式オブジェクトから`n`個の行を無作為に抽出する関数である。`slice_sample(pop_df, n = 100)`は`pop_df`から無作為に100行を抽出するコードである。`replace = TRUE`を追加すると復元抽出を行う（既定値は`FALSE`であり、非復元抽出を行う）。この関数を使用するためには事前に{dplyr}パッケージを読み込んでおく必要があるが、{tidyverse}を読み込むと自動的に読み込まれる。
+::::
+
+```{r}
+sample_fit_1 <- lm(y ~ treat, data = slice_sample(pop_df, n = 500, replace = TRUE))
+summary(sample_fit_1)
+```
+
+真の処置効果とズレ（誤差; エラー）はあるが、今回も全ての処置効果の推定値の *p* 値が0.05以上であり、統計的に有意な処置効果は確認できない。推定値の *p* 値のみを抽出するためには`summary(lmオブジェクト名)$coefficients[-1, 4]`と入力する。 
+
+```{r}
+summary(sample_fit_1)$coefficients[-1, 4]
+```
+
+これらの *p* 値が0.05未満かを確認する。
+
+```{r}
+summary(sample_fit_1)$coefficients[-1, 4] <= 0.05
+```
+
+一つでも統計的に処置効果が認められたら、つまり、一つでも`TRUE`が確認されたら「仮説は支持された」と解釈する場合、仮説の支持有無は`any()`関数で判定できる。
+
+:::: {.callout-note collapse=true title="参考）`any()`関数"}
+　`TRUE`と`FALSE`のみで構成されたベクトルに対し、一つでも`TRUE`があったら`TRUE`を返す関数である。ベクトルのすべての要素が`FALSE`の場合**のみ**、`FALSE`を返す。
+::::
+
+```{r}
+any(summary(sample_fit_1)$coef[-1, 4] <= 0.05)
+```
+
+今回はすべての *p* 値が0.05以上だという結果が得られた。つまり、処置群1〜4すべて統計的有意な処置効果は確認できず、仮説は支持されなかった（棄却されたわけではない）。
+
+この作業を1,000回繰り返してみよう。ここではTreatment 1から4までの各処置効果の *p* 値も別途格納しておこう。
+
+```{r}
+trials     <- 1000 # 試行回数
+result_vec <- rep(NA, 1000) # 結果を格納する空ベクトル
+t1_vec <- rep(NA, 1000) # 処置群1の処置効果のp値を格納する空ベクトル
+t2_vec <- rep(NA, 1000) # 処置群2の処置効果のp値を格納する空ベクトル
+t3_vec <- rep(NA, 1000) # 処置群3の処置効果のp値を格納する空ベクトル
+t4_vec <- rep(NA, 1000) # 処置群4の処置効果のp値を格納する空ベクトル
+
+for (i in 1:trials) {
+  temp_data <- slice_sample(pop_df, n = 500, replace = TRUE)
+  temp_fit  <- lm(y ~ treat, data = temp_data)
+  t1_vec[i] <- summary(temp_fit)$coefficients[2, 4] # 処置群1の処置効果のp値
+  t2_vec[i] <- summary(temp_fit)$coefficients[3, 4] # 処置群2の処置効果のp値
+  t3_vec[i] <- summary(temp_fit)$coefficients[4, 4] # 処置群3の処置効果のp値
+  t4_vec[i] <- summary(temp_fit)$coefficients[5, 4] # 処置群4の処置効果のp値
+  result_vec[i] <- any(summary(temp_fit)$coefficients[-1, 4] <= 0.05)
+}
+```
+
+まず、それぞれの処置に統計的有意な処置効果が確認できた割合を確認してみよう。
+
+```{r}
+table(t1_vec <= 0.05)
+```
+
+計`r trials`回の施行中、`r table(t1_vec <= 0.05)[2]`回の試行に統計的有意な処置効果が確認された。処置群1の真の処置効果は0であるが、約5%の割合で統計的有意な処置効果が得られてしまう。これは処置群2、3、4でも確認できる（実際に確認してみよう）。
+
+しかし、我々は一つでも統計的有意な処置効果が得られたら「仮説は支持された」と判定する^[どういう時に「仮説は支持された」と判定するかをあらかじめ明確にしておく必要がある。]。その結果は`result_vec`に格納されている。
+
+```{r}
+table(result_vec)
+```
+
+計`r trials`回の試行中、`r table(result_vec)[2]`回の試行において一つ以上の統計的有意な処置効果が確認され、仮説が支持される結果が得られた。真の処置効果は0であるが、このように処置効果が統計的有意に0でない状況が約20%の割合で出現することを意味する。この20%ということは我々が統計的有意性検定に使用した基準（$\alpha$）に比較回数の積である（後述するが、厳密には積ではない）。今回は$\alpha$ = 0.05、比較回数は4回^[Control vs. Treatment 1 / Control vs. Treatment 2 / Control vs. Treatment 3 / Control vs. Treatment 4]だから、0.05 $\times$ 4 = 0.2である。厳密には20%ではないが（後述）、重要なのは比較の回数と間違った判定を下ろす可能性は比例することだ。
+
+:::: {.callout-important title="参考）厳密には20%じゃない!"}
+　今回の例でいると、仮説が支持される結果が得られる割合の期待値は20%でなく、厳密には約18.5%である。計算式は1 - (1 - $\alpha$)<sup>比較回数</sup>であり、今回は1 - (1 - 0.05)<sup>4</sup> $\simeq$ 0.185になる。比較回数が2回なら約9.75%、3回なら約14.3%、5回なら22.6%であり、本文に登場した積を使った計算はあくまでも簡易的な計算方法である。
+::::
+
+## ボンフェローニ補正をしてみよう
+
+4回の比較を繰り返す場合、1回のみの比較に比べ、「仮説は支持された（帰無仮説は棄却された）」と判定される確率が約4倍高くなることが分かった。これを補正するためにはどうすれば良いだろうか。様々な手法が提唱されているが、ここでは最も簡単な方法であるボンフェローニ補正（Bonferroni correction）を施してみよう。ボンフェローニ補正は2つの考え方がある。比較回数を *m* とした場合、
+
+- $\alpha$を$\frac{1}{\mathsfit{m}}$にし、 *p*  $\leq \alpha$の場合、「5%水準で統計的有意である」と判定する。
+- *p* 値を *m* 倍し、 *p*  $\leq \alpha$の場合、「5%水準で統計的有意である」と判定する。
+
+2つは同じことであるが、ここでは両方やってみよう。まず、$\alpha$を$\frac{1}{\mathsfit{m}}$にする方法である。今回の例だと、$\alpha$ = 0.0125を採用し、 *p* 値が0.0125以下であれば「5%水準で統計的に有意である」と解釈する。処置群1〜4の処置効果の推定値の *p* 値は`t1_vec`、`t2_vec`、`t3_vec`、`t4_vec`に格納されている。一つでも *p* 値が0.0125以下であれば仮説は支持されたと解釈されるため、ペアごとに最も小さい *p* 値のみを抽出してみよう。
+
+:::: {.callout-important title="参考）`pmin()`関数"}
+　`pmin()`は2つ以上の同じ長さのベクトルを受け付け、ペアごとに最小値を返す関数である。例えば、`x`の中身が1、3、5で、`y`の中身が2、2、4の場合、`pmax(x, y)`のようにコードを書く。まず、`x`の1番目の要素（=1）と`y`の1番目の要素（=2）を比較し、最小値である1を返す。続いて、`x`の2番目の要素（=3）と`y`の2番目の要素（=2）を比較し、最小値である1を返す。最後に、`x`の3番目の要素（=5）と`y`の3番目の要素（=4）を比較し、最小値である4を返す。
+::::
+
+```{r}
+minimum_p <- pmin(t1_vec, t2_vec, t3_vec, t4_vec)
+
+head(minimum_p, n = 10)
+```
+
+各試行における最も小さい *p* 値が格納されていることが分かる。続いて、`table()`関数で *p* 値が0.0125以下の試行数を出力してみる。
+
+```{r}
+table(minimum_p <= 0.0125)
+```
+
+1,000回の試行中、`r table(minimum_p <= 0.05)[2]`回の試行において、1つ以上の処置効果が統計的有意と判定され、仮説は支持されたと解釈される。
+
+続いて、 *p* 値を *m* 倍にするやりかたでやってみよう。先ほどのコードと同じだが、`t1_vec`、...、`t4_vec`を4倍にしておく必要がある。
+
+```{r}
+t1_vec_bc <- t1_vec * 4
+t2_vec_bc <- t2_vec * 4
+t3_vec_bc <- t3_vec * 4
+t4_vec_bc <- t4_vec * 4
+
+minimum_p <- pmin(t1_vec_bc, t2_vec_bc, t3_vec_bc, t4_vec_bc)
+head(minimum_p, n = 10)
+```
+
+*p* 値を *m* 倍したのであれば、判定の基準は$\alpha$のままで良い。
+
+```{r}
+table(minimum_p <= 0.05)
+```
+
+同じ結果が得られた。今回は約`r round(table(minimum_p <= 0.05)[2] / trials * 100, 1)`%になったが、試行回数を増やせば増やすほど5%へ近づくと期待される。
+
+多重比較の問題を補正する方法はボンフェローニ法以外にもホルム法（Holm）、BH法（Benjamini-Hochberg）、ダネット検定（Dunnett's test）などがあり、実は今回のケースだと、複数に比較にわたって一つの統制群が共有されているため、ダネット検定が最も適切と考えられる。ただし、ボンフェローニ補正は他の補正法よりも保守的、つまり統計的有意な結果が得られにくく、分析する側からみれば最も都合の悪い手法だから、ボンフェローニ補正を使えば文句は言われないだろう。
+
+:::: {.callout-important title="参考）厳密には5%じゃない!"}
+　今回の例でいると、ボンフェローニ補正後、仮説が支持される結果が得られる割合の期待値は5%でなく、厳密には約4.9%である。計算式は1 - (1 - $\frac{\alpha}{\textsf{比較回数}}$)<sup>比較回数</sup>であり、今回は1 - (1 - 0.0125)<sup>4</sup> $\simeq$ 0.049、つまり約4.9%になる。
+::::
+
+:::: {.callout-note collapse=true title="参考）ダネット検定のやりかた"}
+　ダネット検定をRで実装するには{DescTools}か{multcomp}パッケージを使用する。{DescTools}の`DunnettTest()`関数は`lm()`関数と使い方が似ているため、ここでは{DescTools}を使用した例を紹介する。`lm()`関数とは違って、`control`引数を使って統制群のラベルを指定することができる。
+
+```{r}
+pacman::p_load(DescTools)
+sample_500 <- slice_sample(pop_df, n = 500, replace = TRUE)
+summary(lm(y ~ treat, data = sample_500))
+DunnettTest(y ~ treat, data = sample_500, control = "Control")
+```
+
+　通常の線形回帰モデルから得られた*p*値よりも大きい*p*値が得られたことが分かる。
+::::
+
+<!---
+`pairwise.t.test(y, treatment, p.adjust.method = "bonferroni")`
+
+もし`treatment`が5グループなら比較回数は10通りであり、回帰分析のp値は`pairwise.t.test(y, treatment, p.adjust.method = "bonferroni")`の10分の1
+
+```{r}
+#| eval: false
+mc_df <- tibble(treatment = rep(LETTERS[1:5], each = 100),
+                y         = rep(1:100, 5))
+
+mc_df |> 
+  reframe(mean   = mean(y),
+          median = median(y),
+          sd     = sd(y),
+          min    = min(y),
+          max    = max(y),
+          .by    = treatment)
+
+mc_sim <- function(n = 100) {
+  temp_df <- mc_df |> 
+    slice_sample(n = n)
+  
+  temp_t <- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = "none")
+  temp_p <- temp_t$p.value
+  temp_p <- as.vector(temp_p)
+  
+  sum(temp_p <= 0.05, na.rm = TRUE)
+}
+
+mc_result <- replicate(10000, mc_sim())
+
+table(mc_result)
+
+mc_result |> sum()
+
+mc_sim_bf <- function(n = 100) {
+  temp_df <- mc_df |> 
+    slice_sample(n = n)
+  
+  temp_t <- pairwise.t.test(temp_df$y, temp_df$treatment, p.adjust.method = "bonferroni")
+  temp_p <- temp_t$p.value
+  temp_p <- as.vector(temp_p)
+  
+  sum(temp_p <= 0.05, na.rm = TRUE)
+}
+
+mc_result_bf <- replicate(10000, mc_sim_bf())
+
+table(mc_result_bf)
+
+mc_result_bf |> sum()
+```
+
+1. 母集団`p`からサンプル`s`を抽出
+1. `s`を3つのグループに分割（a、b、c）
+1. グループ間の差は理論上0
+1. グループ間の差を回帰分析で推定（ベースラインはa）
+1. a vs. b、a vs. cの計2回の比較が行われる
+1. 以上の作業を複数回繰り返す
+1. 一つでもp値が0.05を下回るケースは全施行の中、約1割
+1. 閾値を比較回数である2で割ったら0.25となり、0.25を基準とすると約0.5割が統計的有意に
+
+```{r}
+#| eval: false
+set.seed(19861008)
+p <- rnorm(10000, 0, 1)
+result <- data.frame(id = NA, b = NA, c = NA)
+
+for (i in 1:10000) {
+  s <- sample(p, 1000)
+  names(s) <- sample(letters[1:3], 1000, replace = TRUE)
+  pvalue <- enframe(s) |> 
+    lm(value ~ name, data = _) |> 
+    broom::tidy() |> 
+    filter(term != "(Intercept)") |> 
+    pull(p.value)
+  
+  result[i, ] <- c(1, pvalue)
+  
+}
+
+table(result$b <= 0.05)
+table(result$c <= 0.05)
+
+result |> 
+  mutate(b2 = if_else(b <= 0.05, 1, 0),
+         c2 = if_else(c <= 0.05, 1, 0)) |> 
+  mutate(p = if_else(b2 + c2 >= 1, 1, 0)) |> 
+  pull(p) |> table()
+  
+result |> 
+  mutate(b2 = if_else(b <= 0.05 / 2, 1, 0),
+         c2 = if_else(c <= 0.05 / 2, 1, 0)) |> 
+  mutate(p = if_else(b2 + c2 >= 1, 1, 0)) |> 
+  pull(p) |> table()
+```
+--->

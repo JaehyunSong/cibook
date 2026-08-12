@@ -1,0 +1,386 @@
+---
+subtitle: "3/ 内生性"
+modified-date: today
+format: 
+  revealjs:
+    footer: "内生性"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse,
+               gt,
+               ggdag,
+               dagitty,
+               ggforce)
+```
+
+{{< include _common.qmd >}}
+
+# **1** 内生性
+
+## 割当メカニズム
+
+[割当メカニズム]{.strong}[（assignment mechanism）]{.small}：個体$i$が処置を受けるメカニズム
+
+- 以下は処置有無（**D**）が3つの変数（**X**、**Z**）から規定される例
+   - 例）GPAが高い学生が宋さんの授業を履修する
+   - 例）単位がやばい学生が宋さんの授業を履修する
+   - 例）やる気がある学生が宋さんの授業を履修するなど
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+dagify(Y ~ D + e,
+       D ~ X1 + X2,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0.5, e = 2, X1 = -1, X2 = -1),
+                     y = c(Y = 0, D = 0, e = 2, X1 = 1, X2 = -1))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "X", "Z", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-1.15, 2.15), ylim = c(-1.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+## 内生性
+
+[内生性]{.strong}[（endogeneity）]{.small}：処置変数と誤差項間に相関が存在する状態（$\Leftrightarrow$[外生性]{.strong}）
+
+- 内生性が存在する場合、処置変数は[内生変数]{.alert}（$\Leftrightarrow$[外生変数]{.alert}）と呼ばれる
+- 処置変数が内生変数なら...
+   - 処置効果の推定量は一致[（consistent）]{.small}推定量でも、不偏[（unbiased）]{.small}推定量でもなくなる
+
+```{r}
+#| layout: [[-5, 40, -1, 40, -5]]
+#| fig-width: 4
+#| fig-height: 3
+#| fig-subcap: 
+#|    - "Dは外生変数"
+#|    - "Dは内生変数"
+dagify(Y ~ D + e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+
+dagify(Y ~ D + e,
+       D ~ e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+## 参考：誤差
+
+例）2024年衆院選の投票率：53.8%（真の値 = パラメーター）
+
+|調査|$n$|回答者の投票率<br/>[（推定量）]{.small}|真の投票率<br/>[（パラメーター）]{.small}|誤差|
+|:---|---:|---:|---:|---:|
+|調査A|100|0.490|0.538|0.048|
+|調査B|1,000|0.561|0.538|0.023|
+|調査C|2,000|0.543|0.538|0.005|
+
+<!--|調査B|500|0.568|0.030|-->
+
+<center>
+<br/> 推定量 = 真の値 + [誤差]{.strong} <br/>
+</center>
+
+- [誤差]{.strong}[（error）]{.small}：推定量とパラメーター[（母数; 真の値）]{.small}間のズレ
+   - 誤差がぴったり0になることはほぼない
+   - サンプルが母集団から無作為抽出されたのであれば、$n$が大きくなるほど誤差は0へ収斂する <br/> $\Rightarrow$ [大数の法則]{.strong}[（Law of large numbers; LLM）]{.small} <br/> $\Rightarrow$ 標本平均[（sample mean）]{.small}は母平均[（population mean）]{.small}一致推定量[（consistent estimator）]{.small}
+<!-- - ある統計量が[一致推定量]{.alert}であれば、$n$を大きくすることでよりパラメーターに近い値が得られる -->
+
+## 参考：バイアス
+
+[バイアス]{.strong}[（偏り; bias）]{.small}：推定量の期待値とパラメーター間のずれ
+
+- $\mathbb{E}[\hat{\theta}] - \theta = 0$の場合、$\hat{\theta}$は$\theta$の[不偏推定量]{.alert}[（unbiased estimator）]{.small}
+
+:::: {.columns}
+::: {.column width=50%}
+
+: バイアス**なし**の例
+
+|調査|$n$|投票率|誤差|
+|:---|---:|---:|---:|
+|調査A|3,000|0.518|-0.020|
+|調査B|1,000|0.514|-0.024|
+|調査C|1,500|0.599|0.061|
+|調査D|2,000|0.547|0.009|
+|...|...|...|...|
+|調査$\infty$|2,400|0.567|0.029|
+|平均|||[0.000]{.strong}|
+:::
+
+::: {.column width=50%}
+
+: バイアス**あり**の例
+
+|調査|$n$|投票率|誤差|
+|:---|---:|---:|---:|
+|調査A|3,000|0.635|0.097|
+|調査B|1,000|0.530|-0.008|
+|調査C|1,500|0.594|0.056|
+|調査D|2,000|0.603|0.065|
+|...|...|...|...|
+|調査$\infty$|2,400|0.585|0.047|
+|平均|||[0.050]{.strong}|
+:::
+::::
+
+## 参考：バイアス $\neq$ 誤差
+
+- 誤差は観測値とパラメーター間のズレだから、一つひとつの[個体]{.strong}が持つ
+   - 誤差項は特定の確率分布に従うと仮定するケースが多い（平均0の正規分布など）
+- バイアスは個体でなく、特定の[推定量]{.strong}が持つ性質
+   - バイアスが大きい統計量でもそれを構成する一部の個体の誤差は小さい可能性もある
+
+```{r}
+#| layout: [[30,-5,30,-5,30]]
+#| fig-width: 5
+#| fig-height: 5
+#| fig-subcap: 
+#|    - "バイアス小"
+#|    - "バイアス大"
+#|    - "バイアス小"
+set.seed(19861008)
+tibble(x = rnorm(10, 0, 0.75),
+       y = rnorm(10, 0, 0.75)) |> 
+  ggplot() +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 5), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 4), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), fill = "red") +
+  annotate("point", x = 0, y = 0, color = "yellow", size = 5) +
+  geom_point(aes(x = x, y = y), shape = 21, color = "white", fill = "black", size = 5) +
+  coord_fixed() +
+  theme_void()
+
+tibble(x = rnorm(10, 2.5, 0.25),
+       y = rnorm(10, 2.5, 0.25)) |> 
+  ggplot() +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 5), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 4), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), fill = "red") +
+  annotate("point", x = 0, y = 0, color = "yellow", size = 5) +
+  geom_point(aes(x = x, y = y), shape = 21, color = "white", fill = "black", size = 5) +
+  coord_fixed() +
+  theme_void()
+
+tibble(x = rnorm(10, 0, 1.5),
+       y = rnorm(10, 0, 1.5)) |> 
+  ggplot() +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 5), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 4), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), fill = "red") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), fill = "white") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), fill = "red") +
+  annotate("point", x = 0, y = 0, color = "yellow", size = 5) +
+  geom_point(aes(x = x, y = y), shape = 21, color = "white", fill = "black", size = 5) +
+  coord_fixed() +
+  theme_void()
+```
+
+## 内生性の発生メカニズム
+
+- 左の図）割当メカニズム上に存在する変数[（XとZ）]{.small}が結果変数にも影響を与えている[（X）]{.small}
+- 右の図）割当メカニズム上に存在する変数が観察されず、誤差項（$\varepsilon$）の一部を占めている[^sb-omit]
+   - Xが誤差項に含まれることによって誤差項と処置変数間の相関が発生
+
+[^sb-omit]: もし割当メカニズム上に存在する変数すべてが観察されている場合、適切なモデリングを通じて信頼できる因果効果が推定できるようになる。詳細は今後の講義で解説する。
+
+```{r}
+#| layout: [[45, -10, 45]]
+#| fig-width: 5
+#| fig-height: 3
+dagify(Y ~ D + X1 + e,
+       D ~ X1 + X2,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2, X1 = 0, X2 = 1),
+                     y = c(Y = 0, D = 0, e = 2, X1 = 2, X2 = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "X", "Z", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.25, 2.25), ylim = c(-0.25, 2.5)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+
+tibble(x = c(0, 2, 1),
+       y = c(0, 0, 1.8)) |> 
+  ggplot() +
+  geom_point(aes(x = x, y = y), size = 20) +
+  annotate("text", x = 0, y = 0, label = "D", color = "white", size = 10) +
+  annotate("text", x = 2, y = 0, label = "Y", color = "white", size = 10) +
+  annotate("point", x = 1, y = 1.8, size = 30) +
+  annotate("text", x = 1, y = 2, label = expression(epsilon), color = "white", size = 10) +
+  annotate("point", x = 0.9, y = 1.7, size = 10, color = "white") +
+  annotate("point", x = 1.1, y = 1.7, size = 10, color = "white") +
+  annotate("text", x = 0.9, y = 1.7, label = "X", size = 5) +
+  annotate("text", x = 1.1, y = 1.7, label = "Z", size = 5) +
+  annotate("segment", x = 0.25, xend = 1.75, y = 0, yend = 0,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 1.2, xend = 1.85, y = 1.45, yend = 0.35,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 0.8, xend = 0.15, y = 1.45, yend = 0.35,
+           arrow = arrow(type = "closed")) +
+  coord_cartesian(xlim = c(-0.25, 2.25), ylim = c(-0.25, 2.5)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+## 内生性の原因
+
+処置変数と誤差項間の相関関係（内生性）は様々な理由から発生する
+
+- [セレクション・バイアス]{.strong}[（selection bias）]{.small}
+   - [セルフ]{.alert}セレクション・バイアス、[サンプル]{.alert}セレクション・バイアスなど
+- 欠落変数バイアス
+- 逆の因果
+- 同時性
+- 測定誤差など
+
+社会科学における因果推論上に存在する内生性の多くは[セレクション・バイアス]{.strong}が原因[^sb-endogeneity]
+
+[^sb-endogeneity]: 処置変数と誤差項間の相関という意味では同じであるが、その相関が生じる原因には様々な理由がある。
+
+# **2** セレクション・バイアス
+
+## セレクション・バイアスの定式化
+
+- セレクション・バイアスが存在する場合、推定された因果効果（処置効果）にはセレクションによりバイアスを含む
+   - 推定された処置効果 = 真の処置効果 [+ セレクション・バイアス]{.alert}
+- 推定対象がATTかATCかによって想定されるセレクション・バイアスが異なる
+   - ATT：処置群のおける処置効果（$\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]$）
+   - ATC：統制群のおける処置効果（$\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]$）
+
+## ATTとセレクション・バイアス
+
+もともと優秀な人が宋さんの授業を取る（[セルフ]{.alert}セレクション）
+
+- $\mathbb{E}[Y_i(0) | D_i = 1]$：処置群がもし処置を受けなかった場合の結果変数の期待値
+- $\mathbb{E}[Y_i(0) | D_i = 0]$：統制群における結果変数の期待値（観察可能）
+
+$$
+\begin{align}
+& \mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] \textcolor{red}{- \mathbb{E}[Y_i(0) | D_i = 1] + \mathbb{E}[Y_i(0) | D_i = 1]} - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]}_{\textsf{ATT}} + \underbrace{\mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]}_{\textsf{selection bias}}
+\end{align}
+$$
+
+## ATCとセレクション・バイアス
+
+授業の効果が高そうな人が宋さんの授業を取る（[最適化]{.alert}セレクション）
+
+- $\mathbb{E}[Y_i(1) | D_i = 1]$：処置群における結果変数の期待値（観察可能）
+- $\mathbb{E}[Y_i(1) | D_i = 0]$：統制群がもし処置を受けたら場合の結果変数の期待値
+
+$$
+\begin{align}
+& \mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \mathbb{E}[Y_i(1) | D_i = 1] \textcolor{red}{- \mathbb{E}[Y_i(1) | D_i = 0] + \mathbb{E}[Y_i(1) | D_i = 0]} - \mathbb{E}[Y_i(0) | D_i = 0] \\
+= & \underbrace{\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(1) | D_i = 0]}_{\textsf{selection bias}} + \underbrace{\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]}_{\textsf{ATC}}
+\end{align}
+$$
+
+## ATT、ATCの識別条件
+
+以下の2つの条件が**すべて**満たされる場合、ATEが推定可能
+
+- ATTの識別条件：
+   - $\mathbb{E}[Y_i(0) | D_i = 1] = \mathbb{E}[Y_i(0) | D_i = 0]$
+   - この場合、ATT = $\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]$
+- ATCの識別条件：
+   - $\mathbb{E}[Y_i(1) | D_i = 1] = \mathbb{E}[Y_i(1) | D_i = 0]$
+   - この場合、ATC = $\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]$
+- これらは[経験的に観察できず、理論的に説得する]{.strong}必要がある
+   - 前者の方が説得しやすいケースが多いので、ATTを推定するケースが多い
+   - 「優秀な人が宋さんの授業を取る」と「授業の効果が高そうな人が宋さんの授業を取る」
+
+## その他のセレクションの例
+
+<!--
+ここは世論調査における投票率のギャップを使用?
+-->
+
+手元のサンプルが「授業効果が高そうな学生[（$i \in \{1, 2, 5\}$）]{.small}」だけなら...?
+
+- 真の処置効果は0だが、この場合、処置効果は必ず正になる
+- $\Rightarrow$ 偏ったサンプリングによるバイアス（サンプルセレクション・バイアス）
+
+|$i$|$Y_i(0)$|$Y_i(1)$|ITE|
+|:---:|---:|---:|---:|
+|[1]{.strong}|500|550|50|
+|[2]{.strong}|200|300|100|
+|3|800|750|-50|
+|4|550|450|-100|
+|[5]{.strong}|700|750|50|
+|6|600|550|-50|
+|平均|||0|
+
+<!--
+|[**4**]{.alert}|300|400|100|
+|5|300|200|-100|
+|[**8**]{.alert}|400|600|200|
+|9|500|300|-200|
+-->
+
+## セレクションへの対処
+
+- [無作為抽出]{.strong}[（random sampling）]{.small}
+   - サンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合
+- [ランダム割り当て]{.strong}[（無作為割当; random assignment）]{.small}
+   - あらゆる内生性を（理論上）完全に除去できる[因果推論の王道]{.alert}
+- 統計的因果推論[（statistical causal inference）]{.small}
+   - [共変量調整]{.strong}
+   - [自然実験]{.strong}、疑似実験など

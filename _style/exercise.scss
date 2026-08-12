@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&family=Noto+Sans+JP:wght@100..900&display=swap');
+
+/* ==========================================
+   SCSS: DEFAULTS (変数の定義)
+   ========================================== */
+/*-- scss:defaults --*/
+
+// Typography
+$font-family-sans-serif: "Noto Sans Japanese", Helvetica, sans-serif !default;
+$font-family-monospace:	"M PLUS 1 Code", monospace !default;
+$font-weight-base: 400;
+$headings-font-weight: 600;
+
+// Colors
+$font-color: #131516 !default;
+$background: #F0F5F9 !default;
+$accent: #0072BB !default;
+$accent2: #E82825 !default;
+$presentation-heading-color: $font-color !default;
+$body-color: $font-color !default;
+$link-color: $accent !default;
+$selection-bg: #26351c !default;
+
+// Assets
+$right-arrow: "\2981";
+
+/* ==========================================
+   SCSS: RULES (スタイルの適用)
+   ========================================== */
+/*-- scss:rules --*/
+
+figure > figcaption {
+  text-align: center;
+}
+
+.fg {
+  color: var(--col, black);
+}
+
+.bg {
+  background-color: var(--col, #fff);
+  padding: 0.1em;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+a {
+   text-decoration: none;
+}
+
+  div.sourceCode {
+    border-radius: 0px !important;
+    border-color: #EBEEF1 !important;
+  }
+
+  div.callout {
+    border-radius: 0px !important;
+  }
+  
+  div.callout.callout-style-default {
+    border: 1px solid #acacac;
+  }
+  
+  div.callout.callout-note {
+    border-color: #2b83ba;
+  }
+  
+  div.callout.callout-warning {
+    border-color: #fdae61;
+  }
+  
+  div.callout.callout-important {
+    border-color: #d7191c;
+  }
+  
+  div.callout.callout-tip {
+    border-color: #abdda4;
+  }
+  
+  div.callout.callout-caution {
+    border-color: #ffffbf;
+  }

@@ -1,0 +1,887 @@
+---
+title: "傾向スコア"
+modified-date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 1
+metadata-files: 
+  - "_style/exercise.yml"
+---
+
+{{< revealjs file="ps_slide.html" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}
+
+# セットアップ
+
+　今回の実習で使用するパッケージを読み込んでおく。
+
+```{r}
+pacman::p_load(
+  tidyverse,     # Rの必須パッケージ
+  ggbeeswarm,    # ビースウォーム図の作成
+  broom,         # 推定結果をdata.frameい
+  modelsummary,  # 推定結果の比較 / 記述統計表の作成
+  MatchIt,       # 層化を使った処置効果の推定
+  WeightIt,      # 重み付けを使った処置効果の推定
+  cobalt,        # バランスチェック用
+  estimatr,      # 頑健な標準誤差を計算
+  marginaleffects# G-computation
+)
+```
+
+{{< include _common.qmd >}}
+
+　今回使用するデータはLaLonde（1986）[^lalonde]、およびDehejia and Wahba（1999）[^dehejia_wahba]に使用されたデータセットだ。統計的因果推論の界隈では非常に有名なデータセットで、通常「ラ・ロンド（lalonde）データセット」と呼ばれる。このデータセットはいくつかのRパッケージのサンプルデータとして提供されているが、今回使用する{MatchIt}と{cobalt}にもこのlalondeデータセットが含まれている。パッケージに含まれるデータセットを読み込む際は`data("データセット名", package = "パッケージ名")`と入力する。今回は{cobalt}パッケージのlalondeを読み込む（{MatchIt}が提供するものと100%同じものだ）。
+
+[^lalonde]: LaLonde, Robert J.. 1986. "[Evaluating the Econometric Evaluations of Training Programs](https://www.jstor.org/stable/1806062)," *American Economic Review*, 76(4): 604-620.
+
+[^dehejia_wahba]: Dehejia, R., and Wahba, S. (1999), "[Causal Effects in Nonexperimental Studies: Reevaluating the Evaluation of Training Programs](https://doi.org/10.2307/2669919)," *Journal of the American Statistical Association*, 94: 1053-1062.
+
+```{r}
+data("lalonde", package = "cobalt")
+```
+
+　読み込んでも何かの変化が生じるわけではないが、`ls()`を入力してみると作業環境内に`lalonde`という名前のデータセットがいつの間にか追加されていることが確認できる。`lalonde`の中身を確認してみよう。普通に`lalonde`だけ入力すると、先頭100行が出力されるが、データの中身を確認するのに100行も要らない。`head()`関数で最初の6行のみ出力してみよう。
+
+```{r}
+head(lalonde)
+```
+
+　これからこのデータセットの名前を何回も打つことになるので、`df`という新しい名前のオブジェクトにコピーしておこう。また、本来はデータフレーム形式で提供されているが、より見栄の良いティブル形式^[{tibble}パッケージが必要だが、{tidyverse}のコア・パッケージだから自動的に読み込まれているはず。あらゆる面でデータフレームの上位互換でありながら、使い方はデータフレームも99.9%同じだ。]に変換しておこう。続いて`df`を中身を確認してみよう。データフレームでなくティブル型なので、`head()`を使わなくても先頭10行のみ出力される。
+
+```{r}
+df <- as_tibble(lalonde)
+
+df
+```
+
+　本データセットはアメリカ労働省や民間財団が1975年から1979年^[このデータセットは1978年までの内容になっている]まで提供した職業訓練プログラム（National Supported Work Demonstration; *NSW*）の効果検証のためのデータだ。このプログラムの詳細はLaLonde（1986）[^lalonde]、およびDehejia and Wahba（1999）[^dehejia_wahba]を参照されたい。
+
+|変数名|説明|備考|
+|:---|:---|:---|
+|`treat`|職業訓練|1 = 職業訓練履修, 0 = 職業訓練未修;**処置変数**|
+|`re78`|1978年の年収|米ドル; **結果変数**|
+|`age`|年齢|歳|
+|`education`|教育年数|年|
+|`race`|人種|black = 黒人, hispanic = ヒスパニック,<br/>white = 白人|
+|`married`|婚姻状態|1 = 既婚, 0 = 既婚以外|
+|`nodegree`|高校学位（diploma）の有無|1 = 高校学位なし, 0 = 高校学位あり|
+|`re74`|1974年の年収|米ドル|
+|`re75`|1975年の年収|米ドル|
+
+: {tbl-colwidths="[15,35,50]"}
+
+　ここでは「職業訓練プラグラムに参加した人はそうでない人に比べ、年収が高いか」が問いである。したがって、処置変数は`treat`（職業訓練プログラムへの参加有無）、結果変数は`re78`（1978年の年収）となる。当然ながら訓練に参加した人々とそうでない人々間の単純比較は意味がない。なぜなら「元の収入が低い人が職業訓練プログラムに参加する傾向」があるからだ。実際にこのプログラムに参加した人々の1978年の平均年収は`r round(mean(df$re78[df$treat == 1]), 0)`ドルで、参加しなかった人々のそれである`r round(mean(df$re78[df$treat == 0]), 0)`に比べると、なんと`r round(abs(mean(df$re78[df$treat == 1]) - mean(df$re78[df$treat == 0])), 0)`ドルも低い。しかし、この結果だけで「職業訓練プログラムは有害だ」結論づけることはできないだろう。もし、この職業訓練プログラムがなかったら、その差は`r round(abs(mean(df$re78[df$treat == 1]) - mean(df$re78[df$treat == 0])), 0)`ドルでなく、1000ドル、2000ドルだったかも知れないからだ。
+
+　この職業訓練プログラムの効果を検証するためには、ちゃんと似たような人同士で比較する必要がありそうだ。そのための手法の一つが傾向スコアを使った処置効果の推定だ。これは職業訓練に参加した人のグループとしなかったグループの性質を重み付けや層化による条件付けで均質に、つまり2つの集団を比較可能（comparable）にする手法だ。
+
+# 記述統計
+
+　まず、記述統計から確認しよう。「[Rの復習](r.qmd)」で紹介した{summarytools}を使えばカスタマイズの自由度の高い記述統計表が作成できるが、ここでは推定結果を表形式で出力する{modelsummary}パッケージが提供する`datasummary_skim()`関数を使ってみよう。カスタマイズの自由度はやや低いものの、普段（?）使う分には十分な程度の記述統計表が簡単に作れる。使い方は簡単で、`datasummary_skim()`関数にデータフレームのオブジェクト名を指定するだけだ。
+
+　{summarytools}の`descr()`は数値型変数の記述統計量のみ出力すため、今回の`race`変数のような名目変数は事前にダミー変数に変換しておく必要があったが、`datasummary_skim()`は名目変数に対して別途の度数分布表を作成してくれるすぐれものだ。ただ、度数分布表であり、平均値や標準偏差などは出力されないため、こちらが必要なら{summarytools}の`descr()`同様、`race`変数を予めダミー変数に変換しておく必要がある。
+
+```{r}
+datasummary_skim(df)
+```
+
+　左から固有値（Unique）^[線形代数における固有値（eigen value）ではなく、重複のない固有の値（unique value）の数を意味する。たとえば、`treat`変数のUniqueの値が2なら、これは`treat`変数が2つの値（ここでは0と1）だけで構成されていることを意味する。]、欠損値を含む個体の割合、平均値、標準偏差、最小値、中央値、最大値、分布のヒストグラムである。表の下段には名目変数の度数分布表が続いている。
+
+　まず、生の状態におけるバランスを確認してみよう。「[Rの復習](r.qmd)」で紹介した標準化平均差は後ほど使うとし、ここでは各変数のグループ間比較だけしてみよう。使用する関数は{modelsummary}の`datasummary_balance()`関数だ。第1引数はformulaで`. ~ 処置変数名`、第2引数（`data`）にはデータフレームのオブジェクト名を指定する。
+
+```{r}
+#| label: tbl-blcchk-0
+#| tbl-cap: バランスチェック（簡易版）
+datasummary_balance(. ~ treat, data = df)
+```
+
+　年齢の場合、約2.2歳若く、既婚者の割合も30ポイント少ない。何より、職業訓練が始まる前の年収（`re74`と`re75`）は非常に大きい差がある。また、職業訓練に参加した人の多くが黒人であることも確認できる。この結果から、何の補正や調整もなしに処置群と統制群を比較することは適切ではないことが分かる。
+
+# 傾向スコアの作成
+
+　それでは処置効果を推定する前に傾向スコアを作っておこう。傾向スコアマッチングであれ、層化であれ、重み付けであれ、各個体の傾向スコアがないと始まらない。傾向スコアの計算方法はいくつかあるが、ここでは最もポピュラーなやり方であるロジスティック回帰分析を使用する。使用する関数は**一般化**（*g*eneralized）線形モデルの推定に使われる`glm()`で、線形回帰分析に使用した`lm()`の使い方とあまり変わらない。しかし、`glm()`関数には`family`引数が必要である。ロジスティック回帰分析の場合、`binomial("logit")`を指定する。この`family`関数の値によって、ロジスティック回帰分析、プロビット回帰分析、ポアソン回帰分析など様々なモデルの推定が出来るようになる。一般化線形モデルの仕組みについては[久保（2012）](https://amzn.asia/d/07pWl4Md)^[久保拓弥. 2012. 『[データ解析のための統計モデリング入門---化線形モデル・階層ベイズモデル・MCMC](https://amzn.asia/d/07pWl4Md)』岩波書店.]を参照されたい。
+
+　回帰式（formula）の左辺には処置変数、右辺には共変量を指定する。共変量として使うべき変数は（1）処置変数と応答変数両方に影響を与える変数、（2）応答変数に影響を与える変数、（3）処置変数より時間的に先行する変数（pre-treatment variables）であり、使ってはいけない変数は（1）すべての処置後変数（post-treatment variables）と（2）処置変数より時間的に先行する変数のうち、処置変数**のみ**に影響する変数である。ここでは応答変数である1978年の年収（`re78`）以外、すべて右辺に入れておく。推定結果は`ps_fit`と名付けて作業環境に格納しておく。
+
+```{r}
+ps_fit <- glm(treat ~ age + educ + race + married + nodegree + re74 + re75,
+              data = df, family = binomial("logit"))
+summary(ps_fit)
+```
+
+　傾向スコア計算においてこの推定結果はあまり重要ではない。むしろ、後ほど紹介するバランスの改善度合いが重要だろう。
+
+　早速、各個体の傾向スコアを確認してみよう。`predict(推定結果オブジェクト名, type = "response")`か`推定結果オブジェクト名$fitted.value`で各個体の傾向スコアが出力される。サンプルサイズと同じ計614個の傾向スコアが出力される（ここでは最初の20個のみ表示する）。
+
+```{r}
+#| eval: false
+predict(ps_fit, type = "response") # ps_fit$fitted.values も可
+```
+
+```{r}
+#| echo: false
+predict(ps_fit, type = "response") |> head(20)
+```
+
+　この傾向スコアをデータ新しい列として加えておく（列名は`s`とする）。
+
+```{r}
+df <- df |> 
+  mutate(ps = ps_fit$fitted.values)
+
+df
+```
+
+　傾向スコアの分布を確認する前に、`treat`変数をfactor化し、「統制群」、「処置群」とラベルも付けておこう。今後の可視化などで大活躍するはずだ。
+
+```{r}
+df <- df |> 
+  mutate(treat_name = factor(treat, levels = c(0, 1), labels = c("統制群", "処置群"))) 
+```
+
+　それでは`ps`のヒストグラムを作成してみよう。一つの面（facet）に2つのヒストグラムをオーバーラップさせると図の可読性が落ちるため、今回は処置群と統制群でファセットを分割する。
+
+```{r}
+df |> 
+  ggplot(aes(x = ps)) +
+  geom_histogram(binwidth = 0.05, color = "gray20", fill = "gray90") +
+  labs(x = "傾向スコア", y = "度数") +
+  # axes = "all" を付けると、すべてのファセットに横・縦軸が与えられる
+  # axes = "all"がなかったらどうなるか、各自確認してみよう。
+  facet_wrap(~ treat_name, axes = "all")
+```
+
+　当たり前のことだが、統制群の場合、傾向スコアの低い（= 処置を受ける確率が低い）個体が多く、統制群は傾向スコアの高い（= 処置を受ける可能性が高い）個体が多いことが分かる。これは傾向スコアを含む共変量がバランスしていない可能性が高いことを示唆する。バランスチェックは後ほど解説するとし、ここでは傾向スコアの重要な仮定の一つである共有サポート（common support）について考えてみよう。
+
+# 共有サポートの確認
+
+　共有サポートを確認するには{cobalt}パッケージが便利だが、こういうものに依存しなくてもよく使う{ggplot2}だけで十分だ。まず、{ggplot2}を使った方法を紹介し、つづいて{cobalt}パッケージの使い方を紹介する。
+
+## {ggplot2}のみ使用
+
+　共有サポートを確認する最も簡単な方法は統制群と処置群の傾向スコアの範囲（最小値、最大値）を確認することである。
+
+```{r}
+#| collapse: true
+summary(df$ps[df$treat == 0])
+summary(df$ps[df$treat == 1])
+```
+
+　しかし、この方法は傾向スコアの分布に関するごく一部の情報しか提供しないため、ここではグラフィカルな確認を推奨する。まずは、箱ひげ図から作ってみよう。使用する幾何オブジェクトは`geom_boxplot()`であり、横軸（`x`）には処置変数、縦軸（`y`）には傾向スコアをマッピングする。処置変数として`treat`の代わりに`treat_name`を指定すると横軸が0、1でなく、統制群、処置群と表示され、より読みやすい図になる。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+df |> 
+  ggplot() +
+  geom_boxplot(aes(x = treat_name, y = ps))  +
+  labs(x = "グループ", y = "傾向スコア")
+```
+
+　処置群のサポートがやや広いように見えるが、この程度であれば問題なさそうだ。
+
+　箱ひげ図は分布を素早く確認する時には便利だが、分布を精査するには情報が少なすぎる。箱ひげ図には似ていながら、分布の形まで確認できる図としてバイオリン図（violin plot）やビースウォーム図（beeswarm plot）、レインクラウド図（raincloud plot）等がある。ここでは{ggbeeswarm}パッケージを使用し、ビースウォーム図を作ってみよう。使い方は箱ひげ図のコードの`geom_boxplot()`を`geom_beeswarm()`に替えるだけだが、点が密集している箇所があるので、`alpha`引数で点を半透明にする。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+df |> 
+  ggplot() +
+  geom_beeswarm(aes(x = treat_name, y = ps), alpha = 0.25)  +
+  labs(x = "グループ", y = "傾向スコア")
+```
+
+　鉢（bee）の群れ（swarm）のようなプロットが出来た。箱ひげ図に比べると中央値、第一四分位数などの情報はキャッチできなくなっているが、分布の詳細が分かるメリットがある。傾向スコアの空白（今回の例だと$e(X)$ = 0.3周辺）も確認できる。
+
+　ビースウォーム図は一つ一つの個体がプロットされるため、人によっては情報量が**多すぎる**かも知れない（形がキモいと思う人もいるかも）。こういうケースにはバイオリン図やヒストグラムが良い選択肢になる。ヒストグラムで共有サポートを確認する場合は、図を左右で並べるより女下で並べたほうが比較しやすい。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 8
+#| out-width: 400px
+df |> 
+  ggplot() +
+  geom_histogram(aes(x = ps),
+                 binwidth = 0.05, color = "gray20", fill = "gray90") +
+  # 上のファセットにも横軸を付けるために axes = "all" を指定
+  facet_grid(treat_name ~ ., axes = "all") +
+  labs(x = "グループ", y = "傾向スコア")
+```
+
+　上下のファセットの縦軸のスケールが同じことから、処置群における傾向スコアの分布が確認しにくいなら、ファセット分割関数内に`scale = "free_y"`を2つの縦軸スケール（範囲）を独立させることもできる。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 8
+#| out-width: 400px
+df |> 
+  ggplot() +
+  geom_histogram(aes(x = ps),
+                 binwidth = 0.05, color = "gray20", fill = "gray90") +
+  facet_grid(treat_name ~ ., axes = "all", scale = "free_y") +
+  labs(x = "グループ", y = "傾向スコア")
+```
+
+## {cobalt}パッケージ使用
+
+　続いて、{cobalt}パッケージを使ってみよう。バランスチェックに特化したパッケージであるが、`bal.plot()`は共有サポートの確認にもかなり使える関数だ。第1引数はformulaで`処置変数名 ~ 傾向スコア`、第2引数（`data`）にはデータフレームのオブジェクト名を指定する。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.plot(treat ~ ps, data = df)
+```
+
+　デフォルトではこのように密度曲線が補ユジされる。これでも十分だが、よく使う機能も紹介する。まず、密度曲線でなく、ヒストグラムにしたい場合は`type = "histogram"`を追加すれば良い。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.plot(treat ~ ps, data = df, type = "histogram")
+```
+
+　オーバーラップしたヒストグラムは非常に可読性が悪いが、`mirror = TRUE`を追加すれば解決できる。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.plot(treat ~ ps, data = df, 
+         type = "histogram", mirror = TRUE)
+```
+
+　こ処置群のヒストグラムを上下反転し、統制群のヒストグラムの真下におくことで非常に見やすくなっている。同じ横軸を共有しているため、共有サポートの確認も楽になる。
+
+　最後にこの図をカスタマイズしてみよう。まず、`position = "bottom"`で凡例を図の下段に移動させる。続いて`labs()`関数で軸のタイトルを日本語化し、図のタイトルと色塗り凡例のタイトルを除去する。最後に、`theme()`レイヤーでファセットのタイトル（上の図では"Unadjusted Sample"）も除去する（`theme()`関数の使い方はかなり奥深いので覚える必要はない）。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.plot(treat_name ~ ps, data = df, 
+         type = "histogram", mirror = TRUE, position = "bottom") +
+  labs(x = "傾向スコア", y = "割合", fill = NULL, title = NULL) +
+  theme(strip.text = element_blank())
+```
+
+# 層化
+
+　ここではATTを推定するコードを解説する。{MatchIt}パッケージを使えば簡単だが、まずは分析の仕組みを理解するために別途の専用パッケージを使わないコードを解説してから、{MatchIt}を紹介したい。
+
+## パッケージを使わない例
+
+　層化でATTを推定するためには処置群を*k*等分にする傾向スコアのカットポイント（cutpoint）が必要だ。もし、*k* = 4なら四分位数（quartile）を求めれば良い。四分位数は`quantile()`関数で求められる。
+
+```{r}
+quantile(df$ps)
+```
+
+　`df`の`ps`変数の第一四分位数は`r sprintf("%.3f", quantile(df$ps)[2])`、第二四分位数は`r sprintf("%.3f", quantile(df$ps)[3])`、第三四分位数は`r sprintf("%.3f", quantile(df$ps)[4])`だ。20%ずつ入る五分位数を指定したい場合は、`quantile()`内に`probs = c(0, 0.2, 0.4, 0.6, 0.8, 1)`を追加すする。これはベクトルを昇順（小さいものから大きいものへ）で並べ、左から0%（最初の値）、20%、40%、60%、80%、100%（最後の値）目の数値を返すように指定する関数だ。今回は**処置群の**傾向スコアを5等分する分位数を求め、`cutpoint`に格納してみよう。
+
+```{r}
+cutpoint <- quantile(df$ps[df$treat == 1], probs = c(0, 0.2, 0.4, 0.6, 0.8, 1))
+cutpoint
+```
+
+　傾向スコアが`r sprintf("%.3f", cutpoint[1])`以上、`r sprintf("%.3f", cutpoint[2])`未満の個体数が処置群全体の20%になることを意味する。まとめるの以下のようになる。
+
+|以上|未満|個体数|
+|---:|---:|:---|
+|`r sprintf("%.3f", cutpoint[1])`|`r sprintf("%.3f", cutpoint[2])`|処置群の20%|
+|`r sprintf("%.3f", cutpoint[2])`|`r sprintf("%.3f", cutpoint[3])`|処置群の20%|
+|`r sprintf("%.3f", cutpoint[3])`|`r sprintf("%.3f", cutpoint[4])`|処置群の20%|
+|`r sprintf("%.3f", cutpoint[4])`|`r sprintf("%.3f", cutpoint[5])`|処置群の20%|
+|`r sprintf("%.3f", cutpoint[5])`|`r sprintf("%.3f", cutpoint[6])`|処置群の20%|
+
+　上から1層、2層、...とし`stratum`という変数として`df`に追加してみよう。
+
+:::: {.callout-note title="参考）`case_when()`関数" collapse=true}
+　`case_when()`関数は`if_else()`同様、条件式を判定し、その結果（TRUEかFALSE）に応じて値を返す関数だ。`if_else()`は一つの条件式のみ受け付けるが、`case_when()`は2つ以上の条件式を受け付ける。具体的には1つ目の条件式を判定し、TRUEなら任意の値を返し、FALSEなら2つ目の条件式を判定する仕組みだ。`case_when()`内にはは`条件式 ~ 戻り値`をカンマ区切りで書く。また、`.default`引数で「すべてFALSEの場合」の戻り値も指定できる。
+
+　たとえば、`age`が39以下なら「"young"」、59以下なら「"middle"」、それ以外は「"old"」にし、`age2`という名の新しい変数として追加する場合は以下のように書く。
+
+```{r}
+#| eval: false
+データ |> 
+  mutate(age2 = case_when(age <= 39 ~ "young",
+                          age <= 59 ~ "middle",
+                          .default = "old"))
+```
+::::
+
+```{r}
+df <- df |> 
+  mutate(stratum = case_when(ps < cutpoint[2] ~ 1, # psの値が 0.439 未満なら 1
+                             ps < cutpoint[3] ~ 2, # psの値が 0.619 未満なら 2
+                             ps < cutpoint[4] ~ 3, # psの値が 0.688 未満なら 3
+                             ps < cutpoint[5] ~ 4, # psの値が 0.746 未満なら 4
+                             .default         = 5))# それ以外は 5
+
+df
+```
+
+　各層における個体数を処置群と統制群で確認してみる。データを`count()`関数に渡し、個体数を調べた変数を1つ以上指定すれば、その変数の値ごとのサンプルサイズが出力される。
+
+```{r}
+df |> 
+  count(treat_name, stratum)
+```
+
+　各層における処置群の個体数が等しく37であることが確認できる。この表を読みやすくするために、`pivot_wider()`関数を使って統制群と処置群を別の列になるように成形する。`pivot_wider()`関数の詳しい使い方は『私たちのR』の「[整然データ構造](https://www.jaysong.net/RBook/tidydata.html)」に譲るが、使い方を簡単にまとめると、新しい列の名前になる列を`names_from`引数に、新しい列の値になる列を`values_from`引数に指定すれば良い。`pivot_*()`系の関数は最初はイメージが湧きにくく、使いにくいかも知れないが、結果物を先に確認しながらイメージトレーニング（?）すれば、そのうち慣れるだろう。
+
+```{r}
+df |> 
+  count(treat_name, stratum) |> 
+  pivot_wider(names_from  = treat_name,
+              values_from = n)
+```
+
+　続いて、重みを計算してみよう。ATTの場合、処置群の重みは1だからここでは統制群の重みだけを計算すれば良いだろう。*k*層に属する統制群の重み（$w_k^{\sf control}$）は以下のように計算する。
+
+$$
+w_k^{\sf control} = \frac{\textsf{統制群の個体数}}{\textsf{処置群の個体数}} \times \frac{k\textsf{層の処置群の個体数}}{k\textsf{層の統制群の個体数}}
+$$
+
+　以上のルールに従って、先ほど作成した表に統制群の重みを計算し、新しい列として格納するコードを書いてみよう。計算した重みは`control_w`という名前の新しい列として格納し、この表全体を`strat_att_w`という名前のオブジェクトとして作業環境内に格納する。
+
+```{r}
+strat_att_w <- df |> 
+  count(treat_name, stratum) |> 
+  pivot_wider(names_from  = treat_name,
+              values_from = n) |> 
+  mutate(control_w = (sum(統制群) / sum(処置群)) * (処置群 / 統制群))
+
+strat_att_w
+```
+
+　それではこの重みを個々の個体に割り付け、`att_w`という列として追加してみよう。統制群（`treat == 0`）、かつ1層（`stratum == 1`）なら`r strat_att_w$control_w[1]`を、統制群（`treat == 0`）、かつ2層（`stratum == 2`）なら`r strat_att_w$control_w[2]`...を付ける。それ以外の場合は処置群ということになるので、1を付ければ良い。自分で数字を打っても良いが、画面には小数点2〜3桁くらいまでしか表示されないから、`strat_att_w$control_w[1]`（`strat_att_w`の`control_w`列の1番目の数字）のように書いた方が良いだろう。
+
+```{r}
+df <- df |> 
+  mutate(att_w = case_when(treat == 0 & stratum == 1 ~ strat_att_w$control_w[1],
+                           treat == 0 & stratum == 2 ~ strat_att_w$control_w[2],
+                           treat == 0 & stratum == 3 ~ strat_att_w$control_w[3],
+                           treat == 0 & stratum == 4 ~ strat_att_w$control_w[4],
+                           treat == 0 & stratum == 5 ~ strat_att_w$control_w[5],
+                           .default = 1))
+
+df
+```
+
+　最初の10個の個体がすべて処置群だから、ちゃんと重みが付いているかが分からない。統制群だけ出力してみよう。
+
+```{r}
+df |> 
+  filter(treat == 0)
+```
+
+　問題なさそうだ。それでは処置効果を推定してみよう。結果変数モデル（outcome model）の結果変数は1978年の年収（`re78`）、処置変数は職業訓練プログラムへの参加有無（`treat`）だ。ここでさらに各個体に`att_w`の値だけ重みを付ける必要があるが、第2引数以降に`weights = 重みの列名`の引数を追加すれば重み付け回帰分析ができるようになる。これらは`lm()`関数を使っても良いが、標準誤差が過小推定される可能性もあるため、頑健（robust）な標準誤差の使用が推奨される。頑健標準誤差の計算はかなり面倒だが{estimatr}パッケージの`lm_roubst()`関数を使えば簡単だ。`se_type`には使用する頑健標準誤差の種類を指定する。既定値は`"HC2"`だが、ここでは最も頑健な`"HC3"`を指定する（{MatchIt}公式でもHC3標準誤差を推奨している）。分析結果は`strat_fit_1`に格納し、中身を確認してみよう。
+
+:::: {.callout-note title="クラスター標準誤差というものがあると聞きましたが?" collapse=ture}
+　クラスター標準誤差はクラスターの数が少ないときは使うべきではないとされており（Cameron *et al.* 2008）[^cameron]、この場合は通常のHR2かHR3標準誤差を推奨している。それでも何かの宗教的信念があってクラスター標準誤差を使いたい場合は、標準誤差のタイプ（`se_type`）は`"CR0"`、`"CR2"`、`"stata"`から一つを、 `cluster`引数に層を表す変数名を指定すれば良い（そもそも何の宗教?）。
+
+[^cameron]:  Cameron, A. Colin, Jonah B. Gelbach, and Douglas L. Miller. 2008 "[Bootstrap-Based Improvements for Inference with Clustered Errors](https://doi.org/10.1162/rest.90.3.414)," *The Review of Economics and Statistics,* 90(3): 414-427.
+
+```{r}
+lm_robust(re78 ~ treat, 
+          data = df, weights = att_w,
+          se_type = "stata", cluster = stratum) |> 
+  summary()
+```
+:::
+
+```{r}
+# 頑健標準誤差を使わない場合、以下のコードでも良い（非推奨）
+# strat_fit_1 <- lm(re78 ~ treat, data = df, weights = att_w)
+strat_fit_1 <- lm_robust(re78 ~ treat, 
+                         data = df, weights = att_w,
+                         se_type = "HC3")
+summary(strat_fit_1)
+```
+
+　処置効果の点推定値は約`r round(coef(strat_fit_1)[2], 0)`ドルである。これは**職業訓練プログラムへの参加した人にとって**（ATTだから）、このプログラムは平均して約`r round(coef(strat_fit_1)[2], 0)`ドルの年収アップの効果があることを意味するが、その推定値の不確実性^[不確実性の評価しようとしてよく使われるのは標準誤差（standard error）、信頼区間（confidential interval）、*p* 値がある。予め決めた有意水準（$\alpha$）が0.05（5%）なら、（1）点推定値の絶対値が標準誤差の2倍より大きいか、（2）95%信頼区間の外にに0があるか、（3）*p* 値が0.05以下である場合、処置効果は**統計的に**有意と判定する。]が大きいため、処置効果があるとは言えない（処置効果は統計的に有意ではない）。
+
+## {MatchIt}パッケージを使う例
+
+　それでは{MatchIt}パッケージを使ってみよう。`matchit()`関数は`glm()`関数で傾向スコアを計算したときと同じ書き方をベースにし、いくつかの引数を追加する必要がある。まず、層化を意味する`method = "subclass"`と層の数を5にすることを意味する`subclass = 5`を入力する。今回はこれだけでも良いが、推定対象（estimand）と傾向スコアの計算方法も既定値のままであっても、明記した方が良い。推定対象の既定値は`estimand = "ATT"`であり、ATEを推定したいときには`estimand = "ATE"`と書く。また、傾向スコアの計算方法はロジスティック回帰分析を使うなら`distance = "glm"`と`link = "logit"`と書く。プロビット回帰分析で傾向スコアを計算したい場合は`link = "probit"`にする。後ほど紹介するCBPSを使いたい場合は`distance = "cbps"`とし、`link`引数は省略する（`link`引数は`distance = "glm"`の場合のみ必要）。推定結果は`strat_att`という名で格納する。
+
+```{r}
+strat_att <- matchit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+                     data = lalonde, 
+                     method = "subclass", subclass = 5,
+                     estimand = "ATT", distance = "glm", link = "logit")
+
+strat_att
+```
+
+　この`matchit()`関数は傾向スコアを推定し、重みや層などを作成してくれる関数であり、これだけでは処置効果は分からない。ここから処置効果（今回はATT）を推定するためには、`match_data()`関数で推定に使用するデータセットを抽出する必要がある。抽出したデータには`strat_att_df`と名付けておく。`match_data()`で抽出したデータはフォーマットはデータフレーム型で可読性があまり良くないので、`as_tibble()`関数でティブル型に変換しておく（データフレーム型でも推定には何の問題ない）。
+
+```{r}
+strat_att_df <- match_data(strat_att)
+# match_data() で取得したデータはデータフレーム型なのでティブル型に変換しておく
+strat_att_df <- as_tibble(strat_att_df) 
+strat_att_df
+```
+
+　ATT推定のための重みは`weights`列、どの層なのかは`subclass`列に格納されている。
+
+　各層のサンプルサイズを確認してみよう。
+
+```{r}
+strat_att_df |> 
+  count(treat, subclass)
+```
+
+　{MatchIt}を使わなかったときと同じ結果が得られた。それでは`strat_att_df`を使用し、ATTを推定してみよう。
+
+```{r}
+strat_fit_2 <- lm_robust(re78 ~ treat, 
+                         data = strat_att_df, weights = weights,
+                         se_type = "HC3")
+
+summary(strat_fit_2)
+```
+
+　同じような結果が得られたような気がするが、どうだろうか。
+
+## 比較
+
+　{modelsummary}パッケージの`modelsummary()`関数（= `msummary()`）で2つの横に並べて比較してみよう。
+
+```{r}
+list("{MathchIt}未使用" = strat_fit_1,
+     "{MathchIt}使用"   = strat_fit_2) |> 
+  msummary()
+```
+
+　結果が完全に一致していることが分かる。
+
+:::: {.callout-note title="参考）上記表のカスタマイズの例" collapse=true}
+```{r}
+list("{MathchIt}未使用" = strat_fit_1,
+     "{MathchIt}使用"   = strat_fit_2) |> 
+  msummary(estimate    = "{estimate}{stars}",
+           coef_rename = c("(Intercept)" = "切片",
+                           "treat"       = "職業訓練プログラムへの参加"),
+           notes       = c("注：カッコ内は標準誤差"))
+```
+::::
+
+# 重み付け
+
+続いて、重み付けでATEを推定（IPW）してみよう。ここでもパッケージを使わないやり方と{WeigtIt}を使った方法の順で解説する。
+
+## パッケージを使わない例
+
+　IPWにおける個体$i$重み（$w_i^{\tiny\mbox{IPW}}$）は以下のように定義される。
+
+$$
+w_i^{\tiny\mbox{IPW}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
+$$
+
+　`df`には今回の実習の前半に作成した傾向スコアが`ps`列に可能されているため、これと処置変数（`treat`）を使えば重みが計算できる。
+
+```{r}
+df <- df |> 
+  mutate(ipw_w = treat * (1 / ps) + (1 - treat) * (1 / (1 - ps)))
+
+df
+```
+
+　あとは層化のときと同様、`ipw_w`列で重み付けた回帰分析を実施するだけだ。今回の頑健標準誤差のタイプもこれまでと同様、`"HC3"`を使用してみよう。
+
+```{r}
+# 頑健標準誤差を使わないなら以下のコードでOK（非推奨）
+# ipw_fit_1 <- lm(re78 ~ treat, data = df, weights = ipw_w)
+ipw_fit_1 <- lm_robust(re78 ~ treat, data = df, weights = ipw_w, se_type = "HC3")
+summary(ipw_fit_1)
+```
+
+　ATEの点推定値は約`r round(coef(ipw_fit_1)[2], 0)`ドルだ。職業訓練プログラムの年収アップ効果は`r round(coef(ipw_fit_1)[2], 0)`だが、これが統計的に有意か（= たまたま得られた推定値なのか、あるいは本当に効果があるのか）まではこれだけでは分からない。不確実性の指標の一つである *p* 値を見ると *p* = `r round(ipw_fit_1$p.value[2], 3)`で、統計的に有意な処置効果とは言えない（「8.080e-01」は8.080 $\times$ 10<sup>-1</sup>）。少なくとも今回の標本と分析手法、モデルでは職業訓練プログラムが年収に影響を与えるというエビデンスは見つからなかったということになる^[効果がないと断定することはできない。今回のデータでたまたま効果が観察できなかった可能性もあるし、モデルや手法が間違っている可能性もある。あるいは、単に効果を検証するに十分なサンプルサイズではなかったかも知れない。むろん、本当に効果がない可能性もある。繰り返して強調するが、因果推論において「効果がない」ことを立証することはかなり難しく、厳密な意味では不可能だと思って良い。]。
+
+## {WeightIt}パッケージを使う例
+
+　それではパッケージを使ってみよう。今回は{MatchIt}でなく、{WeightIt}の`weightit()`関数を使用する。使い方は`matchit()`と似ていいる。ただし、傾向スコアの計算方法が`distance`でなく、`method`引数を使う点には注意されたい（`link`引数は不要）。ロジスティック回帰分析であれば、`"glm"`で良い。つづいて、今回の推定対象はATEだから`estimand = "ATE"`を指定する（既定値がATEだから今回は省略しても良い）。
+
+```{r}
+ipw_obj <- weightit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+                    data = df, method = "glm", estimand = "ATE")
+
+ipw_obj
+```
+
+　ここでも`weightit()`関数から何か推定値が得られるわけではない。この`weightit()`関数の主な目的は各個体の重みを計算することであり、その重みは`weightitオブジェクト名$weights`から抽出できる（長さ614のベクトルが表示されるが、ここでは最初の20個のみ表示）。
+
+```{r}
+#| eval: false
+ipw_obj$weights
+```
+
+```{r}
+#| echo: false
+head(ipw_obj$weights, 20)
+```
+
+　それではATEを推定してみよう。
+
+```{r}
+ipw_fit_2 <- lm_robust(re78 ~ treat, data = df, weights = ipw_obj$weights, se_type = "HC3")
+
+summary(ipw_fit_2)
+```
+
+:::: {.callout-tip title="参考）`lm_weightit()`関数を使った処置効果の推定" collapse=true}
+
+　{WeightIt}パッケージには処置効果の推定に必要な関数（`lm_weightit()`や`glm_weightit()`）が提供されている。使い方はこれまで使ってきた`lm_robust()`に似ているが、`weights`の代わりに`weightit`引数を使用するところが異なる。`lm_robust()`の`weights`引数には重みの**ベクトル**（ここでは`ipw_obj$weights`）を指定したが、`lm_weightit()`の`weightit`引数には`weightit()`関数で推定した**オブジェクトそのもの**（ここでは`ipw_obj`）を指定する。また、頑健標準誤差も`se_type`の代わりに`vcov`を使用し、使えるオプションも異なる。`lm_weightit()`と`lm_robust()`間で共通する頑健標準誤差はHC0のみだ。やってみよう。
+
+```{r}
+lm_weightit(re78 ~ treat, data = df, weightit = ipw_obj, vcov = "HC0") |> 
+  summary()
+```
+
+　`lm_robust()`でも頑健標準誤差のタイプをHC0にして推定してみよう。
+
+```{r}
+lm_robust(re78 ~ treat, data = df, weights = ipw_obj$weights, se_type = "HC0") |> 
+  summary()
+```
+
+　結果が100%一致することが分かる。
+::::
+
+## 比較
+
+　{modelsummary}パッケージの`modelsummary()`関数（= `msummary()`）で2つの横に並べて比較してみよう。
+
+```{r}
+list("{WeightIt}未使用" = ipw_fit_1,
+     "{WeightIt}使用"   = ipw_fit_2) |> 
+  msummary()
+```
+
+　全く同じ結果が得られた。
+
+# バランスチェック
+
+　前半の記述統計で簡易（?）バランスチェックをしたが（ @tbl-blcchk-0 ）、多くの変数においてグループ間差があることが確認できた。どう考えても共変量がバランスしているとは言えなかったが、傾向スコアを使った層化や重み付けはこのアンバランスを改善してくれるのだろうか。「[Rの復習](r.qmd)」で紹介した{cobalt}の`bal.tab()`関数でバランスチェックをし、`love.plot()`で可視化してみよう。
+
+　「[Rの復習](r.qmd)」で紹介した`bal.tab()`の使い方とほぼ同じだが、傾向スコアを使った調整後は共変量だけでなく傾向スコアそのもののバランシングも確認するのが通例なので`~`の右辺に傾向スコアも追加する。また、今回は`weights`引数で重み変数を指定する必要がある。これを指定することで重みを調整する前後の比較ができるようになる。`df`には私たちが計算したIPW用の重みが`ipw_w`という名の列として格納されているから、これを使うとしよう。列名は`"`で囲む必要がる。バランスチェックの結果を別途格納せず、そのまま`love.plot()`に渡してラブプロットも作成する。標準化差分（SMD）の絶対値が0.1以下であれば当該共変量がバランスしていると判断したいので、`threshold = 0.1`で垂直線を追加しする。また、SMDは負の値を取ることもあるが、バランスチェックではSMDの絶対値が重要なので`abs = TRUE`でSMDを絶対値に変換する。最後に凡例を下段に移動させ（`position = "bottom"`）、非標準化変数（= 二値変数）にアスタリスク（*）が付くよう`stars = "raw"`も指定する。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.tab(treat ~ ps + age + educ + race + married + nodegree + re74 + re75, 
+        data = df, s.d.denom = "pooled", weights = "ipw_w") |> 
+  love.plot(thresholds = 0.1, abs = TRUE, position = "bottom", stars = "raw")
+```
+
+　解釈は後にしてまずは図をカスタマイズしよう。`title = NULL`で上段のタイトルを削除し、`var.names`で変数名を日本語化する。{cobalt}で作成したラブプロットは{ggplot2}ベースだから、`labs()`で横軸のラベル、色分け凡例のタイトル、下段のキャプションが調整できる。最後に凡例の値（UnadjustedとAdjusted）を`scale_color_discrete()`で変更しよう。`scale_*_*()`関数群の使い方は覚える必要はなく、適宜必要に応じて検索して使えば良い。よく使う機能はそのうち自然に覚えられるだろう。
+
+```{r}
+#| label: fig-blcchk-ipw
+#| fig-cap: バランスチェック（IPW）
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+bal.tab(treat ~ ps + age + educ + race + married + nodegree + re74 + re75, 
+        data = df, s.d.denom = "pooled", weights = "ipw_w") |> 
+  love.plot(thresholds = 0.1, abs = TRUE, position = "bottom", stars = "raw",
+            title = NULL,
+            var.names = c("ps"          = "傾向スコア",
+                          "age"         = "年齢",
+                          "educ"        = "教育年数",
+                          "race_black"  = "黒人",
+                          "race_hispan" = "ヒスパニック",
+                          "race_white"  = "白人",
+                          "married"     = "既婚",
+                          "nodegree"    = "高校学位なし",
+                          "re74"        = "年収（1974年）",
+                          "re75"        = "年収（1975年）")) +
+  labs(x = "標準化平均差の絶対値", color = NULL, caption = "注：「*」は非標準化変数（二値変数）") +
+  scale_color_discrete(labels = c("Adjusted" = "調整済み", "Unadjusted" = "調整前"))
+```
+
+　調整前（赤）に比べると、SMDが画期的に改善されていることが分かる。教育年数はむしろSMDが改善されず、改悪されているが他の変数は大幅に改善されている。ただし、それでもいつくかの変数はSMDが0.1を超えるので、大幅に改善されているものの、バイアスの心配がなくなっているとは言えない。むろん、調整しないよりは何億倍もマシということは確かだが、それでも何らかの対処は必要かも知れない。そもそも傾向スコアは（大雑把にいえば）処置有無の予測精度を最大するように計算されたものであり、バランスが最適化するように計算されるものではない。バランスの改善はある意味、「付随的」なものとも言える。この場合は、共変量が最もバランスするように計算された「共変量バランシング傾向スコア」（covariate balancing propensity score; CBPS）や「エントロピーバランシング」（entropy balancing）などを使うか、処置効果を推定する際にさらに共変量調整をするｋじょとを検討しても良いだろう。
+
+:::: {.callout-tip title="SMDの数値が知りたい場合" collapse=true}
+
+　`bal.tab()`のみ使用すると具体的なSMDが確認できる。グループが3つ以上の場合、各共変量に対して複数のSMDが得られるが、その中から最も絶対値の高いSMDが出力される。
+
+```{r}
+bal.tab(treat ~ ps + age + educ + race + married + nodegree + re74 + re75, 
+        data = df, s.d.denom = "pooled", weights = "ipw_w") 
+```
+::::
+
+　もし{MatchIt}か{WeightIt}を使ったのであれば、`bal.tab()`を通さずにそのまま`love.plot()`でラブプロットが作成できる。ここでは{MatchIt}で推定した`strat_att`と`ipw_obj`のラブプロットを作ってみよう。
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 5
+#| fig-subcap:
+#|   - 層化（ATT）
+#|   - IPW（ATE）
+love.plot(strat_att, abs = TRUE, thresholds = 0.1, stars = "raw", position = "bottom")
+love.plot(ipw_obj, abs = TRUE, thresholds = 0.1, stars = "raw", position = "bottom")
+```
+
+　こうして並べてみると左（層化）の方がバランスが改善されていることが分かる。これだけを見て「層化の方が重み付けより優れている」と判断してはいけない。これは層化と重み付けの違いではなく、ATTとATEの違いだ。基本的にATT・ATCのための調整がATEのための調整にくらべバランスは改善されやすい。興味があれば、層化でATE、重み付けでATTを推定しバランスチェックをしてみよう。
+
+# 参考）CBPS
+
+　ここでは共変量バランシング傾向スコア（covariate balancing propensity score; CBPS）について紹介するが、これまでのコードとほぼ変わらない。ここでは{WeightIt}を使用し、重み付けでATEを推定するIPW推定の例を使うが、他の手法や{MatchIt}でも応用できる。`weightit()`の場合、`method`を`"glm"`から`"cpbs"`に替えれば良い。これで終わりだ。{MatchIt}の`matchit()`関数なら`"distance"`を`"cbps"`にすれば良い。
+
+```{r}
+cbps_obj <- weightit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+                     data = df, method = "cbps", estimand = "ATE")
+```
+
+　まずは、ロジスティック回帰分析で作成した傾向スコアとの分布を比較してみよう。
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 5
+#| fig-subcap:
+#|   - 通常の傾向スコア（ロジット）
+#|   - CBPS
+bal.plot(ipw_obj, type = "histogram", mirror = TRUE, position = "bottom")
+bal.plot(cbps_obj, type = "histogram", mirror = TRUE, position = "bottom")
+```
+
+　共有サポートについてはあまり問題がなさそうだ。それでは各共変量のバランスはどうだろうか。つづいてラブプロットも確認してみよう。
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 5
+#| fig-subcap:
+#|   - 通常の傾向スコア（ロジット）
+#|   - CBPS
+love.plot(ipw_obj, abs = TRUE, thresholds = 0.1, position = "bottom")
+love.plot(cbps_obj, abs = TRUE, thresholds = 0.1, position = "bottom")
+```
+
+　CBPSを使った重み付けの方がよりバランスしている。そもそもCBPSはバランス改善を目的に作られた傾向スコアであるため、ある意味当たり前の結果かも知れない。
+
+　それでは処置効果（ATE）を推定し、通常の傾向スコアを使ったIPWの推定結果と比較してみよう。
+
+```{r}
+cbps_fit <- lm_robust(re78 ~ treat, data = df, weights = cbps_obj$weights, se_type = "HC3")
+list("一般化線形モデル（Logit）" = ipw_fit_2, 
+     "CBPS"                      = cbps_fit) |> 
+  msummary()
+```
+
+　いずれも統計的に有意な処置効果は確認できなかった。
+
+:::: {.callout-note title="参考）処置効果の可視化" collapse=true}
+　今回の例だと推定に回帰分析を使うため、「[Rの復習](r.qmd)」で紹介したpointrangeプロットを使用し、処置効果を可視化・比較することもできる。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: 400px
+list("GLM (logit)"  = tidy(ipw_fit_2, conf.int = TRUE),
+     "CBPS" = tidy(cbps_fit, conf.int = TRUE)) |> 
+  bind_rows(.id = "model") |> 
+  filter(term == "treat") |> 
+  mutate(model = fct_relevel(model, "GLM (logit")) |> 
+  ggplot() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_pointrange(aes(x = model, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  labs(x = "傾向スコアの計算方法", y = "処置効果（ATE）の推定値と95%信頼区間")
+```
+::::
+
+# 参考）共変量調整
+
+　@fig-blcchk-ipw を見ると重み付け後も、すべての共変量がバランスしていないことが分かる。大幅に改善され、このまま処置効果を推定してもバイアスは大きく減るとは考えられるが、残存している不均衡（residual imbalance）もあろう。このバランスしていない変数を処置効果の推定モデル（結果変数モデル/アウトカム・モデル）に統制変数として投入すると残存バイアスが低減され、推定の制度が向上しうることが指摘されている（Nguyen *et al.* 2017）[^Nguyen]。
+
+[^Nguyen]: Nguyen, Tri-Long, Gary S. Collins, Jessica Spence, Jean-Pierre Daurès, P. J. Devereaux, Paul Landais, and Yannick Le Manach. 2017. "[Double-adjustment in propensity score matching analysis: choosing a threshold for considering residual imbalance](https://doi.org/10.1186/s12874-017-0338-0)," *BMC Medical Research Methodology*, 17: 78.
+
+　ここでは`ipw_fit_2`のモデルに傾向スコアを計算する時に使用した変数を加えたモデルを推定し`ipw_fit_3`と名付ける。この統制変数は何でもOKというわけではない。基本的にはバランスチェックでバランスしていない変数を使用するが、完全にバランスすることはなかなか考えないくいため、基本的にすべて使っても良いだろう。しかし、通常の回帰分析同様、処置後変数（post-treatment variable）や合流点（collider）、中間変数（mediator）等は避けるべきである。
+
+```{r}
+ipw_fit_3 <- lm_robust(re78 ~ treat + age + educ + race + married + nodegree + re74 + re75,
+                       data = df, weights = ipw_obj$weights, se_type = "HC3")
+
+summary(ipw_fit_3)
+```
+
+　ATEの点推定値`r round(coef(ipw_fit_3)[2], 0)`ドルだが、統計的に有意な処置効果は得られなかった。
+
+# 参考）*G*-computation
+
+## *G*-computationとは
+
+　*G*-computation（generalized computation）とはある各個体における潜在的結果を推定し、そこから処置効果を推定する方法である。詳細はSnowden *et al.* （2011）[^snowden]等に譲るが、言い換えれば「全個体が処置を受けた場合の結果変数の平均値」と「全個体が処置を受けなかった場合の結果変数の平均値」を推定し、この2つの差分を処置効果（ATE、ATT、ATC等）として解釈する方法も言える。これまでの分析だと処置変数（ここだと`treat`）の係数が処置効果として解釈できたが、*G*-computationでも同じような結果が得られる。
+
+[^snowden]: Snowden, Jonathan M., Sherri Rose, Kathleen M. Mortimer. 2011. "[Implementation of G-Computation on a Simulated Data Set: Demonstration of a Causal Inference Technique](https://doi.org/10.1093/aje/kwq472)," *American Journal of Epidemiology,* 173(7): 731-738.
+
+　先ほど推定した`ipw_fit_3`を使用し、処置群、40歳、教育年数は12年、黒人、既婚、高校学位あり、1974年の年収は3000ドル、1975年の年収が5000ドルの場合は1978年の年収を推定してみよう。予測値の計算には{marginaleffects}パッケージの`predictions()`関数を使用する。第1引数はモデルのオブジェクト名（ここでは`ipw_fit_3`）、第2引数として`newdata = datagrid()`を指定し、`()`内に架空の個体のプロフィールを書く。
+
+```{r}
+predictions(ipw_fit_3, newdata = datagrid(treat = 1, age = 40, educ = 12, race = "black", 
+                                          married = 1, nodegree = 0, re74 = 3000, re75 = 5000))
+```
+
+　ここで注目するのは予測値である`Estimate`列だ。40歳、教育年数は12年、黒人、既婚、高校学位あり、1974年の年収は3000ドル、1975年の年収が5000ドルで、処置群に割り当てられた人の1978年の年収の推定値は約7858ドルである。このやり方で614人全員に対し、その人が処置群である場合と統制群である場合の1978年年収の予測値を計算する。そのためにはデータフレームを用意する。`lalonde`（または`df`）の`treat`列の値をすべて1に置換したものを`df_1`に、0に置換したものを`df_0`と名付けて格納する。
+
+```{r}
+# lalonde データを「全員が処置群なら...」にし、df_1 に格納
+df_1 <- lalonde |> mutate(treat = 1)
+# lalonde データを「全員が統制群なら...」にし、df_0 に格納
+df_0 <- lalonde |> mutate(treat = 0)
+```
+
+このデータフレームを`predictions()`の`newdata`の実引数として割り当てれば、614人分の予測値が計算される。
+
+:::: {.columns}
+::: {.column width=49%}
+```{r}
+pr_0 <- predictions(ipw_fit_3, newdata = df_0)
+pr_0
+```
+:::
+
+::: {.column width=2%}
+:::
+
+::: {.column width=49%}
+```{r}
+pr_1 <- predictions(ipw_fit_3, newdata = df_1)
+pr_1
+```
+:::
+::::
+
+　あとは`予測値オブジェクト名$estimate`で予測値列を抽出し、平均値を計算すれば良い。
+
+```{r}
+#| eval: false
+# 614個の予測値が表示されるが、ここでは最初の10個のみ表示
+pr_0$estimate
+```
+
+```{r}
+#| echo: false
+head(pr_0$estimate, 10)
+```
+
+　全員が処置群だった場合の予測値の平均値から全員が統制群群だった場合の予測値の平均値を引けば、それが*G*-computationを利用したATEの推定値だ。
+
+```{r}
+mean(pr_1$estimate) - mean(pr_0$estimate)
+```
+
+　また、平均値の差分でなく、差分（$\simeq$ ITEの推定値）の平均値でも同じ推定値が得られる。
+
+```{r}
+mean(pr_1$estimate - pr_0$estimate)
+```
+
+　結果は約`r round(mean(pr_1$estimate) - mean(pr_0$estimate), 3)`ドルだ。
+
+　以上の作業は`avg_comparisons()`関数を使うと一発で終わる。第一引数にモデル名を、`varilabes`には処置変数の名前を`"`で囲んで指定するだけだ。
+
+```{r}
+avg_comparisons(ipw_fit_3, variables = "treat")
+```
+
+　推定値を小数点まで詳しく確認したい時は推定オブジェクトを`as.data.frame()`関数でデータフレーム化すれば良い。
+
+```{r}
+avg_comparisons(ipw_fit_3, variables = "treat") |> as.data.frame()
+```
+
+　それではもう一度、線形回帰分析を使ったATEの推定値を確認してみよう。
+
+```{r}
+summary(ipw_fit_3)
+```
+
+　ここでも`treat`の点推定値が約`r round(coef(ipw_fit_3)[2], 3)`ドルだ。処置効果が全員に対して同じだと仮定する（= 処置効果の不均一性を考慮しない）と場合、線形回帰モデルから得られた処置効果の推定値と*G*-computationから得られたそれは常に一致する。
+
+## 実装
+
+　しかし、処置効果が全個体において一定ということは仮定としては強すぎるし、現実的でもない。年齢、性別、教育年数、年収などの属性によって処置効果が異なる可能性が高い。このような処置効果の不均一性を検証するために使用するのが交互作用モデルである。以下のモデルは$D_i$と$X_i$の交互作用を含むモデルである。Rでは`Y ~ D * X`と表記する。これは処置効果が$X$の値に応じて異なることを許容するモデルである。
+
+$$
+\widehat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 D_i + \hat{\beta}_2 X_i + \hat{\beta}_3 D_i X_i
+$$
+
+　以下のモデルは$D_i$と$X_i$、$D_i$と$Z_i$の交互作用を含むモデルであり、Rでは`Y ~ D * X + D * Z`と表記するが、`Y ~ D * (X + Z)`とも表記できる。このモデルは処置効果が$X$と$Z$の値に応じて異なることを許容するモデルである。
+
+$$
+\widehat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 D_i + \hat{\beta}_2 X_i + \hat{\beta}_3 Z_i + \hat{\beta}_3 D_i X_i + \hat{\beta}_4 D_i Z_i
+$$
+
+
+　ここではまず、年齢、教育年数、人種、婚姻状態、高校学位の有無、1974年と1975年の年収によって処置効果が異なることを想定したモデルを推定し、`ate_g`という名で格納しておこう。ここでは`lm_robust()`を使わず、`lm()`関数を使用する。頑健標準誤差を使わないことではなく、`avg_comparisons()`内で頑健標準誤差を計算する^[`lm_robust()`で頑健標準誤差を計算した場合、`avg_comparisons()`内で頑健標準誤差を無効化する必要があるので、二度手間になってしまう。]。
+
+```{r}
+ate_g <- lm(re78 ~ treat * (age + educ + race + married + nodegree + re74 + re75),
+            data = df, weights = ipw_obj$weights)
+
+summary(ate_g)
+```
+
+　交互作用に関わる変数の点推定値はそのまま解釈してはいけない。今回、`treat`の点推定値は`r round(coef(ate_g)[2], 3)`だが、そもそも*G*-computationは予測値ベースで処置効果を推定するので、あまり意味のない数字でもある。それでは`avg_comparisons()`関数で*G*-computationでATEを推定してみよう。HC3頑健標準誤差を使いたいので、`vcov = "HC3"`を指定する。
+
+```{r}
+avg_comparisons(ate_g, variables = "treat", vcov = "HC3")
+```
+
+　処置効果の推定値は約`r round(avg_comparisons(ate_g, variables = "treat", vcov = "HC3")$estimate)`ドルだが、統計的有意な処置効果ではなかった（*p* = `r round(avg_comparisons(ate_g, variables = "treat", vcov = "HC3")$p.value, 3)`）。
+
+　続いて重み付けでATTを推定してみよう。まず、`weightit()`関数でATTを推定用の重みを計算し、`att_obj`という名で作業環境に格納する。
+
+```{r}
+att_obj <- weightit(treat ~ age + educ + race + married + nodegree + re74 + re75,
+                    data = df, method = "glm", estimand = "ATT")
+```
+
+　この重みを使用し、今回も処置変数と全共変量の交互作用を想定した線形回帰モデルを推定し、`att_g`と名付ける。
+
+```{r}
+att_g <- lm(re78 ~ treat * (age + educ + race + married + nodegree + re74 + re75),
+            data = df, weights = att_obj$weights)
+```
+
+　ここからが重要だが、`avg_comparisons()`関数を使用する際、`newdata()`を指定する必要がる。ATTは「**処置群の**結果変数 - **処置群が**処置を受けなかった場合の結果変数」から求められることを思い出して欲しい。「全員が処置群だったら...」とか「全員が統制群だったら...」はATEでの話であって、ATTは統制群に絞る必要がある。したがって、データの処置群だけを使って計算する必要がある。`filter()`関数を使用すれば簡単だろう。これまでの使い方は`データ |> filter(条件式)`で、これでも問題ないが、コードの可読性のためにここでは`filter(データ, 条件式)`と書く^[実はここではデータ名を省略し、条件式のみ書いても良い（今回の例だと`filter(treat == 1)`）。なぜなら、`avg_comparisons()`の第1引数である`att_g`の中には分析に使用したデータも含まれており（普段目に見えないだけで、オブジェクト内には入っている）、`newdata`引数にはそのデータセットを使うことが前提とされているからだ。また、`filter()`の代わりにR内蔵関数の`subset()`を使っても良い。]。
+
+```{r}
+avg_comparisons(att_g, variables = "treat", vcov = "HC3", 
+                newdata = filter(lalonde, treat == 1))
+```
+
+　処置効果の推定値は約`r round(avg_comparisons(att_g, variables = "treat", vcov = "HC3", newdata = filter(lalonde, treat == 1))$estimate)`ドルだが、統計的有意な処置効果ではなかった（*p* = `r round(avg_comparisons(att_g, variables = "treat", vcov = "HC3", newdata = filter(lalonde, treat == 1))$p.value, 3)`）。
+
+　最後に、層化で共変量を調整した場合の*G*-computationについても解説する。ここでは層化でATTを推定するために作成した`strat_att_df`を利用し、ここでも処置変数と全共変量の交互作用を想定した線形回帰モデルを推定し、`strat_g`と名付ける。
+
+```{r}
+strat_g <- lm(re78 ~ treat * (age + educ + race + married + nodegree + re74 + re75), 
+              data = strat_att_df, weights = weights)
+
+summary(strat_g)
+```
+
+　続いて、`avg_comparison()`でATTの推定値を計算するが、まず推定対象（estimand）がATTだから`newdata = filter(treat == 1)`を指定することを忘れてはいけない。そして、もう一つ、標準誤差にも注意する必要がある。層化の例では`lm_robust()`を使用し、クラスター頑健標準誤差を使ったが、今回の例では`lm()`関数を使用した。したがって、`avg_comparisons()`の段階で頑健標準誤差を指定する必要がある。ここでは`vcov`の実引数として`~層の表す変数名`を指定すれば、自動的にクラスター頑健標準誤差が計算される。
+
+```{r}
+avg_comparisons(strat_g, variables = "treat",
+                vcov = "HC3",
+                newdata = subset(treat == 1)) 
+```
+
+　処置効果の推定値は約`r round(avg_comparisons(strat_g, variables = "treat", vcov = "HC3", newdata = filter(lalonde, treat == 1))$estimate)`ドルだが、やはり今回も統計的有意な処置効果ではなかった（*p* = `r round(avg_comparisons(strat_g, variables = "treat", vcov = "HC3", newdata = filter(lalonde, treat == 1))$p.value, 3)`）。
+
+
+　他にも結果変数が二値変数だったり、処置変数が二値変数ではなかったりなど、様々なケースがある。{MatchIt}や{WeightIt}使用後の処置効果の推定方法の詳細は{MatchIt}公式ホームページの[Estimating Effects After Matching](https://kosukeimai.github.io/MatchIt/articles/estimating-effects.html)ページ、および{WeightIt}公式ホームページの[Estimating Effects After Weighting](https://ngreifer.github.io/WeightIt/articles/estimating-effects.html)を参照されたい。

@@ -1,0 +1,26 @@
+---
+subtitle: "10/ 操作変数法"
+modified-date: today
+format: 
+  revealjs:
+    footer: "操作変数法"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse)
+```
+
+{{< include _common.qmd >}}
+
+# **1** 操作変数法
+
+# **2** 仮定
+
+# **3** 2段階回帰
+
+# **4** 推定
+
+# **5** 実装例

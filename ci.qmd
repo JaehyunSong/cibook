@@ -1,0 +1,9 @@
+---
+title: "因果関係と因果推論"
+modified-date: today
+format: html
+metadata-files: 
+  - "_style/exercise.yml"
+---
+
+{{< revealjs file="ci_slide.html" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}

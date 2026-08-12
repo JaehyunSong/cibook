@@ -1,0 +1,1280 @@
+---
+subtitle: "4/ ランダム化比較試験"
+modified-date: today
+format: 
+  revealjs:
+    footer: "ランダム化比較試験"
+metadata-files: 
+  - "_style/slide.yml"
+---
+
+```{r}
+#| include: false
+pacman::p_load(tidyverse,
+               ggforce,
+               ggdag,
+               dagitty,
+               png,
+               patchwork,
+               cobalt)
+```
+
+{{< include _common.qmd >}}
+
+# **1** 内生性と外生性
+
+## 内生性
+
+処置変数と誤差項間に相関が存在する場合
+
+- 処置変数は[内生変数]{.alert}（$\Leftrightarrow$外生変数）
+- 処置変数が外生変数の場合、処置効果[（因果効果）]{.small}の推定値はバイアスを含む
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 3
+#| fig-subcap: 
+#|    - "内生性あり"
+#|    - "内生性なし"
+dagify(Y ~ D + e,
+       D ~ e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+
+dagify(Y ~ D + e,
+       D ~ X,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, X = 0, e = 2),
+                     y = c(Y = 0, D = 0, X = 2, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "X", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+## 内生性がない状態
+
+内生性が存在しない場合、処置群と統制群は集団として均質
+
+- 統制群と処置群を逆にしても問題ない（$\Rightarrow$統制群と処置群は**交換可能**）
+
+```{r}
+#| layout: [[-5, 40, -10, 40, -5]]
+#| fig-width: 4
+#| fig-height: 3
+#| fig-subcap: 
+#|    - "例1）やる気のある学生が処置群に多い（内生性あり）"
+#|    - "例2）やる気のある学生の割合は処置群・統制群において均等（内生性なし）"
+dagify(Y ~ D + e,
+       D ~ e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+
+dagify(Y ~ D + e,
+       exposure = "D",
+       outcome  = "Y",
+       coords = list(x = c(Y = 2, D = 0, e = 2),
+                     y = c(Y = 0, D = 0, e = 2))) |> 
+  tidy_dagitty() |> 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_point() +
+  geom_dag_edges() +
+  geom_dag_text(parse = TRUE, 
+                size  = 10,
+                col   = "white",
+                label = c("D", "Y", expression(epsilon))) +
+  coord_cartesian(xlim = c(-0.15, 2.15), ylim = c(-0.35, 2.15)) +
+  theme_dag() +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+## 交換可能性
+
+[交換可能性]{.strong}[（exchangeability）]{.small}：処置と潜在的結果が独立であること
+
+- [無視可能性]{.alert}[（ignorability）]{.small}、または[独立性]{.alert}[（independence）]{.small}とも呼ばれる
+
+$$
+(Y(0), Y(1)) \mathop{\perp\!\!\!\!\perp} D
+$$
+
+- 処置群と統制群の潜在的結果の分布が同じであること
+   - 処置群と統制群が同質 $\Rightarrow$ 処置群を統制群（あるいはその逆に）に[交換可能]{.strong}
+- [交換可能性が成立する場合、ATEが推定可能]{.strong}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+set.seed(19861008)
+tibble(mi    = rep(c("交換可能", "交換不可能"), each = 2000),
+       group = rep(rep(c("統制群", "処置群"), each = 1000), 2),
+       y     = c(rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 1.5, sd = 1),
+                 rnorm(1000, mean = -1.5, sd = 1))) |> 
+  mutate(mi = fct_inorder(mi)) |> 
+  ggplot() +
+  geom_density(aes(x = y, fill = group), 
+               alpha = 0.5, linewidth = 1) +
+  guides(fill = guide_legend(position = "inside")) +
+  labs(x = "潜在的結果", y = "密度", fill = "") +
+  facet_wrap(~mi) +
+  theme_bw(base_size = 16) +
+  theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
+        legend.justification.top = "left",
+        legend.justification.left = "top",
+        legend.justification.bottom = "right",
+        legend.justification.inside = c(0.01, 0.95),
+        legend.location = "plot",
+        plot.title.position = "plot",
+        legend.title = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text  = element_blank(),
+        panel.grid = element_blank(),
+        panel.background      = element_rect(fill = "transparent"),
+        plot.background       = element_rect(fill = "transparent", color = NA),
+        legend.background     = element_rect(fill = "transparent", color = NA),
+        legend.box.background = element_rect(fill = "transparent", color = NA))
+```
+
+## 平均独立性
+
+[**平均独立性**]{.alert}[（mean independence）]{.small}
+
+$$
+\begin{gathered}
+\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] \\
+\textsf{かつ} \\
+\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0]
+\end{gathered}
+$$
+
+- 潜在的結果の<ruby>分布<rt>・・</rt></ruby>でなく、<ruby>**期待値**<rt>・・・</rt></ruby>に関する条件：[交換可能性より緩い条件]{.alert}
+   - [平均独立が成立していればATEは推定可能]{.alert}
+   - ただし、不均一処置効果[（heterogeneous treatment effect）]{.small}を推定する場合、平均独立だけでは不十分[^hte]
+
+[^hte]: 識別自体は可能だが、推定値が信頼できる推定値かは別の問題である。信頼できるHTEを推定するためには交換可能性が満たされる必要がある。
+
+## 平均独立と交換可能性間の関係
+
+**[交換可能性は平均独立を内包する]{.strong}より強い仮定**^[平均独立が交換可能性を保証するわけではない。]
+
+$$
+\begin{gathered}
+(Y(0), Y(1)) \mathop{\perp\!\!\!\!\perp} D \\
+\Downarrow \\
+\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] \\
+\textsf{かつ} \\
+\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0]
+\end{gathered}
+$$
+
+|ケース|平均独立|交換可能性|ATE|HTE|
+|:---:|:---|:---|:---|:---|
+|1|成立|成立|**識別可**|**識別可**|
+|2|成立|不成立|**識別可**|識別不可|
+|3|不成立|成立|あり得ない|あり得ない|
+|2|不成立|不成立|識別不可|識別不可|
+
+## 平均独立と交換可能性
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+set.seed(19861008)
+tibble(mi    = rep(c("平均独立◯ & 交換可能性◯", "平均独立◯ & 交換可能性✕", 
+                     "平均独立✕ & 交換可能性✕（1）", "平均独立✕ & 交換可能性✕（2）"), each = 2000),
+       group = rep(rep(c("統制群", "処置群"), each = 1000), 4),
+       y     = c(rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 0, sd = 2),
+                 rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = 3, sd = 1),
+                 rnorm(1000, mean = 0, sd = 1),
+                 rnorm(1000, mean = -2, sd = 2))) |> 
+  mutate(mi = fct_inorder(mi)) |> 
+  ggplot() +
+  geom_density(aes(x = y, fill = group), 
+               alpha = 0.5, linewidth = 1) +
+  labs(x = "潜在的結果", y = "密度", fill = "") +
+  guides(fill = guide_legend(position = "inside")) +
+  labs(x = "潜在的結果", y = "密度", fill = "") +
+  facet_wrap(~mi) +
+  theme_bw(base_size = 16) +
+  theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
+        legend.justification.top = "left",
+        legend.justification.left = "top",
+        legend.justification.bottom = "right",
+        legend.justification.inside = c(0.01, 0.99),
+        legend.location = "plot",
+        plot.title.position = "plot",
+        legend.title = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text  = element_blank(),
+        panel.grid = element_blank(),
+        panel.background      = element_rect(fill = "transparent"),
+        plot.background       = element_rect(fill = "transparent", color = NA),
+        legend.background     = element_rect(fill = "transparent", color = NA),
+        legend.box.background = element_rect(fill = "transparent", color = NA))
+```
+
+## 平均独立と交換可能性が成立する例
+
+真のATEが2の例
+
+:::: {.columns}
+::: {.column width=35%}
+
+| $i$ | $D_i$ | $Y_i(0)$ | $Y_i(1)$ | $Y$ |
+|---:|---:|---:|---:|---:|
+|  1 | 0 | 3    | 5    | 3 |
+|  2 | 0 | 4    | 6    | 4 |
+|  3 | 0 | 5    | 7    | 5 |
+|  4 | 0 | 6    | 8    | 6 |
+|  5 | 0 | 7    | 9    | 7 |
+|  6 | 1 | 6    | 8    | 8 |
+|  7 | 1 | 4    | 6    | 6 |
+|  8 | 1 | 5    | 7    | 7 |
+|  9 | 1 | 7    | 9    | 9 |
+| 10 | 1 | 3    | 5    | 5 |
+
+:::
+
+::: {.column width=65%}
+
+- 平均独立：成立
+   - $\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] = 5$
+   - $\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0] = 7$
+- 交換可能性：成立（潜在的結果の分布が同じ）
+
+||$Y(0)$|$Y(1)$|
+|:---|:---:|:---:|
+|統制群|**[3, 7]**|[5, 9]|
+|処置群|[3, 7]|**[5, 9]**|
+
+- 事実[（factual）]{.small}を基づく$\widehat{\textsf{ATE}}$：2
+- 統制群と処置群が逆にした場合の$\widehat{\textsf{ATE}}$：2
+
+:::
+::::
+
+## 平均独立と交換可能性が成立しない例
+
+真のATEが2の例
+
+:::: {.columns}
+::: {.column width=35%}
+
+| $i$ | $D_i$ | $Y_i(0)$ | $Y_i(1)$ | $Y$ |
+|---:|---:|---:|---:|---:|
+| 1 | 0 | 2    | 4    | 2 |
+| 2 | 0 | 3    | 5    | 3 |
+| 3 | 0 | 4    | 6    | 4 |
+| 4 | 0 | 3    | 5    | 3 |
+| 5 | 0 | 2    | 4    | 2 |
+| 6 | 1 | 6    | 8    | 8 |
+| 7 | 1 | 5    | 7    | 7 |
+| 8 | 1 | 7    | 9    | 9 |
+| 9 | 1 | 6    | 8    | 8 |
+|10 | 1 | 5    | 7    | 7 |
+
+:::
+
+::: {.column width=65%}
+
+- 平均独立：[不成立]{.alert}
+   - $\mathbb{E}[Y(0)|D = 1] = 5.8 \neq \mathbb{E}[Y(0)|D = 0] = 2.8$
+   - $\mathbb{E}[Y(1)|D = 1] = 7.8 \neq \mathbb{E}[Y(1)|D = 0] = 4.8$
+- 交換可能性：[不成立]{.alert}（潜在的結果の分布が異なる）
+
+||$Y(0)$|$Y(1)$|
+|:---|:---:|:---:|
+|統制群|**[2, 4]**|[4, 6]|
+|処置群|[5, 7]|**[7, 9]**|
+
+- 事実[（factual）]{.small}を基づく$\widehat{\textsf{ATE}}$：5
+- 統制群と処置群が逆にした場合の$\widehat{\textsf{ATE}}$：-1
+
+:::
+::::
+
+## 平均独立のみ成立する例
+
+真のATEが0の例
+
+:::: {.columns}
+::: {.column width=35%}
+
+| $i$ | $D_i$ | $Y_i(0)$ | $Y_i(1)$ | $Y$ |
+|---:|---:|---:|---:|---:|
+| 1 | 0 | 2    | 1   | 2 |
+| 2 | 0 | 3    | 7   | 3 |
+| 3 | 0 | 4    | 4   | 4 |
+| 4 | 0 | 5    | 6   | 5 |
+| 5 | 0 | 6    | 2   | 6 |
+| 6 | 1 | 2   | 2    | 2 |
+| 7 | 1 | 1   | 4    | 4 |
+| 8 | 1 | 7   | 6    | 6 |
+| 9 | 1 | 4  | 5    | 5 |
+|10 | 1 | 6   | 3    | 3 |
+
+:::
+
+::: {.column width=65%}
+
+- 平均独立：成立
+   - $\mathbb{E}[Y(0)|D = 1] = \mathbb{E}[Y(0)|D = 0] = 4$
+   - $\mathbb{E}[Y(1)|D = 1] = \mathbb{E}[Y(1)|D = 0] = 4$
+- 交換可能性：[不成立]{.alert}（潜在的結果の分布が異なる）
+
+||$Y(0)$|$Y(1)$|
+|:---|:---:|:---:|
+|統制群|**[2, 6]**|[1, 7]|
+|処置群|[1, 7]|**[2, 6]**|
+
+- 事実[（factual）]{.small}を基づく$\widehat{\textsf{ATE}}$：0
+- 統制群と処置群が逆にした場合の$\widehat{\textsf{ATE}}$：0
+
+:::
+::::
+
+## 平均独立・交換可能性の確認
+
+結論：[平均独立・交換可能性の成立有無は確認できない]{.alert}[（因果推論の根本問題）]{.small}
+
+- 「内生性が存在しない」ことは確認できない[^blc-chk]
+- それでも信頼できる処置効果の推定のためには内生性の確認が必要
+- 解決策
+   - ~~内生性がないことを確認する~~（不可能）
+   - 理論的に内生性をなくす[（条件付け）]{.small}
+   - 理論的に内生性が（ほぼ）存在しないはずのデータを見つける[（自然実験・疑似実験）]{.small}
+   - [内生性が存在しないデータを作り上げる]{.strong}[（実験）]{.small}
+
+[^blc-chk]: 後述するバランスチェックを行えば、平均独立・交換可能性が満たされて**<ruby>いない<rt>・・・</rt></ruby>**ことは確認できるが、平均独立・交換可能性が満たされていることは示せない。
+
+# **2** 無作為割り当て
+
+## 無作為割り当て[（Random assignment）]{.small}
+
+- 被験者（人間や動物など）を複数のグループ（統制群や処置群など）に、コイン投げや乱数発生器などの偶然性によって割り当てる手法
+- 各個体がどのグループに割り当てられるかは等しい確率
+   - グループが2つ（$D$ = {0, 1}）なら...
+   - Pr($D_i$ = 1) = Pr($D_{j \neq i}$ = 1) & Pr($D_i$ = 0) = Pr($D_{j \neq i}$ = 0) 
+- グループ間の事前の差異を最小限に抑えることが可能
+
+
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+tibble(x = c(6:11, 6:11,
+             1:3,  1:3,
+             14:16, 14:16),
+       y = c(rep(6, 6), rep(7, 6),
+             rep(1, 3), rep(2, 3),
+             rep(1, 3), rep(2, 3)),
+       f = c(rep(c("男性", "女性"), c(4, 8)),
+             c("男性", "女性", "女性", "女性", "女性", "男性"),
+             c("女性", "男性", "男性", "女性", "女性", "女性"))) |> 
+  ggplot(aes(x = x, y = y, color = f)) +
+  geom_point(size = 5) +
+  annotate("rect", xmin = 6 - 1, xmax = 11 + 1, ymin = 6 - 0.5, ymax = 8,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 1, xmax = 3 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 1, xmax = 16 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("segment", x = 8.5, xend = 4, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 13, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("label", x = 8.5, y = 7.95, label = "標本（サンプル）", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 2, y = 3, label = "統制群", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 15, y = 3, label = "処置群", lineheight = 0, size = 7, fill = "white") +
+  guides(color = "none") +
+  theme_void() +
+  inset_element(p      = readPNG("figs/rct/sports_coin_toss.png", native = TRUE),
+                left   = 0.3,
+                right  = 0.7,
+                bottom = 0.3,
+                top    = 0.7) +
+  inset_element(p      = readPNG("figs/rct/coin_head.png", native = TRUE),
+                left   = 0.1,
+                right  = 0.2,
+                bottom = 0.35,
+                top    = 0.7) +
+  inset_element(p      = readPNG("figs/rct/coin_tail.png", native = TRUE),
+                left   = 0.8,
+                right  = 0.9,
+                bottom = 0.35,
+                top    = 0.7) 
+```
+
+## 無作為抽出[（Random sampling）]{.small}との違い {.no-stretch}
+
+- サンプリング法の一つであり、主に母集団から標本（サンプル）を抽出する際に用いられる（とされている）
+   - **単純無作為抽出**[^sampling]：母集団内の各個体が標本として選ばれる確率は等しい
+- 無作為抽出された標本は母集団を代表する
+   - 無作為抽出された標本の分布は母集団の分布と同じ[^sampling-mi]（[交換可能性が成立]{.alert}）
+
+[^sampling]: 無作為抽出にも様々なバリエーションがあり、単純無作為抽出、系統無作為抽出、層化無作為抽出などがある。詳細は社会調査法、サンプリングの教科書を参照すること
+
+[^sampling-mi]: また、標本の大きさが十分であれば、大数の法則（law of large number）により平均独立性も成り立つ。
+
+```{r}
+#| fig-width: 15
+#| fig-height: 3
+ggplot() +
+  geom_circle(aes(x0 = -2, y0 = 5, r = 1)) +
+  annotate("text", x = -2, y = 5, label = "母集団", size = 7.5) +
+  geom_circle(aes(x0 = 5, y0 = 5, r = 0.75)) +
+  annotate("text", x = 5, y = 5, label = "標本", size = 5) +
+  annotate("segment", x = -1, xend = 4.25, y = 5, yend = 5, arrow = arrow(type = "closed")) +
+  annotate("label", x = 1.5, y = 5, label = "無作為抽出", size = 7.5, fill = "white") +
+  annotate("curve", x = -1, xend = 4.25, y = 5.25, yend = 5.25, 
+           curvature = -0.2, color = "royalblue", linewidth = 1,
+           arrow = arrow(ends = "both", type = "closed")) +
+  annotate("text", x = 1.5, y = 6, label = "交換可能", 
+           size = 7.5, color = "royalblue", fontface = "bold") +
+  coord_fixed(xlim = c(-4, 7), ylim = c(4, 6.5)) + 
+  theme_void()
+```
+
+## 無作為割り当てと交換可能性
+
+交換可能性が成立するので、平均独立は当然ながら成立
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+ggplot() +
+  geom_circle(aes(x0 = 5, y0 = 5, r = 0.75)) +
+  annotate("text", x = 5, y = 5, label = "標本", size = 5) +
+  geom_circle(aes(x0 = 3, y0 = 0, r = 0.5)) +
+  annotate("text", x = 3, y = 0, label = "統制群") +
+  geom_circle(aes(x0 = 7, y0 = 0, r = 0.5)) +
+  annotate("text", x = 7, y = 0, label = "処置群") +
+  annotate("segment", x = 5, xend = 3.2, y = 4.25, yend = 0.475, arrow = arrow(type = "closed")) +
+  annotate("segment", x = 5, xend = 6.8, y = 4.25, yend = 0.475, arrow = arrow(type = "closed")) +
+  annotate("label", x = 5, y = 3, label = "無作為割り当て", fill = "white") +
+  annotate("curve", x = 4.7, xend = 2.9, y = 4.25, yend = 0.55, 
+           curvature = 0.2, color = "tomato", linewidth = 1,
+           arrow = arrow(ends = "both", type = "closed")) +
+  annotate("curve", x = 5.3, xend = 7.1, y = 4.25, yend = 0.55, 
+           curvature = -0.2, color = "tomato", linewidth = 1,
+           arrow = arrow(ends = "both", type = "closed")) +
+  annotate("curve", x = 3.6, xend = 6.4, y = 0, yend = 0, 
+           curvature = 0.2, color = "tomato", linewidth = 1,
+           arrow = arrow(ends = "both", type = "closed")) +
+  annotate("text", x = 5, y = 2, label = "交換可能", 
+           size = 7.5, color = "tomato", fontface = "bold") +
+  coord_fixed() + 
+  theme_void()
+```
+
+## 無作為抽出 + 無作為割り当て
+
+無作為抽出 + 無作為割り当て：[統制群と処置群と標本と母集団は交換可能]{.alert}
+
+- 「処置群の結果変数 = 母集団に処置を施した場合の結果変数」として解釈可能
+- 理想の話ではあり、標本が母集団を代表しない（交換不可能）ケースも多い
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+ggplot() +
+  annotate("rect", xmin = 2, xmax = 8, ymin = -0.75, ymax = 6,
+           alpha = 0.35, fill = "tomato") +
+  annotate("rect", xmin = -3.25, xmax = 6, ymin = 3.75, ymax = 6.25,
+           alpha = 0.35, fill = "royalblue") +
+  geom_circle(aes(x0 = -2, y0 = 5, r = 1)) +
+  annotate("text", x = -2, y = 5, label = "母集団", size = 7.5) +
+  geom_circle(aes(x0 = 5, y0 = 5, r = 0.75)) +
+  annotate("text", x = 5, y = 5, label = "標本", size = 5) +
+  geom_circle(aes(x0 = 3, y0 = 0, r = 0.5)) +
+  annotate("text", x = 3, y = 0, label = "統制群") +
+  geom_circle(aes(x0 = 7, y0 = 0, r = 0.5)) +
+  annotate("text", x = 7, y = 0, label = "処置群") +
+  annotate("segment", x = -1, xend = 4.25, y = 5, yend = 5, arrow = arrow(type = "closed")) +
+  annotate("segment", x = 5, xend = 3, y = 4.25, yend = 0.5, arrow = arrow(type = "closed")) +
+  annotate("segment", x = 5, xend = 7, y = 4.25, yend = 0.5, arrow = arrow(type = "closed")) +
+  annotate("label", x = 1, y = 5, label = "無作為抽出", fill = "white") +
+  annotate("label", x = 5, y = 3, label = "無作為割り当て", fill = "white") +
+  coord_fixed() + 
+  theme_void()
+```
+
+## 無作為割り当ての方法
+
+- [**ベルヌーイ実験**]{.alert}[（Bernoulli randomized experiment; コイン投げ）]{.small}
+   - 各個体は確率$p$で独立的に処置を受ける
+   - 「望ましくない」ランダム化の可能性（例：すべての固体が処置群になる）
+- [**完全ランダム化実験**]{.alert}[（completely randomized experiment）]{.small}
+   - 予め処置群の大きさ$n_1$を決め[（$n_1 < n$）]{.small}、全個体の中から$n_1$個を無作為に選ぶ
+   - 「望ましくない」ランダム化の可能性あり（例：処置群の全員が女性になる）
+- [**ブロック別（層別）ランダム化実験**]{.alert}[（block/stratified randomized experiment）]{.small}
+   - サンプルを2つ以上のブロックに分け、ブロック内で完全無作為割り当て
+   - ブロックが2つのみの場合、「[**ペアごとのランダム化実験**]{.alert}」[（paired randomized experiment）]{.small}と呼ばれる
+
+## ブロッキング
+
+- 完全ランダム化の場合、偏ったグループが出来上がる可能性がある[^prob-bias]
+- [ブロッキング]{.strong}[（blocking）]{.small}：ブロック内で完全ランダム化割り当てを実施
+   - 例）男性と女性の中で完全ランダム化割り当てを実施
+- [推定の精度が上がる]{.alert}ため、ブロッキングできる場合、ブロッキングをした方が良い
+
+[^prob-bias]: サンプルサイズ（$n$）が十分大きい場合、この可能性は低い。
+
+```{r}
+#| layout: [[-15, 35, -10, 35, -15]]
+#| fig-width: 5
+#| fig-height: 3.5
+#| fig-subcap: 
+#|    - "完全ランダム化が失敗した例"
+#|    - "ブロック別ランダム化の例"
+tibble(x = c(6:11, 6:11,
+             1:3,  1:3,
+             14:16, 14:16),
+       y = c(rep(6, 6), rep(7, 6),
+             rep(1, 3), rep(2, 3),
+             rep(1, 3), rep(2, 3)),
+       f = c(rep(c("男性", "女性"), each = 6),
+             c("男性", "女性", "女性", "女性", "女性", "女性"),
+             c("男性", "男性", "男性", "男性", "男性", "女性"))) |> 
+  ggplot(aes(x = x, y = y, color = f)) +
+  geom_point(size = 5) +
+  annotate("rect", xmin = 6 - 1, xmax = 11 + 1, ymin = 6 - 0.5, ymax = 7 + 0.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 1, xmax = 3 + 1, ymin = 1 - 0.5, ymax = 2 + 0.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 1, xmax = 16 + 1, ymin = 1 - 0.5, ymax = 2 + 0.5,
+           color = "black", fill = NA) +
+  annotate("segment", x = 8.5, xend = 2, y = 5.5, yend = 2.5,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 15, y = 5.5, yend = 2.5,
+           arrow = arrow(type = "closed")) +
+  guides(color = "none") +
+  theme_void()
+
+tibble(x = c(6:11, 6:11,
+             1:3,  1:3,
+             14:16, 14:16),
+       y = c(rep(6, 6), rep(7, 6),
+             rep(1, 3), rep(2, 3),
+             rep(1, 3), rep(2, 3)),
+       f = c(rep(c("男性", "女性"), each = 6),
+             c("男性", "男性", "男性", "女性", "女性", "女性"),
+             c("男性", "男性", "男性", "女性", "女性", "女性"))) |> 
+  ggplot(aes(x = x, y = y, color = f)) +
+  geom_point(size = 5) +
+  annotate("rect", xmin = 6 - 1, xmax = 11 + 1, ymin = 6 - 0.5, ymax = 7 + 0.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 6 - 0.5, xmax = 11 + 0.5, ymin = 6 - 0.35, ymax = 6 + 0.35,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 6 - 0.5, xmax = 11 + 0.5, ymin = 7 - 0.35, ymax = 7 + 0.35,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 1, xmax = 3 + 1, ymin = 1 - 0.5, ymax = 2 + 0.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 0.5, xmax = 3 + 0.5, ymin = 1 - 0.35, ymax = 1 + 0.35,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 0.5, xmax = 3 + 0.5, ymin = 2 - 0.35, ymax = 2 + 0.35,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 1, xmax = 16 + 1, ymin = 1 - 0.5, ymax = 2 + 0.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 0.5, xmax = 16 + 0.5, ymin = 1 - 0.35, ymax = 1 + 0.35,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 0.5, xmax = 16 + 0.5, ymin = 2 - 0.35, ymax = 2 + 0.35,
+           color = "black", fill = NA) +
+  annotate("segment", x = 8.5, xend = 2, y = 6.65, yend = 2.35,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 15, y = 6.65, yend = 2.35,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 2, y = 5.65, yend = 1.35,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 15, y = 5.65, yend = 1.35,
+           arrow = arrow(type = "closed")) +
+  guides(color = "none") +
+  theme_void()
+```
+
+# **3** ランダム化比較試験
+
+## ランダム化比較試験[（randomized controlled trials; **RCT**）]{.small}
+
+- 標本[（サンプル）]{.small}を無作為割り当てで複数[（2つ以上）]{.small}のグループに分割し、各グループに異なる処置[^treat-control]を施し、結果変数を比較する手法
+- [**実験**]{.alert}[（experiment）]{.small}とも呼ばれる[因果推論の王道]{.alert}[（best practice）]{.small}
+
+[^treat-control]: ここには処置を施さないことも含まれる。
+
+```{r}
+#| fig-width: 12
+#| fig-height: 3.5
+ggplot() +
+  geom_circle(aes(x0 = -5, y0 =  0, r = 2), fill = "purple") +
+  geom_circle(aes(x0 = 3, y0 =  3, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 3, y0 = 0, r = 1), fill = "cornsilk") +
+  geom_circle(aes(x0 = 3, y0 = -3, r = 1), fill = "royalblue") +
+  geom_circle(aes(x0 = 8, y0 =  3, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 8, y0 = 0, r = 1), fill = "cornsilk") +
+  geom_circle(aes(x0 = 8, y0 = -3, r = 1), fill = "royalblue") +
+  geom_circle(aes(x0 = 13, y0 =  3, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 13, y0 = 0, r = 1), fill = "cornsilk") +
+  geom_circle(aes(x0 = 13, y0 = -3, r = 1), fill = "royalblue") +
+  annotate("segment", 
+           x = -3, xend = 2, y = 0, yend = c(-3, 0, 3),
+           arrow = arrow(type = "closed")) +
+  annotate("segment", 
+           x = 4, xend = 7, y = c(-3, 0, 3), yend = c(-3, 0, 3),
+           arrow = arrow(type = "closed")) +
+  annotate("segment", 
+           x = 9, xend = 12, y = c(-3, 0, 3), yend = c(-3, 0, 3),
+           arrow = arrow(type = "closed")) +
+  annotate("rect", xmin = 11.5, xmax = 14.5, ymin = -4.5, ymax = 4.5,
+           color = "black", fill = NA) +
+  annotate("text", x = -5, y = 0, label = "サンプル", color = "white", size = 5) +
+  annotate("text", x = 3, y = 3, label = "グループ1", color = "white") +
+  annotate("text", x = 3, y = 0, label = "グループ2", color = "black") +
+  annotate("text", x = 3, y = -3, label = "グループ3", color = "white") +
+  annotate("text", x = 8, y = 3, label = "", color = "white") +
+  annotate("text", x = 8, y = 0, label = "💊", color = "black", size = 6) +
+  annotate("text", x = 8, y = -3, label = "💊💊", color = "white", size = 6) +
+  annotate("text", x = 13, y = 3, label = "🌡", color = "white", size = 8) +
+  annotate("text", x = 13, y = 0, label = "🌡", color = "black", size = 8) +
+  annotate("text", x = 13, y = -3, label = "🌡", color = "white", size = 8) +
+  annotate("text", x = 3, y = 5, label = "無作為割り当て", size = 5) +
+  annotate("text", x = 8, y = 5, label = "介入", size = 5) +
+  annotate("text", x = 13, y = 5, label = "測定", size = 5) +
+  coord_fixed() +
+  theme_void()
+```
+
+:::: {.aside}
+厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。
+::::
+
+## 実験の種類
+
+Hyde[（2015）]{.small}による分類
+
+- **フィールド**実験[（field experiment）]{.small}
+- **実験室**実験[（laboratory experiment）]{.small}
+- **サーベイ**実験[（survey experiment）]{.small}
+
+それぞれの実験は長所と短所を持つ[（以下は目安であり、設計次第でいくらでも上下する）]{.small}
+
+|種類|内的妥当性|外的妥当性|実施コスト|コントロール性|対象|
+|:---|:---:|:---:|:---:|:---:|:---|
+|実験室実験|高|低〜中|低〜高|高|大学生など|
+|フィールド実験|低〜中|高|高|中|一般市民など|
+|サーベイ実験|中〜高|中|中〜高|中|全国・国際的|
+
+:::: {.aside}
+- Hyde, Susan D.. 2015. "[Experiments in International Relations: Lab, Survey, and Field](https://doi.org/10.1146/annurev-polisci-020614-094854)." *Annual Review of Political Science,* 18: 403-424.
+::::
+
+## フィールド実験[（field experiment）]{.small}
+
+実生活[（学校、地域、職場、選挙など）]{.small}の場面で行われる実験
+
+:::: {.columns}
+::: {.column width=50%}
+#### メリット
+
+- 外的妥当性[（現実の行動に近い）]{.small}
+- 自然な環境で被験者が行動するため、実験効果が出にくい
+- 政策介入の効果などを現場で検証できる
+:::
+
+::: {.column width=50%}
+#### デメリット
+
+- 内的妥当性[（外的要因が混入しやすい）]{.small}
+- 高い実施コスト[（+ 許可や倫理的配慮も必要）]{.small}
+- 研究者による統制が限定的
+:::
+::::
+
+## フィールド実験の例
+
+- 問い：啓発メッセージは投票参加を促すか[（Gerber, Green, and Larimer 2008）]{.small}
+- 統制群：処置なし
+- 処置群：[投票参加を促すメッセージが記載されたハガキ]{.alert}を発送
+- メッセージの処置効果 = 処置群の投票率 - 統制群の投票率
+
+```{r}
+#| fig-width: 15
+#| fig-height: 3.5
+tibble(x = c(6:11, 6:11,
+             1:3,  1:3,
+             14:16, 14:16),
+       y = c(rep(6, 6), rep(7, 6),
+             rep(1, 3), rep(2, 3),
+             rep(1, 3), rep(2, 3)),
+       f = c(rep(c("男性", "女性"), c(4, 8)),
+             c("男性", "女性", "女性", "女性", "女性", "男性"),
+             c("女性", "男性", "男性", "女性", "女性", "女性"))) |> 
+  ggplot(aes(x = x, y = y, color = f)) +
+  geom_point(size = 5) +
+  annotate("rect", xmin = 6 - 1, xmax = 11 + 1, ymin = 6 - 0.5, ymax = 8,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 1, xmax = 3 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 1, xmax = 16 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("segment", x = 8.5, xend = 4, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 13, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("label", x = 8.5, y = 4.5, label = "無作為割り当て", size = 7, fill = "white") +
+  annotate("label", x = 8.5, y = 7.85, label = "ミシガン州民", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 2, y = 3, label = "統制群", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 15, y = 3, label = "処置群", lineheight = 0, size = 7, fill = "white") +
+  annotate("curve", x = 16, xend = 16.5, y = 5, yend = 2.75, curvature = -0.75,
+           arrow = arrow(type = "closed", length = unit(0.15, "inches"))) +
+  annotate("label", x = 16, y = 5, label = "DO YOUR\nCIVIC DUTY\nAND\nVOTE!", fill = "white") +
+  guides(color = "none") +
+  coord_cartesian(xlim = c(-5, 22.5)) +
+  theme_void()
+```
+
+:::: {.aside}
+- Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. "[Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment](https://doi.org/10.1017/S000305540808009X)." *American Political Science Review* 102(1): 33–48.
+- Gerber, Alan S. and Donald P. Green. 2012. [*Field Experiments*](https://www.amazon.co.jp/dp/0393979954/), Norton.
+::::
+
+## 実験室実験[（labotary experiment）]{.small}
+
+研究者によって完全にコントロールされる環境[（例：大学の実験室）]{.small}で行う実験
+
+:::: {.columns}
+::: {.column width=50%}
+#### メリット
+
+- 高い内部妥当性[（因果関係の識別が容易）]{.small}
+- 外部のノイズを排除しやすい
+- 実験環境の精密なコントロールが可能
+:::
+
+::: {.column width=50%}
+#### デメリット
+
+- 外的妥当性
+- 観測者効果、ホーソン効果[（被験者が「実験されている」と強く意識）]{.small}への懸念
+- 偏ったサンプルになりがち[（主に大学生）]{.small}
+:::
+::::
+
+> *College sophomores may not be people*（Hovland 1959）^[Hovland, Carl. I. 1959. "[Reconciling conflicting results derived from experimental and survey studies of attitude change](https://doi.org/10.1037/h0042210)." *American Psychologist,* 14(1): 8-17.]
+
+## 実験室実験の例
+
+- 問い：討議は少数派への配慮が強めるか
+- **Step 1：**全員を対象に不公平に対する嫌悪感[（inequity aversion）]{.small}を測定
+- **Step 2：**公平な配分案 vs. 多数派優遇の不公平配分案の投票
+   - 処置群のみ[グループ内のコミュニケーション（議論）]{.alert}を許可
+- **Step 3：**全員を対象とした5つの配分案の投票
+- 議論の因果効果 = 公平な配分案に対する「処置群の支持 - 統制群の支持」
+
+```{r}
+#| fig-width: 15
+#| fig-height: 2.5
+ggplot() +
+  geom_circle(aes(x0 = -3, y0 =  0, r = 2), fill = "purple") +
+  geom_circle(aes(x0 = 3, y0 =  2, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 3, y0 = -2, r = 1), fill = "royalblue") +
+  geom_circle(aes(x0 = 8, y0 =  2, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 8, y0 = -2, r = 1), fill = "royalblue") +
+  geom_circle(aes(x0 = 13, y0 =  2, r = 1), fill = "tomato") +
+  geom_circle(aes(x0 = 13, y0 = -2, r = 1), fill = "royalblue") +
+  annotate("segment", x = -1, xend = 2, y = 0, yend = 2,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = -1, xend = 2, y = 0, yend = -2,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 4, xend = 7, y = 2, yend = 2,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 4, xend = 7, y = -2, yend = -2,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 9, xend = 12, y = 2, yend = 2,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 9, xend = 12, y = -2, yend = -2,
+           arrow = arrow(type = "closed")) +
+  annotate("rect", xmin = 1.5, xmax = 4.5, ymin = -3.5, ymax = 3.5,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 11.5, xmax = 14.5, ymin = -3.5, ymax = 3.5,
+           color = "black", fill = NA) +
+  annotate("text", x = -3, y = 0, label = "サンプル", color = "white", size = 5) +
+  annotate("text", x = c(3, 8, 13), y = 2, label = "統制群", color = "white") +
+  annotate("text", x = c(3, 8, 13), y = -2, label = "処置群", color = "white") +
+  annotate("text", x = -3, y = 4, label = "無作為割り当て", size = 5) +
+  annotate("text", x = 3, y = 4, label = "Step 1", size = 5) +
+  annotate("text", x = 8, y = 4, label = "Step 2", size = 5) +
+  annotate("text", x = 13, y = 4, label = "Step 3", size = 5) +
+  coord_fixed() +
+  theme_void()
+```
+
+:::: {.aside}
+- Woon, Jonathan, Minsu Jang, Kira Pronin and Jacob Schiller. 2023. "[Discussion and Fairness in a Laboratory Voting Experiment](https://doi.org/10.1017/XPS.2023.29)," *Journal of Experimental Political Science,* 11(2): 224-236.
+::::
+
+## サーベイ実験[（survey experiment）]{.small}
+
+アンケート内に無作為に割り当てたの処置[（例：文言の違い、シナリオの提示）]{.small}を埋め込み、参加者の反応を比較する実験
+
+- インターネットを用いたアンケートに処置を埋め込むのが一般的
+
+:::: {.columns}
+::: {.column width=50%}
+#### メリット
+
+- 実施コストが低く、大規模サンプルを得やすい
+- インターネット調査での実施が可能
+   - 時系列や国際比較も容易
+- さまざまな認知的・態度的反応が測定可能
+:::
+
+::: {.column width=50%}
+#### デメリット
+
+- 行動ではなく意見や認識の測定が中心[（行動的な結果の妥当性に限界）]{.small}
+- 省力回答者[（satisficer）]{.small}の存在
+- 処置の「強さ」が限られ、効果量が小さくなることが多い
+:::
+::::
+
+:::: {.aside}
+- SONG Jaehyun・秦正樹. 2020. 「[オンライン・サーベイ実験の方法：理論編](https://doi.org/10.11218/ojjams.35.92)」『理論と方法』35(1): 92-108.
+- 秦正樹・SONG Jaehyun. 2020. 「[オンライン・サーベイ実験の方法：実践編](https://doi.org/10.11218/ojjams.35.109)」『理論と方法』35(1): 109-127.
+::::
+
+## サーベイ実験の例
+
+- 問い：日米韓軍事同盟は日韓協力への支持を高めるか[（Asaba *et al.* 2020）]{.small}
+- 統制群：米豪合同軍事演習の動画を視聴
+- 処置群：[日米韓同軍事演習の動画]{.alert}を視聴
+- 動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度
+
+```{r}
+#| fig-width: 15
+#| fig-height: 3.5
+tibble(x = c(6:11, 6:11,
+             1:3,  1:3,
+             14:16, 14:16),
+       y = c(rep(6, 6), rep(7, 6),
+             rep(1, 3), rep(2, 3),
+             rep(1, 3), rep(2, 3)),
+       f = c(rep(c("男性", "女性"), c(7, 5)),
+             c("男性", "女性", "男性", "女性", "男性", "男性"),
+             c("女性", "男性", "男性", "男性", "女性", "女性"))) |> 
+  ggplot(aes(x = x, y = y, color = f)) +
+  geom_point(size = 5) +
+  annotate("rect", xmin = 6 - 1, xmax = 11 + 1, ymin = 6 - 0.5, ymax = 8,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 1 - 1, xmax = 3 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("rect", xmin = 14 - 1, xmax = 16 + 1, ymin = 1 - 0.5, ymax = 3,
+           color = "black", fill = NA) +
+  annotate("segment", x = 8.5, xend = 4, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("segment", x = 8.5, xend = 13, y = 5.5, yend = 3,
+           arrow = arrow(type = "closed")) +
+  annotate("label", x = 8.5, y = 4.5, label = "無作為割り当て", size = 7, fill = "white") +
+  annotate("label", x = 8.5, y = 7.9, label = "回答者", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 2, y = 3, label = "統制群", lineheight = 0, size = 7, fill = "white") +
+  annotate("label", x = 15, y = 3, label = "処置群", lineheight = 0, size = 7, fill = "white") +
+  annotate("curve", x = 15, xend = 16.5, y = 5, yend = 2.75, curvature = -0.75,
+           arrow = arrow(type = "closed", length = unit(0.15, "inches"))) +
+  annotate("curve", x = 2, xend = 0.5, y = 5, yend = 2.75, curvature = 0.75,
+           arrow = arrow(type = "closed", length = unit(0.15, "inches"))) +
+  annotate("label", x = 2, y = 5, label = "🇺🇸♥🇦🇺", size = 7, fill ="white") +
+  annotate("label", x = 15, y = 5, label = "🇯🇵♥🇺🇸♥🇰🇷", size = 7, fill = "white") +
+  guides(color = "none") +
+  coord_cartesian(xlim = c(-5, 22.5)) +
+  theme_void()
+```
+
+:::: {.aside}
+- Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. "[38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea](https://doi.org/10.1093/irap/lcy024)," *International Relations of the Asia-Pacific*, 20(2): 253-273.
+::::
+
+# **4** 処置効果の推定
+
+## 処置効果の推定
+
+**結果変数の平均値をグループ間で比較**
+
+- ATE = $\mathbb{E}[Y|D = 1] - \mathbb{E}[Y|D = 0]$
+   - ATE = 処置群の結果変数の平均値 - 統制群の結果変数の平均値
+
+**使用可能な手法**
+
+- 平均値/比率の差の検定[（$t$検定、$z$検定）]{.small}
+   - グループが3つ以上の場合、ペアごと[（pairwise）]{.small}の検定を実施（非推奨）
+- 分散分析[（ANOVA、MANCOVAなど）]{.small}
+- [**線形回帰分析**]{.alert}
+
+## 多重比較の問題[（multiple comparisons problem）]{.small}
+
+- [複数回の比較から処置効果を推定する際に発生]{.alert}する問題
+   - 統制群と処置群1、処置群2がある場合、「統制群 vs. 処置群1」、「統制群 vs. 処置群2」計2回の比較が行われる
+- $p$ = 0.05を基準とした統計的有意性検定の限界
+   - 処置効果が0でも、処置効果があると判定される可能性は約5%
+   - [**比較が複数回行われたら、処置効果があると判定される可能性が自然に上がる**]{.alert}
+      
+## 多重比較の例
+
+2回の比較のうち、1つでも$p$ < 0.05になったら「処置効果がある」と判定してしまう
+
+- より厳しい基準で統計的有意性検定を行うべき
+
+|施行|統制群 vs. 処置群1|統制群 vs. 処置群2|処置効果|
+|:---:|---:|---:|:---:|
+|1|0.975|0.878|留保|
+|2|0.447|[0.048]{.alert}|[あり]{.alert}|
+|3|0.693|0.729|留保|
+|4|[0.011]{.alert}|0.899|[あり]{.alert}|
+|5|0.205|0.988|留保|
+|6|0.975|0.878|留保|
+
+## 多重比較の問題の補正
+
+[ボンフェローニ補正]{.strong}[（Bonferroni correction）]{.small}[^mtc]の例
+
+- 真の処置効果が0でも、計2回の比較が行われる場合、それぞれの比較において$p$ < 0.05になる割合は5%
+   - 1つでも$p$ < 0.05になったら「処置効果がある」と判定される
+   - 計2回の比較が行われるため、「処置効果がある」と判定される割合は10%（**2倍**）
+   - $\Rightarrow$ [「処置効果がある」と判定される可能性は既存の$m$倍]{.alert}（$m$は比較回数）
+   - $\Rightarrow$ **解決策：**[統計的有意性の閾値（$\alpha$）を$m$分の1に変更]{.alert}する^[または、得られた$p$値を$m$倍して解釈する。]
+
+[^mtc]: 他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé's method）、テューキー法（Tukey HSD）など様々な補正法がある。
+
+## ボンフェローニ補正の例
+
+- 例）$\alpha = 0.05$、比較回数が2回の場合
+   - $p$値が0.025（= 0.05 / 2）を下回る場合、「5%水準で統計的に有意」と解釈する
+   - 得られた$p$値を2倍にし、その$p$値が0.05を下回る場合、「5%水準で統計的に有意」と解釈する
+- 例）$\alpha = 0.01$、比較回数が5回の場合
+   - $p$値が0.002（= 0.01 / 5）を下回る場合、「1%水準で統計的に有意」と解釈する
+   - 得られた$p$値を5倍にし、その$p$値が0.01を下回る場合、「1%水準で統計的に有意」と解釈する
+
+## 不均一な処置効果[（heterogeneous treatment effect; HTE）]{.small}
+
+- 処置効果は人によって異なる
+   - 平均処置効果[（ATE）]{.small}はあくまで「平均値」
+   - 現実には[個人や集団によって処置効果が異なる]{.strong}可能性が高い[（処置効果の異質性）]{.small}
+- 問いの例
+   - 処置効果が最も大きいのは誰か
+   - どの条件下で処置効果が最大・最小か
+
+#### 不均一な処置効果が考えられる例
+
+- 1万円給付金の処置効果
+   - 高所得者：少額[（...?）]{.small}の給付金で消費にあまり影響なし
+   - 低所得者：生活必需品の購入が可能に $\rightarrow$ 実質的な効果大
+
+<!---
+- 例2）新しい教授法の効果
+   - すでに成績の良い生徒 vs 学習機会がなかった生徒
+--->
+
+## HTEの推定
+
+条件付き平均処置効果[（conditional average treatment efffect; **CATE**）]{.small}でHTE推定
+
+- [**交互作用項**]{.alert}による推定
+   - 例：$Y_i = \alpha + \tau T_i + \beta X_i + \delta (T_i \cdot X_i) + \varepsilon_i$
+      - $\tau + \delta X_i$：$X_i = x$における処置効果[（限界効果 [marginal effect]）]{.small}
+- [**サブグループごと**]{.alert}の推定
+   - 年齢・性別・所得などで層別化してATEを推定
+   - $\mathbb{E}[Y(1)−Y(0)|X=x]$：$X = x$における平均処置効果
+
+:::: {.aside}
+- サブグループは**予め設定した仮説に基いて選定**すべきであり、**多重検定**の問題も考慮する必要がある。
+- Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. "[Understanding Interaction Models: Improving Empirical Analyses.](https://doi.org/10.1093/pan/mpi014)" *Political Analysis* 14(1): 63–82.
+- Hainmueller, Jens, Jonathan Mummolo, and Yiqing Xu. 2020. "[How Much Should We Trust Estimates from Multiplicative Interaction Models? Noticeable Errors and Simple Remedies.](https://doi.org/10.1017/pan.2018.46)" *Political Analysis,* 27 (2): 173–92.
+::::
+
+## 参考）機械学習を用いたHTEの推定
+
+- Causal Forest[（Wagner and Athey 2018; Athey *et al.* 2019; Jawadekar *et al.* 2023）]{.small}
+- Meta-learner[（Künzel *et al.* 2019）]{.small}
+   - S-learner
+   - T-learner
+   - X-learner
+- Double/Debiased Machine Learning[（Chernozhukov *et al.* 2018）]{.small}
+   
+:::: {.aside}
+- Wager, Stefan, and Susan Athey. 2018. "[Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.](https://doi.org/10.1080/01621459.2017.1319839)" *Journal of the American Statistical Association,* 113 (523): 1228–1242.
+- Athey, Susan, Julie Tibshirani, and Stefan Wager. 2019. "[Generalized Random Forests.](https://www.jstor.org/stable/26581894)" *The Annals of Statistics,* 47 (2): 1148–1178.
+- Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. "[Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects](https://doi.org/10.1093/aje/kwad043)." *American Journal of Epidemiology,* 192(7): 1155–1165.
+- Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. "[Metalearners for estimating heterogeneous treatment effects using machine learning](https://doi.org/10.1073/pnas.1804597116)." *Proceedings of the National Academy of Sciences of the United States of America,* 116(10): 4156-4165.
+- Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. "[Double/Debiased Machine Learning for Treatment and Structural Parameters](https://doi.org/10.1111/ectj.12097)." *The Econometrics Journal,* 21 (1): C1–C68.
+::::
+
+# **5** 実装時の注意点
+
+## 実験と研究倫理
+
+- RCTにおける倫理的配慮の必要性
+   - RCTは介入[（処置）]{.small}を人為的に操作するため、参加者にリスク・不利益を与える可能性が存在
+      - 喫煙[（原因）]{.small}と健康[（結果）]{.small}をRCTで検証しようとしたら...?
+      - 統制群に有効な処置を与えないことで、公正性や人道性に反するケースも
+
+- RCT実施における倫理的対策
+   - [**インフォームド・コンセント**]{.alert}（説明と同意）の取得は必須
+      - 説明責任、理解、自由意志の保障、途中中止基準の明示など
+   - [**研究開始前に審査を必ず受ける**]{.alert}
+      - **IRB**（Institutional Review Board／倫理審査委員会）
+
+## 研究倫理違反の例（1）
+
+**スタンフォード監獄実験**[（Haney *et al.* 2018）]{.small}
+
+- 被験者を無作為に「囚人」と「看守」に割り当て、模擬刑務所で行動を観察
+   - 当初2週間予定した実験だが6日間で中止
+- 被験者が心理的苦痛や屈辱を実際に体験[（実験後も続く）]{.small}
+- インフォームド・コンセントの問題[（被験者が途中退出できないと誤認）]{.small}
+- 研究者自身[（Zimbardo）]{.small}が刑務所長役として実験に介入
+
+:::: {.aside}
+- Haney, Craig, Curtis Banks, and Philip Zimbardo, 1973. "[A Study of Prisoners and Guards in a Simulated Prison]()." *Naval Research Reviews,* 9(1): 1–17.
+::::
+
+## 研究倫理違反の例（2）
+
+**Facebook感情操作実験**[（Kramer *et al.* 2014）]{.small}
+
+- Facebookが約69万人のユーザーのニュースフィードを操作
+   - ポジティブな投稿が減らされたグループとネガティブな投稿を減らされたグループ
+   - 表示される投稿の感情傾向が、ユーザー自身の感情表現に影響
+- インフォームド・コンセントの不在
+- 研究倫理審査[（IRB）]{.small}の管轄外で行われた実験
+
+:::: {.aside}
+- Kramer, Adam D. I., Jamie E. Guillory, and Jeffrey T. Hancock. 2014. "[Experimental evidence of massive-scale emotional contagion through social networks](https://doi.org/10.1073/pnas.1320040111)." *Proceedings of the National Academy of Sciences of the United States of America,* 111(24): 8788–8790.
+::::
+
+## 内的妥当性と外的妥当性
+
+ランダム化比較試験[（実験）]{.small}の場合、通常、内的妥当性が高い
+
+#### [内的妥当性]{.alert}[（internal validity）]{.small}
+
+- 推定された処置効果の信頼性[（推定された処置効果が標本に対して有効か）]{.small}
+- 処置効果が本当に処置によって引き起こされたか[（交絡要因が正しく統制されているか）]{.small}
+- ランダム化比較試験の場合、**無作為割り当て**を用いるため内的妥当性が高い
+
+#### [外的妥当性]{.alert}[（external validity）]{.small}
+
+- 標本から得られた処置効果がどの程度（どこまで）一般化可能か[（母集団でも同じ結果が得られるか）]{.small}
+- 標本が母集団を代表する場合、外的妥当性が高くなりやすい
+   - 緻密な設計[（**無作為抽出**など）]{.small}で行われた観察から得られた結果は一般的に外的妥当性が高い
+
+:::: {.aside}
+- Findley, Michael G., Kyosuke Kikuta and Michael Denly. 2021. "[External Validity](https://doi.org/10.1146/annurev-polisci-041719-102556)." *Annual Review of Political Science,* 24: 365-393.
+::::
+
+## SUTVA
+
+[**Stable Unit Treatment Value Assumption**]{.alert}（Rubin 1980）
+
+> 　個々のユニットにおける潜在的結果は、他のユニットが受ける処置によって変化しない。また、個々のユニットに対する処置水準は一定であり、異なる潜在的結果を導くような処置水準の形態的・内容的な変動はない。（インベンス・ルービン 2023: 11）
+
+- 以下の2つの仮定で構成
+   1. [**干渉なし**]{.alert}
+   1. [**処置の一意性**]{.alert}
+- サーベイ実験では意識しなくても満たされるケースが多い（例外あり）
+
+:::: {.aside}
+- Rubin, Donald B. 1980. "[Discussion of "Randomization Analysis of Experimental Data in the Fisher Randomization Test](https://doi.org/10.2307/2287653)." *The Journal of the American Statistical Association*, 75 (371): 591-593.
+- G.W. インベンス・D.B. ルービン 著. 星野崇宏・繁桝算男 訳. 2023. 『インベンス・ルービン 統計的因果推論 (上)』朝倉書店
+::::
+
+## SUTVA（1）
+
+[**干渉なし**]{.alert}（no interference）
+
+- ある個体の潜在的結果は、他の個体の処置有無の影響を受けないこと
+- 例）ワクチン接種の効果
+   - $D$：ワクチン接種の有無（0 or 1）
+   - $Y$：感染の確率（0〜1）
+- Aの潜在的結果[（$Y_A$）]{.small}はBのワクチン接種有無によって異なる[（集団免疫）]{.small}
+
+:::: {layout-ncol=2}
+
+:::{.center}
+||$D_B = 0$|$D_B = 1$|
+|:---:|:---:|:---:|
+|$D_A = 0$|$Y_A = 0.8$|$Y_A = 0.3$|
+|$D_A = 1$|$Y_A = 0.3$|$Y_A = 0.1$|
+
+: 仮定が満たされない例
+:::
+
+:::{.center}
+||$D_B = 0$|$D_B = 1$|
+|:---:|:---:|:---:|
+|$D_A = 0$| $Y_A = 0.8$ | $Y_A = 0.8$ |
+|$D_A = 1$| $Y_A = 0.3$ | $Y_A = 0.3$ |
+
+: 仮定が満たされる例
+:::
+::::
+
+## SUTVA（2）
+
+[**処置の一意性**]{.alert}（no hidden variations of treatment）
+
+- 同じ処置はすべての個体に対して同じ方法で適用されること
+- 満たされる例：
+   - 医療実験で標準化された薬剤を同量・同時点で投与
+- 満たされない例：
+   - 教授法・教材の効果：同じ教授法・教材を与えても教師による進め方・熱意・補足指導にばらつきが存在
+   - 給付金の効果：一律2万円を配っても東京都の2万円と鹿児島県の2万円は意味が違う[^prices]
+   - 給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など
+
+[^prices]: 2003年[消費者物価地域差指数](https://www.stat.go.jp/data/kouri/kouzou/index.html)を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。
+
+## 二重盲検法
+
+[**二重盲検法**]{.alert}[（double-blind）]{.small}：被験者も研究者も、誰がどの処置を受けたかを知らない設計
+
+- 二重盲検 > 単盲検 > 非盲検
+- [プラセボ効果]{.alert}と[観察バイアス]{.alert}の防止（評価者の期待が結果に影響）
+- 二重盲検法が困難なケースの例
+   - 教育介入（教師が処遇を知ってしまう）
+   - 社会政策（給付の存在自体が分かる）
+- サーベイ実験の場合、基本的に二重盲検が保障されるが、フィールド実験・実験室実験では単盲検、非盲検になる可能性も
+
+## バランスチェック
+
+グループの均質性を確認する手法
+
+- 処置群と統制群が同質[（= 交換可能）]{.small}であれば、処置以外の変数[（被験者の性別、年齢、学歴、支持政党、...）]{.small}も同じであるはず
+   - $\Rightarrow$ 統制群と処置群間において様々な共変量のバランスがとれている
+- [バランスしていない[（imbalanced）]{.small}場合、グループ間の単純比較は不適切]{.alert}
+   - 平均独立、交換可能性が成立していない可能性が極めて高い
+- [**注意：**]{.alert}バランスしていることは、交換可能性・平均独立性を担保しない。**バランスは交換可能性[（または、平均独立性）]{.small}の必要条件**に過ぎず、十分条件ではない
+- 実験データであってもバランスしていない可能性がある
+
+## バランスチェックの方法
+
+- 統計的有意性検定[（$t$検定、$\chi^2$検定、ANOVAなど）]{.small}は[**非推奨**]{.alert}[（Imai *et al.* 2008）]{.small}
+- [**標準化平均差**]{.alert}[（standardized mean difference; **SMD**）]{.small}[^standardized]の使用を推奨
+   - [**SMDが0から大きく離れている = SMDの絶対値が「十分に」大きい = グループは不均質**]{.strong}
+   - バランスの閾値は研究者が任意で決めが、推奨は[**0.1**]{.strong}[（Austin 2011）]{.small}
+      - 傾向スコアのバランスチェックには0.25を採用する場合も[（Stuart 2010）]{.small}
+   - グループが3つ以上ならペアごとにSMDを計算
+
+[^standardized]: 標準化した変数$X$を$X_z$とする場合、$X_z = \frac{X - \overline{X}}{s_X}$である（$\overline{X}$は$X$の平均値、$s_X$は$X$の標準偏差）。ただし、共変量が二値変数の場合は標準化をせず、単純に平均差を計算する。
+
+:::: {.aside}
+- Imai, Kosuke, Gary King, Elizabeth A. Stuart. 2008. "[Misunderstandings between experimentalists and observationalists about causal inference](https://doi.org/10.1111/j.1467-985X.2007.00527.x)." *Journal of the Royal Statistical Society: Series A,* 171(2): 481-502.
+- Austin, Peter C. 2011. "[An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies](https://doi.org/10.1080/00273171.2011.568786)." *Multivariate Behavioral Research,* 46(3): 399-424.
+- Stuart, Elizabeth A. 2010. "[Matching methods for causal inference: A review and a look forward](https://doi.org/10.1214/09-STS313)." *Statistical science: a review journal of the Institute of Mathematical Statistics,* 25(1): 1-21.
+::::
+
+## バランスチェックの例
+
+{cobalt}パッケージ[^balancer]を利用したバランスチェックの例
+
+[^balancer]: {[BalanceR](https://github.com/JaehyunSong/BalanceR)}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{[BalanceR](https://github.com/JaehyunSong/BalanceR)}を使ってくれるなら感謝しかない。
+
+- 左の図の場合、ほとんどの共変量がバランスしていない[（閾値=0.1の場合）]{.small}
+   - バランスしていないデータでも[共変量調整でバイアスの補正]{.alert}が可能[（Lin 2013）]{.small}
+
+```{r}
+#| layout: [[-7, 38, -10, 38, -7]]
+#| fig-width: 5
+#| fig-height: 4
+set.seed(19861008)
+lalonde |> 
+  bal.tab(treat ~ age + educ + race + married + re74 + re75, 
+          data = _, s.d.denom = "pooled") |> 
+  love.plot(abs = TRUE, stars = "std", 
+            var.names = c("age" = "年齢",
+                          "educ" = "学歴",
+                          "race_black" = "人種：黒人",
+                          "race_hispan" = "人種：ヒスパニック",
+                          "race_white" = "人種：白人",
+                          "married" = "既婚",
+                          "re74" = "収入（1974年）",
+                          "re75" = "収入（1975年）")) +
+  geom_vline(xintercept = c(0.1, 0.25), linetype = "dashed") +
+  scale_x_continuous(breaks = c(0, 0.1, 0.25, 0.4, 0.6)) +
+  labs(x       = "平均値の差分の絶対値", 
+       title   = "",
+       caption = "注：*は標準化差分を意味する") +
+  coord_cartesian(xlim = c(0, 0.65)) +
+  theme(legend.position = "none",
+        plot.title      = element_blank()) +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+
+lalonde |> 
+  mutate(treat = sample(0:1, size = nrow(lalonde), replace = TRUE)) |> 
+  bal.tab(treat ~ age + educ + race + married + re74 + re75, 
+          data = _, s.d.denom = "pooled") |> 
+  love.plot(abs = TRUE, stars = "std", 
+            var.names = c("age" = "年齢",
+                          "educ" = "学歴",
+                          "race_black" = "人種：黒人",
+                          "race_hispan" = "人種：ヒスパニック",
+                          "race_white" = "人種：白人",
+                          "married" = "既婚",
+                          "re74" = "収入（1974年）",
+                          "re75" = "収入（1975年）")) +
+  geom_vline(xintercept = c(0.1, 0.25), linetype = "dashed") +
+  scale_x_continuous(breaks = c(0, 0.1, 0.25, 0.4, 0.6)) +
+  labs(x       = "平均値の差分の絶対値", 
+       title   = "",
+       caption = "注：*は標準化差分を意味する") +
+  coord_cartesian(xlim = c(0, 0.65)) +
+  theme(legend.position = "none",
+        plot.title      = element_blank()) +
+  theme(panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background  = element_rect(fill = "transparent", color = NA))
+```
+
+:::: {.aside}
+- Lin, Winston. 2013. "[Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman's Critique](https://doi.org/10.1214/12-AOAS583)." *The Annals of Applied Statistics* 7(1): 295-318.
+::::
