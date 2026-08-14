@@ -11,9 +11,232 @@ metadata-files:
 
 {{< revealjs file="rdd_slide.html" width="1300px" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}
 
-# 可視化
+# セットアップ
+
+```{r}
+pacman::p_load(tidyverse,
+               broom,
+               rdrobust,
+               rddapp,
+               modelsummary)
+
+df <- read_csv("_data/Myersson_2014.csv")
+df
+```
+
+ Meyersson（2014）[^meyersson]の再現
+
+[^meyersson]: Meyersson, Erik. 2014. "[Islamic Rule and the Empowerment of the Poor and Pious](https://doi.org/10.3982/ECTA9878)," *Econometrica*, 82(1): 229-269.
+
+- イスラム系政党の市長が誕生することは、女性の教育参加（高校修了率など）に対して抑圧的に働くのか、あるいはエンパワーメントとして働くのか。
+- イスラム政党の市長が当選した自治体では、特に貧困層・保守層出身の女性における高校修了率が大幅に上昇した。イスラム系市長の存在が、保守的な家庭環境において少女を公立校へ通学させることへの心理的・環境的ハードルを下げる効果を果たしたと分析している。
+- 方法
+   - ランニング変数：トルコ自治体首長選挙における「イスラム政党候補の得票率差（対次点）」
+   - 得票率差0%（カットオフ）を境に勝敗が決定される
+
+選挙結果に関する変数は1994年のトルコ地方選挙、
+
+
+　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数`treat`を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系政党の対次点得票率差（`iwm`）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、`iwm`が0より大きい場合は1、それ以外は0の値をとる`treat`変数を`if_else()`関数で作成する。
+
+　もう一つ、`is_any_center`関数も作っておこう。これは統制変数として使う予定の変数だ。今回のデータセットには当該自治体が中心都市かどうかを表す4つの変数がある。たとえば、`is_province_center`はその県（province）の中心都市かを示す変数で、`is_district_center`はその群（district; 県の下位区分）の中心都市かを示すダミー変数である。また、大都市自治体、その周辺の主要都市を示す`is_metro`と`is_sub_metro`がある。この4つの変数のうち1つでも該当すれば、大きい都市と言っても良いだろう。これを`is_any_center`という新しい変数として追加する。具体的には先ほど述べた4つの変数の和を計算し、これが0より大きいのであれば、`is_any_center`の値を1に、それ以外は0にすれば良い。
+
+```{r}
+df <- df |> 
+   mutate(treat         = if_else(iwm > 0, 1, 0),
+          is_any_center = if_else(is_district_center + is_province_center + 
+                                     is_sub_metro + is_metro > 0, 1, 0))
+```
+
+　続いて、メイン分析の推定に使用する変数が1つでも欠損している行を除外する。たとえば、`df |> drop_na(x)`は変数`x`の値が欠損（`NA`）している場合、その**行**を丸ごと落とすことを意味する。もし、`drop_na(x)`の変わりに`drop_na(x, y)`にすれば変数`x`**か**`y`、1つでも欠損していればその行を落とすことになる。もったいないと思うかも知れないが、どうせ分析の時に欠損値を含む行は自動的に落とされる^[一部のパッケージはその列の平均値や中央値で欠損値を埋めたりもするば、ほとんどのパッケージはそこまでしない。]。むしろ、共変量あり/なしバージョンを推定する場合は、事前に欠損値の整理をしておかないと大変なことになるので、事前に落としておく必要がある。
+
+:::: {.callout-note title="なぜ欠損した行を「予め」削除するのか" collapse=true}
+　たとえば、同じデータセット（ *n* = 100 ）を使って、`y ~ d`と`y ~ d + x`のモデルを推定するとする、`x`に10個の欠損値が含まれているとしよう。もし欠損値を含む行を整理せずに推定を続けると、モデル1のサンプルサイズは100、モデル2のサンプルサイズは90になる。ここで2つの推定結果（たとえば、`d`の係数）が異なるとすれば、これは共変量調整が原因と言えるだろうか。もしかしたら、脱落した10行が原因だったかも知れない。2つのモデルは使用しているデータセットがことなるため、モデル間比較ができない。`x`が欠損している10行分を予め削除しておくと、2つのモデルはいずれも *n* = 90だから、推定結果の違いが見られたらそれは共変量調整によるものだと判断することができる。
+::::
+
+```{r}
+df <- df |> 
+   drop_na(female_hs_2000, male_hs_2000, treat, ivs, n_parties, 
+           log_pop, pop_young, pop_old, gender_ratio, hh_size, 
+           is_district_center, is_province_center, is_sub_metro)
+
+df
+```
+
+　約600行分が削除され、残り`r nrow(df)`行となっている。
+
+# 記述統計量
+
+　まず、記述統計量を確認してみよう。Meyersson（2014）のTable 1では全体の平均値と標準偏差、グループ（`treat`の値が0か1か）ごとに平均値と標準誤差を掲載している。`select()`関数で`df`からTable 1に登場した共変量のみを抽出し、{modelsummary}の`datasummary_skim()`で全体（pooled）の記述統計量を確認する。小数点3桁まで出力するために`fmt = fmt_decimal(digits = 3)`を指定知る。
+
+```{r}
+df |> 
+   select(female_hs_2000, male_hs_2000, treat, ivs, n_parties, 
+          log_pop, pop_young, pop_old, gender_ratio, hh_size, 
+          is_district_center, is_province_center, is_sub_metro) |> 
+   datasummary_skim(fmt = fmt_decimal(digits = 3))
+```
+
+　次は処置群（`treat` = 1）と統制群（`treat` = 0）の記述統計量だ。ここでは{modelsummary}の`datasummary_balance()`を使う。`datasumamry_skim()`とは違って、第1引数がformula（`~ 処置変数名`）になっている。データフレーム名は`data`引数に当てる。パイプ演算子を使う場合はプレイスホルダー（`_`）を使う。
+
+```{r}
+df |> 
+   select(female_hs_2000, male_hs_2000, treat, ivs, n_parties, 
+          log_pop, pop_young, pop_old, gender_ratio, hh_size, 
+          is_district_center, is_province_center, is_sub_metro) |> 
+   datasummary_balance(~treat, data = _, fmt = fmt_decimal(digits = 3))
+```
 
 # 推定
+
+　それではLATEを推定してみよう。Meyersson（2014）のFigure 4とTable 2が主要推定結果である。RDDを使った研究は図と表の組み合わせが定番である。図で<ruby>大体の<rt>・・・</rt></ruby>雰囲気を見せ、表で具体的な処置効果を示す。Figure 4は4つの図で、Table 2は計18のモデルで構成されているが、ここでは紙幅（...?）の関係上、すべての結果を再現せず、メインの結果のみを再現する。
+
+## LATEの推定
+
+　本稿のメインの推定結果はTable 2のPanel Aの左から4列目とPanel Bの左から4列目である^[いずれも最適バンド幅を使用し、共変量を入れた局所線形回帰分析の結果である。]。いずれも2000年における高卒の割合を結果変数だが、Panel Aが女性、Panel Bが男性である。
+
+　まず、女性の高卒割合を結果変数とし、共変量を入れていないモデル（Panel Aの3列目）を推定してみよう。使用する関数は{rdrobust}の`rdrobust()`だ。必須引数は`y`、`x`、`c`、`data`だ。`y`と`x`は結果変数と割当変数名、`data`は`x`と`y`で指定した変数が格納されているデータフレーム名だ。最後に`c`は処置を受ける閾値（*c*utpoint）だ。今回は`iwm`が0より大きくなると処置群に割り当てられるから`c = 0`になる。ただし、`c`は既定値が0であり、ここの実習では指定しなくても問題ない（一応、最初は付けてみよう）。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, c = 0, data = df)
+```
+
+　何か表示されるが、推定結果はどこにあるだろうか。推定結果を見るためには`rdrobust()`で推定したオブジェクトを`summary()`関数に通す必要がある。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df) |> 
+   summary(all = TRUE)
+```
+
+:::: {.callout-tip title="推定結果を表形式で抽出したい" collapse=true}
+　{broom}の`tidy()`関数を使えばLATEの推定結果をデータフレーム型で抽出できる。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df) |> 
+   tidy()
+```
+::::
+
+　計3つの推定結果（Conventional、Bias-Corrected、Robust）が表示され、結果も微妙に異なる。どの結果が、Meyersson（2014）の結果と一致するだろうか。論文を見直してみても良いが、結論からいうと一致するものは「ない」。Meyersson（2014）の推定結果は点推定値が0.032、標準誤差が0.010になっている。この相違を説明するのはかなり面倒だ。簡単にいえば、Meyersson（2014）のRDDと{rdrobust}がデフォルトで提供しているRDDは同じRDDとはいえ、中身の設定が相当異なると言える。まず、使用しているバンド幅が異なる。Meyersson（2014）はImbens and Kalyanaraman（2012）[^ik12]、通常IK、またはIK12バンド幅[^ik09]を使用しているが、{rdrobust}はCalonico *et al.*（2014）[^cct2014]のバンド幅を使用している。数年前までは引数でIK12が指定できたが、今はできなくなっている^[Calonico *et al.*（2014）の著者は{rdrobust}パッケージの開発者でもあるが、昔は伝統的なRDD推定にも対応していたが、今は自分たちが推奨している手法のみ使えるようになっている。{rdd}パッケージが使えなくなった2026年現在、{rdrobust}パッケージが事実上の標準（*de facto* standard）だが、かなり独善的としか言いようがない。{rddapp}や{rddtools}などのパッケージもあるが、今のところ出来が微妙だ。]。
+
+[^ik09]: IKでなくIK12と呼ぶには理由がある。Imbens and Kalyanaraman（2012）はNBERワーキングペーパー（[Imbens and Kalyanaraman 2009](https://doi.org/10.3386/w14726)）をベースとしているが、ワーキングペーパーの時の計算方法と2012年の論文版の計算方法がやや異なるからだ。この微妙な違いにこだわる人はIK09とIK12と分けて呼ぶ。
+
+[^ik12]: Imbens, Guido, Karthik Kalyanaraman. 2012. "[Optimal Bandwidth Choice for the Regression Discontinuity Estimator](https://doi.org/10.1093/restud/rdr043)," *The Review of Economic Studies*, 79(3): 933-959.
+
+[^cct2014]: Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), "[Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs](https://doi.org/10.3982/ECTA11757)," *Econometrica*, 82: 2295-2326.
+
+　それではバンド幅を変えれば同じ結果が得られるだろうか。IK12バンド幅の値は0.2397612だ。これを使ってみよう。`rdrobust()`でバンド幅を手動で指定したい時には`h`引数を使用する。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df,
+         h = 0.2397612) |> 
+   summary(all = TRUE)
+```
+
+　それでも結果が全然合わない。元の論文と{rdrobust}の違いはバンド幅の選び方だけではない。カーネル関数も異なる。講義ではRDDにおけるカーネル関数の事実上の標準は三角形カーネル関数（traiangular）と述べた（はず）が、{rdrobust}でもこれを採用している。しかし、Meyersson（2014）はなぜか一様カーネル関数（uniform / rectangular）を使用している^[ただし、IK12バンド幅の計算には三角形カーネル関数を使用している]。それでは`kernel`引数でカーネル関数を一様カーネルに変えてみよう。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df,
+         h = 0.2397612, kernel = "uniform") |> 
+   summary(all = TRUE)
+```
+
+　Conventional行で点推定値（0.032）が一致した。点推定値のズレの謎はこれで解決したが、標準誤差がややことなる。論文では0.010、{rdrobust}の推定結果は0.012だ。結論からいうと、これはどうしようもない。{rdrobust}ではAbadie and Imbens（2006）[^abadie_imbens_2006]の不均一分散に頑健な最近傍分散推定量（heteroskedasticity-robust nearest neighbor variance estimator）が採用されており、Meyersson（2014）は分散不均一性を考慮した標準誤差を採用していない^[共変量を投入したモデルでは県レベルでクラスタリングした標準誤差を使っている]。問題は{rdrobust}では頑健ではない通常の標準誤差は使えないということだ。つまり、{rdrobust}で本論文の結果を100%再現することはできない。誤解しないで頂きたいが、これはMeyersson（2014）がわざと頑健ではない手法を採用したとか、方法論的に間違った手法を使ったとか、あるいは時代遅れだったとか、そういうものではない。この論文が執筆された時期を考えるとある意味、これが標準的な作法だったともいえる^[ただし、バンド幅の計算時には使用した三角形カーネル関数を使わなかったことは未だに謎である。]。実際に論文を読んで見れば分かるが、「ここまでする?」と思わせるレベルで方法論的に真摯に向かってる良い論文だ。
+
+[^abadie_imbens_2006]: Abadie, Alberto. and Guido. W. Imbens. 2006. "[Large Sample Properties of Matching Estimators for Average Treatment Effects](https://doi.org/10.1111/j.1468-0262.2006.00655.x)," *Econometrica*, 74: 235-267.
+
+　それでは話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico *et al.*（2014）[^cct2014]を参照すること。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df, 
+         covs = ~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + is_province_center + is_district_center + is_sub_metro + is_metro + factor(province),
+         h = 0.2397612, kernel = "uniform", vce = "cr1", cluster = province) |> 
+   summary(all = TRUE)
+```
+
+```{r}
+rdd_fit_0 <- rdrobust(y = female_hs_2000, x = iwm, 
+                      covs = cov_formula,
+                      data = df)
+rdd_fit_0
+```
+
+```{r}
+summary(rdd_fit_0, all = TRUE)
+```
+
+```{r}
+cov_formula <- formula(~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + is_district_center + is_province_center + is_sub_metro + is_metro + province)
+```
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, c = 0, h = 1, data = df) |> 
+   summary(all = TRUE)
+```
+
+## 可視化
+
+```{r}
+#| layout: [[49,-2,49]]
+#| fig-width: 4
+#| fig-height: 4
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(a) Women in 2000") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = male_hs_2000, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(b) Men in 2000") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_1990, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(a) Women in 1990") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = male_hs_1990, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(b) Men in 1990") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+```
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, 
+         covs = ~ ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df)
+rdrobust(y = male_hs_2000, x = iwm, 
+         covs = ~ ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df)
+```
 
 # RDDの仮定
 
@@ -30,6 +253,201 @@ metadata-files:
 
 ## プラセボ検定
 
-## バランスチェック
+$\delta$ = 0.5
+
+```{r}
+df_left <- df |> 
+   filter(iwm < median(iwm))
+
+df_right <- df |> 
+   filter(iwm >= median(iwm))
+
+rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df_left, cutpoint = median(df_left$iwm), t.design = "g") |> summary()
+
+rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df_right, cutpoint = median(df_right$iwm), t.design = "g") |> summary()
+```
 
 ## 密度検定
+
+Figure 2
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+df |> 
+   ggplot() +
+   geom_histogram(aes(x = iwm, fill = iwm > 0),
+                  color = "white", boundary = 0, binwidth = 0.02) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "firebrick") +
+   labs(x = "Isalmic party vote margin in 1994 (running variable)",
+        y = "Number of municipalities",
+        fill = "Mayor party") +
+   scale_fill_manual(labels = c("FALSE" = "Non-Islamic", "TRUE" = "Islamic"),
+                     values = c("FALSE" = "#5F7387", "TRUE" = "#E74C3C")) +
+   theme_classic() +
+   theme(legend.position = "bottom")
+```
+
+```{r}
+dc_test(df$iwm[abs(df$iwm) < 0.6], cutpoint = 0)
+```
+
+## バランスチェック
+
+Figure 3
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+df |> 
+   filter(iwm >= -0.3 & iwm <= 0.3) |> 
+   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
+   geom_point() 
+```
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+df |> 
+   filter(iwm >= -0.3 & iwm <= 0.3) |> 
+   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_point() +
+   geom_smooth() 
+```
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+df |> 
+   filter(iwm >= -0.3 & iwm <= 0.3) |> 
+   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.05, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Age 60+") +
+   scale_x_continuous(breaks = c(-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3)) +
+   coord_cartesian(ylim = c(0.05, 0.11)) +
+   theme_classic()
+```
+
+
+```{r}
+#| code-fold: true
+#| layout: [[49,-2,49],[49,-2,49],[49,-2,49],[49,-2,49]]
+#| fig-width: 3
+#| fig-height: 2
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = ivs, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(method = "loess", color = "black", linewidth = 0.75, span = 1) +
+   labs(x = "Islamic win margin", y = "Islamic vote share") +
+   coord_cartesian(ylim = c(0, 0.65)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Age 60+") +
+   coord_cartesian(ylim = c(0.05, 0.11)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = pop_young, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Age 19-") +
+   coord_cartesian(ylim = c(0.35, 0.55)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = log_pop, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Log polulation") +
+   coord_cartesian(ylim = c(6, 10)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = gender_ratio, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Gender") +
+   coord_cartesian(ylim = c(0.9, 1.1)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = is_any_center, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Any center municipality") +
+   coord_cartesian(ylim = c(0, 0.8)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = n_parties, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Number of parties") +
+   coord_cartesian(ylim = c(2, 8)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.32 & iwm <= 0.32) |> 
+   ggplot(aes(x = iwm, y = hh_size, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.08, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
+   labs(x = "Islamic win margin", y = "Household size") +
+   coord_cartesian(ylim = c(4, 10)) +
+   theme_classic()
+```
+
+# 感度分析
+
+```{r}
+rd_est(female_hs_2000 ~ iwm | iwm + ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df, cutpoint = 0, t.design = "g", less = TRUE) |> summary() |> 
+   rd_sens_bw(bws = seq(0.1, 1, by = 0.1))
+
+rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
+       data = df, cutpoint = 0, t.design = "g") |> rd_sens_bw(bws = seq(0.1, 1, by = 0.1)) |> str()
+```

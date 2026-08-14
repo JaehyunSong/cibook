@@ -1233,9 +1233,9 @@ mlda_df |>
 ## バンド幅
 
 - 最適なバンド幅を決めるたった一つのルールは存在しない
-   - [Imbens and Kalyanaraman（2009）](https://doi.org/10.3386/w14726)、[Lee and Lemieux（2010）](https://doi.org/10.1257/jel.48.2.281)、[Imbens and Kalyanaraman（2012）](https://doi.org/10.1093/restud/rdr043)、[Calonico et al.（2014）](https://doi.org/10.3982/ECTA11757)、[Arai and Ichimura（2018）](https://doi.org/10.3982/QE590)、[Calonico et al.（2019）](https://doi.org/10.3150/21-BEJ1445)、[Calonico et al.（2020）](https://doi.org/10.1093/ectj/utz022)など
+   - [Lee and Lemieux（2010）](https://doi.org/10.1257/jel.48.2.281)、[Imbens and Kalyanaraman（2012）](https://doi.org/10.1093/restud/rdr043)、[Calonico et al.（2014）](https://doi.org/10.3982/ECTA11757)、[Arai and Ichimura（2018）](https://doi.org/10.3982/QE590)、[Calonico et al.（2019）](https://doi.org/10.3150/21-BEJ1445)、[Calonico et al.（2020）](https://doi.org/10.1093/ectj/utz022)など
       - 多くはMSE[（mean squared error）]{.small}の最小化を目指している。
-   - 現在、一般的に採用されているのは[**Imbens and Kalyanaraman（2012）**]{.alert}の方法
+   - 現在、一般的に採用されているのは[**Imbens and Kalyanaraman（2012）**]{.alert}の方法^[ただし、現在最も幅広く使われている{rdrobust}パッケージは[Calonico et al.（2014）](https://doi.org/10.3982/ECTA11757)が提唱する通称、「CCTバンド幅」である。]
 
 - [バンド幅によってLATEの推定値は変わり得る]{.strong}
    - 多少の変動は仕方ないが、バンド幅が少し変わっただけでLATEの推定値が大きく変化することは望ましくない。
@@ -1692,16 +1692,12 @@ tibble(side  = rep(c("21歳未満サンプル", "21歳以上サンプル"), each
 
 ## バランスチェック
 
-[閾値周辺における共変量の連続性]{.alert}の確認
+[閾値周辺における共変量の連続性]{.strong}の確認
 
-- 共変量（処置前変数）を結果変数とし、RDDを実行
-- ジャンプが生じないことが望ましい
+- 共変量（処置前変数）を結果変数とし、RDDを実行 $\Rightarrow$ ジャンプが生じないことが望ましい
+- 標準化平均差[（SMD）]{.small}を使ったバランスチェックは使用**しない**^[連続性が満たされても、割当変数と共変量の関係が右上がり・右下がりの関係の場合、SMDが大きくからだ。]
 
-![](figs/rdd/balance_check.png){width="45%" fig-align="center"}
-
-:::: {.aside}
-出典：[Lee, Moretti, and Butler（2004）](https://doi.org/10.1162/0033553041502153)
-::::
+![出典：[Lee, Moretti, and Butler（2004）](https://doi.org/10.1162/0033553041502153)](figs/rdd/balance_check.png){width="40%" fig-align="center"}
 
 ## 密度検定
 
