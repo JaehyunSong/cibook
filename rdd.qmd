@@ -287,9 +287,9 @@ df |>
 　線がジャンプしていることが分かる。実はこれだけで目的は達成したが、Figure 4を見ると散布図が非常にシンプルになっている。RDDにおける可視化は情報量よりも傾向が重要だ。ここまで点が多いと、線はジャンプしていても、点の群れがジャンプしているかどうかは分かりにくい。ここでは以下のようにデータを4%ポイントの区間に分け、その区間内の結果変数（`female_hs_2000`）の平均値をプロットしてみよう。
 
 ```{r}
-#| fig-width: 4
+#| fig-width: 8
 #| fig-height: 4
-#| out-width: 400px
+#| out-width: 800px
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
@@ -311,7 +311,7 @@ df |>
                     size = 3, shape = 21, color = "black", fill = "gray")
 ```
 
-　ここでさらにLOESS曲線と割当変数の閾値に垂直線（`geom_vline()`）を乗せる。線の色は黒（`color = "black"`）、太さはやや細めの0.75（`linewidth = 0.75`）とする。
+　ここでさらにLOESS曲線と割当変数の閾値に垂直線（`geom_vline()`）を乗せる。線の色は黒（`color = "black"`）、太さはやや細めの0.5（`linewidth = 0.5`）とする。
 
 ```{r}
 #| fig-width: 4
@@ -324,10 +324,45 @@ df |>
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.75)
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5)
 ```
 
-　後は`labs()`で軸タイトル、図のタイトルを修正し、`coord_cartesian()`で座標軸の下限と上限を調節する。今回は縦軸の下限と上限をそれぞれ-0.05、0.25にしたいから`ylim = c(-0.05, 0.25)`とする。テーマはMeyersson（2014）内の図と似た雰囲気のクラシック（`theme_classic()`）を使う。
+:::: {.callout-tip title="曲線の滑らかさの調節" collapse=true}
+　`geom_smooth()`内の`span`引数で曲線の滑らかさは調整できる。既定値は0.75だが、これを大きくすればするほど滑らかな曲線となり、小さいするとより点（データポイント）にフィットするギザギザな線になる。
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5, span = 0.25) +
+   labs(x = "割当変数", y = "結果変数", title = "span = 0.25の場合") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5, span = 1.5) +
+   labs(x = "割当変数", y = "結果変数", title = "span = 1.5の場合") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+```
+::::
+
+　あとは`labs()`で軸タイトル、図のタイトルを修正し、`coord_cartesian()`で座標軸の下限と上限を調節する。今回は縦軸の下限と上限をそれぞれ-0.05、0.25にしたいから`ylim = c(-0.05, 0.25)`とする。テーマはMeyersson（2014）内の図と似た雰囲気のクラシック（`theme_classic()`）を使う。
 
 ```{r}
 #| fig-width: 4
@@ -340,25 +375,28 @@ df |>
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.75)
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree",
         title = "(a) Women in 2000") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 ```
 
+　同じ要領で縦軸（結果変数）を2000年におけるの15〜20歳男性の高校卒業者割合（`male_hs_2000`）、1990年におけるの15〜20歳女性の高校卒業者割合（`female_hs_1990`）、1990年におけるの15〜20歳男性の高校卒業者割合（`male_hs_1990`）にした図を作成してみよう（以下の「▶ コード」をクリックすればコードが表示される）。
+
 ```{r}
+#| code-fold: true
 #| layout: [[49,-2,49]]
 #| fig-width: 4
 #| fig-height: 4
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
-   ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
         title = "(a) Women in 2000") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
@@ -366,12 +404,12 @@ df |>
 
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
-   ggplot(aes(x = iwm, y = male_hs_2000, group = treat)) +
+   ggplot(aes(x = iwm, y = male_hs_2000)) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
         title = "(b) Men in 2000") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
@@ -379,12 +417,12 @@ df |>
 
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
-   ggplot(aes(x = iwm, y = female_hs_1990, group = treat)) +
+   ggplot(aes(x = iwm, y = female_hs_1990)) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
         title = "(a) Women in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
@@ -392,17 +430,28 @@ df |>
 
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
-   ggplot(aes(x = iwm, y = male_hs_1990, group = treat)) +
+   ggplot(aes(x = iwm, y = male_hs_1990)) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
         title = "(b) Men in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 ```
+
+```{r}
+female_90 <- rdrobust(y = female_hs_1990, x = iwm, data = df, cluster = province, vce = "CR2") 
+male_90   <- rdrobust(y = male_hs_1990, x = iwm, data = df, cluster = province, vce = "CR2") 
+```
+
+　イスラム系首長の誕生は女性の世俗的な高校教育を増加させるという傾向が確認できた。また、1990年における高校卒業者の割合を縦軸にした分析では線の大きなジャンプが確認出来ていない。1994年の選挙結果前にジャンプが見られないことは、逆の因果や第3の要因（交絡要因）がないことを強く示唆している[^late-1990]。
+
+　しかし、こういった図からでは統計的有意性検定はできず、あくまでも「傾向」を確認することが主な目的である。曲線のジャンプの幅や信頼区間はLOESSの設定によっていくらでも変わるものであり、この図から効果の有無を語ることはできない。処置効果の有無やその効果量の大きさを語る際には図ではなく、推定結果そのものの図表を使おう。
+
+[^late-1990]: 1990年の女性を結果変数とした場合のLATEの推定値は`r sprintf("%.3f", tidy(female_90)$estimate[3])`（*p* = `r sprintf("%.3f", tidy(female_90)$p.value[3])`）、男性のそれは`r sprintf("%.3f", tidy(male_90)$estimate[3])`（*p* = `r sprintf("%.3f", tidy(male_90)$p.value[3])`）である。論文の付録にも同様の分析結果が掲載されている。先述の通り、使用しているカーネル関数やバンド幅が異なるため、そこそこギャップがあるが、これらを一致させるとほぼ同じ結果が得られる。しかし、なぜかこの分析においては共変量を投入していない。たしかに、共変量は2000年時点での変数だから共変量として不適切かも知れないが、ここは玉に瑕とも言えよう。
 
 :::: {.callout-tip title="`rdplot()`を使った簡単な作り方" collapse=true}
 　{rdrobust}を使った`rdplot()`を使えばより簡単に上記の図が作れる。`rdplot()`の`y`、`x`、`c`、`data`引数は`rdrobust()`のそれと同じだ。ここに`nbins`引数を使うことで、閾値を中心とし左右に何個の点を出力するかが調節できる。
@@ -425,31 +474,36 @@ rdplot1$rdplot +
 
 # RDDの仮定
 
-1. 閾値のルールが明確であり、既知であること
-   - 問題ないケースが多い
-1. 閾値周辺において潜在的結果が連続であること
-   - プラセボ検定
-1. 閾値周辺において応答変数に影響を与える共変量（処置変数を除く）が連続すること
-   - バランスチェック
-1. 閾値周辺において割当変数が連続であること
-   - 密度検定
+RDDの識別条件として重要なのは以下の3点です。
 
-ただ、「仮定が満たされていない」ことは確認できても、「仮定が満たされている」は確認できない（統計的仮説検定の仕組みを考えてみよう）。せいぜい「「仮定が満たされていない」とは言えない」くらいまでしか確認できない。それでも仮定違反が見つかるだけでも十分に意義はあろう。
+1. 閾値周辺において潜在的結果が連続であること
+1. 閾値周辺において応答変数に影響を与える共変量（処置変数を除く）が連続すること
+1. 閾値周辺において割当変数が連続であること
+
+これらの仮定はそれぞれプラセボ検定、バランスチェック、密度検定を使うことで仮定の違反有無が確認できる。ただ、仮定の**違反**有無を確認することが限界であり、「仮定が満たされていない」ことは確認できても、「仮定が満たされている」は確認できない（統計的仮説検定の仕組みを考えてみよう）。せいぜい「「仮定が満たされていない」とは言えない」くらいまでしか確認できない。それでも仮定違反が見つかるだけでも十分に意義はあろう。
 
 ## プラセボ検定
 
 $\delta$ = 0.5
 
 ```{r}
-df_left <- df |> 
-   filter(iwm < median(iwm))
+df_c <- df |> filter(treat == 0)
+df_t <- df |> filter(treat == 1)
+```
 
-df_right <- df |> 
-   filter(iwm >= median(iwm))
+```{r}
+quantile(df_c$iwm, probs = 0.6)
+quantile(df_t$iwm, probs = 0.6)
+```
 
-rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, data = df_left, c = median(df_left$iwm)) |> summary(all = TRUE)
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
+         data = df_c, c = quantile(df_c$iwm, probs = 0.5)) |> 
+   summary(all = TRUE)
 
-rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, data = df_right, c = median(df_right$iwm)) |> summary(all = TRUE)
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, 
+         data = df_t, c = quantile(df_t$iwm, probs = 0.5)) |> 
+   summary(all = TRUE)
 ```
 
 ## 密度検定
