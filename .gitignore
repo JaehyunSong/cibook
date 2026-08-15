@@ -9,9 +9,9 @@
 /_data/
 /_data_slide/
 
-*_cache/
-*_files/
-site_libs/
+/*_cache/
+/*_files/
+/site_libs/
 
 /docs/.DS_Store
 **/*.quarto_ipynb
