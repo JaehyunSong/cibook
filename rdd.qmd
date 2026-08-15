@@ -39,13 +39,9 @@ df
 
 　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数`treat`を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系政党の対次点得票率差（`iwm`）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、`iwm`が0より大きい場合は1、それ以外は0の値をとる`treat`変数を`if_else()`関数で作成する。
 
-　もう一つ、`is_any_center`関数も作っておこう。これは統制変数として使う予定の変数だ。今回のデータセットには当該自治体が中心都市かどうかを表す4つの変数がある。たとえば、`is_province_center`はその県（province）の中心都市かを示す変数で、`is_district_center`はその群（district; 県の下位区分）の中心都市かを示すダミー変数である。また、大都市自治体、その周辺の主要都市を示す`is_metro`と`is_sub_metro`がある。この4つの変数のうち1つでも該当すれば、大きい都市と言っても良いだろう。これを`is_any_center`という新しい変数として追加する。具体的には先ほど述べた4つの変数の和を計算し、これが0より大きいのであれば、`is_any_center`の値を1に、それ以外は0にすれば良い。
-
 ```{r}
 df <- df |> 
-   mutate(treat         = if_else(iwm > 0, 1, 0),
-          is_any_center = if_else(is_district_center + is_province_center + 
-                                     is_sub_metro + is_metro > 0, 1, 0))
+   mutate(treat = if_else(iwm > 0, 1, 0))
 ```
 
 　続いて、メイン分析の推定に使用する変数が1つでも欠損している行を除外する。たとえば、`df |> drop_na(x)`は変数`x`の値が欠損（`NA`）している場合、その**行**を丸ごと落とすことを意味する。もし、`drop_na(x)`の変わりに`drop_na(x, y)`にすれば変数`x`**か**`y`、1つでも欠損していればその行を落とすことになる。もったいないと思うかも知れないが、どうせ分析の時に欠損値を含む行は自動的に落とされる^[一部のパッケージはその列の平均値や中央値で欠損値を埋めたりもするば、ほとんどのパッケージはそこまでしない。]。むしろ、共変量あり/なしバージョンを推定する場合は、事前に欠損値の整理をしておかないと大変なことになるので、事前に落としておく必要がある。
@@ -341,7 +337,7 @@ df |>
 
 ```{r}
 #| code-fold: true
-#| layout: [[49,-2,49],[49,-2,49],[49,-2,49],[49,-2,49]]
+#| layout: [[49,-2,49],[49,-2,49]]
 #| fig-width: 3
 #| fig-height: 2
 df |> 
@@ -390,54 +386,6 @@ df |>
    geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
    labs(x = "Islamic win margin", y = "Log polulation") +
    coord_cartesian(ylim = c(6, 10)) +
-   theme_classic()
-
-df |> 
-   filter(iwm >= -0.32 & iwm <= 0.32) |> 
-   ggplot(aes(x = iwm, y = gender_ratio, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.08, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Gender") +
-   coord_cartesian(ylim = c(0.9, 1.1)) +
-   theme_classic()
-
-df |> 
-   filter(iwm >= -0.32 & iwm <= 0.32) |> 
-   ggplot(aes(x = iwm, y = is_any_center, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.08, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Any center municipality") +
-   coord_cartesian(ylim = c(0, 0.8)) +
-   theme_classic()
-
-df |> 
-   filter(iwm >= -0.32 & iwm <= 0.32) |> 
-   ggplot(aes(x = iwm, y = n_parties, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.08, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Number of parties") +
-   coord_cartesian(ylim = c(2, 8)) +
-   theme_classic()
-
-df |> 
-   filter(iwm >= -0.32 & iwm <= 0.32) |> 
-   ggplot(aes(x = iwm, y = hh_size, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.08, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Household size") +
-   coord_cartesian(ylim = c(4, 10)) +
    theme_classic()
 ```
 

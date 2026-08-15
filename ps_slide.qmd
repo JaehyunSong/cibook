@@ -298,9 +298,7 @@ plot(mat_reg_ex)
 
 ## 職業訓練プログラムの効果検証
 
-職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか。
-
-**単純比較の例**
+職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか
 
 - 受講群（処置群）の平均年収：300万円
 - 未受講群（統制群）の平均年収：350万円
@@ -318,7 +316,7 @@ plot(mat_reg_ex)
 ## 背景にある違いを揃える
 
 |属性|受講群（処置群）|未受講群（統制群）|
-|:---|:---|:---|
+|:---|:---:|:---:|
 |平均年齢|若い|高い|
 |過去の就労経験|少ない|豊富|
 |受講前の年収|非常に低い|平均的|
@@ -1038,8 +1036,10 @@ strat_ate |>
 
 ## 層化による推定（例）
 
+処置効果 = 処置群の加重平均 - 統制群の加重平均
+
 :::: {.columns}
-::: {.column width=43%}
+::: {.column width=45%}
 ```{r}
 set.seed(19861009)
 
@@ -1064,7 +1064,7 @@ options(digits = 7)
 ```
 :::
 
-::: {.column width=57%}
+::: {.column width=55%}
 ```{r}
 #| echo: true
 #| code-line-numbers: false
@@ -1074,12 +1074,7 @@ my_data |>
 6334.135 - 6984.198 # 処置効果の点推定値
 ```
 
-```{r}
-#| echo: true
-#| collapse: false
-#| code-line-numbers: false
-lm(y ~ treat, data = my_data, weights = weight)
-```
+- 線形回帰分析による推定を推奨（後述）
 :::
 ::::
 
@@ -1331,8 +1326,10 @@ $$
 
 ## 重み付けによる推定（例）
 
+処置効果 = 処置群の加重平均 - 統制群の加重平均
+
 :::: {.columns}
-::: {.column width=43%}
+::: {.column width=45%}
 ```{r}
 set.seed(19861009)
 
@@ -1358,7 +1355,7 @@ options(digits = 7)
 ```
 :::
 
-::: {.column width=57%}
+::: {.column width=55%}
 ```{r}
 #| echo: true
 #| code-line-numbers: false
@@ -1368,12 +1365,7 @@ my_data |>
 6647.559 - 6422.869 # 処置効果の点推定値
 ```
 
-```{r}
-#| echo: true
-#| collapse: false
-#| code-line-numbers: false
-lm(y ~ treat, data = my_data, weights = weight)
-```
+- 線形回帰分析による推定を推奨（後述）
 :::
 ::::
 
@@ -1507,17 +1499,17 @@ bal.tab(treat ~ ps + age + educ + race + married + nodegree + re74 + re75,
 
 ## 処置効果の推定方法
 
-[結果変数モデル]{.strong}[（outcome model; ATE/ATT/$/dots$）]{.small}：推定対象[（estimand）]{.small}を推定するモデル
+[結果変数モデル]{.strong}[（outcome model; ATE/ATT/$\dots$）]{.small}：推定対象[（estimand）]{.small}を推定するモデル
 
 - **傾向スコア・モデル**[（propensity score mode; 傾向スコアを推定するためのモデル）]{.small}ではない!
 
-1. 荷重平均の差分：処置効果の不確実性[（標準誤差、信頼区間、*p* 値等）]{.small}が計算が難しいから非推奨
+1. 加重平均の差分：処置効果の不確実性[（標準誤差、信頼区間、*p* 値等）]{.small}が計算が難しいから非推奨
 1. 重み付け回帰分析[（推奨）]{.strong}
    - 単回帰分析
    - 重回帰分析（次のスライド）
    - *G*-computation[（Snowden *et al.* 2011）]{.small}
       - <ruby>**全員**<rt>・・</rt></ruby>が処置/統制群の場合の潜在的結果を計算し、潜在的結果の平均値から処置効果を推定
-      - 処置変数と共変量間の交互作用を想定する場合に推奨される方法^[もし、結果変数モデルに交互作用項が含まれないなら、*G*-computationと通常の重回帰分析の結果は一致する。]
+      - 処置変数と共変量間の交互作用を想定する場合に推奨される方法^[もし、結果変数モデルに交互作用項が含まれていない場合、*G*-computationと通常の重回帰分析の結果は一致する。]
 
 :::: {.aside}
 - Snowden, Jonathan M., Sherri Rose, Kathleen M. Mortimer. 2011. "[Implementation of G-Computation on a Simulated Data Set: Demonstration of a Causal Inference Technique](https://doi.org/10.1093/aje/kwq472)," *American Journal of Epidemiology,* 173(7): 731-738.

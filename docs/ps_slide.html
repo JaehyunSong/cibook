@@ -816,8 +816,7 @@
 <strong>2</strong> 傾向スコア</h1>
 
 </section><section id="職業訓練プログラムの効果検証" class="slide level2"><h2>職業訓練プログラムの効果検証</h2>
-<p>職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか。</p>
-<p><strong>単純比較の例</strong></p>
+<p>職業訓練プログラムを受講すると、受講者の年収は増えるのだろうか</p>
 <ul>
 <li>受講群（処置群）の平均年収：300万円</li>
 <li>未受講群（統制群）の平均年収：350万円</li>
@@ -841,24 +840,24 @@
 <table class="caption-top">
 <thead><tr class="header">
 <th style="text-align: left;">属性</th>
-<th style="text-align: left;">受講群（処置群）</th>
-<th style="text-align: left;">未受講群（統制群）</th>
+<th style="text-align: center;">受講群（処置群）</th>
+<th style="text-align: center;">未受講群（統制群）</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">平均年齢</td>
-<td style="text-align: left;">若い</td>
-<td style="text-align: left;">高い</td>
+<td style="text-align: center;">若い</td>
+<td style="text-align: center;">高い</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">過去の就労経験</td>
-<td style="text-align: left;">少ない</td>
-<td style="text-align: left;">豊富</td>
+<td style="text-align: center;">少ない</td>
+<td style="text-align: center;">豊富</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">受講前の年収</td>
-<td style="text-align: left;">非常に低い</td>
-<td style="text-align: left;">平均的</td>
+<td style="text-align: center;">非常に低い</td>
+<td style="text-align: center;">平均的</td>
 </tr>
 </tbody>
 </table>
@@ -1585,8 +1584,9 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 </table>
 </div>
 </section><section id="層化による推定例" class="slide level2"><h2>層化による推定（例）</h2>
+<p>処置効果 = 処置群の加重平均 - 統制群の加重平均</p>
 <div class="columns">
-<div class="column" style="width:43%;">
+<div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1606,7 +1606,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 ## 13     0  6280       2 1.00000</code></pre>
 </div>
 </div>
-</div><div class="column" style="width:57%;">
+</div><div class="column" style="width:55%;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">reframe</span><span class="op">(</span>y   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">y</span>, w <span class="op">=</span> <span class="va">weight</span><span class="op">)</span>,</span>
@@ -1617,18 +1617,9 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <span><span class="fl">6334.135</span> <span class="op">-</span> <span class="fl">6984.198</span> <span class="co"># 処置効果の点推定値</span></span>
 <span><span class="co">## [1] -650.063</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">treat</span>, data <span class="op">=</span> <span class="va">my_data</span>, weights <span class="op">=</span> <span class="va">weight</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## 
-## Call:
-## lm(formula = y ~ treat, data = my_data, weights = weight)
-## 
-## Coefficients:
-## (Intercept)        treat  
-##      6984.2       -650.1</code></pre>
-</div>
-</div>
+<ul>
+<li>線形回帰分析による推定を推奨（後述）</li>
+</ul>
 </div></div>
 </section></section><section><section id="推定重み付け" class="title-slide slide level1 center"><h1>
 <strong>4</strong> 推定：重み付け</h1>
@@ -1666,7 +1657,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <li>無作為割り当て <span class="math inline">\(\leadsto\)</span> 均質なグループへ</li>
 </ul>
 
-<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"><div title="注意）これは単なるイメージであり、実際とは異なる">
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"><div title="注意）これは単なるイメージであり、実際とは異なる">
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1694,14 +1685,14 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 </li>
 </ul>
 
-<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="重み付けの考え方3" class="slide level2"><h2>重み付けの考え方（3）</h2>
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="重み付けの考え方3" class="slide level2"><h2>重み付けの考え方（3）</h2>
 <p>異常なケースに高い重みを与える</p>
 <ul>
 <li>例）統制群における<span class="hl_blue">●</span>の重みを2倍に <span class="math inline">\(\leadsto\)</span> 各群の<span class="hl_blue">●</span>が6つに</li>
 <li>例）処置群における<span class="hl_red">▲</span>の重みを2.5倍に <span class="math inline">\(\leadsto\)</span> 各群の<span class="hl_red">▲</span>が5つに</li>
 </ul>
 
-<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="重み付けによる処置効果の推定の手順" class="slide level2"><h2>重み付けによる処置効果の推定の手順</h2>
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2400"></section><section id="重み付けによる処置効果の推定の手順" class="slide level2"><h2>重み付けによる処置効果の推定の手順</h2>
 <ol type="1">
 <li>推定対象<span class="small">（estimand）</span>を決める（ATT、ATC、ATE）</li>
 <li>個々の個体に重みを与える</li>
@@ -1722,11 +1713,11 @@ w_i^{\tiny\mbox{ATC}} &amp; = &amp; D_i \frac{1 - e_i(X)}{e_i(X)} + (1 - D_i)
 <!---
 $\widehat{\textsf{ATT}}$ = 224.676 [-909.755, 1359.108]
 --->
-<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -1735,7 +1726,7 @@ $\widehat{\textsf{ATT}}$ = 224.676 [-909.755, 1359.108]
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-30-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-29-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -1762,11 +1753,11 @@ w_i^{\tiny\mbox{ATE}} = D_i \frac{1}{e_i(X)} + (1 - D_i) \frac{1}{1 - e_i(X)}
 <!---
 $\widehat{\textsf{ATE}}$ = 224.676 [-909.755, 1359.108]
 --->
-<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -1775,7 +1766,7 @@ $\widehat{\textsf{ATE}}$ = 224.676 [-909.755, 1359.108]
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-31-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-30-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -1807,10 +1798,11 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 <li>Liu Guoer and Kevin M. Quinn. Online first. <a href="https://doi.org/10.1177/2755323X261465058">Why the Average Treatment Effect for the Overlap Population (ATO) Matters for Natural Experiments</a>. <em>Journal of Law &amp; Empirical Analysis</em>.</li>
 </ul>
 </div></aside></section><section id="重み付けによる推定例" class="slide level2"><h2>重み付けによる推定（例）</h2>
+<p>処置効果 = 処置群の加重平均 - 統制群の加重平均</p>
 <div class="columns">
-<div class="column" style="width:43%;">
+<div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##    treat     y      ps weight
 ## 1      0  2752 0.05913 1.0628
@@ -1828,9 +1820,9 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 ## 13     0  6280 0.04382 1.0458</code></pre>
 </div>
 </div>
-</div><div class="column" style="width:57%;">
+</div><div class="column" style="width:55%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">reframe</span><span class="op">(</span>y   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">y</span>, w <span class="op">=</span> <span class="va">weight</span><span class="op">)</span>,</span>
 <span>          .by <span class="op">=</span> <span class="va">treat</span><span class="op">)</span></span>
 <span><span class="co">##   treat        y</span></span>
@@ -1839,18 +1831,9 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 <span><span class="fl">6647.559</span> <span class="op">-</span> <span class="fl">6422.869</span> <span class="co"># 処置効果の点推定値</span></span>
 <span><span class="co">## [1] 224.69</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">treat</span>, data <span class="op">=</span> <span class="va">my_data</span>, weights <span class="op">=</span> <span class="va">weight</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## 
-## Call:
-## lm(formula = y ~ treat, data = my_data, weights = weight)
-## 
-## Coefficients:
-## (Intercept)        treat  
-##      6422.9        224.7</code></pre>
-</div>
-</div>
+<ul>
+<li>線形回帰分析による推定を推奨（後述）</li>
+</ul>
 </div></div>
 </section></section><section><section id="実践上の注意点" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 実践上の注意点</h1>
@@ -1867,25 +1850,25 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-37-1.png" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-35-1.png" width="1500"></p>
 <figcaption>箱ひげ図</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-37-2.png" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-35-2.png" width="1500"></p>
 <figcaption>ビースウォーム図</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-37-3.png" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-35-3.png" width="1500"></p>
 <figcaption>密度曲線（{cobalt}使用）</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-37-4.png" width="1500"></p>
+<figure><p><img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-35-4.png" width="1500"></p>
 <figcaption>ヒストグラム（{cobalt}使用）</figcaption></figure>
 </div>
 </div>
@@ -1914,7 +1897,7 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
 </ul><aside><ol class="aside-footnotes"><li id="fn6"><p>共変量が二値変数の場合、標準化は行わない。また、共変量が人種や性別のような名目変数も二値変数として扱われる。</p></li></ol></aside></section><section id="バランスチェックの可視化" class="slide level2"><h2>バランスチェックの可視化</h2>
 <p>以下は{cobalt}パッケージを使用したバランスチェックの例</p>
 
-<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center r-stretch" width="600"><div title="傾向スコアを用いた調整はバランスの改善を保証**しない**">
+<img data-src="ps_slide_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center r-stretch" width="600"><div title="傾向スコアを用いた調整はバランスの改善を保証**しない**">
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1969,13 +1952,13 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
 <li>Imai, Kosuke and Marc Ratkovic. 2014. “<a href="https://doi.org/10.1111/rssb.12027">Covariate Balancing Propensity Score</a>.” <em>Journal of the Royal Statistical Society Series B: Statistical Methodology,</em> 76(1):243-263.</li>
 </ul>
 </div></aside></section><section id="処置効果の推定方法" class="slide level2"><h2>処置効果の推定方法</h2>
-<p><span class="strong">結果変数モデル</span><span class="small">（outcome model; ATE/ATT/<span class="math inline">\(/dots\)</span>）</span>：推定対象<span class="small">（estimand）</span>を推定するモデル</p>
+<p><span class="strong">結果変数モデル</span><span class="small">（outcome model; ATE/ATT/<span class="math inline">\(\dots\)</span>）</span>：推定対象<span class="small">（estimand）</span>を推定するモデル</p>
 <ul>
 <li>
 <strong>傾向スコア・モデル</strong><span class="small">（propensity score mode; 傾向スコアを推定するためのモデル）</span>ではない!</li>
 </ul>
 <ol type="1">
-<li>荷重平均の差分：処置効果の不確実性<span class="small">（標準誤差、信頼区間、<em>p</em> 値等）</span>が計算が難しいから非推奨</li>
+<li>加重平均の差分：処置効果の不確実性<span class="small">（標準誤差、信頼区間、<em>p</em> 値等）</span>が計算が難しいから非推奨</li>
 <li>重み付け回帰分析<span class="strong">（推奨）</span>
 <ul>
 <li>単回帰分析</li>
@@ -1997,7 +1980,7 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
 <ul>
 <li>Snowden, Jonathan M., Sherri Rose, Kathleen M. Mortimer. 2011. “<a href="https://doi.org/10.1093/aje/kwq472">Implementation of G-Computation on a Simulated Data Set: Demonstration of a Causal Inference Technique</a>,” <em>American Journal of Epidemiology,</em> 173(7): 731-738.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn7"><p>もし、結果変数モデルに交互作用項が含まれないなら、<em>G</em>-computationと通常の重回帰分析の結果は一致する。</p></li></ol></aside></section><section id="処置効果推定時の共変量について" class="slide level2"><h2>処置効果推定時の共変量について</h2>
+</div><ol class="aside-footnotes"><li id="fn7"><p>もし、結果変数モデルに交互作用項が含まれていない場合、<em>G</em>-computationと通常の重回帰分析の結果は一致する。</p></li></ol></aside></section><section id="処置効果推定時の共変量について" class="slide level2"><h2>処置効果推定時の共変量について</h2>
 <p>傾向スコア計算時に使用した共変量を結果変数モデル<sup>1</sup>にも入れるべきか</p>
 <ul>
 <li>層化、重み付け等の主目的は統制群・処置群の共変量バランスを改善すること<span class="small">（Austin 2011）</span>
