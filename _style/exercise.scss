@@ -80,3 +80,8 @@ a {
   div.callout.callout-caution {
     border-color: #ffffbf;
   }
+  
+div.callout-title-container > code {
+  font-size: 1em;
+  background-color: transparent;
+}

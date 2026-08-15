@@ -36,6 +36,31 @@ df
 
 選挙結果に関する変数は1994年のトルコ地方選挙、
 
+|変数名|説明|備考|
+|:---|:---|:---|
+|`province`|||
+|`district`|||
+|`province_code`|||
+|`is_province_center`|||
+|`is_district_center`|||
+|`is_metro`|||
+|`is_submetro`|||
+|`iwm`|||
+|`ivs`|||
+|`n_parties`|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
+|``|||
 
 　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数`treat`を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系政党の対次点得票率差（`iwm`）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、`iwm`が0より大きい場合は1、それ以外は0の値をとる`treat`変数を`if_else()`関数で作成する。
 
@@ -82,6 +107,10 @@ df |>
           is_district_center, is_province_center, is_sub_metro) |> 
    datasummary_balance(~treat, data = _, fmt = fmt_decimal(digits = 3))
 ```
+
+　記述統計を見るとイスラム系首長のいる自治体の場合、高校を卒業した15-20歳女性の割合が約`r sprintf("%.1f", mean(df$female_hs_2000[df$treat == 1]) * 100)`%、非イスラム系首長のいる自治体のそれは約`r sprintf("%.1f", mean(df$female_hs_2000[df$treat == 0]) * 100)`である。この差分は約`r sprintf("%.1f", (mean(df$female_hs_2000[df$treat == 1]) - mean(df$female_hs_2000[df$treat == 0])) * 100)`%ポイントだ。男性のそれが`r sprintf("%.1f", (mean(df$male_hs_2000[df$treat == 1]) - mean(df$male_hs_2000[df$treat == 0])) * 100)`%ポイントであることを考えると、やはり通念通り、イスラム政党の政権掌握は女性の権利を後退させるように見える。
+
+　しかし、これは単純比較から得られた結果だ。観察データには常に内生性が残っている。単に、イスラム信者の多い地域においてイスラム系首長が誕生しやすく、女性に教育を受けさせない家庭が多い可能性もある。もしそうであれば、これは家庭の問題であって首長が原因とは言えないだろう。やはり、より厳密なリサーチデザインが必要だろう。ここで登場することが回帰不連続デザイン（regression discontinuity design; RDD）だ。イスラム系首長がギリギリ当選した自治体とギリギリ落選した自治体であれば、自治体のしての特徴はそこまで変わらないだろう。Meyersson（2014）はこの点に着目し、イスラム政党による政治的統制が女性のエンパワーメントに影響を与えるかどうかを検証した研究成果である。
 
 # 推定
 
@@ -141,36 +170,182 @@ rdrobust(y = female_hs_2000, x = iwm, data = df,
 
 [^abadie_imbens_2006]: Abadie, Alberto. and Guido. W. Imbens. 2006. "[Large Sample Properties of Matching Estimators for Average Treatment Effects](https://doi.org/10.1111/j.1468-0262.2006.00655.x)," *Econometrica*, 74: 235-267.
 
-　それでは話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico *et al.*（2014）[^cct2014]を参照すること。
+　話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico *et al.*（2014）[^cct2014]を参照すること。
+
+　それでは共変量を投入した推定方法を紹介する。ここからは{rdrobust}のデフォルト設定（CCTバンド幅、頑健標準誤差、三角形カーネル関数）を使用し、推定結果はRobust列を使う。`rdrobust()`で共変量は`covs`引数で指定する。具体的には`covs ~ 共変量1 + 共変量2 + ...`のように書く。使用する共変量はTable 2の下段に書かれている[^covs]。また、論文内では推定後、県（`province`）単位でクラスタリングした標準誤差を使用していることを明記しているので、`cluster = province`を追加し、`province`変数でクラスタリングした頑健標準誤差を使用する[^cr]。クラスター標準誤差の計算方法としてCR1、CR2、CR3が提供されており、`cluster`引数を指定すると自動的にCR1が適用される。CR2やCR3に変更したい場合は`vce = "cr2"`か`vce = "cr3"`を引数として追加すれば良い。CR3はやや大きめの標準誤差を出す保守的な計算方法だが、一般的に採用されている方法はCR2である（Imbens and Kolesár 2016）[^cr]。ここでもCR2を使うとする。推定したオブジェクトはそのまま`summary()`関数に渡し、LATE推定結果を確認してみよう。
+
+[^covs]: イスラム系政党の得票率（`ivs`）、得票した政党の数（`n_parties`）、19歳未満の人口割合（`pop_young`）、61歳より上の人口割合（`pop_old`）、男女比（`gender_ratio`）、対数化した人口（`log_pop`）、中心都市ダミー（`is_province_center`、`is_district_center`、`is_sub_metro`、`is_metro`）、固定効果のための各県のダミー変数（`province`）
+
+[^cr]: Guido W. Imbens and Michal Kolesár. 2016. "[Robust Standard Errors in Small Samples: Some Practical Advice](https://doi.org/10.1162/REST_a_00552)," *The Review of Economics and Statistics,* 98(4): 701-712.
 
 ```{r}
 rdrobust(y = female_hs_2000, x = iwm, data = df, 
-         covs = ~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + is_province_center + is_district_center + is_sub_metro + is_metro + factor(province),
-         h = 0.2397612, kernel = "uniform", vce = "cr1", cluster = province) |> 
+         covs = ~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + 
+            is_province_center + is_district_center + is_sub_metro + is_metro + province, 
+         cluster = province, vce = "CR2") |> 
    summary(all = TRUE)
 ```
 
-```{r}
-rdd_fit_0 <- rdrobust(y = female_hs_2000, x = iwm, 
-                      covs = cov_formula,
-                      data = df)
-rdd_fit_0
-```
+　これから共変量を投入したモデルを推定していくわけだが、毎回共変量のを書くのは面倒だろう。`formula()`関数を使えば、これらの共変量（`~ ivs + n_parties + ...`）を一つのオブジェクトとして扱うことができる。共変量リストを`cov_formula`と名付けて格納してみよう。
 
 ```{r}
-summary(rdd_fit_0, all = TRUE)
+cov_formula <- formula(~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + 
+                          is_district_center + is_province_center + is_sub_metro + 
+                          is_metro + province)
 ```
 
-```{r}
-cov_formula <- formula(~ ivs + n_parties + pop_young + pop_old + gender_ratio + log_pop + is_district_center + is_province_center + is_sub_metro + is_metro + province)
-```
+　これからは`covs = cov_formula`と書くだけで、上記の11個の共変量リスト作成の手間が省ける。
 
 ```{r}
-rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, c = 0, h = 1, data = df) |> 
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
+         cluster = province, vce = "CR2") |> 
    summary(all = TRUE)
 ```
+
+　それでは本稿のメインのモデルを推定してみよう。結果変数の2種類であり、（1）2000年におけるの15〜20歳女性の高校卒業者割合（`female_hs_2000`）と（2）2000年におけるの15〜20歳男性の高校卒業者割合（`male_hs_2000`）だ。推定結果はそれぞれ`rdd_female_2000`、`rdd_male_2000`と名付ける。
+
+```{r}
+rdd_female_2000 <- rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
+                            cluster = province, vce = "CR2")
+
+rdd_male_2000 <- rdrobust(y = male_hs_2000, x = iwm, data = df, covs = cov_formula, 
+                          cluster = province, vce = "CR2")
+```
+
+　これらの結果を{broom}の`tidy()`関数でLATEの推定値のみ表形式で抽出できるが、これを`bind_rows()`関数で一つのデータフレームにまとめてみよう。`bind_rows()`関数の使い方は「[Rの復習](r.qmd)」を参照すること。
+
+```{r}
+list("Female" = tidy(rdd_female_2000),
+     "Male"   = tidy(rdd_male_2000)) |> 
+   bind_rows(.id = "gender")
+```
+
+　以下はこの表からRobustの行のみ残し、pointrangeプロットで可視化するコードだ。
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 500px
+list("Female" = tidy(rdd_female_2000),
+     "Male"   = tidy(rdd_male_2000)) |> 
+   bind_rows(.id = "gender") |> 
+   filter(term == "Robust") |> 
+   ggplot() +
+   geom_hline(yintercept = 0, linetype = "dashed") +
+   geom_pointrange(aes(x = gender, y = estimate, ymin = conf.low, ymax = conf.high)) +
+   labs(x = "Gender", y = "LATE with 95% CIs") +
+   theme_classic()
+```
+
+　イスラム系首長の誕生は女性の世俗的な高校教育を統計的有意に増加させたことが分かった。一方、男性のそれは効果量が小さく、統計的有意な処置効果は確認できなかった。
 
 ## 可視化
+
+　続いて、Figure 4を再現してみよう。Figure 4は計4つの図で構成されされているが、1つでも作れるようになったら、あとは使用する変数と図のスケールを少しいじるだけが。まずはメインの分析結果である2000年におけるの15〜20歳女性の高校卒業者割合（`female_hs_2000`）を応答変数とした図（Figure 4の左上）を作ってみよう。
+
+　まずは割当変数（`iwm`）と結果変数（`female_hs_2000`）の散布図を作ってみよう。論文のFigure 4では`iwm`の値が-0.5以上、0.5以下のケースのみを使用しているため、`df`を`ggplot()`に渡す前に`filter()`関数で`iwm`の値が-0.5以上、0.5以下のケースのみに絞る。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_point()
+```
+
+　続いて、直線をオーバラップしてみよう。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）[^loess]をネット上の解説記事等を参照されたい。
+
+[^loess]: Cleveland, William S. 1979. "[Robust Locally Weighted Regression and Smoothing Scatterplots](https://doi.org/10.1080/01621459.1979.10481038)," *Journal of the American Statistical Association*, 74(368): 829-836.
+
+　LOESS線は`geom_smooth()`レイヤーで足せる。`method = "loess"`をすればLOESSが、`"lm"`だと線形回帰、`"gam"`だと一般化加法モデルが使われる（自分で作った関数を使用することもできる）。また、マッピングでは`x`と`y`だけでなく、`group`も必要だ。`group`を指定しないと一本の線が表示されるが、`group = treat`にしておくと、統制群と処置群、それぞれのLOESS曲線が計算され、出力される。
+
+```{r}
+#| eval: false
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot() +
+   geom_point(aes(x = iwm, y = female_hs_2000)) +
+   geom_smooth(aes(x = iwm, y = female_hs_2000, group = treat), method = "loess")
+```
+
+　コードを見ると、`geom_point()`と`geom_smooth()`は`x`と`y`のマッピングを共有しているため、この2つは`ggplot()`内でマッピングしておくとより簡潔なコードになる。
+
+```{r}
+#| eval: false
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_point() +
+   geom_smooth(aes(group = treat), method = "loess")
+```
+
+　線がジャンプしていることが分かる。実はこれだけで目的は達成したが、Figure 4を見ると散布図が非常にシンプルになっている。RDDにおける可視化は情報量よりも傾向が重要だ。ここまで点が多いと、線はジャンプしていても、点の群れがジャンプしているかどうかは分かりにくい。ここでは以下のようにデータを4%ポイントの区間に分け、その区間内の結果変数（`female_hs_2000`）の平均値をプロットしてみよう。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
+   geom_vline(xintercept = seq(-0.52, 0.52, by = 0.04)) +
+   geom_point()
+```
+
+　任意の区間（bin）内で変数を要約（summary）し、プロットする関数は`stat_summary_bin()`だ。ここで要約方法は平均値（`fun = "mean"`）、出力方法は散布図（`geom = "point"`）とする。区間の幅は0.04（`bindwidth = 0.04`）にする。ここでさらに`boundary = 0`を指定しておくと、区間が0にかからなくなり、Figure 4のような図が作れるようになる。後は`geom_point()`同様、`size`、`shape`、`color`、`fill`等で点のカスタマイズをする。ここでは点の大きさは3、形は枠線付きの円（21番）、枠線の色は黒、中身の色塗りはグレーとする。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray")
+```
+
+　ここでさらにLOESS曲線と割当変数の閾値に垂直線（`geom_vline()`）を乗せる。線の色は黒（`color = "black"`）、太さはやや細めの0.75（`linewidth = 0.75`）とする。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.75)
+```
+
+　後は`labs()`で軸タイトル、図のタイトルを修正し、`coord_cartesian()`で座標軸の下限と上限を調節する。今回は縦軸の下限と上限をそれぞれ-0.05、0.25にしたいから`ylim = c(-0.05, 0.25)`とする。テーマはMeyersson（2014）内の図と似た雰囲気のクラシック（`theme_classic()`）を使う。
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.75)
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree",
+        title = "(a) Women in 2000") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+```
 
 ```{r}
 #| layout: [[49,-2,49]]
@@ -184,7 +359,8 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
-   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(a) Women in 2000") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
+        title = "(a) Women in 2000") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 
@@ -196,7 +372,8 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
-   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(b) Men in 2000") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
+        title = "(b) Men in 2000") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 
@@ -208,7 +385,8 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
-   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(a) Women in 1990") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
+        title = "(a) Women in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 
@@ -220,19 +398,30 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess") +
-   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", title = "(b) Men in 1990") +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
+        title = "(b) Men in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 ```
 
+:::: {.callout-tip title="`rdplot()`を使った簡単な作り方" collapse=true}
+　{rdrobust}を使った`rdplot()`を使えばより簡単に上記の図が作れる。`rdplot()`の`y`、`x`、`c`、`data`引数は`rdrobust()`のそれと同じだ。ここに`nbins`引数を使うことで、閾値を中心とし左右に何個の点を出力するかが調節できる。
+
 ```{r}
-rdrobust(y = female_hs_2000, x = iwm, 
-         covs = ~ ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df)
-rdrobust(y = male_hs_2000, x = iwm, 
-         covs = ~ ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df)
+rdplot1 <- df |> 
+   filter(iwm >= -0.5 & iwm < 0.5) |> 
+   rdplot(y = female_hs_2000, x = iwm, nbins = 15, data = _)
 ```
+
+　出力された図は{ggplot2}で作られたものだ。`図オブジェクト名$rdplot`でオブジェクトの中から図だけを抽出できるため、ここから`+`演算子を使うとさらにレイヤーを追加できる。
+
+```{r}
+rdplot1$rdplot +
+   labs(x = "Islamic win margin in 1994", 
+        y = "Share of 15-20-year-olds\nwith high school degree", 
+        title = "(a) Women in 2000") 
+```
+::::
 
 # RDDの仮定
 
@@ -258,11 +447,9 @@ df_left <- df |>
 df_right <- df |> 
    filter(iwm >= median(iwm))
 
-rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df_left, cutpoint = median(df_left$iwm), t.design = "g") |> summary()
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, data = df_left, c = median(df_left$iwm)) |> summary(all = TRUE)
 
-rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df_right, cutpoint = median(df_right$iwm), t.design = "g") |> summary()
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, data = df_right, c = median(df_right$iwm)) |> summary(all = TRUE)
 ```
 
 ## 密度検定
@@ -284,10 +471,6 @@ df |>
                      values = c("FALSE" = "#5F7387", "TRUE" = "#E74C3C")) +
    theme_classic() +
    theme(legend.position = "bottom")
-```
-
-```{r}
-dc_test(df$iwm[abs(df$iwm) < 0.6], cutpoint = 0)
 ```
 
 ## バランスチェック
@@ -391,11 +574,3 @@ df |>
 
 # 感度分析
 
-```{r}
-rd_est(female_hs_2000 ~ iwm | iwm + ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df, cutpoint = 0, t.design = "g", less = TRUE) |> summary() |> 
-   rd_sens_bw(bws = seq(0.1, 1, by = 0.1))
-
-rd_est(female_hs_2000 ~ iwm | ivs + hh_size + pop_young + pop_old + log_pop + n_parties + gender_ratio + is_district_center + is_province_center + is_sub_metro + is_metro, 
-       data = df, cutpoint = 0, t.design = "g") |> rd_sens_bw(bws = seq(0.1, 1, by = 0.1)) |> str()
-```

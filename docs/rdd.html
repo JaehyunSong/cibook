@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7ac9241da4525f629cdadd87b350181d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ca21eab4249f8dd8b62a7aa862475134.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-def299d564fbe54e430ef9e3500009de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -402,13 +402,106 @@ window.Quarto = {
 </ul></li>
 </ul>
 <p>選挙結果に関する変数は1994年のトルコ地方選挙、</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">変数名</th>
+<th style="text-align: left;">説明</th>
+<th style="text-align: left;">備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>province</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>district</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>province_code</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>is_province_center</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>is_district_center</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>is_metro</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>is_submetro</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>iwm</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ivs</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>n_parties</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>||| |</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">``</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 <p>　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数<code>treat</code>を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系政党の対次点得票率差（<code>iwm</code>）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、<code>iwm</code>が0より大きい場合は1、それ以外は0の値をとる<code>treat</code>変数を<code>if_else()</code>関数で作成する。</p>
-<p>　もう一つ、<code>is_any_center</code>関数も作っておこう。これは統制変数として使う予定の変数だ。今回のデータセットには当該自治体が中心都市かどうかを表す4つの変数がある。たとえば、<code>is_province_center</code>はその県（province）の中心都市かを示す変数で、<code>is_district_center</code>はその群（district; 県の下位区分）の中心都市かを示すダミー変数である。また、大都市自治体、その周辺の主要都市を示す<code>is_metro</code>と<code>is_sub_metro</code>がある。この4つの変数のうち1つでも該当すれば、大きい都市と言っても良いだろう。これを<code>is_any_center</code>という新しい変数として追加する。具体的には先ほど述べた4つの変数の和を計算し、これが0より大きいのであれば、<code>is_any_center</code>の値を1に、それ以外は0にすれば良い。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">treat         =</span> <span class="fu">if_else</span>(iwm <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">is_any_center =</span> <span class="fu">if_else</span>(is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                     is_sub_metro <span class="sc">+</span> is_metro <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">treat =</span> <span class="fu">if_else</span>(iwm <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>　続いて、メイン分析の推定に使用する変数が1つでも欠損している行を除外する。たとえば、<code>df |&gt; drop_na(x)</code>は変数<code>x</code>の値が欠損（<code>NA</code>）している場合、その<strong>行</strong>を丸ごと落とすことを意味する。もし、<code>drop_na(x)</code>の変わりに<code>drop_na(x, y)</code>にすれば変数<code>x</code><strong>か</strong><code>y</code>、1つでも欠損していればその行を落とすことになる。もったいないと思うかも知れないが、どうせ分析の時に欠損値を含む行は自動的に落とされる<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。むしろ、共変量あり/なしバージョンを推定する場合は、事前に欠損値の整理をしておかないと大変なことになるので、事前に落としておく必要がある。</p>
 <div class="callout callout-style-default callout-note callout-titled" title="なぜ欠損した行を「予め」削除するのか">
@@ -435,7 +528,7 @@ window.Quarto = {
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,629 × 25
+<pre><code># A tibble: 2,629 × 24
    province district   province_code is_district_center is_province_center is_sub_metro is_metro
    &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
  1 Adana    Aladag                 1                  1                  0            0        0
@@ -449,10 +542,10 @@ window.Quarto = {
  9 Adana    Ceyhan                 1                  0                  0            0        0
 10 Adana    Ceyhan                 1                  0                  0            0        0
 # ℹ 2,619 more rows
-# ℹ 18 more variables: iwm &lt;dbl&gt;, ivs &lt;dbl&gt;, n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;,
+# ℹ 17 more variables: iwm &lt;dbl&gt;, ivs &lt;dbl&gt;, n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;,
 #   male_hs_2000 &lt;dbl&gt;, female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, female_univ &lt;dbl&gt;,
 #   male_univ &lt;dbl&gt;, female_hijab &lt;dbl&gt;, ivs_2004 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;,
-#   pop_old &lt;dbl&gt;, gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;, is_any_center &lt;dbl&gt;</code></pre>
+#   pop_old &lt;dbl&gt;, gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>　約600行分が削除され、残り2629行となっている。</p>
@@ -473,20 +566,20 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_50nw7ivnniqzbmz5hpak = TinyTable.createTableFunctions("tinytable_50nw7ivnniqzbmz5hpak");
+      const tableFns_mumeegtfjk6rk1y3pknf = TinyTable.createTableFunctions("tinytable_mumeegtfjk6rk1y3pknf");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_x73kbszkf7n4e6tmf3g6',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_drvei493z4fk7nnbzk54',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_iuenmcvpxwjbz9typw08',}, 
+          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_7ycklyeg89uorufqmvy3',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_00fffi4h6i4toa30d1is',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_xkar8wpbmjc0lyxxsvf3',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_50nw7ivnniqzbmz5hpak.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_mumeegtfjk6rk1y3pknf.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -495,12 +588,12 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_50nw7ivnniqzbmz5hpak td.tinytable_css_x73kbszkf7n4e6tmf3g6, #tinytable_50nw7ivnniqzbmz5hpak th.tinytable_css_x73kbszkf7n4e6tmf3g6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_50nw7ivnniqzbmz5hpak td.tinytable_css_drvei493z4fk7nnbzk54, #tinytable_50nw7ivnniqzbmz5hpak th.tinytable_css_drvei493z4fk7nnbzk54 { text-align: left }
-    #tinytable_50nw7ivnniqzbmz5hpak td.tinytable_css_iuenmcvpxwjbz9typw08, #tinytable_50nw7ivnniqzbmz5hpak th.tinytable_css_iuenmcvpxwjbz9typw08 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_mumeegtfjk6rk1y3pknf td.tinytable_css_7ycklyeg89uorufqmvy3, #tinytable_mumeegtfjk6rk1y3pknf th.tinytable_css_7ycklyeg89uorufqmvy3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_mumeegtfjk6rk1y3pknf td.tinytable_css_00fffi4h6i4toa30d1is, #tinytable_mumeegtfjk6rk1y3pknf th.tinytable_css_00fffi4h6i4toa30d1is { text-align: left }
+    #tinytable_mumeegtfjk6rk1y3pknf td.tinytable_css_xkar8wpbmjc0lyxxsvf3, #tinytable_mumeegtfjk6rk1y3pknf th.tinytable_css_xkar8wpbmjc0lyxxsvf3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_50nw7ivnniqzbmz5hpak" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_mumeegtfjk6rk1y3pknf" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -680,26 +773,26 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_eaml9rqad36074kgdg2p = TinyTable.createTableFunctions("tinytable_eaml9rqad36074kgdg2p");
+      const tableFns_ccqs4ajp425mr8rb714q = TinyTable.createTableFunctions("tinytable_ccqs4ajp425mr8rb714q");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_xpdyh5eivhf7ahi2sy5x',}, 
-          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_trie4mb6pua2qpt6smfc',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_kgxoe195spavtssv16cu',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_3ljaqs8yy98qiepswwtx',}, 
-          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_zfym7o9lo32s5xmkydeq',}, 
-          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_bfsw5fyb8hixdmg2elnh',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_7khkgtp0z2c4bwfgy36c',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_it3ofadu7f1x0n62sp6g',}, 
-          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_uq98cmfwdfv2v9sjlcxw',}, 
+          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_vu7un80vwss20w310bc6',}, 
+          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_fjbi696dbj3946r631tm',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_7aclcr8injtbvhg2ceiy',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_d8i600cszh3kk0sol6ib',}, 
+          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_u96at735gwomzfn8klum',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_j4jdvzsiytqacu1oancj',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_0n4zdjzhl4s4f9q9dddp',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_m6meucp9zt7ixagnq1fn',}, 
+          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_5p8l8q45zluhe6dj05hy',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_eaml9rqad36074kgdg2p.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_ccqs4ajp425mr8rb714q.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -708,18 +801,18 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_xpdyh5eivhf7ahi2sy5x, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_xpdyh5eivhf7ahi2sy5x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_trie4mb6pua2qpt6smfc, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_trie4mb6pua2qpt6smfc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_kgxoe195spavtssv16cu, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_kgxoe195spavtssv16cu { text-align: right }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_3ljaqs8yy98qiepswwtx, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_3ljaqs8yy98qiepswwtx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_zfym7o9lo32s5xmkydeq, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_zfym7o9lo32s5xmkydeq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_bfsw5fyb8hixdmg2elnh, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_bfsw5fyb8hixdmg2elnh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_7khkgtp0z2c4bwfgy36c, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_7khkgtp0z2c4bwfgy36c { text-align: left }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_it3ofadu7f1x0n62sp6g, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_it3ofadu7f1x0n62sp6g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_eaml9rqad36074kgdg2p td.tinytable_css_uq98cmfwdfv2v9sjlcxw, #tinytable_eaml9rqad36074kgdg2p th.tinytable_css_uq98cmfwdfv2v9sjlcxw {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_vu7un80vwss20w310bc6, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_vu7un80vwss20w310bc6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_fjbi696dbj3946r631tm, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_fjbi696dbj3946r631tm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_7aclcr8injtbvhg2ceiy, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_7aclcr8injtbvhg2ceiy { text-align: right }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_d8i600cszh3kk0sol6ib, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_d8i600cszh3kk0sol6ib {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_u96at735gwomzfn8klum, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_u96at735gwomzfn8klum {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_j4jdvzsiytqacu1oancj, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_j4jdvzsiytqacu1oancj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_0n4zdjzhl4s4f9q9dddp, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_0n4zdjzhl4s4f9q9dddp { text-align: left }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_m6meucp9zt7ixagnq1fn, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_m6meucp9zt7ixagnq1fn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ccqs4ajp425mr8rb714q td.tinytable_css_5p8l8q45zluhe6dj05hy, #tinytable_ccqs4ajp425mr8rb714q th.tinytable_css_5p8l8q45zluhe6dj05hy {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_eaml9rqad36074kgdg2p" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_ccqs4ajp425mr8rb714q" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
 <tr>
@@ -855,6 +948,8 @@ window.Quarto = {
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
+<p>　記述統計を見るとイスラム系首長のいる自治体の場合、高校を卒業した15-20歳女性の割合が約14.0%、非イスラム系首長のいる自治体のそれは約16.6である。この差分は約-2.6%ポイントだ。男性のそれが0.4%ポイントであることを考えると、やはり通念通り、イスラム政党の政権掌握は女性の権利を後退させるように見える。</p>
+<p>　しかし、これは単純比較から得られた結果だ。観察データには常に内生性が残っている。単に、イスラム信者の多い地域においてイスラム系首長が誕生しやすく、女性に教育を受けさせない家庭が多い可能性もある。もしそうであれば、これは家庭の問題であって首長が原因とは言えないだろう。やはり、より厳密なリサーチデザインが必要だろう。ここで登場することが回帰不連続デザイン（regression discontinuity design; RDD）だ。イスラム系首長がギリギリ当選した自治体とギリギリ落選した自治体であれば、自治体のしての特徴はそこまで変わらないだろう。Meyersson（2014）はこの点に着目し、イスラム政党による政治的統制が女性のエンパワーメントに影響を与えるかどうかを検証した研究成果である。</p>
 </section>
 <section id="推定" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> 推定</h1>
@@ -1015,151 +1110,288 @@ Bias-Corrected     0.026     0.012     2.242     0.025     [0.003 , 0.048]
 </div>
 </div>
 <p>　Conventional行で点推定値（0.032）が一致した。点推定値のズレの謎はこれで解決したが、標準誤差がややことなる。論文では0.010、{rdrobust}の推定結果は0.012だ。結論からいうと、これはどうしようもない。{rdrobust}ではAbadie and Imbens（2006）<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>の不均一分散に頑健な最近傍分散推定量（heteroskedasticity-robust nearest neighbor variance estimator）が採用されており、Meyersson（2014）は分散不均一性を考慮した標準誤差を採用していない<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。問題は{rdrobust}では頑健ではない通常の標準誤差は使えないということだ。つまり、{rdrobust}で本論文の結果を100%再現することはできない。誤解しないで頂きたいが、これはMeyersson（2014）がわざと頑健ではない手法を採用したとか、方法論的に間違った手法を使ったとか、あるいは時代遅れだったとか、そういうものではない。この論文が執筆された時期を考えるとある意味、これが標準的な作法だったともいえる<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。実際に論文を読んで見れば分かるが、「ここまでする?」と思わせるレベルで方法論的に真摯に向かってる良い論文だ。</p>
-<p>　それでは話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico <em>et al.</em>（2014）<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>を参照すること。</p>
+<p>　話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico <em>et al.</em>（2014）<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>を参照すること。</p>
+<p>　それでは共変量を投入した推定方法を紹介する。ここからは{rdrobust}のデフォルト設定（CCTバンド幅、頑健標準誤差、三角形カーネル関数）を使用し、推定結果はRobust列を使う。<code>rdrobust()</code>で共変量は<code>covs</code>引数で指定する。具体的には<code>covs ~ 共変量1 + 共変量2 + ...</code>のように書く。使用する共変量はTable 2の下段に書かれている<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。また、論文内では推定後、県（<code>province</code>）単位でクラスタリングした標準誤差を使用していることを明記しているので、<code>cluster = province</code>を追加し、<code>province</code>変数でクラスタリングした頑健標準誤差を使用する<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>。クラスター標準誤差の計算方法としてCR1、CR2、CR3が提供されており、<code>cluster</code>引数を指定すると自動的にCR1が適用される。CR2やCR3に変更したい場合は<code>vce = "cr2"</code>か<code>vce = "cr3"</code>を引数として追加すれば良い。CR3はやや大きめの標準誤差を出す保守的な計算方法だが、一般的に採用されている方法はCR2である（Imbens and Kolesár 2016）<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。ここでもCR2を使うとする。推定したオブジェクトはそのまま<code>summary()</code>関数に渡し、LATE推定結果を確認してみよう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">covs =</span> <span class="sc">~</span> ivs <span class="sc">+</span> n_parties <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> gender_ratio <span class="sc">+</span> log_pop <span class="sc">+</span> is_province_center <span class="sc">+</span> is_district_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro <span class="sc">+</span> <span class="fu">factor</span>(province),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">h =</span> <span class="fl">0.2397612</span>, <span class="at">kernel =</span> <span class="st">"uniform"</span>, <span class="at">vce =</span> <span class="st">"cr1"</span>, <span class="at">cluster =</span> province) <span class="sc">|&gt;</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">covs =</span> <span class="sc">~</span> ivs <span class="sc">+</span> n_parties <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> gender_ratio <span class="sc">+</span> log_pop <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>            is_province_center <span class="sc">+</span> is_district_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro <span class="sc">+</span> province, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: rdrobust
 
 Covariate-adjusted Sharp RD estimates using local polynomial regression. Std. errors are clustered (120 clusters).
 
 Number of Obs.                 2629
-BW type                      Manual
-Kernel                      Uniform
-VCE method                      CR1
+BW type                       mserd
+Kernel                   Triangular
+VCE method                      CR2
 
                                Left        Right
 Number of Obs.                 2314          315
-Eff. Number of Obs.             727          293
+Eff. Number of Obs.             282          187
 Order est. (p)                    1            1
 Order bias (q)                    2            2
-BW est. (h)                   0.240        0.240
-BW bias (b)                   0.240        0.240
-rho (h/b)                     1.000        1.000
+BW est. (h)                   0.096        0.096
+BW bias (b)                   0.208        0.208
+rho (h/b)                     0.461        0.461
 Clusters (g)                     67           53
 Unique Obs.                    2312          315
 
 =======================================================================================
         Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
 =======================================================================================
-  Conventional     0.025     0.007     3.792     0.000     [0.012 , 0.038]     
-Bias-Corrected     0.024     0.007     3.611     0.000     [0.011 , 0.037]     
-        Robust     0.024     0.010     2.423     0.015     [0.005 , 0.043]     
+  Conventional     0.025     0.008     3.096     0.002     [0.009 , 0.041]     
+Bias-Corrected     0.026     0.008     3.231     0.001     [0.010 , 0.042]     
+        Robust     0.026     0.009     2.938     0.003     [0.009 , 0.043]     
 =======================================================================================</code></pre>
 </div>
 </div>
+<p>　これから共変量を投入したモデルを推定していくわけだが、毎回共変量のを書くのは面倒だろう。<code>formula()</code>関数を使えば、これらの共変量（<code>~ ivs + n_parties + ...</code>）を一つのオブジェクトとして扱うことができる。共変量リストを<code>cov_formula</code>と名付けて格納してみよう。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rdd_fit_0 <span class="ot">&lt;-</span> <span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">covs =</span> cov_formula,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error:
-! object 'cov_formula' not found</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cov_formula <span class="ot">&lt;-</span> <span class="fu">formula</span>(<span class="sc">~</span> ivs <span class="sc">+</span> n_parties <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> gender_ratio <span class="sc">+</span> log_pop <span class="sc">+</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                          is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                          is_metro <span class="sc">+</span> province)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>rdd_fit_0</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error:
-! object 'rdd_fit_0' not found</code></pre>
-</div>
-</div>
+<p>　これからは<code>covs = cov_formula</code>と書くだけで、上記の11個の共変量リスト作成の手間が省ける。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rdd_fit_0, <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error:
-! object 'rdd_fit_0' not found</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cov_formula <span class="ot">&lt;-</span> <span class="fu">formula</span>(<span class="sc">~</span> ivs <span class="sc">+</span> n_parties <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> gender_ratio <span class="sc">+</span> log_pop <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro <span class="sc">+</span> province)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">covs =</span> cov_formula, <span class="at">c =</span> <span class="dv">0</span>, <span class="at">h =</span> <span class="dv">1</span>, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df, <span class="at">covs =</span> cov_formula, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: rdrobust
 
-Covariate-adjusted Sharp RD estimates using local polynomial regression.
+Covariate-adjusted Sharp RD estimates using local polynomial regression. Std. errors are clustered (120 clusters).
 
 Number of Obs.                 2629
-BW type                      Manual
+BW type                       mserd
 Kernel                   Triangular
-VCE method                       NN
+VCE method                      CR2
 
                                Left        Right
 Number of Obs.                 2314          315
-Eff. Number of Obs.            2313          315
+Eff. Number of Obs.             282          186
 Order est. (p)                    1            1
 Order bias (q)                    2            2
-BW est. (h)                   1.000        1.000
-BW bias (b)                   1.000        1.000
-rho (h/b)                     1.000        1.000
+BW est. (h)                   0.096        0.096
+BW bias (b)                   0.208        0.208
+rho (h/b)                     0.461        0.461
+Clusters (g)                     67           53
 Unique Obs.                    2312          315
 
 =======================================================================================
         Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
 =======================================================================================
-  Conventional     0.017     0.006     3.038     0.002     [0.006 , 0.029]     
-Bias-Corrected     0.025     0.006     4.321     0.000     [0.014 , 0.036]     
-        Robust     0.025     0.007     3.354     0.001     [0.010 , 0.039]     
+  Conventional     0.025     0.008     3.095     0.002     [0.009 , 0.041]     
+Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]     
+        Robust     0.026     0.009     2.937     0.003     [0.009 , 0.043]     
 =======================================================================================</code></pre>
 </div>
 </div>
+<p>　それでは本稿のメインのモデルを推定してみよう。結果変数の2種類であり、（1）2000年におけるの15〜20歳女性の高校卒業者割合（<code>female_hs_2000</code>）と（2）2000年におけるの15〜20歳男性の高校卒業者割合（<code>male_hs_2000</code>）だ。推定結果はそれぞれ<code>rdd_female_2000</code>、<code>rdd_male_2000</code>と名付ける。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>rdd_female_2000 <span class="ot">&lt;-</span> <span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df, <span class="at">covs =</span> cov_formula, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>rdd_male_2000 <span class="ot">&lt;-</span> <span class="fu">rdrobust</span>(<span class="at">y =</span> male_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df, <span class="at">covs =</span> cov_formula, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>　これらの結果を{broom}の<code>tidy()</code>関数でLATEの推定値のみ表形式で抽出できるが、これを<code>bind_rows()</code>関数で一つのデータフレームにまとめてみよう。<code>bind_rows()</code>関数の使い方は「<a href="./r.html">Rの復習</a>」を参照すること。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="st">"Female"</span> <span class="ot">=</span> <span class="fu">tidy</span>(rdd_female_2000),</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>     <span class="st">"Male"</span>   <span class="ot">=</span> <span class="fu">tidy</span>(rdd_male_2000)) <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">bind_rows</span>(<span class="at">.id =</span> <span class="st">"gender"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender           term   estimate   std.error statistic     p.value     conf.low  conf.high
+1 Female   Conventional 0.02482684 0.008021680  3.094967 0.001968345  0.009104635 0.04054904
+2 Female Bias-Corrected 0.02590484 0.008021680  3.229354 0.001240703  0.010182639 0.04162705
+3 Female         Robust 0.02590484 0.008820505  2.936889 0.003315230  0.008616970 0.04319272
+4   Male   Conventional 0.01171863 0.008407292  1.393865 0.163358411 -0.004759360 0.02819662
+5   Male Bias-Corrected 0.01176940 0.008407292  1.399904 0.161542114 -0.004708589 0.02824739
+6   Male         Robust 0.01176940 0.009998157  1.177157 0.239132872 -0.007826628 0.03136543</code></pre>
+</div>
+</div>
+<p>　以下はこの表からRobustの行のみ残し、pointrangeプロットで可視化するコードだ。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="st">"Female"</span> <span class="ot">=</span> <span class="fu">tidy</span>(rdd_female_2000),</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="st">"Male"</span>   <span class="ot">=</span> <span class="fu">tidy</span>(rdd_male_2000)) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">bind_rows</span>(<span class="at">.id =</span> <span class="st">"gender"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Robust"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Gender"</span>, <span class="at">y =</span> <span class="st">"LATE with 95% CIs"</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　イスラム系首長の誕生は女性の世俗的な高校教育を統計的有意に増加させたことが分かった。一方、男性のそれは効果量が小さく、統計的有意な処置効果は確認できなかった。</p>
 </section>
 <section id="可視化" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="可視化"><span class="header-section-number">3.2</span> 可視化</h2>
+<p>　続いて、Figure 4を再現してみよう。Figure 4は計4つの図で構成されされているが、1つでも作れるようになったら、あとは使用する変数と図のスケールを少しいじるだけが。まずはメインの分析結果である2000年におけるの15〜20歳女性の高校卒業者割合（<code>female_hs_2000</code>）を応答変数とした図（Figure 4の左上）を作ってみよう。</p>
+<p>　まずは割当変数（<code>iwm</code>）と結果変数（<code>female_hs_2000</code>）の散布図を作ってみよう。論文のFigure 4では<code>iwm</code>の値が-0.5以上、0.5以下のケースのみを使用しているため、<code>df</code>を<code>ggplot()</code>に渡す前に<code>filter()</code>関数で<code>iwm</code>の値が-0.5以上、0.5以下のケースのみに絞る。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　続いて、直線をオーバラップしてみよう。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>をネット上の解説記事等を参照されたい。</p>
+<p>　LOESS線は<code>geom_smooth()</code>レイヤーで足せる。<code>method = "loess"</code>をすればLOESSが、<code>"lm"</code>だと線形回帰、<code>"gam"</code>だと一般化加法モデルが使われる（自分で作った関数を使用することもできる）。また、マッピングでは<code>x</code>と<code>y</code>だけでなく、<code>group</code>も必要だ。<code>group</code>を指定しないと一本の線が表示されるが、<code>group = treat</code>にしておくと、統制群と処置群、それぞれのLOESS曲線が計算され、出力される。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat), <span class="at">method =</span> <span class="st">"loess"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>　コードを見ると、<code>geom_point()</code>と<code>geom_smooth()</code>は<code>x</code>と<code>y</code>のマッピングを共有しているため、この2つは<code>ggplot()</code>内でマッピングしておくとより簡潔なコードになる。</p>
+<div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, <span class="at">title =</span> <span class="st">"(a) Women in 2000"</span>) <span class="sc">+</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> male_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, <span class="at">title =</span> <span class="st">"(b) Men in 2000"</span>) <span class="sc">+</span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_1990, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, <span class="at">title =</span> <span class="st">"(a) Women in 1990"</span>) <span class="sc">+</span></span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> male_hs_1990, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, <span class="at">title =</span> <span class="st">"(b) Men in 1990"</span>) <span class="sc">+</span></span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">group =</span> treat), <span class="at">method =</span> <span class="st">"loess"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>　線がジャンプしていることが分かる。実はこれだけで目的は達成したが、Figure 4を見ると散布図が非常にシンプルになっている。RDDにおける可視化は情報量よりも傾向が重要だ。ここまで点が多いと、線はジャンプしていても、点の群れがジャンプしているかどうかは分かりにくい。ここでは以下のようにデータを4%ポイントの区間に分け、その区間内の結果変数（<code>female_hs_2000</code>）の平均値をプロットしてみよう。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.52</span>, <span class="fl">0.52</span>, <span class="at">by =</span> <span class="fl">0.04</span>)) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　任意の区間（bin）内で変数を要約（summary）し、プロットする関数は<code>stat_summary_bin()</code>だ。ここで要約方法は平均値（<code>fun = "mean"</code>）、出力方法は散布図（<code>geom = "point"</code>）とする。区間の幅は0.04（<code>bindwidth = 0.04</code>）にする。ここでさらに<code>boundary = 0</code>を指定しておくと、区間が0にかからなくなり、Figure 4のような図が作れるようになる。後は<code>geom_point()</code>同様、<code>size</code>、<code>shape</code>、<code>color</code>、<code>fill</code>等で点のカスタマイズをする。ここでは点の大きさは3、形は枠線付きの円（21番）、枠線の色は黒、中身の色塗りはグレーとする。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　ここでさらにLOESS曲線と割当変数の閾値に垂直線（<code>geom_vline()</code>）を乗せる。線の色は黒（<code>color = "black"</code>）、太さはやや細めの0.75（<code>linewidth = 0.75</code>）とする。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">group =</span> treat), <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　後は<code>labs()</code>で軸タイトル、図のタイトルを修正し、<code>coord_cartesian()</code>で座標軸の下限と上限を調節する。今回は縦軸の下限と上限をそれぞれ-0.05、0.25にしたいから<code>ylim = c(-0.05, 0.25)</code>とする。テーマはMeyersson（2014）内の図と似た雰囲気のクラシック（<code>theme_classic()</code>）を使う。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(a) Women in 2000"</span>) <span class="sc">+</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(a) Women in 2000"</span>) <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> male_hs_2000, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, </span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(b) Men in 2000"</span>) <span class="sc">+</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_1990, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, </span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(a) Women in 1990"</span>) <span class="sc">+</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> male_hs_1990, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, </span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(b) Men in 1990"</span>) <span class="sc">+</span></span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout="[[49,-2,49]]" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -1169,7 +1401,7 @@ Bias-Corrected     0.025     0.006     4.321     0.000     [0.014 , 0.036]
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -1178,7 +1410,7 @@ Bias-Corrected     0.025     0.006     4.321     0.000     [0.014 , 0.036]
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-24-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
 </figure>
 </div>
 </div>
@@ -1188,58 +1420,52 @@ Bias-Corrected     0.025     0.006     4.321     0.000     [0.014 , 0.036]
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-24-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1200"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">covs =</span> <span class="sc">~</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call: rdrobust
-
-Covariate-adjusted Sharp RD estimates using local polynomial regression.
-
-Number of Obs.                 2629
-BW type                       mserd
-Kernel                   Triangular
-VCE method                       NN
-
-                               Left        Right
-Number of Obs.                 2314          315
-Eff. Number of Obs.             421          237
-Order est. (p)                    1            1
-Order bias (q)                    2            2
-BW est. (h)                   0.138        0.138
-BW bias (b)                   0.242        0.242
-rho (h/b)                     0.569        0.569
-Unique Obs.                    2312          315</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled" title="`rdplot()`を使った簡単な作り方">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> male_hs_2000, <span class="at">x =</span> iwm, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">covs =</span> <span class="sc">~</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call: rdrobust
-
-Covariate-adjusted Sharp RD estimates using local polynomial regression.
-
-Number of Obs.                 2629
-BW type                       mserd
-Kernel                   Triangular
-VCE method                       NN
-
-                               Left        Right
-Number of Obs.                 2314          315
-Eff. Number of Obs.             346          207
-Order est. (p)                    1            1
-Order bias (q)                    2            2
-BW est. (h)                   0.111        0.111
-BW bias (b)                   0.176        0.176
-rho (h/b)                     0.627        0.627
-Unique Obs.                    2312          315</code></pre>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">ヒント</span><code>rdplot()</code>を使った簡単な作り方
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>　{rdrobust}を使った<code>rdplot()</code>を使えばより簡単に上記の図が作れる。<code>rdplot()</code>の<code>y</code>、<code>x</code>、<code>c</code>、<code>data</code>引数は<code>rdrobust()</code>のそれと同じだ。ここに<code>nbins</code>引数を使うことで、閾値を中心とし左右に何個の点を出力するかが調節できる。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>rdplot1 <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rdplot</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">nbins =</span> <span class="dv">15</span>, <span class="at">data =</span> _)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　出力された図は{ggplot2}で作られたものだ。<code>図オブジェクト名$rdplot</code>でオブジェクトの中から図だけを抽出できるため、ここから<code>+</code>演算子を使うとさらにレイヤーを追加できる。</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>rdplot1<span class="sc">$</span>rdplot <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin in 1994"</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Share of 15-20-year-olds</span><span class="sc">\n</span><span class="st">with high school degree"</span>, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"(a) Women in 2000"</span>) </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -1269,83 +1495,69 @@ Unique Obs.                    2312          315</code></pre>
 <h2 data-number="4.1" class="anchored" data-anchor-id="プラセボ検定"><span class="header-section-number">4.1</span> プラセボ検定</h2>
 <p><span class="math inline">\(\delta\)</span> = 0.5</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_left <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&lt;</span> <span class="fu">median</span>(iwm))</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>df_right <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="fu">median</span>(iwm))</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rd_est</span>(female_hs_2000 <span class="sc">~</span> iwm <span class="sc">|</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df_left, <span class="at">cutpoint =</span> <span class="fu">median</span>(df_left<span class="sc">$</span>iwm), <span class="at">t.design =</span> <span class="st">"g"</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_left <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&lt;</span> <span class="fu">median</span>(iwm))</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>df_right <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="fu">median</span>(iwm))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">covs =</span> cov_formula, <span class="at">data =</span> df_left, <span class="at">c =</span> <span class="fu">median</span>(df_left<span class="sc">$</span>iwm)) <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-rd_est(formula = female_hs_2000 ~ iwm | ivs + hh_size + pop_young + 
-    pop_old + log_pop + n_parties + gender_ratio + is_district_center + 
-    is_province_center + is_sub_metro + is_metro, data = df_left, 
-    cutpoint = median(df_left$iwm), t.design = "g")
+<pre><code>Call: rdrobust
 
-ITT used:
-FALSE
+Covariate-adjusted Sharp RD estimates using local polynomial regression.
 
-Type:
-sharp 
+Number of Obs.                 1314
+BW type                       mserd
+Kernel                   Triangular
+VCE method                       NN
 
-Estimates:
-            Bandwidth  Observations  Estimate   Std. Error  lower.CL   upper.CL  z value  Pr(&gt;|z|)
-Linear           NA    1314           0.006211  0.007435    -0.008362  0.020784   0.8353  0.4035  
-Quadratic        NA    1314          -0.003681  0.010531    -0.024321  0.016959  -0.3496  0.7267  
-Cubic            NA    1314          -0.019036  0.014038    -0.046550  0.008477  -1.3561  0.1751  
-Opt         0.12319    1096           0.001868  0.009695    -0.017135  0.020870   0.1927  0.8472  
-Half-Opt    0.06159     625          -0.010478  0.013452    -0.036842  0.015887  -0.7789  0.4360  
-Double-Opt  0.24637    1290           0.004892  0.008042    -0.010871  0.020655   0.6082  0.5430  
-             
-Linear       
-Quadratic    
-Cubic        
-Opt          
-Half-Opt     
-Double-Opt   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                               Left        Right
+Number of Obs.                  657          657
+Eff. Number of Obs.             215          145
+Order est. (p)                    1            1
+Order bias (q)                    2            2
+BW est. (h)                   0.038        0.038
+BW bias (b)                   0.060        0.060
+rho (h/b)                     0.635        0.635
+Unique Obs.                     656          657
 
-Confidence interval used:  0.95 </code></pre>
+=======================================================================================
+        Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
+=======================================================================================
+  Conventional    -0.010     0.013    -0.788     0.430    [-0.036 , 0.015]     
+Bias-Corrected    -0.008     0.013    -0.579     0.563    [-0.033 , 0.018]     
+        Robust    -0.008     0.016    -0.482     0.630    [-0.038 , 0.023]     
+=======================================================================================</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rd_est</span>(female_hs_2000 <span class="sc">~</span> iwm <span class="sc">|</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df_right, <span class="at">cutpoint =</span> <span class="fu">median</span>(df_right<span class="sc">$</span>iwm), <span class="at">t.design =</span> <span class="st">"g"</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">covs =</span> cov_formula, <span class="at">data =</span> df_right, <span class="at">c =</span> <span class="fu">median</span>(df_right<span class="sc">$</span>iwm)) <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-rd_est(formula = female_hs_2000 ~ iwm | ivs + hh_size + pop_young + 
-    pop_old + log_pop + n_parties + gender_ratio + is_district_center + 
-    is_province_center + is_sub_metro + is_metro, data = df_right, 
-    cutpoint = median(df_right$iwm), t.design = "g")
+<pre><code>Call: rdrobust
 
-ITT used:
-FALSE
+Covariate-adjusted Sharp RD estimates using local polynomial regression.
 
-Type:
-sharp 
+Number of Obs.                 1315
+BW type                       mserd
+Kernel                   Triangular
+VCE method                       NN
 
-Estimates:
-            Bandwidth  Observations  Estimate    Std. Error  lower.CL  upper.CL  z value   Pr(&gt;|z|)
-Linear           NA    1315           0.0023861  0.006330    -0.01002  0.01479    0.37692  0.7062  
-Quadratic        NA    1315          -0.0041262  0.009370    -0.02249  0.01424   -0.44036  0.6597  
-Cubic            NA    1315          -0.0078304  0.012430    -0.03219  0.01653   -0.62994  0.5287  
-Opt         0.18822    1096           0.0010515  0.008296    -0.01521  0.01731    0.12675  0.8991  
-Half-Opt    0.09411     577           0.0065707  0.011622    -0.01621  0.02935    0.56538  0.5718  
-Double-Opt  0.37645    1299           0.0003838  0.006907    -0.01315  0.01392    0.05557  0.9557  
-             
-Linear       
-Quadratic    
-Cubic        
-Opt          
-Half-Opt     
-Double-Opt   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                               Left        Right
+Number of Obs.                  657          658
+Eff. Number of Obs.             190          203
+Order est. (p)                    1            1
+Order bias (q)                    2            2
+BW est. (h)                   0.064        0.064
+BW bias (b)                   0.101        0.101
+rho (h/b)                     0.633        0.633
+Unique Obs.                     656          658
 
-Confidence interval used:  0.95 </code></pre>
+=======================================================================================
+        Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
+=======================================================================================
+  Conventional    -0.001     0.012    -0.052     0.959    [-0.025 , 0.023]     
+Bias-Corrected     0.002     0.012     0.161     0.872    [-0.022 , 0.026]     
+        Robust     0.002     0.014     0.137     0.891    [-0.026 , 0.030]     
+=======================================================================================</code></pre>
 </div>
 </div>
 </section>
@@ -1353,53 +1565,24 @@ Confidence interval used:  0.95 </code></pre>
 <h2 data-number="4.2" class="anchored" data-anchor-id="密度検定"><span class="header-section-number">4.2</span> 密度検定</h2>
 <p>Figure 2</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">fill =</span> iwm <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">binwidth =</span> <span class="fl">0.02</span>) <span class="sc">+</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Isalmic party vote margin in 1994 (running variable)"</span>,</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Number of municipalities"</span>,</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Mayor party"</span>) <span class="sc">+</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"Non-Islamic"</span>, <span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"Islamic"</span>),</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#5F7387"</span>, <span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>)) <span class="sc">+</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">fill =</span> iwm <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">binwidth =</span> <span class="fl">0.02</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Isalmic party vote margin in 1994 (running variable)"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Number of municipalities"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Mayor party"</span>) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"Non-Islamic"</span>, <span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"Islamic"</span>),</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#5F7387"</span>, <span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>)) <span class="sc">+</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1500"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1500"></p>
 </figure>
 </div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dc_test</span>(df<span class="sc">$</span>iwm[<span class="fu">abs</span>(df<span class="sc">$</span>iwm) <span class="sc">&lt;</span> <span class="fl">0.6</span>], <span class="at">cutpoint =</span> <span class="dv">0</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Binwidth:
-0.008296 
-
-Bandwidth:
-0.1413 </code></pre>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Estimate for log difference in heights:
-  Estimate  Std. Error  lower.CL  upper.CL  z value   Pr(&gt;|z|)   
-  -0.04891   0.16068    -0.36384   0.26603  -0.30437   0.76085   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Confidence interval used:  0.95 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7608466</code></pre>
 </div>
 </div>
 </section>
@@ -1407,14 +1590,29 @@ Confidence interval used:  0.95 </code></pre>
 <h2 data-number="4.3" class="anchored" data-anchor-id="バランスチェック"><span class="header-section-number">4.3</span> バランスチェック</h2>
 <p>Figure 3</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.3</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.3</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.3</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>() </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
 </div>
@@ -1424,134 +1622,75 @@ Confidence interval used:  0.95 </code></pre>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.3</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>() </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 60+"</span>) <span class="sc">+</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.11</span>)) <span class="sc">+</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.3</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 60+"</span>) <span class="sc">+</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)) <span class="sc">+</span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.11</span>)) <span class="sc">+</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
 </div>
 </div>
 <details class="code-fold">
 <summary>コード</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> ivs, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Islamic vote share"</span>) <span class="sc">+</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>)) <span class="sc">+</span></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 60+"</span>) <span class="sc">+</span></span>
-<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.11</span>)) <span class="sc">+</span></span>
-<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_young, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 19-"</span>) <span class="sc">+</span></span>
-<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.55</span>)) <span class="sc">+</span></span>
-<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> log_pop, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-41"><a href="#cb46-41" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-42"><a href="#cb46-42" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Log polulation"</span>) <span class="sc">+</span></span>
-<span id="cb46-43"><a href="#cb46-43" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb46-44"><a href="#cb46-44" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-45"><a href="#cb46-45" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-46"><a href="#cb46-46" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-47"><a href="#cb46-47" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> gender_ratio, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-48"><a href="#cb46-48" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-49"><a href="#cb46-49" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-50"><a href="#cb46-50" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-51"><a href="#cb46-51" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-52"><a href="#cb46-52" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-53"><a href="#cb46-53" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Gender"</span>) <span class="sc">+</span></span>
-<span id="cb46-54"><a href="#cb46-54" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">1.1</span>)) <span class="sc">+</span></span>
-<span id="cb46-55"><a href="#cb46-55" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-56"><a href="#cb46-56" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-57"><a href="#cb46-57" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-58"><a href="#cb46-58" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> is_any_center, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-59"><a href="#cb46-59" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-60"><a href="#cb46-60" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-61"><a href="#cb46-61" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-62"><a href="#cb46-62" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-63"><a href="#cb46-63" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-64"><a href="#cb46-64" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Any center municipality"</span>) <span class="sc">+</span></span>
-<span id="cb46-65"><a href="#cb46-65" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb46-66"><a href="#cb46-66" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-67"><a href="#cb46-67" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-68"><a href="#cb46-68" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-69"><a href="#cb46-69" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> n_parties, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-70"><a href="#cb46-70" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-71"><a href="#cb46-71" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-72"><a href="#cb46-72" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-73"><a href="#cb46-73" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-74"><a href="#cb46-74" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-75"><a href="#cb46-75" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Number of parties"</span>) <span class="sc">+</span></span>
-<span id="cb46-76"><a href="#cb46-76" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)) <span class="sc">+</span></span>
-<span id="cb46-77"><a href="#cb46-77" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
-<span id="cb46-78"><a href="#cb46-78" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb46-79"><a href="#cb46-79" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb46-80"><a href="#cb46-80" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> hh_size, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
-<span id="cb46-81"><a href="#cb46-81" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-82"><a href="#cb46-82" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb46-83"><a href="#cb46-83" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb46-84"><a href="#cb46-84" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb46-85"><a href="#cb46-85" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-86"><a href="#cb46-86" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Household size"</span>) <span class="sc">+</span></span>
-<span id="cb46-87"><a href="#cb46-87" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb46-88"><a href="#cb46-88" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> ivs, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Islamic vote share"</span>) <span class="sc">+</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>)) <span class="sc">+</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_old, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 60+"</span>) <span class="sc">+</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.11</span>)) <span class="sc">+</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> pop_young, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Age 19-"</span>) <span class="sc">+</span></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.55</span>)) <span class="sc">+</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.32</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.32</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> log_pop, <span class="at">group =</span> treat)) <span class="sc">+</span></span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.08</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Islamic win margin"</span>, <span class="at">y =</span> <span class="st">"Log polulation"</span>) <span class="sc">+</span></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell quarto-layout-panel" data-layout="[[49,-2,49],[49,-2,49],[49,-2,49],[49,-2,49]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout="[[49,-2,49],[49,-2,49]]" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
 </figure>
 </div>
 </div>
@@ -1561,7 +1700,7 @@ Confidence interval used:  0.95 </code></pre>
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-32-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
 </figure>
 </div>
 </div>
@@ -1570,7 +1709,7 @@ Confidence interval used:  0.95 </code></pre>
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-32-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
 </figure>
 </div>
 </div>
@@ -1580,45 +1719,7 @@ Confidence interval used:  0.95 </code></pre>
 <div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 2.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-7.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 2.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 49.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-24-8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-32-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900"></p>
 </figure>
 </div>
 </div>
@@ -1628,47 +1729,6 @@ Confidence interval used:  0.95 </code></pre>
 </section>
 <section id="感度分析" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> 感度分析</h1>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rd_est</span>(female_hs_2000 <span class="sc">~</span> iwm <span class="sc">|</span> iwm <span class="sc">+</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df, <span class="at">cutpoint =</span> <span class="dv">0</span>, <span class="at">t.design =</span> <span class="st">"g"</span>, <span class="at">less =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rd_sens_bw</span>(<span class="at">bws =</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-rd_est(formula = female_hs_2000 ~ iwm | iwm + ivs + hh_size + 
-    pop_young + pop_old + log_pop + n_parties + gender_ratio + 
-    is_district_center + is_province_center + is_sub_metro + 
-    is_metro, data = df, cutpoint = 0, less = TRUE, t.design = "g")
-
-ITT used:
-FALSE
-
-Type:
-sharp 
-
-Estimates:
-        Bandwidth  Observations  Estimate  Std. Error  lower.CL  upper.CL  z value  Pr(&gt;|z|)    
-Linear      NA     2629          0.01362   0.006382    0.001108  0.02613   2.134    0.032873  * 
-Opt     0.3058     1268          0.02370   0.007712    0.008585  0.03881   3.073    0.002118  **
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Confidence interval used:  0.95 </code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `rd_sens_bw()`:
-! Not an object of class rd.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rd_est</span>(female_hs_2000 <span class="sc">~</span> iwm <span class="sc">|</span> ivs <span class="sc">+</span> hh_size <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> log_pop <span class="sc">+</span> n_parties <span class="sc">+</span> gender_ratio <span class="sc">+</span> is_district_center <span class="sc">+</span> is_province_center <span class="sc">+</span> is_sub_metro <span class="sc">+</span> is_metro, </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> df, <span class="at">cutpoint =</span> <span class="dv">0</span>, <span class="at">t.design =</span> <span class="st">"g"</span>) <span class="sc">|&gt;</span> <span class="fu">rd_sens_bw</span>(<span class="at">bws =</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   11 obs. of  4 variables:
- $ bw   : num  0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 ...
- $ est  : num  0.0301 0.0263 0.0238 0.0222 0.0212 ...
- $ se   : num  0.01239 0.00909 0.00776 0.00714 0.00682 ...
- $ model: chr  "usr" "usr" "usr" "usr" ...</code></pre>
-</div>
-</div>
 
 
 </section>
@@ -1689,6 +1749,10 @@ Confidence interval used:  0.95 </code></pre>
 <li id="fn10"><p>共変量を投入したモデルでは県レベルでクラスタリングした標準誤差を使っている<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>ただし、バンド幅の計算時には使用した三角形カーネル関数を使わなかったことは未だに謎である。<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), “<a href="https://doi.org/10.3982/ECTA11757">Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs</a>,” <em>Econometrica</em>, 82: 2295-2326.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>イスラム系政党の得票率（<code>ivs</code>）、得票した政党の数（<code>n_parties</code>）、19歳未満の人口割合（<code>pop_young</code>）、61歳より上の人口割合（<code>pop_old</code>）、男女比（<code>gender_ratio</code>）、対数化した人口（<code>log_pop</code>）、中心都市ダミー（<code>is_province_center</code>、<code>is_district_center</code>、<code>is_sub_metro</code>、<code>is_metro</code>）、固定効果のための各県のダミー変数（<code>province</code>）<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Cleveland, William S. 1979. “<a href="https://doi.org/10.1080/01621459.1979.10481038">Robust Locally Weighted Regression and Smoothing Scatterplots</a>,” <em>Journal of the American Statistical Association</em>, 74(368): 829-836.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

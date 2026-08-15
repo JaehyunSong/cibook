@@ -405,7 +405,7 @@ out_mean_df
 #| out-width: 500px
 out_mean_df |>
   ggplot() +
-  geom_bar(aes(x = Groups, y = Outcome), stat = "identity")
+  geom_col(aes(x = Groups, y = Outcome))
 ```
 
 　続いて、このグラフの見た目を調整してみよう。
