@@ -255,14 +255,16 @@ df |>
    geom_point()
 ```
 
-　続いて、直線をオーバラップしてみよう。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）[^loess]をネット上の解説記事等を参照されたい。
+　続いて、曲線をオーバラップしてみよう。この曲線は**平滑化曲線**（smoothing line）と呼ばれるものであり、2つの変数間の関係を示す滑らかな曲線（または直線）である。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）[^loess]をネット上の解説記事等を参照されたい。
 
 [^loess]: Cleveland, William S. 1979. "[Robust Locally Weighted Regression and Smoothing Scatterplots](https://doi.org/10.1080/01621459.1979.10481038)," *Journal of the American Statistical Association*, 74(368): 829-836.
 
 　LOESS線は`geom_smooth()`レイヤーで足せる。`method = "loess"`をすればLOESSが、`"lm"`だと線形回帰、`"gam"`だと一般化加法モデルが使われる（自分で作った関数を使用することもできる）。また、マッピングでは`x`と`y`だけでなく、`group`も必要だ。`group`を指定しないと一本の線が表示されるが、`group = treat`にしておくと、統制群と処置群、それぞれのLOESS曲線が計算され、出力される。
 
 ```{r}
-#| eval: false
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot() +
@@ -273,7 +275,6 @@ df |>
 　コードを見ると、`geom_point()`と`geom_smooth()`は`x`と`y`のマッピングを共有しているため、この2つは`ggplot()`内でマッピングしておくとより簡潔なコードになる。
 
 ```{r}
-#| eval: false
 #| fig-width: 4
 #| fig-height: 4
 #| out-width: 400px
@@ -284,17 +285,25 @@ df |>
    geom_smooth(aes(group = treat), method = "loess")
 ```
 
-　線がジャンプしていることが分かる。実はこれだけで目的は達成したが、Figure 4を見ると散布図が非常にシンプルになっている。RDDにおける可視化は情報量よりも傾向が重要だ。ここまで点が多いと、線はジャンプしていても、点の群れがジャンプしているかどうかは分かりにくい。ここでは以下のようにデータを4%ポイントの区間に分け、その区間内の結果変数（`female_hs_2000`）の平均値をプロットしてみよう。
+　線がジャンプしていることが分かる。実はこれだけで目的は達成したが、Figure 4を見ると散布図が非常にシンプルになっている。RDDにおける可視化は情報量よりも**傾向**が重要だ。ここまで点が多いと、線はジャンプしていても、点の群れがジャンプしているかどうかは分かりにくい。ここでは以下の図のようにデータを4%ポイントの区間に分け、その区間内の結果変数（`female_hs_2000`）の平均値をプロットしてみよう。
 
 ```{r}
+#| echo: false
 #| fig-width: 8
 #| fig-height: 4
 #| out-width: 800px
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot(aes(x = iwm, y = female_hs_2000, group = treat)) +
+   geom_point(color = "gray", alpha = 0.5) +
    geom_vline(xintercept = seq(-0.52, 0.52, by = 0.04)) +
-   geom_point()
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "white", aes(fill = "区間内のfemale_hs_2000の平均値")) +
+   scale_fill_manual(values = c("区間内のfemale_hs_2000の平均値" = "tomato")) +
+   theme_gray(base_size = 14) +
+   theme(legend.position = "bottom",
+         legend.title    = element_blank())
 ```
 
 　任意の区間（bin）内で変数を要約（summary）し、プロットする関数は`stat_summary_bin()`だ。ここで要約方法は平均値（`fun = "mean"`）、出力方法は散布図（`geom = "point"`）とする。区間の幅は0.04（`bindwidth = 0.04`）にする。ここでさらに`boundary = 0`を指定しておくと、区間が0にかからなくなり、Figure 4のような図が作れるようになる。後は`geom_point()`同様、`size`、`shape`、`color`、`fill`等で点のカスタマイズをする。ここでは点の大きさは3、形は枠線付きの円（21番）、枠線の色は黒、中身の色塗りはグレーとする。
@@ -443,6 +452,7 @@ df |>
 ```
 
 ```{r}
+#| include: false
 female_90 <- rdrobust(y = female_hs_1990, x = iwm, data = df, cluster = province, vce = "CR2") 
 male_90   <- rdrobust(y = male_hs_1990, x = iwm, data = df, cluster = province, vce = "CR2") 
 ```
@@ -484,35 +494,113 @@ RDDの識別条件として重要なのは以下の3点です。
 
 ## プラセボ検定
 
-$\delta$ = 0.5
+　潜在的結果の連続性は「もし、閾値が今とは異なる別のポイントなら、今の閾値周辺において直線（または曲線）は連続しているだろう」ということである。飲酒年齢の例で考えると、交通事故率は20歳を境界にジャンプしていると考えられる。もし、法改正により飲酒可能な年齢が18歳に引き下げられた場合、今の20歳周辺で見られるジャンプは見られなくなる、これが潜在的結果が連続している状況である^[18歳周辺にジャンプが見られるかどうかは別の話である。重要なのは閾値が変化したら既存の閾値周辺における傾向性はジャンプしないとのことだ。]。しかし、我々は潜在的結果のうち、反事実は観察できない。したがって、この連続性を直接立証することはできない。
+
+　ここで発想を転換してみよう。「処置が発生しない場所でも、同じようなジャンプが生じていないか」を確認することはどうだろうか。もし、本当の閾値以外の場所でも、ジャンプが頻繁に見つかるなら、「このデータでは、処置がなくても割当変数に沿って不連続な変化が発生しているのでは?」という疑念が生じることになる。これがプラセボテスト（placebo test）の考え方だ。偽の閾値を与えた場合、統計的に有意なLATEが得られるかどうかを確認することである。プラセボテストの方法はいくつか考えられるが、ここではImbens and Lemieux（2008）[^imbens-lemieux-2008]が提案した方法を紹介する。
+
+[^imbens-lemieux-2008]: Imbens, Guido W. and Thomas Lemieux. 2008. "[Regression discontinuity designs: A guide to practice.](https://doi.org/10.1016/j.jeconom.2007.05.001)" *Journal of Econometrics,* 142(2): 615-635.
+
+　まず、`filter()`関数を使用し、データセットを処置群と統制群で分割する。統制群のデータセットは`df_c`、処置群のそれは`df_t`とする。
 
 ```{r}
 df_c <- df |> filter(treat == 0)
 df_t <- df |> filter(treat == 1)
 ```
 
-```{r}
-quantile(df_c$iwm, probs = 0.6)
-quantile(df_t$iwm, probs = 0.6)
-```
+　つづいて、任意の閾値を決める。Imbens and Lemieux（2008）は閾値を中心に左側に個体の50%、右側に50%が入るよう閾値を提案している。簡単にいえば、中央値（= 第2四分位数）だ。`median()`関数を使えば簡単に中央値が計算できる。むろん、必ず中央値を使う必要はない。たとえば閾値を中心に左側に個体の40%、右側に60%が入るような閾値を決めても良い。その場合は`qunatile()`関数を使用すれば良い（`quantile(データフレーム名$iwm, probs = 0.4)`）。
 
 ```{r}
-rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
-         data = df_c, c = quantile(df_c$iwm, probs = 0.5)) |> 
-   summary(all = TRUE)
-
-rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula, 
-         data = df_t, c = quantile(df_t$iwm, probs = 0.5)) |> 
-   summary(all = TRUE)
+median(df_c$iwm)
+median(df_t$iwm)
 ```
+
+　あとはこの2つのデータセットと閾値を使用し、同じRDDを行えば良い。今回は`tidy()`関数でLATEの推定値だけ確認しよう。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df_c, c = median(df_c$iwm)) |> 
+   tidy()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df_t, c = median(df_t$iwm)) |> 
+   tidy()
+```
+
+　いずれも統計的有意なジャンプが見られなかった。これが潜在的結果の連続性を保証するわけではないが、少なくとも潜在的結果の非連続性の証拠は**まだ**見つかってないことを意味している。
+
+:::: {.callout-note title="図を添えても良いかも?" collapse=true}
+　以下のように通常とRDD同様、プラセボテストの図を添えても良いだろう。本文に載せるには字数制限がもったいないので、付録で良いかも知れない。
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| fig-width: 4
+#| fig-height: 4
+df_c |> 
+   mutate(treat = if_else(iwm >= median(iwm), 1, 0)) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = median(df_c$iwm), linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.02, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree (women in 2000)", 
+        title = "Control group") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+
+df_t |> 
+   mutate(treat = if_else(iwm >= median(iwm), 1, 0)) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_vline(xintercept = median(df_t$iwm), linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.02, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
+   labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree (women in 2000)", 
+        title = "Treatment group") +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic()
+```
+::::
+
+　プラセボテストにはいくつかのやり方が考えられる。たとえばデータを分割せず、全体のデータセットに対し、割当変数の閾値を少しずつ動かしながらLATEを推定することも考えられる。`rdrobust()`の`c`引数だけを修正すれば良いし、簡単にできよう。
 
 ## 密度検定
 
-Figure 2
+　割当変数の連続する密度検定の結果はFigure 2として掲載されている。割当変数の連続性が確認されない場合、割当変数に人為的な操作が加わっている可能性が示唆される。変数の人為的操作は日常的に観察できる。
+
+　以下は日本で販売されている乗用車（除く軽自動車）の車幅の分布を示したものである（AIで適当に集めたデータなので、そこまで信頼できるものではない）。日本で販売されている軽自動車以外の乗用車の車幅の平均値は約1,800mm、標準偏差は約85mmであり、これは赤い線でしてしている（もう一度強調するが、AIで適当に集めたデータである）。傾向としては分布とおりだが、異常な箇所がいくつかある。それは車幅が1,700mmと1,800mmにギリギリいっていない車が異常に多いことだ。車幅はメーカー側で決めるものであり、意図的にこうなっている。維持費が比較的安いと言われている通称「５ナンバー」車両の条件の一つが車幅1,700mm以下であるため、多くの車の車幅が1,695mmになっている。また、1,800mmにも理由がある。都心部のマンションにある機械式駐車場の多くが1,800mmまで入庫できるからだ^[実際は、数センチ程度の余裕はあるが、1mmでも超えたら管理組合で入庫お断りになるケースが多い。]。今は1,850mmの機械式駐車場が標準で、タワマンのように富裕層の多いマンションだと2,000mmまで入庫できる機械式駐車場も多いが、まだ多くが1,800mmが限界になっている。「
+売れそうな」車幅の車種をたくさん作っていることが、このような車幅の分布密度の断絶の理由でもある（むろん、一番多いのは車幅は1,475mmであり、これは日本の軽自動車規格である1,480mmギリギリの数値である）。
+
+```{r}
+#| echo: false
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+read_csv("_data_slide/rdd/japan_cars.csv") |> 
+   filter(width >= 1500) |>
+   ggplot() +
+   geom_histogram(aes(x = width, fill = ((width >= 1690 & width <= 1700) | (width >= 1791 & width <= 1800))),
+                  binwidth = 10, boundary = 0, color = "white") +
+   stat_function(fun = \(x) dnorm(x, mean = 1800, sd = 85) * 1750,
+                 color = "tomato", linewidth = 1) +
+   labs(x = "車幅（mm）", y = "密度", caption = "注：赤線は平均1800、標準偏差85の正規分布") +
+   coord_cartesian(xlim = c(1600, 2000)) +
+   scale_fill_manual(values = c("TRUE" = "firebrick", "FALSE" = "gray50")) +
+   theme_classic(base_family = "HiraginoSans-W3") +
+   theme(legend.position = "none", 
+         axis.line.y     = element_blank(),
+         axis.ticks.y    = element_blank(),
+         axis.text.y     = element_blank())
+```
+
+　もし割当変数にこのような人為的操作が出来るのであれば、その割当変数はRDDに使ってはいけない。その意味で今回の割当変数（`iwm`）は問題なさそうだ。`iwm`が0を超えると、それはイスラム系候補者が勝利したことになるが、これが操作可能であれば、当選することが至上目標である政治家はみんなが操作してしまうだろう。むろん、自分の得票率を上げるために何かの不正をする可能性はあり、それによって得票率が上がることになる。しかし、ギリギリな線で勝つかどうかは別である。これはどう考えても不可能だろう。つまり、イスラム系候補者が「0.1%ポイント差で勝つようにしよう!」という誘引で何かをすることは考えにくい（本当に僅差で勝利したらそっちの方が色々と大変だし）。
+
+　理論的には問題なさそうだが、政府や与党、その他の政治エリートによる選挙結果を操作している可能性も排除できないので、やはりデータで確認する必要がある。Figure 2を上段をみるとヒストグラムを使用しているが、同じものを作ってみよう。
 
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
+#| out-width: 600px
 df |> 
    ggplot() +
    geom_histogram(aes(x = iwm, fill = iwm > 0),
@@ -527,50 +615,124 @@ df |>
    theme(legend.position = "bottom")
 ```
 
-## バランスチェック
+　ギザギザしているが、不自然なものはないように見える。ただし、そう「見える」だけであって、統計的有意な不自然さがあるかも知れない。そこで必要なのが密度検定だ。この分布を適切に示す密度曲線を作成し、その密度曲線が閾値でジャンプしているかどうかを決めるものである。密度検定の詳細についてはMcCrary（2008）[^mccrary]を参照して頂くとし、ここでは{rddapp}パッケージを利用した密度検定の実装方法を紹介する[^rddenstiy]。
 
-Figure 3
+[^mccrary]: McCrary, Justin. 2008. "[Manipulation of the running variable in the regression discontinuity design: A density test](https://doi.org/10.1016/j.jeconom.2007.05.005)," *Journal of Econometrics*, 142(2): 698-714.
+
+[^rddenstiy]: {rddensity}という定番のパッケージがあるが、一部の曲線が信頼区間外にはみ出るなど、不可解な結果を返すケースがある。
+
+　{rddapp}は`dc_test()`という密度検定用の関数を提供している。必須引数は2つだ。1つ目は割当変数のベクトル、2つ目は閾値（`cutpoint`）だ。割当変数は`$`演算子を使用し、`df`から`iwm`列を抽出すれば良い。
 
 ```{r}
-#| fig-width: 5
-#| fig-height: 3
-#| out-width: 600px
-df |> 
-   filter(iwm >= -0.3 & iwm <= 0.3) |> 
-   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
-   geom_point() 
+#| include: false
+dens_test <- dc_test(df$iwm, cutpoint = 0, plot = FALSE, ext.out = TRUE)
 ```
 
 ```{r}
 #| fig-width: 5
-#| fig-height: 3
-#| out-width: 600px
-df |> 
-   filter(iwm >= -0.3 & iwm <= 0.3) |> 
-   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+#| fig-height: 5
+#| out-width: 500px
+dc_test(df$iwm, cutpoint = 0)
+```
+
+　密度検定の結果で注目するのは密度曲線の「Pr(>|z|) 」列だ。ここが予め設定した有意水準（$\alpha$）を下回れば、割当変数が閾値周辺にて**非**連続だと判定する。今回の *p* 値は約`r sprintf("%.3f", dens_test$p)`であり、よく使う基準である0.05より大きいことから割当変数が非連続である証拠は見つからなかったことになる。少なくとも仮定を違反しているとは言えないということだろう。
+
+　また、`dc_test()`を使うと自動的に図も返してくれるが、この図はカスタマイズが非常に難しい。{ggplot2}で作成した図ならばレイヤーを上書きする形で調整できるが、これはBase Rで作成されたものなので、すでに表示されているものを削除したり、修正することはできず、この図の上に何かを追加することだけである。もし、自分で作図をしたい場合は密度検定の歳、`ext.out = TRUE`を付けておくと、散布図に使用したデータフレームが抽出できる。さらに図が不要であれば`plot = FALSE`も付けておこう。
+
+```{r}
+#| eval: false
+dens_test <- dc_test(df$iwm, cutpoint = 0, plot = FALSE, ext.out = TRUE)
+```
+
+　`密度検定のオブジェクト$data`で散布図用のデータセットが抽出できる。
+
+```{r}
+head(dens_test$data) # 長いので最初の6行だけ確認
+```
+
+　後はこのデータを利用し、散布図（`geom_point()`） + 平滑化曲線（`geom_smooth()`）を作るだけだ。
+
+```{r}
+dens_test$data |> 
+   mutate(treat = if_else(cellmp > 0, 1, 0)) |> 
+   ggplot(aes(x = cellmp, y = cellval, group = treat)) +
    geom_point() +
-   geom_smooth() 
-```
-
-```{r}
-#| fig-width: 5
-#| fig-height: 3
-#| out-width: 600px
-df |> 
-   filter(iwm >= -0.3 & iwm <= 0.3) |> 
-   ggplot(aes(x = iwm, y = pop_old, group = treat)) +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.05, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Age 60+") +
-   scale_x_continuous(breaks = c(-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3)) +
-   coord_cartesian(ylim = c(0.05, 0.11)) +
+   geom_smooth(method = "loess", color = "black", linewidth = 0.75, span = 0.5) +
+   labs(x = "Islamic win margin", y = "# of districts") +
+   coord_cartesian(xlim = c(-0.5, 0.5)) +
    theme_classic()
 ```
 
+　Figure 2の下段のものとはやや異なるが、傾向自体は同じである。ここでも図は傾向を示すことが主目的であり、非連続性の検討は密度検定の具体的な数値に基づいて行うべきであろう。
+
+```{r}
+#| include: false
+df |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   mutate(iwm2 = cut(iwm, breaks = seq(-0.5, 0.5, 0.01))) |> 
+   reframe(treat = mean(treat),
+           n     = n(),
+           .by   = iwm2) |> 
+   separate(col  = iwm2,
+            into = c("ll", "ul"),
+            sep  = ",") |> 
+   mutate(ll = parse_number(ll),
+          ul = parse_number(ul),
+          x  = (ll + ul) / 2) |>
+   ggplot(aes(x = x, y = n, group = treat)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_point() +
+   geom_smooth(method = "loess", color = "black", linewidth = 0.75) +
+   labs(x = "Islamic win margin", y = "# of districts") +
+   theme_classic()
+```
+
+## バランスチェック
+
+　バランスチェックはMeyersson（2014）のFigure 3として掲載されている。RDDでは割当変数の値が閾値に達するか、閾値を超えると線のジャンプが生じ、そのジャンプの幅がLATEとなる。しかし、同じタイミングで別の変数におてもジャンプが発生したら、LATEが識別できなくなる。処置によるものか、あるいはそのジャンプした別の変数から影響されたのかが分からなくなるからだ。しかし、バランスチェックはこれまでのランダム化比較試験（RCT）や傾向スコア推定のような標準化平均差（standardized mean difference; SMD）を使うことはできない。RDDにおけるバランスチックは共変量のジャンプが重要であって、その平均値は重要ではない。たとえば、以下にある左の図の場合、SMDが約3.5である。緩い基準でも0.25を使っても非常に大きい数値となっている。しかし、図を見れば分かるが、線のジャンプはない。一方、右の図の場合、SMDは0.05であり、数値だけ見ればバランスが取れているかのように見えるが、図を見れば明らかにジャンプしていることが分かる。このようにRDDにおけるバランスチェックはSMDでなく、可視化（+推定）を用いることが推奨される。
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| fig-width: 3
+#| fig-height: 3
+set.seed(19861008)
+tibble(x = runif(100, -1, 1),
+       y = x + rnorm(100, 0, 0.1),
+       t = if_else(x >= 0, "t", "c")) |> 
+   ggplot(aes(x = x, y = y, group = t)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_point(color = "gray", alpha = 0.5)  +
+   geom_smooth(method = "loess", color = "tomato", linewidth = 0.75, span = 1) +
+   scale_x_continuous(breaks = 0, labels = "統制群　←　閾値　→　処置群") +
+   labs(x = "割当変数", y = "共変量",
+        subtitle = "E[共変量 | 統制群] = -0.554\nE[共変量 | 処置群] = 0.534") +
+   theme_classic(base_family = "HiraginoSans-W3") +
+   theme(plot.subtitle = element_text(size = 10))
+
+set.seed(19861008)
+tibble(x = runif(100, -1, 1),
+       e = rnorm(100, 0, 0.1),
+       t = if_else(x >= 0, "t", "c")) |> 
+   mutate(y = if_else(t == "c", x + e, 0.25 - 1.5 * x + e)) |> 
+   ggplot(aes(x = x, y = y, group = t)) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_point(color = "gray", alpha = 0.5)  +
+   geom_smooth(method = "loess", color = "tomato", linewidth = 0.75, span = 1) +
+   scale_x_continuous(breaks = 0, labels = "統制群　←　閾値　→　処置群") +
+   labs(x = "割当変数", y = "共変量",
+        subtitle = "E[共変量 | 統制群] = -0.554\nE[共変量 | 処置群] = -0.535") +
+   theme_classic(base_family = "HiraginoSans-W3") +
+   theme(plot.subtitle = element_text(size = 10))
+```
+
+　可視化はLATEの可視化と全く同じで、縦軸（結果変数）の変数だけ替えれば良い。LATEの推定でも述べた通り、RDDの図は傾向を確認するものであって、統計的有意なジャンプがあったかどうかは図では判定できない。たとえば、今回は適合曲線としてLOESSを採用したが、これはパラメーター（`span`）の値に応じて見た目が大きく変わる[^loess-gam]。したがって、論文には載っていなかったが、以下のようにLATEの点推定値および *p* 値も一緒に掲載しておくと、より説得力のあるバランスチェックになるだろう[^blc-setting]。
+
+　以下はFigure 3の最初の4つだけ再現した例だ（以下の「▶ コード」をクリックすればコードが表示される）。
+
+[^loess-gam]: 他にもよく使われる一般化加法モデル（GAM）でも基底関数（base function）の値によって見た目が変わる。
+
+[^blc-setting]: 共変量を使わず、`rdrobust()`の既定値で推定した結果を掲載した。
 
 ```{r}
 #| code-fold: true
@@ -585,7 +747,8 @@ df |>
                     binwidth = 0.08, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(method = "loess", color = "black", linewidth = 0.75, span = 1) +
-   labs(x = "Islamic win margin", y = "Islamic vote share") +
+   labs(x = "Islamic win margin", y = "Islamic vote share",
+        subtitle = "LATE = 0.006 (p = 0.713)") +
    coord_cartesian(ylim = c(0, 0.65)) +
    theme_classic()
 
@@ -597,7 +760,8 @@ df |>
                     binwidth = 0.08, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Age 60+") +
+   labs(x = "Islamic win margin", y = "Age 60+",
+        subtitle = "LATE = -0.004 (p = 0.445)") +
    coord_cartesian(ylim = c(0.05, 0.11)) +
    theme_classic()
 
@@ -609,7 +773,8 @@ df |>
                     binwidth = 0.08, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Age 19-") +
+   labs(x = "Islamic win margin", y = "Age 19-",
+        subtitle = "LATE = 0.008 (p = 0.567)") +
    coord_cartesian(ylim = c(0.35, 0.55)) +
    theme_classic()
 
@@ -621,10 +786,223 @@ df |>
                     binwidth = 0.08, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(color = "black", linewidth = 0.75, method = "loess", span = 1) +
-   labs(x = "Islamic win margin", y = "Log polulation") +
+   labs(x = "Islamic win margin", y = "Log polulation",
+        subtitle = "LATE = 0.002 (p = 0.996)") +
    coord_cartesian(ylim = c(6, 10)) +
    theme_classic()
 ```
 
+　いずれの共変量においても目に見えるジャンプは見えず、推定値ベースでみても統計的有意なジャンプは確認できなかった。
+
 # 感度分析
 
+RDDの推定結果が、分析方法やRDDの仮定を少し変えてもどの程度安定しているか
+
+| 感度分析                 | 何を変える？                     | 何を見る？                   |
+| -------------------- | -------------------------- | ----------------------- |
+| **Bandwidth**        | $h$（cutoffから何の範囲を使うか）      | 効果推定値が安定しているか           |
+| **Polynomial order** | local linear / quadraticなど | 関数形に依存していないか            |
+| **Kernel**           | triangular / uniformなど     | 重み付けに依存していないか           |
+| **Covariates**       | 共変量を入れる/入れない               | 共変量調整に依存していないか          |
+| **Donut RDD**        | cutoff直近の観測を除外             | cutoff付近の特殊な観測に依存していないか |
+
+## バンド幅
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
+         cluster = province, vce = "CR2")
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = 0.096 / 2,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = 0.096 * 2,
+         cluster = province, vce = "CR2") |> 
+   summary()
+```
+
+```{r}
+#| code-fold: true
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+c(seq(0.2, 0.05, by = -0.01), 0.096) |> 
+   enframe() |> 
+   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = x,
+                                         cluster = province, vce = "CR2")),
+          rdd = map(rdd, \(x) tidy(x))) |> 
+   unnest(rdd) |> 
+   filter(term == "Robust") |> 
+   ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high,
+              color = (value == 0.096))) +
+   geom_hline(yintercept = 0) +
+   geom_pointrange() +
+   labs(x = "Bandwidth", y = "Estimated LATE with 95% CI") +
+   scale_color_manual(values = c("FALSE" = "black", "TRUE" = "tomato")) +
+   coord_cartesian(ylim = c(-0.025, 0.1)) +
+   theme_classic() +
+   theme(legend.position = "none")
+```
+
+## 高次多項式
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 1,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 2,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 3,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 4,
+         cluster = province, vce = "CR2") |> 
+   summary()
+
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 5,
+         cluster = province, vce = "CR2") |> 
+   summary()
+```
+
+```{r}
+#| code-fold: true
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+enframe(1:5) |> 
+   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = x,
+                                         cluster = province, vce = "CR2")),
+          rdd = map(rdd, \(x) tidy(x))) |> 
+   unnest(rdd) |> 
+   filter(term == "Robust") |> 
+   ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high)) +
+   geom_hline(yintercept = 0) +
+   geom_pointrange() +
+   labs(x = "Order of Local Polynomial Regression", y = "Estimated LATE with 95% CI") +
+   coord_cartesian(ylim = c(-0.025, 0.1)) +
+   theme_classic()
+```
+
+## カーネル関数
+
+```{r}
+#| code-fold: true
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+c("triangular", "epanechnikov", "uniform") |> 
+   enframe() |> 
+   mutate(value = fct_relevel(value, "triangular", "epanechnikov", "uniform")) |> 
+   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, kernel = x,
+                                         cluster = province, vce = "CR2")),
+          rdd = map(rdd, \(x) tidy(x))) |> 
+   unnest(rdd) |> 
+   filter(term == "Robust") |> 
+   ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high)) +
+   geom_hline(yintercept = 0) +
+   geom_pointrange() +
+   labs(x = "Kernel functions", y = "Estimated LATE with 95% CI") +
+   coord_cartesian(ylim = c(-0.01, 0.06)) +
+   theme_classic()
+```
+
+## 共変量の有無
+
+もうやったよね。
+
+## ドーナツRDD
+
+　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）の影響を受けている可能性をある。だから、閾値周辺の一部の個体をデータから除外して分析をする。
+
+どれくらいの個体を落とすかに関するガイドラインはない。ここでは通常のバンド幅の$\bigcirc$%という基準でやる。
+
+Donut RDDはBarreca *et al.*（2011）[^barreca-et-al]で提案され、Noack and Rothe（2023）[^noack-rothe]によって方法論的にまとめられるようになった。
+
+[^barreca-et-al]: Barreca, Alan I., Melanie Guldi, Jason M. Lindo, and Glen R. Waddell. 2011. "[Saving Babies? Revisiting the Effect of Very Low Birth Weight Classification](https://doi.org/10.1093/qje/qjr042)," *Quarterly Journal of Economics*, 126(4): 2117-2123.
+
+[^noack-rothe]: Noack, Cladia and Chistoph Rothe. 2023. "[Donut Regression Discontinuity Designs](https://doi.org/10.48550/arXiv.2308.14464)," *arXiv.*
+
+```{r}
+df |> 
+   filter(abs(iwm) >= 0.01) |> 
+   filter(abs(iwm) <= 0.1) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_rect(aes(xmin = -0.01, xmax = 0.01, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.1, color = "black", linetype = "dashed") +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray30") +
+   geom_point() +
+   labs(x = "割当変数", y = "結果変数", fill = NULL) +
+   scale_fill_manual(values = c("ドーナツ・ホール" = "gray80")) +
+   scale_x_continuous(breaks = 0, label = "閾値（c）") +
+   scale_y_continuous(breaks = NULL) +
+   coord_cartesian(ylim = c(0, 0.5)) +
+   theme_classic() +
+   theme(legend.position = "bottom")
+```
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| out-width: 400px
+df |> 
+   filter(abs(iwm) >= 0.05) |> 
+   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   ggplot(aes(x = iwm, y = female_hs_2000)) +
+   geom_rect(aes(xmin = -0.05, xmax = 0.05, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.1, color = "black", linetype = "dashed") +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   stat_summary_bin(fun = "mean", geom = "point", 
+                    binwidth = 0.04, boundary = 0,
+                    size = 3, shape = 21, color = "black", fill = "gray") +
+   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
+   labs(x = "割当変数", y = "結果変数", fill = NULL) +
+   scale_fill_manual(values = c("ドーナツ・ホール" = "gray80")) +
+   scale_x_continuous(breaks = 0, label = "閾値（c）") +
+   scale_y_continuous(breaks = NULL) +
+   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   theme_classic() +
+   theme(legend.position = "bottom")
+```
+
+```{r}
+df_donut <- df |> 
+   filter(abs(iwm) >= 0.096 * 0.05)
+
+df
+```
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df_donut, covs = cov_formula, 
+         cluster = province, vce = "CR2") |> 
+   summary(all = TRUE)
+```
+
+```{r}
+#| code-fold: true
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: 600px
+c(0.096 * seq(0.01, 0.1, by = 0.01)) |> 
+   enframe() |> 
+   mutate(data = map(value, \(x) filter(df, abs(iwm) >= x)),
+          rdd  = map(data, \(x) rdrobust(y = female_hs_2000, x = iwm, data = x, covs = cov_formula,
+                                         cluster = province, vce = "CR2")),
+          rdd  = map(rdd, \(x) tidy(x))) |> 
+   unnest(rdd) |> 
+   filter(term == "Robust") |> 
+   ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high,
+              color = p.value <= 0.05)) +
+   geom_hline(yintercept = 0) +
+   geom_pointrange() +
+   labs(x = "Donut hole size (% of bandwidth)", y = "Estimated LATE with 95% CI") +
+   scale_x_continuous(breaks = c(0.096 * seq(0.01, 0.1, by = 0.01)), labels = 1:10) +
+   scale_color_brewer(palette = "Set1", direction = -1) +
+   theme_classic() +
+   theme(legend.position = "none")
+```
