@@ -31,6 +31,12 @@ $right-arrow: "\2981";
 
 figure > figcaption {
   text-align: center;
+  font-style: none !important;
+}
+
+.quarto-layout-cell-subref figcaption, figure .quarto-layout-row figure figcaption {
+  text-align: center;
+  font-style: none !important;
 }
 
 .fg {

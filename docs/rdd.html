@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7ac9241da4525f629cdadd87b350181d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-def299d564fbe54e430ef9e3500009de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-aec3492a693cba08123ea7c8501bc5f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -361,6 +361,7 @@ window.Quarto = {
   
 <section id="セットアップ" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> セットアップ</h1>
+<p>　実習ではMeyersson（2014）<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>の（一部の）再現を試みる。本研究は「イスラム系政党の市長が誕生することは、女性の教育参加（高校修了率など）に対して抑圧的に働くのか、あるいはエンパワーメントとして働くのか」という問いをRDDを使って分析した研究である。分析の結果、イスラム政党の市長が当選した自治体では、女性における高校修了率が大幅に上昇した<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>ことが明らかになった面白い研究である。分析は1994年の地方選挙を使用において、僅差で当選・落選したイスラム系首長に注目し、2000年の高校卒業者の割合を比較したものである。それでは今回使用するパッケージとデータセットを読み込んでおこう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               broom,</span>
@@ -371,37 +372,26 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"_data/Myersson_2014.csv"</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3,204 × 23
-   province district   province_code is_district_center is_province_center is_sub_metro is_metro
-   &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
- 1 Adana    Aladag                 1                  1                  0            0        0
- 2 Adana    Aladag                 1                  0                  0            0        0
- 3 Adana    Buyuksehir             1                  1                  0            0        1
- 4 Adana    Ceyhan                 1                  0                  0            0        0
- 5 Adana    Ceyhan                 1                  0                  0            0        0
- 6 Adana    Ceyhan                 1                  0                  0            0        0
- 7 Adana    Ceyhan                 1                  0                  0            0        0
- 8 Adana    Ceyhan                 1                  1                  0            0        0
- 9 Adana    Ceyhan                 1                  0                  0            0        0
-10 Adana    Ceyhan                 1                  0                  0            0        0
+<pre><code># A tibble: 3,204 × 18
+   province district   is_district_center is_province_center is_sub_metro is_metro    iwm     ivs
+   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Adana    Aladag                      1                  0            0        0 -0.356 0.0154 
+ 2 Adana    Aladag                      0                  0            0        0 -0.543 0.0251 
+ 3 Adana    Buyuksehir                  1                  0            0        1 -0.204 0.111  
+ 4 Adana    Ceyhan                      0                  0            0        0 -0.201 0.102  
+ 5 Adana    Ceyhan                      0                  0            0        0 -0.430 0.0206 
+ 6 Adana    Ceyhan                      0                  0            0        0 -0.450 0.0559 
+ 7 Adana    Ceyhan                      0                  0            0        0 -0.519 0.00249
+ 8 Adana    Ceyhan                      1                  0            0        0 -0.207 0.0806 
+ 9 Adana    Ceyhan                      0                  0            0        0 -0.514 0.00656
+10 Adana    Ceyhan                      0                  0            0        0 -0.578 0.00706
 # ℹ 3,194 more rows
-# ℹ 16 more variables: iwm &lt;dbl&gt;, ivs &lt;dbl&gt;, n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;,
-#   male_hs_2000 &lt;dbl&gt;, female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, female_univ &lt;dbl&gt;,
-#   male_univ &lt;dbl&gt;, female_hijab &lt;dbl&gt;, ivs_2004 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;,
-#   pop_old &lt;dbl&gt;, gender_ratio &lt;dbl&gt;</code></pre>
+# ℹ 10 more variables: n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;, male_hs_2000 &lt;dbl&gt;,
+#   female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;, pop_old &lt;dbl&gt;,
+#   gender_ratio &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Meyersson（2014）<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>の再現</p>
-<ul>
-<li>イスラム系政党の市長が誕生することは、女性の教育参加（高校修了率など）に対して抑圧的に働くのか、あるいはエンパワーメントとして働くのか。</li>
-<li>イスラム政党の市長が当選した自治体では、特に貧困層・保守層出身の女性における高校修了率が大幅に上昇した。イスラム系市長の存在が、保守的な家庭環境において少女を公立校へ通学させることへの心理的・環境的ハードルを下げる効果を果たしたと分析している。</li>
-<li>方法
-<ul>
-<li>ランニング変数：トルコ自治体首長選挙における「イスラム政党候補の得票率差（対次点）」</li>
-<li>得票率差0%（カットオフ）を境に勝敗が決定される</li>
-</ul></li>
-</ul>
-<p>選挙結果に関する変数は1994年のトルコ地方選挙、</p>
+<p>　今回使用するデータはMeyersson（2014）が公開した再現用データの一部を抜粋したものである。本来は236変数で構成されており、本研究の本文・付録に掲載されているすべての分析を再現しようとすれば、これらのほとんどが必要だが、ここではMeyersson（2014）の主要な分析結果のみを再現するので、必要な18変数のみ利用する。</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -413,97 +403,102 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>province</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">州/県（İl）</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>district</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">地区/群（ilçe）</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>province_code</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
 <td style="text-align: left;"><code>is_province_center</code></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>is_district_center</code></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>is_metro</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">大都市ダミー</td>
 <td style="text-align: left;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>is_submetro</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">副大都市ダミー</td>
 <td style="text-align: left;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>iwm</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">イスラム系候補者の惜敗率</td>
+<td style="text-align: left;">1994年地方選挙</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>ivs</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">イスラム系候補者の得票率</td>
+<td style="text-align: left;">1994年地方選挙</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>n_parties</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">得票した政党の数</td>
+<td style="text-align: left;">1994年地方選挙</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>log_pop</code></td>
+<td style="text-align: left;">人口（対数）</td>
+<td style="text-align: left;">2000年</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>female_hs_2000</code></td>
+<td style="text-align: left;">15-20歳女性の高卒者の割合</td>
+<td style="text-align: left;">2000年</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>male_hs_2000</code></td>
+<td style="text-align: left;">15-20歳男性の高卒者の割合</td>
+<td style="text-align: left;">2000年</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>female_hs_1990</code></td>
+<td style="text-align: left;">15-20歳女性の高卒者の割合</td>
+<td style="text-align: left;">1990年</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>||| |</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>male_hs_1990</code></td>
+<td style="text-align: left;">15-20歳男性の高卒者の割合</td>
+<td style="text-align: left;">1990年</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">``</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>hh_size</code></td>
+<td style="text-align: left;">平均世帯人数</td>
+<td style="text-align: left;">2000年</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>pop_young</code></td>
+<td style="text-align: left;">19歳以下人口の割合</td>
+<td style="text-align: left;">2000年</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>pop_old</code></td>
+<td style="text-align: left;">60歳超え人口の割合</td>
+<td style="text-align: left;">2000年</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gender_ratio</code></td>
+<td style="text-align: left;">男女比</td>
+<td style="text-align: left;">2000年</td>
 </tr>
 </tbody>
 </table>
-<p>　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数<code>treat</code>を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系政党の対次点得票率差（<code>iwm</code>）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、<code>iwm</code>が0より大きい場合は1、それ以外は0の値をとる<code>treat</code>変数を<code>if_else()</code>関数で作成する。</p>
+<p>　分析に入る前に簡単なデータハンドリングをしておく。まず、処置変数<code>treat</code>を作成する。実際の推定の際は不要な変数だが図表を作成する際に使うこともあるので、割当変数（running variable; RV）が閾値を超えたら1、それ以外は0をとる変数を作る。ここでは1994年地方選挙におけるイスラム系候補者の惜敗率<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>（<code>iwm</code>）が割当変数だ。これが0.1なら、イスラム系政党候補者が2位の候補者に比べ10%ポイント得票率が高かった、つまり、当選したことを意味する（2位より得票率が高いことは1位ということになる）。一方、-0.05なら1位の候補者に比べ、得票率が5%ポイント低く、落選したことになる。したがって、<code>iwm</code>が0より大きい場合は1、それ以外は0の値をとる<code>treat</code>変数を<code>if_else()</code>関数で作成する。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">treat =</span> <span class="fu">if_else</span>(iwm <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>　続いて、メイン分析の推定に使用する変数が1つでも欠損している行を除外する。たとえば、<code>df |&gt; drop_na(x)</code>は変数<code>x</code>の値が欠損（<code>NA</code>）している場合、その<strong>行</strong>を丸ごと落とすことを意味する。もし、<code>drop_na(x)</code>の変わりに<code>drop_na(x, y)</code>にすれば変数<code>x</code><strong>か</strong><code>y</code>、1つでも欠損していればその行を落とすことになる。もったいないと思うかも知れないが、どうせ分析の時に欠損値を含む行は自動的に落とされる<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。むしろ、共変量あり/なしバージョンを推定する場合は、事前に欠損値の整理をしておかないと大変なことになるので、事前に落としておく必要がある。</p>
+<p>　続いて、メイン分析の推定に使用する変数が1つでも欠損している行を除外する。たとえば、<code>df |&gt; drop_na(x)</code>は変数<code>x</code>の値が欠損（<code>NA</code>）している場合、その<strong>行</strong>を丸ごと落とすことを意味する。もし、<code>drop_na(x)</code>の変わりに<code>drop_na(x, y)</code>にすれば変数<code>x</code><strong>か</strong><code>y</code>、1つでも欠損していればその行を落とすことになる。もったいないと思うかも知れないが、どうせ分析の時に欠損値を含む行は自動的に落とされる<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。むしろ、共変量あり/なしバージョンを推定する場合は、事前に欠損値の整理をしておかないと大変なことになるので、事前に落としておく必要がある。</p>
 <div class="callout callout-style-default callout-note callout-titled" title="なぜ欠損した行を「予め」削除するのか">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -528,24 +523,23 @@ window.Quarto = {
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,629 × 24
-   province district   province_code is_district_center is_province_center is_sub_metro is_metro
-   &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
- 1 Adana    Aladag                 1                  1                  0            0        0
- 2 Adana    Aladag                 1                  0                  0            0        0
- 3 Adana    Buyuksehir             1                  1                  0            0        1
- 4 Adana    Ceyhan                 1                  0                  0            0        0
- 5 Adana    Ceyhan                 1                  0                  0            0        0
- 6 Adana    Ceyhan                 1                  0                  0            0        0
- 7 Adana    Ceyhan                 1                  0                  0            0        0
- 8 Adana    Ceyhan                 1                  1                  0            0        0
- 9 Adana    Ceyhan                 1                  0                  0            0        0
-10 Adana    Ceyhan                 1                  0                  0            0        0
+<pre><code># A tibble: 2,629 × 19
+   province district   is_district_center is_province_center is_sub_metro is_metro    iwm     ivs
+   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Adana    Aladag                      1                  0            0        0 -0.356 0.0154 
+ 2 Adana    Aladag                      0                  0            0        0 -0.543 0.0251 
+ 3 Adana    Buyuksehir                  1                  0            0        1 -0.204 0.111  
+ 4 Adana    Ceyhan                      0                  0            0        0 -0.201 0.102  
+ 5 Adana    Ceyhan                      0                  0            0        0 -0.430 0.0206 
+ 6 Adana    Ceyhan                      0                  0            0        0 -0.450 0.0559 
+ 7 Adana    Ceyhan                      0                  0            0        0 -0.519 0.00249
+ 8 Adana    Ceyhan                      1                  0            0        0 -0.207 0.0806 
+ 9 Adana    Ceyhan                      0                  0            0        0 -0.514 0.00656
+10 Adana    Ceyhan                      0                  0            0        0 -0.578 0.00706
 # ℹ 2,619 more rows
-# ℹ 17 more variables: iwm &lt;dbl&gt;, ivs &lt;dbl&gt;, n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;,
-#   male_hs_2000 &lt;dbl&gt;, female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, female_univ &lt;dbl&gt;,
-#   male_univ &lt;dbl&gt;, female_hijab &lt;dbl&gt;, ivs_2004 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;,
-#   pop_old &lt;dbl&gt;, gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
+# ℹ 11 more variables: n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;, male_hs_2000 &lt;dbl&gt;,
+#   female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;, pop_old &lt;dbl&gt;,
+#   gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>　約600行分が削除され、残り2629行となっている。</p>
@@ -566,20 +560,20 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_j74zmqu02csvcyzkx0s7 = TinyTable.createTableFunctions("tinytable_j74zmqu02csvcyzkx0s7");
+      const tableFns_7wggujzwxz91l9fgvxy9 = TinyTable.createTableFunctions("tinytable_7wggujzwxz91l9fgvxy9");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_18vzgwm1zkiyqhiqdm89',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_d4f3w6ugnp2enwa0ygug',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_zp365k25s8hvqallblda',}, 
+          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_4euj9i19bldgj6cgeyt3',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_vya5yxapsbtwegqgx0xe',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_q42x8yvz5f95qz8vyhvs',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_j74zmqu02csvcyzkx0s7.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_7wggujzwxz91l9fgvxy9.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -588,12 +582,12 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_j74zmqu02csvcyzkx0s7 td.tinytable_css_18vzgwm1zkiyqhiqdm89, #tinytable_j74zmqu02csvcyzkx0s7 th.tinytable_css_18vzgwm1zkiyqhiqdm89 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_j74zmqu02csvcyzkx0s7 td.tinytable_css_d4f3w6ugnp2enwa0ygug, #tinytable_j74zmqu02csvcyzkx0s7 th.tinytable_css_d4f3w6ugnp2enwa0ygug { text-align: left }
-    #tinytable_j74zmqu02csvcyzkx0s7 td.tinytable_css_zp365k25s8hvqallblda, #tinytable_j74zmqu02csvcyzkx0s7 th.tinytable_css_zp365k25s8hvqallblda {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_7wggujzwxz91l9fgvxy9 td.tinytable_css_4euj9i19bldgj6cgeyt3, #tinytable_7wggujzwxz91l9fgvxy9 th.tinytable_css_4euj9i19bldgj6cgeyt3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_7wggujzwxz91l9fgvxy9 td.tinytable_css_vya5yxapsbtwegqgx0xe, #tinytable_7wggujzwxz91l9fgvxy9 th.tinytable_css_vya5yxapsbtwegqgx0xe { text-align: left }
+    #tinytable_7wggujzwxz91l9fgvxy9 td.tinytable_css_q42x8yvz5f95qz8vyhvs, #tinytable_7wggujzwxz91l9fgvxy9 th.tinytable_css_q42x8yvz5f95qz8vyhvs {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_j74zmqu02csvcyzkx0s7" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_7wggujzwxz91l9fgvxy9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -773,26 +767,26 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_v4pzlykmat5l1fvwce4v = TinyTable.createTableFunctions("tinytable_v4pzlykmat5l1fvwce4v");
+      const tableFns_tq95uh4ohrkchxt5ooum = TinyTable.createTableFunctions("tinytable_tq95uh4ohrkchxt5ooum");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_xb9wl3chpltcll4rm936',}, 
-          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_2hs09c7d79n7yurw0dpq',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_uda9nueu25fmrbkg3amm',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_oo5xjabjie7tow8mkw6q',}, 
-          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_n9oh86vzcev4pts2mn6a',}, 
-          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_kgsovtmqdmcma6a9csfy',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_zve5whfe16fwaunjc1kr',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_g1q8y9ij2akroflz25hq',}, 
-          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_7cap24z5admefkkbxbp3',}, 
+          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_3jp16qim10ieljzq6b9f',}, 
+          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_kaq1smc429vdj0466jps',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_mxg7wqna74cm6ju70vok',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_9yhc142emmzr6jn3zhbr',}, 
+          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_z4q6d8ftiihghjdgbxte',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_q3osdx46wnutxvbwzhbj',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_8kxlcswu0ifidai379ji',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_zayfviru6s78l4u45nru',}, 
+          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_cv2t21kaxfduuo1lj09k',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_v4pzlykmat5l1fvwce4v.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_tq95uh4ohrkchxt5ooum.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -801,18 +795,18 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_xb9wl3chpltcll4rm936, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_xb9wl3chpltcll4rm936 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_2hs09c7d79n7yurw0dpq, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_2hs09c7d79n7yurw0dpq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_uda9nueu25fmrbkg3amm, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_uda9nueu25fmrbkg3amm { text-align: right }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_oo5xjabjie7tow8mkw6q, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_oo5xjabjie7tow8mkw6q {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_n9oh86vzcev4pts2mn6a, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_n9oh86vzcev4pts2mn6a {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_kgsovtmqdmcma6a9csfy, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_kgsovtmqdmcma6a9csfy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_zve5whfe16fwaunjc1kr, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_zve5whfe16fwaunjc1kr { text-align: left }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_g1q8y9ij2akroflz25hq, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_g1q8y9ij2akroflz25hq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_v4pzlykmat5l1fvwce4v td.tinytable_css_7cap24z5admefkkbxbp3, #tinytable_v4pzlykmat5l1fvwce4v th.tinytable_css_7cap24z5admefkkbxbp3 {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_3jp16qim10ieljzq6b9f, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_3jp16qim10ieljzq6b9f {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_kaq1smc429vdj0466jps, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_kaq1smc429vdj0466jps {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_mxg7wqna74cm6ju70vok, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_mxg7wqna74cm6ju70vok { text-align: right }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_9yhc142emmzr6jn3zhbr, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_9yhc142emmzr6jn3zhbr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_z4q6d8ftiihghjdgbxte, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_z4q6d8ftiihghjdgbxte {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_q3osdx46wnutxvbwzhbj, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_q3osdx46wnutxvbwzhbj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_8kxlcswu0ifidai379ji, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_8kxlcswu0ifidai379ji { text-align: left }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_zayfviru6s78l4u45nru, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_zayfviru6s78l4u45nru {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_tq95uh4ohrkchxt5ooum td.tinytable_css_cv2t21kaxfduuo1lj09k, #tinytable_tq95uh4ohrkchxt5ooum th.tinytable_css_cv2t21kaxfduuo1lj09k {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_v4pzlykmat5l1fvwce4v" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_tq95uh4ohrkchxt5ooum" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
 <tr>
@@ -956,7 +950,7 @@ window.Quarto = {
 <p>　それではLATEを推定してみよう。Meyersson（2014）のFigure 4とTable 2が主要推定結果である。RDDを使った研究は図と表の組み合わせが定番である。図で<ruby>大体の<rt>・・・</rt></ruby>雰囲気を見せ、表で具体的な処置効果を示す。Figure 4は4つの図で、Table 2は計18のモデルで構成されているが、ここでは紙幅（…?）の関係上、すべての結果を再現せず、メインの結果のみを再現する。</p>
 <section id="lateの推定" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="lateの推定"><span class="header-section-number">3.1</span> LATEの推定</h2>
-<p>　本稿のメインの推定結果はTable 2のPanel Aの左から4列目とPanel Bの左から4列目である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。いずれも2000年における高卒の割合を結果変数だが、Panel Aが女性、Panel Bが男性である。</p>
+<p>　本稿のメインの推定結果はTable 2のPanel Aの左から4列目とPanel Bの左から4列目である<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。いずれも2000年における高卒の割合を結果変数だが、Panel Aが女性、Panel Bが男性である。</p>
 <p>　まず、女性の高卒割合を結果変数とし、共変量を入れていないモデル（Panel Aの3列目）を推定してみよう。使用する関数は{rdrobust}の<code>rdrobust()</code>だ。必須引数は<code>y</code>、<code>x</code>、<code>c</code>、<code>data</code>だ。<code>y</code>と<code>x</code>は結果変数と割当変数名、<code>data</code>は<code>x</code>と<code>y</code>で指定した変数が格納されているデータフレーム名だ。最後に<code>c</code>は処置を受ける閾値（<em>c</em>utpoint）だ。今回は<code>iwm</code>が0より大きくなると処置群に割り当てられるから<code>c = 0</code>になる。ただし、<code>c</code>は既定値が0であり、ここの実習では指定しなくても問題ない（一応、最初は付けてみよう）。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">c =</span> <span class="dv">0</span>, <span class="at">data =</span> df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1040,7 +1034,7 @@ Bias-Corrected     0.030     0.014     2.090     0.037     [0.002 , 0.058]
 </div>
 </div>
 </div>
-<p>　計3つの推定結果（Conventional、Bias-Corrected、Robust）が表示され、結果も微妙に異なる。どの結果が、Meyersson（2014）の結果と一致するだろうか。論文を見直してみても良いが、結論からいうと一致するものは「ない」。Meyersson（2014）の推定結果は点推定値が0.032、標準誤差が0.010になっている。この相違を説明するのはかなり面倒だ。簡単にいえば、Meyersson（2014）のRDDと{rdrobust}がデフォルトで提供しているRDDは同じRDDとはいえ、中身の設定が相当異なると言える。まず、使用しているバンド幅が異なる。Meyersson（2014）はImbens and Kalyanaraman（2012）<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>、通常IK、またはIK12バンド幅<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>を使用しているが、{rdrobust}はCalonico <em>et al.</em>（2014）<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>のバンド幅を使用している。数年前までは引数でIK12が指定できたが、今はできなくなっている<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。</p>
+<p>　計3つの推定結果（Conventional、Bias-Corrected、Robust）が表示され、結果も微妙に異なる。どの結果が、Meyersson（2014）の結果と一致するだろうか。論文を見直してみても良いが、結論からいうと一致するものは「ない」。Meyersson（2014）の推定結果は点推定値が0.032、標準誤差が0.010になっている。この相違を説明するのはかなり面倒だ。簡単にいえば、Meyersson（2014）のRDDと{rdrobust}がデフォルトで提供しているRDDは同じRDDとはいえ、中身の設定が相当異なると言える。まず、使用しているバンド幅が異なる。Meyersson（2014）はImbens and Kalyanaraman（2012）<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>、通常IK、またはIK12バンド幅<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>を使用しているが、{rdrobust}はCalonico <em>et al.</em>（2014）<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>のバンド幅を使用している。数年前までは引数でIK12が指定できたが、今はできなくなっている<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>。</p>
 <p>　それではバンド幅を変えれば同じ結果が得られるだろうか。IK12バンド幅の値は0.2397612だ。これを使ってみよう。<code>rdrobust()</code>でバンド幅を手動で指定したい時には<code>h</code>引数を使用する。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df,</span>
@@ -1075,7 +1069,7 @@ Bias-Corrected     0.027     0.013     2.187     0.029     [0.003 , 0.052]
 =======================================================================================</code></pre>
 </div>
 </div>
-<p>　それでも結果が全然合わない。元の論文と{rdrobust}の違いはバンド幅の選び方だけではない。カーネル関数も異なる。講義ではRDDにおけるカーネル関数の事実上の標準は三角形カーネル関数（traiangular）と述べた（はず）が、{rdrobust}でもこれを採用している。しかし、Meyersson（2014）はなぜか一様カーネル関数（uniform / rectangular）を使用している<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>。それでは<code>kernel</code>引数でカーネル関数を一様カーネルに変えてみよう。</p>
+<p>　それでも結果が全然合わない。元の論文と{rdrobust}の違いはバンド幅の選び方だけではない。カーネル関数も異なる。講義ではRDDにおけるカーネル関数の事実上の標準は三角形カーネル関数（traiangular）と述べた（はず）が、{rdrobust}でもこれを採用している。しかし、Meyersson（2014）はなぜか一様カーネル関数（uniform / rectangular）を使用している<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。それでは<code>kernel</code>引数でカーネル関数を一様カーネルに変えてみよう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">h =</span> <span class="fl">0.2397612</span>, <span class="at">kernel =</span> <span class="st">"uniform"</span>) <span class="sc">|&gt;</span> </span>
@@ -1109,9 +1103,9 @@ Bias-Corrected     0.026     0.012     2.242     0.025     [0.003 , 0.048]
 =======================================================================================</code></pre>
 </div>
 </div>
-<p>　Conventional行で点推定値（0.032）が一致した。点推定値のズレの謎はこれで解決したが、標準誤差がややことなる。論文では0.010、{rdrobust}の推定結果は0.012だ。結論からいうと、これはどうしようもない。{rdrobust}ではAbadie and Imbens（2006）<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>の不均一分散に頑健な最近傍分散推定量（heteroskedasticity-robust nearest neighbor variance estimator）が採用されており、Meyersson（2014）は分散不均一性を考慮した標準誤差を採用していない<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>。問題は{rdrobust}では頑健ではない通常の標準誤差は使えないということだ。つまり、{rdrobust}で本論文の結果を100%再現することはできない。誤解しないで頂きたいが、これはMeyersson（2014）がわざと頑健ではない手法を採用したとか、方法論的に間違った手法を使ったとか、あるいは時代遅れだったとか、そういうものではない。この論文が執筆された時期を考えるとある意味、これが標準的な作法だったともいえる<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>。実際に論文を読んで見れば分かるが、「ここまでする?」と思わせるレベルで方法論的に真摯に向かってる良い論文だ。</p>
-<p>　話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico <em>et al.</em>（2014）<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>を参照すること。</p>
-<p>　それでは共変量を投入した推定方法を紹介する。ここからは{rdrobust}のデフォルト設定（CCTバンド幅、頑健標準誤差、三角形カーネル関数）を使用し、推定結果はRobust列を使う。<code>rdrobust()</code>で共変量は<code>covs</code>引数で指定する。具体的には<code>covs ~ 共変量1 + 共変量2 + ...</code>のように書く。使用する共変量はTable 2の下段に書かれている<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。また、論文内では推定後、県（<code>province</code>）単位でクラスタリングした標準誤差を使用していることを明記しているので、<code>cluster = province</code>を追加し、<code>province</code>変数でクラスタリングした頑健標準誤差を使用する<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>。クラスター標準誤差の計算方法としてCR1、CR2、CR3が提供されており、<code>cluster</code>引数を指定すると自動的にCR1が適用される。CR2やCR3に変更したい場合は<code>vce = "cr2"</code>か<code>vce = "cr3"</code>を引数として追加すれば良い。CR3はやや大きめの標準誤差を出す保守的な計算方法だが、一般的に採用されている方法はCR2である（Imbens and Kolesár 2016）<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。ここでもCR2を使うとする。推定したオブジェクトはそのまま<code>summary()</code>関数に渡し、LATE推定結果を確認してみよう。</p>
+<p>　Conventional行で点推定値（0.032）が一致した。点推定値のズレの謎はこれで解決したが、標準誤差がややことなる。論文では0.010、{rdrobust}の推定結果は0.012だ。結論からいうと、これはどうしようもない。{rdrobust}ではAbadie and Imbens（2006）<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>の不均一分散に頑健な最近傍分散推定量（heteroskedasticity-robust nearest neighbor variance estimator）が採用されており、Meyersson（2014）は分散不均一性を考慮した標準誤差を採用していない<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>。問題は{rdrobust}では頑健ではない通常の標準誤差は使えないということだ。つまり、{rdrobust}で本論文の結果を100%再現することはできない。誤解しないで頂きたいが、これはMeyersson（2014）がわざと頑健ではない手法を採用したとか、方法論的に間違った手法を使ったとか、あるいは時代遅れだったとか、そういうものではない。この論文が執筆された時期を考えるとある意味、これが標準的な作法だったともいえる<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。実際に論文を読んで見れば分かるが、「ここまでする?」と思わせるレベルで方法論的に真摯に向かってる良い論文だ。</p>
+<p>　話を戻し、Conventional、Bias-corrected、Robustのどの推定結果を使うべきかについて考えてみよう。なるべく論文の正確に再現したいのであればConventionalだが、自分の論文であればより頑健なRobustを使うのが良いだろう。{rdrobust}パッケージでの推定方法等に関してはCalonico <em>et al.</em>（2014）<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>を参照すること。</p>
+<p>　それでは共変量を投入した推定方法を紹介する。ここからは{rdrobust}のデフォルト設定（CCTバンド幅、頑健標準誤差、三角形カーネル関数）を使用し、推定結果はRobust列を使う。<code>rdrobust()</code>で共変量は<code>covs</code>引数で指定する。具体的には<code>covs ~ 共変量1 + 共変量2 + ...</code>のように書く。使用する共変量はTable 2の下段に書かれている<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>。また、論文内では推定後、県（<code>province</code>）単位でクラスタリングした標準誤差を使用していることを明記しているので、<code>cluster = province</code>を追加し、<code>province</code>変数でクラスタリングした頑健標準誤差を使用する<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>。クラスター標準誤差の計算方法としてCR1、CR2、CR3が提供されており、<code>cluster</code>引数を指定すると自動的にCR1が適用される。CR2やCR3に変更したい場合は<code>vce = "cr2"</code>か<code>vce = "cr3"</code>を引数として追加すれば良い。CR3はやや大きめの標準誤差を出す保守的な計算方法だが、一般的に採用されている方法はCR2である（Imbens and Kolesár 2016）<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。ここでもCR2を使うとする。推定したオブジェクトはそのまま<code>summary()</code>関数に渡し、LATE推定結果を確認してみよう。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df, </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">covs =</span> <span class="sc">~</span> ivs <span class="sc">+</span> n_parties <span class="sc">+</span> pop_young <span class="sc">+</span> pop_old <span class="sc">+</span> gender_ratio <span class="sc">+</span> log_pop <span class="sc">+</span> </span>
@@ -1205,8 +1199,8 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 <div class="cell-output cell-output-stdout">
 <pre><code>  gender           term   estimate   std.error statistic     p.value     conf.low  conf.high
 1 Female   Conventional 0.02482684 0.008021680  3.094967 0.001968345  0.009104635 0.04054904
-2 Female Bias-Corrected 0.02590484 0.008021680  3.229354 0.001240703  0.010182639 0.04162705
-3 Female         Robust 0.02590484 0.008820505  2.936889 0.003315230  0.008616970 0.04319272
+2 Female Bias-Corrected 0.02590521 0.008021680  3.229400 0.001240502  0.010183010 0.04162742
+3 Female         Robust 0.02590521 0.008820529  2.936923 0.003314864  0.008617295 0.04319313
 4   Male   Conventional 0.01171863 0.008407292  1.393865 0.163358411 -0.004759360 0.02819662
 5   Male Bias-Corrected 0.01176940 0.008407292  1.399904 0.161542114 -0.004708589 0.02824739
 6   Male         Robust 0.01176940 0.009998157  1.177157 0.239132872 -0.007826628 0.03136543</code></pre>
@@ -1250,7 +1244,7 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 </div>
 </div>
 </div>
-<p>　続いて、曲線をオーバラップしてみよう。この曲線は<strong>平滑化曲線</strong>（smoothing line）と呼ばれるものであり、2つの変数間の関係を示す滑らかな曲線（または直線）である。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>をネット上の解説記事等を参照されたい。</p>
+<p>　続いて、曲線をオーバラップしてみよう。この曲線は<strong>平滑化曲線</strong>（smoothing line）と呼ばれるものであり、2つの変数間の関係を示す滑らかな曲線（または直線）である。よく使う回帰直線もできるが、RDD界隈では一般的にLOESS（locally estimated scatterplot smoothing）と呼ばれる局所回帰で推定した線が用いられる。RDDのLATEを推定する際の局所回帰に似たようなものであるが、簡単にいえば、「データ全体に1本のカーブを当てはめるのではなく、各点の周りだけを見て、その近所のデータだけで簡単な回帰線を引く」を、全部の点で繰り返して、それらをつなげたものである。そうすることで直線ではなく、滑らかな曲線が得られる。LOESSの詳細はCleveland（1979）<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>をネット上の解説記事等を参照されたい。</p>
 <p>　LOESS線は<code>geom_smooth()</code>レイヤーで足せる。<code>method = "loess"</code>をすればLOESSが、<code>"lm"</code>だと線形回帰、<code>"gam"</code>だと一般化加法モデルが使われる（自分で作った関数を使用することもできる）。また、マッピングでは<code>x</code>と<code>y</code>だけでなく、<code>group</code>も必要だ。<code>group</code>を指定しないと一本の線が表示されるが、<code>group = treat</code>にしておくと、統制群と処置群、それぞれのLOESS曲線が計算され、出力される。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
@@ -1522,7 +1516,7 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 </figure>
 </div>
 </div>
-<p>　イスラム系首長の誕生は女性の世俗的な高校教育を増加させるという傾向が確認できた。また、1990年における高校卒業者の割合を縦軸にした分析では線の大きなジャンプが確認出来ていない。1994年の選挙結果前にジャンプが見られないことは、逆の因果や第3の要因（交絡要因）がないことを強く示唆している<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>。</p>
+<p>　イスラム系首長の誕生は女性の世俗的な高校教育を増加させるという傾向が確認できた。また、1990年における高校卒業者の割合を縦軸にした分析では線の大きなジャンプが確認出来ていない。1994年の選挙結果前にジャンプが見られないことは、逆の因果や第3の要因（交絡要因）がないことを強く示唆している<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>。</p>
 <p>　しかし、こういった図からでは統計的有意性検定はできず、あくまでも「傾向」を確認することが主な目的である。曲線のジャンプの幅や信頼区間はLOESSの設定によっていくらでも変わるものであり、この図から効果の有無を語ることはできない。処置効果の有無やその効果量の大きさを語る際には図ではなく、推定結果そのものの図表を使おう。</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="`rdplot()`を使った簡単な作り方">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -1579,8 +1573,8 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 <p>これらの仮定はそれぞれプラセボ検定、バランスチェック、密度検定を使うことで仮定の違反有無が確認できる。ただ、仮定の<strong>違反</strong>有無を確認することが限界であり、「仮定が満たされていない」ことは確認できても、「仮定が満たされている」は確認できない（統計的仮説検定の仕組みを考えてみよう）。せいぜい「「仮定が満たされていない」とは言えない」くらいまでしか確認できない。それでも仮定違反が見つかるだけでも十分に意義はあろう。</p>
 <section id="プラセボ検定" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="プラセボ検定"><span class="header-section-number">4.1</span> プラセボ検定</h2>
-<p>　潜在的結果の連続性は「もし、閾値が今とは異なる別のポイントなら、今の閾値周辺において直線（または曲線）は連続しているだろう」ということである。飲酒年齢の例で考えると、交通事故率は20歳を境界にジャンプしていると考えられる。もし、法改正により飲酒可能な年齢が18歳に引き下げられた場合、今の20歳周辺で見られるジャンプは見られなくなる、これが潜在的結果が連続している状況である<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>。しかし、我々は潜在的結果のうち、反事実は観察できない。したがって、この連続性を直接立証することはできない。</p>
-<p>　ここで発想を転換してみよう。「処置が発生しない場所でも、同じようなジャンプが生じていないか」を確認することはどうだろうか。もし、本当の閾値以外の場所でも、ジャンプが頻繁に見つかるなら、「このデータでは、処置がなくても割当変数に沿って不連続な変化が発生しているのでは?」という疑念が生じることになる。これがプラセボテスト（placebo test）の考え方だ。偽の閾値を与えた場合、統計的に有意なLATEが得られるかどうかを確認することである。プラセボテストの方法はいくつか考えられるが、ここではImbens and Lemieux（2008）<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>が提案した方法を紹介する。</p>
+<p>　潜在的結果の連続性は「もし、閾値が今とは異なる別のポイントなら、今の閾値周辺において直線（または曲線）は連続しているだろう」ということである。飲酒年齢の例で考えると、交通事故率は20歳を境界にジャンプしていると考えられる。もし、法改正により飲酒可能な年齢が18歳に引き下げられた場合、今の20歳周辺で見られるジャンプは見られなくなる、これが潜在的結果が連続している状況である<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。しかし、我々は潜在的結果のうち、反事実は観察できない。したがって、この連続性を直接立証することはできない。</p>
+<p>　ここで発想を転換してみよう。「処置が発生しない場所でも、同じようなジャンプが生じていないか」を確認することはどうだろうか。もし、本当の閾値以外の場所でも、ジャンプが頻繁に見つかるなら、「このデータでは、処置がなくても割当変数に沿って不連続な変化が発生しているのでは?」という疑念が生じることになる。これがプラセボテスト（placebo test）の考え方だ。偽の閾値を与えた場合、統計的に有意なLATEが得られるかどうかを確認することである。プラセボテストの方法はいくつか考えられるが、ここではImbens and Lemieux（2008）<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>が提案した方法を紹介する。</p>
 <p>　まず、<code>filter()</code>関数を使用し、データセットを処置群と統制群で分割する。統制群のデータセットは<code>df_c</code>、処置群のそれは<code>df_t</code>とする。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_c <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> <span class="fu">filter</span>(treat <span class="sc">==</span> <span class="dv">0</span>)</span>
@@ -1673,7 +1667,7 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 <section id="密度検定" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="密度検定"><span class="header-section-number">4.2</span> 密度検定</h2>
 <p>　割当変数の連続する密度検定の結果はFigure 2として掲載されている。割当変数の連続性が確認されない場合、割当変数に人為的な操作が加わっている可能性が示唆される。変数の人為的操作は日常的に観察できる。</p>
-<p>　以下は日本で販売されている乗用車（除く軽自動車）の車幅の分布を示したものである（AIで適当に集めたデータなので、そこまで信頼できるものではない）。日本で販売されている軽自動車以外の乗用車の車幅の平均値は約1,800mm、標準偏差は約85mmであり、これは赤い線で示している（もう一度強調するが、AIで適当に集めたデータである）。傾向としては分布とおりだが、異常な箇所がいくつかある。それは車幅が1,700mmと1,800mmにギリギリいっていない車が異常に多いことだ。車幅はメーカー側で決めるものであり、意図的にこうなっている。維持費が比較的安いと言われている通称「５ナンバー」車両の条件の一つが車幅1,700mm以下であるため、多くの車の車幅が1,695mmになっている。また、1,800mmにも理由がある。都心部のマンションにある機械式駐車場の多くが1,800mmまで入庫できるからだ<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>。今は1,850mmの機械式駐車場が標準で、タワマンのように富裕層の多いマンションだと2,000mmまで入庫できる機械式駐車場も多いが、まだ多くが1,800mmが限界になっている。「 売れそうな」車幅の車種をたくさん作っていることが、このような車幅の分布密度の断絶の理由でもある（むろん、一番多いのは車幅は1,475mmであり、これは日本の軽自動車規格である1,480mmギリギリの数値である）。</p>
+<p>　以下は日本で販売されている乗用車（除く軽自動車）の車幅の分布を示したものである（AIで適当に集めたデータなので、そこまで信頼できるものではない）。日本で販売されている軽自動車以外の乗用車の車幅の平均値は約1,800mm、標準偏差は約85mmであり、これは赤い線で示している（もう一度強調するが、AIで適当に集めたデータである）。傾向としては分布とおりだが、異常な箇所がいくつかある。それは車幅が1,700mmと1,800mmにギリギリいっていない車が異常に多いことだ。車幅はメーカー側で決めるものであり、意図的にこうなっている。維持費が比較的安いと言われている通称「５ナンバー」車両の条件の一つが車幅1,700mm以下であるため、多くの車の車幅が1,695mmになっている。また、1,800mmにも理由がある。都心部のマンションにある機械式駐車場の多くが1,800mmまで入庫できるからだ<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。今は1,850mmの機械式駐車場が標準で、タワマンのように富裕層の多いマンションだと2,000mmまで入庫できる機械式駐車場も多いが、まだ多くが1,800mmが限界になっている。「 売れそうな」車幅の車種をたくさん作っていることが、このような車幅の分布密度の断絶の理由でもある（むろん、一番多いのは車幅は1,475mmであり、これは日本の軽自動車規格である1,480mmギリギリの数値である）。</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1706,7 +1700,7 @@ Bias-Corrected     0.026     0.008     3.229     0.001     [0.010 , 0.042]
 </div>
 </div>
 </div>
-<p>　ギザギザしているが、不自然なものはないように見える。ただし、そう「見える」だけであって、統計的有意な不自然さがあるかも知れない。そこで必要なのが密度検定だ。この分布を適切に示す密度曲線を作成し、その密度曲線が閾値でジャンプしているかどうかを決めるものである。密度検定の詳細についてはMcCrary（2008）<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>を参照して頂くとし、ここでは{rddapp}パッケージを利用した密度検定の実装方法を紹介する<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>。</p>
+<p>　ギザギザしているが、不自然なものはないように見える。ただし、そう「見える」だけであって、統計的有意な不自然さがあるかも知れない。そこで必要なのが密度検定だ。この分布を適切に示す密度曲線を作成し、その密度曲線が閾値でジャンプしているかどうかを決めるものである。密度検定の詳細についてはMcCrary（2008）<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>を参照して頂くとし、ここでは{rddapp}パッケージを利用した密度検定の実装方法を紹介する<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。</p>
 <p>　{rddapp}は<code>dc_test()</code>という密度検定用の関数を提供している。必須引数は2つだ。1つ目は割当変数のベクトル、2つ目は閾値（<code>cutpoint</code>）だ。割当変数は<code>$</code>演算子を使用し、<code>df</code>から<code>iwm</code>列を抽出すれば良い。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dc_test</span>(df<span class="sc">$</span>iwm, <span class="at">cutpoint =</span> <span class="dv">0</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1813,7 +1807,7 @@ Confidence interval used:  0.95 </code></pre>
 </figcaption>
 </figure>
 </div>
-<p>　可視化はLATEの可視化と全く同じで、縦軸（結果変数）の変数だけ替えれば良い。LATEの推定でも述べた通り、RDDの図は傾向を確認するものであって、統計的有意なジャンプがあったかどうかは図では判定できない。たとえば、今回は適合曲線としてLOESSを採用したが、これはパラメーター（<code>span</code>）の値に応じて見た目が大きく変わる<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>。したがって、論文には載っていなかったが、以下のようにLATEの点推定値および <em>p</em> 値も一緒に掲載しておくと、より説得力のあるバランスチェックになるだろう<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>。</p>
+<p>　可視化はLATEの可視化と全く同じで、縦軸（結果変数）の変数だけ替えれば良い。LATEの推定でも述べた通り、RDDの図は傾向を確認するものであって、統計的有意なジャンプがあったかどうかは図では判定できない。たとえば、今回は適合曲線としてLOESSを採用したが、これはパラメーター（<code>span</code>）の値に応じて見た目が大きく変わる<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>。したがって、論文には載っていなかったが、以下のようにLATEの点推定値および <em>p</em> 値も一緒に掲載しておくと、より説得力のあるバランスチェックになるだろう<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>。</p>
 <p>　以下はFigure 3の最初の4つだけ再現した例だ（以下の「▶ コード」をクリックすればコードが表示される）。</p>
 <div class="cell" data-layout="[[49,-2,49],[49,-2,49]]" data-layout-align="center">
 <details class="code-fold">
@@ -2355,7 +2349,7 @@ Unique Obs.                    2312          315
 <h2 data-number="5.5" class="anchored" data-anchor-id="ドーナツrdd"><span class="header-section-number">5.5</span> ドーナツRDD</h2>
 <p>　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）の影響を受けている可能性をある。だから、閾値周辺の一部の個体をデータから除外して分析をする。</p>
 <p>どれくらいの個体を落とすかに関するガイドラインはない。ここでは通常のバンド幅の<span class="math inline">\(\bigcirc\)</span>%という基準でやる。</p>
-<p>Donut RDDはBarreca <em>et al.</em>（2011）<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>で提案され、Noack and Rothe（2023）<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>によって方法論的にまとめられるようになった。</p>
+<p>Donut RDDはBarreca <em>et al.</em>（2011）<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>で提案され、Noack and Rothe（2023）<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>によって方法論的にまとめられるようになった。</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> <span class="fl">0.01</span>) <span class="sc">|&gt;</span> </span>
@@ -2411,24 +2405,23 @@ Unique Obs.                    2312          315
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,629 × 24
-   province district   province_code is_district_center is_province_center is_sub_metro is_metro
-   &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
- 1 Adana    Aladag                 1                  1                  0            0        0
- 2 Adana    Aladag                 1                  0                  0            0        0
- 3 Adana    Buyuksehir             1                  1                  0            0        1
- 4 Adana    Ceyhan                 1                  0                  0            0        0
- 5 Adana    Ceyhan                 1                  0                  0            0        0
- 6 Adana    Ceyhan                 1                  0                  0            0        0
- 7 Adana    Ceyhan                 1                  0                  0            0        0
- 8 Adana    Ceyhan                 1                  1                  0            0        0
- 9 Adana    Ceyhan                 1                  0                  0            0        0
-10 Adana    Ceyhan                 1                  0                  0            0        0
+<pre><code># A tibble: 2,629 × 19
+   province district   is_district_center is_province_center is_sub_metro is_metro    iwm     ivs
+   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Adana    Aladag                      1                  0            0        0 -0.356 0.0154 
+ 2 Adana    Aladag                      0                  0            0        0 -0.543 0.0251 
+ 3 Adana    Buyuksehir                  1                  0            0        1 -0.204 0.111  
+ 4 Adana    Ceyhan                      0                  0            0        0 -0.201 0.102  
+ 5 Adana    Ceyhan                      0                  0            0        0 -0.430 0.0206 
+ 6 Adana    Ceyhan                      0                  0            0        0 -0.450 0.0559 
+ 7 Adana    Ceyhan                      0                  0            0        0 -0.519 0.00249
+ 8 Adana    Ceyhan                      1                  0            0        0 -0.207 0.0806 
+ 9 Adana    Ceyhan                      0                  0            0        0 -0.514 0.00656
+10 Adana    Ceyhan                      0                  0            0        0 -0.578 0.00706
 # ℹ 2,619 more rows
-# ℹ 17 more variables: iwm &lt;dbl&gt;, ivs &lt;dbl&gt;, n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;,
-#   male_hs_2000 &lt;dbl&gt;, female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, female_univ &lt;dbl&gt;,
-#   male_univ &lt;dbl&gt;, female_hijab &lt;dbl&gt;, ivs_2004 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;,
-#   pop_old &lt;dbl&gt;, gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
+# ℹ 11 more variables: n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;, male_hs_2000 &lt;dbl&gt;,
+#   female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;, pop_old &lt;dbl&gt;,
+#   gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -2452,7 +2445,7 @@ Order est. (p)                    1            1
 Order bias (q)                    2            2
 BW est. (h)                   0.090        0.090
 BW bias (b)                   0.179        0.179
-rho (h/b)                     0.500        0.500
+rho (h/b)                     0.501        0.501
 Clusters (g)                     67           53
 Unique Obs.                    2300          302
 
@@ -2460,8 +2453,8 @@ Unique Obs.                    2300          302
         Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
 =======================================================================================
   Conventional     0.025     0.009     2.914     0.004     [0.008 , 0.043]     
-Bias-Corrected     0.027     0.009     3.089     0.002     [0.010 , 0.044]     
-        Robust     0.027     0.010     2.636     0.008     [0.007 , 0.047]     
+Bias-Corrected     0.027     0.009     3.088     0.002     [0.010 , 0.044]     
+        Robust     0.027     0.010     2.635     0.008     [0.007 , 0.047]     
 =======================================================================================</code></pre>
 </div>
 </div>
@@ -2504,31 +2497,33 @@ Bias-Corrected     0.027     0.009     3.089     0.002     [0.010 , 0.044]
 
 <ol>
 <li id="fn1"><p>Meyersson, Erik. 2014. “<a href="https://doi.org/10.3982/ECTA9878">Islamic Rule and the Empowerment of the Poor and Pious</a>,” <em>Econometrica</em>, 82(1): 229-269.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>一部のパッケージはその列の平均値や中央値で欠損値を埋めたりもするば、ほとんどのパッケージはそこまでしない。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>いずれも最適バンド幅を使用し、共変量を入れた局所線形回帰分析の結果である。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Imbens, Guido, Karthik Kalyanaraman. 2012. “<a href="https://doi.org/10.1093/restud/rdr043">Optimal Bandwidth Choice for the Regression Discontinuity Estimator</a>,” <em>The Review of Economic Studies</em>, 79(3): 933-959.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>IKでなくIK12と呼ぶには理由がある。Imbens and Kalyanaraman（2012）はNBERワーキングペーパー（<a href="https://doi.org/10.3386/w14726">Imbens and Kalyanaraman 2009</a>）をベースとしているが、ワーキングペーパーの時の計算方法と2012年の論文版の計算方法がやや異なるからだ。この微妙な違いにこだわる人はIK09とIK12と分けて呼ぶ。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), “<a href="https://doi.org/10.3982/ECTA11757">Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs</a>,” <em>Econometrica</em>, 82: 2295-2326.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Calonico <em>et al.</em>（2014）の著者は{rdrobust}パッケージの開発者でもあるが、昔は伝統的なRDD推定にも対応していたが、今は自分たちが推奨している手法のみ使えるようになっている。{rdd}パッケージが使えなくなった2026年現在、{rdrobust}パッケージが事実上の標準（<em>de facto</em> standard）だが、かなり独善的としか言いようがない。{rddapp}や{rddtools}などのパッケージもあるが、今のところ出来が微妙だ。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>ただし、IK12バンド幅の計算には三角形カーネル関数を使用している<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>Abadie, Alberto. and Guido. W. Imbens. 2006. “<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Large Sample Properties of Matching Estimators for Average Treatment Effects</a>,” <em>Econometrica</em>, 74: 235-267.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>共変量を投入したモデルでは県レベルでクラスタリングした標準誤差を使っている<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>ただし、バンド幅の計算時には使用した三角形カーネル関数を使わなかったことは未だに謎である。<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), “<a href="https://doi.org/10.3982/ECTA11757">Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs</a>,” <em>Econometrica</em>, 82: 2295-2326.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>イスラム系政党の得票率（<code>ivs</code>）、得票した政党の数（<code>n_parties</code>）、19歳未満の人口割合（<code>pop_young</code>）、61歳より上の人口割合（<code>pop_old</code>）、男女比（<code>gender_ratio</code>）、対数化した人口（<code>log_pop</code>）、中心都市ダミー（<code>is_province_center</code>、<code>is_district_center</code>、<code>is_sub_metro</code>、<code>is_metro</code>）、固定効果のための各県のダミー変数（<code>province</code>）<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16"><p>Cleveland, William S. 1979. “<a href="https://doi.org/10.1080/01621459.1979.10481038">Robust Locally Weighted Regression and Smoothing Scatterplots</a>,” <em>Journal of the American Statistical Association</em>, 74(368): 829-836.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17"><p>1990年の女性を結果変数とした場合のLATEの推定値は0.007（<em>p</em> = 0.735）、男性のそれは0.002（<em>p</em> = 0.917）である。論文の付録にも同様の分析結果が掲載されている。先述の通り、使用しているカーネル関数やバンド幅が異なるため、そこそこギャップがあるが、これらを一致させるとほぼ同じ結果が得られる。しかし、なぜかこの分析においては共変量を投入していない。たしかに、共変量は2000年時点での変数だから共変量として不適切かも知れないが、ここは玉に瑕とも言えよう。<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18"><p>18歳周辺にジャンプが見られるかどうかは別の話である。重要なのは閾値が変化したら既存の閾値周辺における傾向性はジャンプしないとのことだ。<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn19"><p>Imbens, Guido W. and Thomas Lemieux. 2008. “<a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Regression discontinuity designs: A guide to practice.</a>” <em>Journal of Econometrics,</em> 142(2): 615-635.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn20"><p>実際は、数センチ程度の余裕はあるが、1mmでも超えたら管理組合で入庫お断りになるケースが多い。<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn21"><p>McCrary, Justin. 2008. “<a href="https://doi.org/10.1016/j.jeconom.2007.05.005">Manipulation of the running variable in the regression discontinuity design: A density test</a>,” <em>Journal of Econometrics</em>, 142(2): 698-714.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn22"><p>{rddensity}という定番のパッケージがあるが、一部の曲線が信頼区間外にはみ出るなど、不可解な結果を返すケースがある。<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn23"><p>他にもよく使われる一般化加法モデル（GAM）でも基底関数（base function）の値によって見た目が変わる。<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn24"><p>共変量を使わず、<code>rdrobust()</code>の既定値で推定した結果を掲載した。<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn25"><p>Barreca, Alan I., Melanie Guldi, Jason M. Lindo, and Glen R. Waddell. 2011. “<a href="https://doi.org/10.1093/qje/qjr042">Saving Babies? Revisiting the Effect of Very Low Birth Weight Classification</a>,” <em>Quarterly Journal of Economics</em>, 126(4): 2117-2123.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn26"><p>Noack, Cladia and Chistoph Rothe. 2023. “<a href="https://doi.org/10.48550/arXiv.2308.14464">Donut Regression Discontinuity Designs</a>,” <em>arXiv.</em><a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>イスラム系市長の存在が、保守的な家庭環境において少女を公立校へ通学させることへの心理的・環境的ハードルを下げる効果を果たしたと分析している。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>イスラム系候補者が当選した場合は<span class="math inline">\(\frac{\textsf{イスラム系候補者の得票率}}{\textsf{得票率2位候補者の得票率}}\)</span>、イスラム系候補者が落選した場合は<span class="math inline">\(\frac{\textsf{イスラム系候補者の得票率}}{\textsf{当選者の得票率}}\)</span>で計算する。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>一部のパッケージはその列の平均値や中央値で欠損値を埋めたりもするば、ほとんどのパッケージはそこまでしない。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>いずれも最適バンド幅を使用し、共変量を入れた局所線形回帰分析の結果である。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Imbens, Guido, Karthik Kalyanaraman. 2012. “<a href="https://doi.org/10.1093/restud/rdr043">Optimal Bandwidth Choice for the Regression Discontinuity Estimator</a>,” <em>The Review of Economic Studies</em>, 79(3): 933-959.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>IKでなくIK12と呼ぶには理由がある。Imbens and Kalyanaraman（2012）はNBERワーキングペーパー（<a href="https://doi.org/10.3386/w14726">Imbens and Kalyanaraman 2009</a>）をベースとしているが、ワーキングペーパーの時の計算方法と2012年の論文版の計算方法がやや異なるからだ。この微妙な違いにこだわる人はIK09とIK12と分けて呼ぶ。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), “<a href="https://doi.org/10.3982/ECTA11757">Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs</a>,” <em>Econometrica</em>, 82: 2295-2326.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Calonico <em>et al.</em>（2014）の著者は{rdrobust}パッケージの開発者でもあるが、昔は伝統的なRDD推定にも対応していたが、今は自分たちが推奨している手法のみ使えるようになっている。{rdd}パッケージが使えなくなった2026年現在、{rdrobust}パッケージが事実上の標準（<em>de facto</em> standard）だが、かなり独善的としか言いようがない。{rddapp}や{rddtools}などのパッケージもあるが、今のところ出来が微妙だ。<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>ただし、IK12バンド幅の計算には三角形カーネル関数を使用している<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Abadie, Alberto. and Guido. W. Imbens. 2006. “<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Large Sample Properties of Matching Estimators for Average Treatment Effects</a>,” <em>Econometrica</em>, 74: 235-267.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>共変量を投入したモデルでは県レベルでクラスタリングした標準誤差を使っている<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>ただし、バンド幅の計算時には使用した三角形カーネル関数を使わなかったことは未だに謎である。<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Calonico, Sebastian, Cattaneo, Matias D. and Titiunik, Ricio. (2014), “<a href="https://doi.org/10.3982/ECTA11757">Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs</a>,” <em>Econometrica</em>, 82: 2295-2326.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>イスラム系政党の得票率（<code>ivs</code>）、得票した政党の数（<code>n_parties</code>）、19歳未満の人口割合（<code>pop_young</code>）、61歳より上の人口割合（<code>pop_old</code>）、男女比（<code>gender_ratio</code>）、対数化した人口（<code>log_pop</code>）、中心都市ダミー（<code>is_province_center</code>、<code>is_district_center</code>、<code>is_sub_metro</code>、<code>is_metro</code>）、固定効果のための各県のダミー変数（<code>province</code>）<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Guido W. Imbens and Michal Kolesár. 2016. “<a href="https://doi.org/10.1162/REST_a_00552">Robust Standard Errors in Small Samples: Some Practical Advice</a>,” <em>The Review of Economics and Statistics,</em> 98(4): 701-712.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Cleveland, William S. 1979. “<a href="https://doi.org/10.1080/01621459.1979.10481038">Robust Locally Weighted Regression and Smoothing Scatterplots</a>,” <em>Journal of the American Statistical Association</em>, 74(368): 829-836.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>1990年の女性を結果変数とした場合のLATEの推定値は0.007（<em>p</em> = 0.735）、男性のそれは0.002（<em>p</em> = 0.917）である。論文の付録にも同様の分析結果が掲載されている。先述の通り、使用しているカーネル関数やバンド幅が異なるため、そこそこギャップがあるが、これらを一致させるとほぼ同じ結果が得られる。しかし、なぜかこの分析においては共変量を投入していない。たしかに、共変量は2000年時点での変数だから共変量として不適切かも知れないが、ここは玉に瑕とも言えよう。<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>18歳周辺にジャンプが見られるかどうかは別の話である。重要なのは閾値が変化したら既存の閾値周辺における傾向性はジャンプしないとのことだ。<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>Imbens, Guido W. and Thomas Lemieux. 2008. “<a href="https://doi.org/10.1016/j.jeconom.2007.05.001">Regression discontinuity designs: A guide to practice.</a>” <em>Journal of Econometrics,</em> 142(2): 615-635.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>実際は、数センチ程度の余裕はあるが、1mmでも超えたら管理組合で入庫お断りになるケースが多い。<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>McCrary, Justin. 2008. “<a href="https://doi.org/10.1016/j.jeconom.2007.05.005">Manipulation of the running variable in the regression discontinuity design: A density test</a>,” <em>Journal of Econometrics</em>, 142(2): 698-714.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>{rddensity}という定番のパッケージがあるが、一部の曲線が信頼区間外にはみ出るなど、不可解な結果を返すケースがある。<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>他にもよく使われる一般化加法モデル（GAM）でも基底関数（base function）の値によって見た目が変わる。<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p>共変量を使わず、<code>rdrobust()</code>の既定値で推定した結果を掲載した。<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>Barreca, Alan I., Melanie Guldi, Jason M. Lindo, and Glen R. Waddell. 2011. “<a href="https://doi.org/10.1093/qje/qjr042">Saving Babies? Revisiting the Effect of Very Low Birth Weight Classification</a>,” <em>Quarterly Journal of Economics</em>, 126(4): 2117-2123.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><p>Noack, Cladia and Chistoph Rothe. 2023. “<a href="https://doi.org/10.48550/arXiv.2308.14464">Donut Regression Discontinuity Designs</a>,” <em>arXiv.</em><a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

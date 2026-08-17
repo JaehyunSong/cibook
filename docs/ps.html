@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7ac9241da4525f629cdadd87b350181d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-def299d564fbe54e430ef9e3500009de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-aec3492a693cba08123ea7c8501bc5f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -2113,7 +2113,7 @@ Adjusted    329.01   58.33</code></pre>
 <p>　もし{MatchIt}か{WeightIt}を使ったのであれば、<code>bal.tab()</code>を通さずにそのまま<code>love.plot()</code>でラブプロットが作成できる。ここでは{MatchIt}で推定した<code>strat_att</code>と<code>ipw_obj</code>のラブプロットを作ってみよう。</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(strat_att, <span class="at">abs =</span> <span class="cn">TRUE</span>, <span class="at">thresholds =</span> <span class="fl">0.1</span>, <span class="at">stars =</span> <span class="st">"raw"</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(ipw_obj, <span class="at">abs =</span> <span class="cn">TRUE</span>, <span class="at">thresholds =</span> <span class="fl">0.1</span>, <span class="at">stars =</span> <span class="st">"raw"</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -2145,7 +2145,7 @@ Adjusted    329.01   58.33</code></pre>
 <p>　まずは、ロジスティック回帰分析で作成した傾向スコアとの分布を比較してみよう。</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(ipw_obj, <span class="at">type =</span> <span class="st">"histogram"</span>, <span class="at">mirror =</span> <span class="cn">TRUE</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(cbps_obj, <span class="at">type =</span> <span class="st">"histogram"</span>, <span class="at">mirror =</span> <span class="cn">TRUE</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -2168,7 +2168,7 @@ Adjusted    329.01   58.33</code></pre>
 <p>　共有サポートについてはあまり問題がなさそうだ。それでは各共変量のバランスはどうだろうか。つづいてラブプロットも確認してみよう。</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(ipw_obj, <span class="at">abs =</span> <span class="cn">TRUE</span>, <span class="at">thresholds =</span> <span class="fl">0.1</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(cbps_obj, <span class="at">abs =</span> <span class="cn">TRUE</span>, <span class="at">thresholds =</span> <span class="fl">0.1</span>, <span class="at">position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
