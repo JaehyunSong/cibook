@@ -4,7 +4,7 @@ modified-date: today
 format: 
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 1
 metadata-files: 
   - "_style/exercise.yml"
 ---

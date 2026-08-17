@@ -2408,14 +2408,14 @@
     "href": "reg_slide.html#x_i-0の場合",
     "title": "社会科学における因果推論",
     "section": "\n\\(X_i = 0\\)の場合",
-    "text": "\\(X_i = 0\\)の場合\n\n\n\n\n\n\n\n\nID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n\n\n1\n0\n0\n0\n0\n2\n\n\n2\n0\n0\n-1\n-1\n1\n\n\n3\n0\n0\n1\n1\n3\n\n\n4\n1\n0\n4\n2\n4\n\n\n5\n1\n0\n5\n3\n5\n\n\n6\n1\n0\n-1\n-3\n-1\n\n\n7\n1\n0\n0\n-2\n0\n\n\n8\n1\n0\n1\n-1\n1\n\n\n9\n1\n0\n2\n0\n2\n\n\n10\n1\n0\n3\n1\n3\n\n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 0]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 0]\\)\n\n\n\n\\(D_i = 0\\)\n0.0\n2.0\n\n\n\\(D_i = 1\\)\n0.0\n2.0\n\n\n\n\n\nケース1\nケース2\n\n\n\n平均独立性\\(\\times\\)\n\nもし、現在の処置群が統制群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 0\n\n\nもし、現在の統制群が統制群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 0\n\n\n\n\n\n平均独立性\\(\\times\\)\n\nもし、現在の処置群が処置群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 2\n\n\nもし、現在の統制群が処置群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 2"
+    "text": "\\(X_i = 0\\)の場合\n\n\n\n\n\n\n\n\nID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n\n\n1\n0\n0\n0\n0\n2\n\n\n2\n0\n0\n-1\n-1\n1\n\n\n3\n0\n0\n1\n1\n3\n\n\n4\n1\n0\n4\n2\n4\n\n\n5\n1\n0\n5\n3\n5\n\n\n6\n1\n0\n-1\n-3\n-1\n\n\n7\n1\n0\n0\n-2\n0\n\n\n8\n1\n0\n1\n-1\n1\n\n\n9\n1\n0\n2\n0\n2\n\n\n10\n1\n0\n3\n1\n3\n\n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 0]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 0]\\)\n\n\n\n\\(D_i = 0\\)\n0.0\n2.0\n\n\n\\(D_i = 1\\)\n0.0\n2.0\n\n\n\n\n\nケース1\nケース2\n\n\n\n平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が統制群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 0\n\n\nもし、現在の統制群が統制群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 0\n\n\n\n\n\n平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が処置群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 2\n\n\nもし、現在の統制群が処置群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 2"
   },
   {
     "objectID": "reg_slide.html#x_i-1の場合",
     "href": "reg_slide.html#x_i-1の場合",
     "title": "社会科学における因果推論",
     "section": "\n\\(X_i = 1\\)の場合",
-    "text": "\\(X_i = 1\\)の場合\n\n\n\n\n\n\n\n\nID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n\n\n11\n0\n1\n4\n4\n6\n\n\n12\n0\n1\n5\n5\n7\n\n\n13\n0\n1\n1\n1\n3\n\n\n14\n0\n1\n0\n0\n2\n\n\n15\n0\n1\n2\n2\n4\n\n\n16\n0\n1\n3\n3\n5\n\n\n17\n0\n1\n6\n6\n8\n\n\n18\n1\n1\n4\n2\n4\n\n\n19\n1\n1\n5\n3\n5\n\n\n20\n1\n1\n6\n4\n6\n\n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 1]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 1]\\)\n\n\n\n\\(D_i = 0\\)\n3.0\n5.0\n\n\n\\(D_i = 1\\)\n3.0\n5.0\n\n\n\n\n\nケース1\nケース2\n\n\n\n平均独立性\\(\\times\\)\n\nもし、現在の処置群が統制群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 3\n\n\nもし、現在の統制群が統制群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 3\n\n\n\n\n\n平均独立性\\(\\times\\)\n\nもし、現在の処置群が処置群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 5\n\n\nもし、現在の統制群が処置群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 5"
+    "text": "\\(X_i = 1\\)の場合\n\n\n\n\n\n\n\n\nID\n      D\n      X\n      Y\n      Y(0)\n      Y(1)\n    \n\n\n11\n0\n1\n4\n4\n6\n\n\n12\n0\n1\n5\n5\n7\n\n\n13\n0\n1\n1\n1\n3\n\n\n14\n0\n1\n0\n0\n2\n\n\n15\n0\n1\n2\n2\n4\n\n\n16\n0\n1\n3\n3\n5\n\n\n17\n0\n1\n6\n6\n8\n\n\n18\n1\n1\n4\n2\n4\n\n\n19\n1\n1\n5\n3\n5\n\n\n20\n1\n1\n6\n4\n6\n\n\n\n\n\n\n\n\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i, X_i = 1]\\)\n\\(\\mathbb{E}[Y_i(1)|D_i, X_i = 1]\\)\n\n\n\n\\(D_i = 0\\)\n3.0\n5.0\n\n\n\\(D_i = 1\\)\n3.0\n5.0\n\n\n\n\n\nケース1\nケース2\n\n\n\n平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が統制群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 1]\\) = 3\n\n\nもし、現在の統制群が統制群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(0)|D_i = 0]\\) = 3\n\n\n\n\n\n平均独立性\\(\\bigcirc\\)\n\nもし、現在の処置群が処置群になったら…（事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 1]\\) = 5\n\n\nもし、現在の統制群が処置群になったら…（反事実）\n\n\n\\(\\mathbb{E}[Y_i(1)|D_i = 0]\\) = 5"
   },
   {
     "objectID": "reg_slide.html#条件付き平均独立と回帰分析",
@@ -2583,7 +2583,7 @@
     "href": "reg_slide.html#重回帰分析との比較表",
     "title": "社会科学における因果推論",
     "section": "重回帰分析との比較（表）",
-    "text": "重回帰分析との比較（表）\n\n\n\n\n\n\n \n      交互作用なし\n      交互作用あり\n    \n\n\n切片\n35.835 (0.245)\n36.419 (0.329)\n\n\n投薬量\n0.010 (0.004)\n-0.002 (0.006)\n\n\n男性ダミー\n1.584 (0.221)\n0.442 (0.438)\n\n\n投薬量:男性ダミー\n\n0.023 (0.007)\n\n\nNum.Obs.\n100\n100\n\n\nR2\n0.377\n0.436\n\n\nR2 Adj.\n0.365\n0.418\n\n\n\n注：カッコ内はHC2頑健標準誤差\n    \n\n\n\n\n\n\n係数の解釈：他の条件が同じであれば投薬量が1単位（= 1mg）増えると体温の期待値は0.002単位（0.002℃）下がる\n\nこれで大丈夫?\n何か忘れていませんか?回帰式に処置変数（投薬量）は2回登場するはず"
+    "text": "重回帰分析との比較（表）\n\n\n\n\n\n\n \n      交互作用なし\n      交互作用あり\n    \n\n\n切片\n35.835 (0.245)\n36.419 (0.329)\n\n\n投薬量\n0.010 (0.004)\n-0.002 (0.006)\n\n\n男性ダミー\n1.584 (0.221)\n0.442 (0.438)\n\n\n投薬量:男性ダミー\n\n0.023 (0.007)\n\n\nNum.Obs.\n100\n100\n\n\nR2\n0.377\n0.436\n\n\nR2 Adj.\n0.365\n0.418\n\n\n\n注：カッコ内はHC2頑健標準誤差\n    \n\n\n\n\n\n\n係数の解釈：他の条件が同じであれば投薬量が1単位（= 1mg）増えると体温の期待値は0.002単位（0.002℃）下がる\n\nこれで大丈夫?何か忘れていない?\n\n回帰式に処置変数（投薬量）は2回登場しているはず"
   },
   {
     "objectID": "reg_slide.html#交互作用の解釈",
