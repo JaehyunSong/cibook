@@ -341,10 +341,15 @@ df |>
 
 ```{r}
 #| echo: false
+#| label: fig-smooth-span
 #| layout-ncol: 2
 #| fig-width: 4
 #| fig-height: 4
 #| out-width: 400px
+#| fig-cap: "`span`引数による曲線の滑らかさの調節"
+#| fig-subcap:
+#|   - "`span = 0.25`の場合"
+#|   - "`span = 1.5`の場合"
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot(aes(x = iwm, y = female_hs_2000)) +
@@ -395,9 +400,16 @@ df |>
 
 ```{r}
 #| code-fold: true
-#| layout: [[49,-2,49]]
+#| label: fig-main-result
+#| layout: [[49,-2,49],[49,-2,49]]
 #| fig-width: 4
 #| fig-height: 4
+#| fig-cap: "Meyersson（2014）のFigure 4の再現"
+#| fig-subcap:
+#|   - 女性の高卒者割合（2000年）
+#|   - 男性の高卒者割合（2000年）
+#|   - 女性の高卒者割合（1990年）
+#|   - 男性の高卒者割合（1990年）
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot(aes(x = iwm, y = female_hs_2000)) +
@@ -433,7 +445,7 @@ df |>
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
-        title = "(a) Women in 1990") +
+        title = "(c) Women in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 
@@ -446,7 +458,7 @@ df |>
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "Islamic win margin in 1994", y = "Share of 15-20-year-olds\nwith high school degree", 
-        title = "(b) Men in 1990") +
+        title = "(d) Men in 1990") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
    theme_classic()
 ```
@@ -531,9 +543,14 @@ rdrobust(y = female_hs_2000, x = iwm, data = df_t, c = median(df_t$iwm)) |>
 
 ```{r}
 #| echo: false
+#| label: fig-placebo-test
 #| layout-ncol: 2
 #| fig-width: 4
 #| fig-height: 4
+#| fig-cap: プラセボテストの可視化
+#| fig-subcap:
+#|    - 統制群
+#|    - 処置群
 df_c |> 
    mutate(treat = if_else(iwm >= median(iwm), 1, 0)) |> 
    ggplot(aes(x = iwm, y = female_hs_2000)) +
@@ -689,13 +706,18 @@ df |>
 
 ## バランスチェック
 
-　バランスチェックはMeyersson（2014）のFigure 3として掲載されている。RDDでは割当変数の値が閾値に達するか、閾値を超えると線のジャンプが生じ、そのジャンプの幅がLATEとなる。しかし、同じタイミングで別の変数におてもジャンプが発生したら、LATEが識別できなくなる。処置によるものか、あるいはそのジャンプした別の変数から影響されたのかが分からなくなるからだ。しかし、バランスチェックはこれまでのランダム化比較試験（RCT）や傾向スコア推定のような標準化平均差（standardized mean difference; SMD）を使うことはできない。RDDにおけるバランスチックは共変量のジャンプが重要であって、その平均値は重要ではない。たとえば、以下にある左の図の場合、SMDが約3.5である。緩い基準でも0.25を使っても非常に大きい数値となっている。しかし、図を見れば分かるが、線のジャンプはない。一方、右の図の場合、SMDは0.05であり、数値だけ見ればバランスが取れているかのように見えるが、図を見れば明らかにジャンプしていることが分かる。このようにRDDにおけるバランスチェックはSMDでなく、可視化（+推定）を用いることが推奨される。
+　バランスチェックはMeyersson（2014）のFigure 3として掲載されている。RDDでは割当変数の値が閾値に達するか、閾値を超えると線のジャンプが生じ、そのジャンプの幅がLATEとなる。しかし、同じタイミングで別の変数におてもジャンプが発生したら、LATEが識別できなくなる。処置によるものか、あるいはそのジャンプした別の変数から影響されたのかが分からなくなるからだ。しかし、バランスチェックはこれまでのランダム化比較試験（RCT）や傾向スコア推定のような標準化平均差（standardized mean difference; SMD）を使うことはできない。RDDにおけるバランスチックは共変量のジャンプが重要であって、その平均値は重要ではない。たとえば、 @fig-blc-warning-1 の場合、SMDが約3.5である。緩い基準でも0.25を使っても非常に大きい数値となっている。しかし、図を見れば分かるが、線のジャンプはない。一方、 @fig-blc-warning-2 の場合、SMDは0.05であり、数値だけ見ればバランスが取れているかのように見えるが、図を見れば明らかにジャンプしていることが分かる。このようにRDDにおけるバランスチェックはSMDでなく、可視化（+推定）を用いることが推奨される。
 
 ```{r}
 #| echo: false
+#| label: fig-blc-warning
 #| layout-ncol: 2
 #| fig-width: 3
 #| fig-height: 3
+#| fig-cap: バランス成立・不成立の例
+#| fig-subcap: 
+#|   - バランスO
+#|   - バランスX
 set.seed(19861008)
 tibble(x = runif(100, -1, 1),
        y = x + rnorm(100, 0, 0.1),
@@ -736,9 +758,16 @@ tibble(x = runif(100, -1, 1),
 
 ```{r}
 #| code-fold: true
+#| label: fig-blc-chk
 #| layout: [[49,-2,49],[49,-2,49]]
 #| fig-width: 3
 #| fig-height: 2
+#| fig-cap: 共変量のバランスチェック
+#| fig-subcap: 
+#|   - イスラム系候補者の得票率
+#|   - 60歳超え人口の割合
+#|   - 18歳以下人口の割合
+#|   - 対数人口
 df |> 
    filter(iwm >= -0.32 & iwm <= 0.32) |> 
    ggplot(aes(x = iwm, y = ivs, group = treat)) +
