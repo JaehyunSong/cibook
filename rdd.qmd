@@ -4,7 +4,7 @@ modified-date: today
 format: 
   html:
     toc: true
-    toc-depth: 1
+    toc-depth: 2
 metadata-files: 
   - "_style/exercise.yml"
 ---
@@ -127,7 +127,7 @@ rdrobust(y = female_hs_2000, x = iwm, data = df) |>
 ```
 
 :::: {.callout-tip title="推定結果を表形式で抽出したい" collapse=true}
-　{broom}の`tidy()`関数を使えばLATEの推定結果をデータフレーム型で抽出できる。
+　{broom}の`tidy()`関数を使えばLATEの推定結果をデータフレーム型で抽出できる。ただし、この表をそのまま使うのは危険である。点推定値はConventional行を、それ以外はRobust行を使うことが推奨されている（後述）。
 
 ```{r}
 rdrobust(y = female_hs_2000, x = iwm, data = df) |> 
@@ -205,11 +205,47 @@ rdd_male_2000 <- rdrobust(y = male_hs_2000, x = iwm, data = df, covs = cov_formu
                           cluster = province, vce = "CR2")
 ```
 
-　これらの結果を{broom}の`tidy()`関数でLATEの推定値のみ表形式で抽出できるが、これを`bind_rows()`関数で一つのデータフレームにまとめてみよう。`bind_rows()`関数の使い方は「[Rの復習](r.qmd)」を参照すること。
+　これらの結果を{broom}の`tidy()`関数でLATEの推定値のみ表形式で抽出できるが、一つ注意点が必要だ。たとえば、`rdd_female_2000`の推定結果を`tidy()`で抽出してみよう
 
 ```{r}
-list("Female" = tidy(rdd_female_2000),
-     "Male"   = tidy(rdd_male_2000)) |> 
+tidy(rdd_female_2000)
+```
+
+　`summary()`関数では点推定値が約`r sprintf("%.3f", tidy(rdd_female_2000)$estimate[1])`で、*p* 値が約`r sprintf("%.3f", tidy(rdd_female_2000)$p.value[3])`になっているが、これと一致する結果がない。これには理由がある。LATEの点推定値はConventional行を、統計的仮説検定に関わる推定量（標準誤差、$z$統計量、*p* 値、信頼区間）はRobust行を使うからだ（Cattaneo *et al.* 2020[^Cattaneo-et-al-2020]; Valentim *et al.* 2021[^Valentim-et-al-2021]）。`tidy()`から得られた結果をよく見ると、たしかに2つの結果が混在している。
+
+[^Cattaneo-et-al-2020]: Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2020. *A Practical Introduction to Regression Discontinuity Designs*. Cambridge University Press.
+
+[^Valentim-et-al-2021]: Valentim, Vicente, Ana Ruipérez Núñez, and Elias Dinas. 2021. "[Regression Discontinuity Designs: A Hands-on Guide for Practice](https://doi.org/10.1017/ipo.2021.27)." *Italian Political Science Review/Rivista Italiana di Scienza Politica,* 51(2): 250-268.
+
+　今の`tidy()`関数だけでは私たちに欲しい表が出来上がらないので、Robust行だけ残し、`estimate`の列だけはConventional行のものを取ってくる`rdd_tidy()`という新しい関数を追加してみよう。関数の作り方については『私たちのR』の「[Rプログラミングの基礎](https://www.jaysong.net/RBook/programming.html)」と「[関数の自作](https://www.jaysong.net/RBook/functions.html)」を参照するとし、ここでは関数の完成したコードだけ示す。
+
+```{r}
+# 関数名は rdd_tidy で、必要な引数は x のみ
+rdd_tidy <- function(x) {
+   # tidy(x) の結果を temp と名付ける
+   temp <- tidy(x)
+   # temp の3行目だけを抽出し result と名付ける
+   # また、1列目も不要だから[3, -1]とする
+   result <- temp[3, -1]
+   # reuslt の estimate 列に temp の estimate 列の1番目の値を入れる
+   result$estimate <- temp$estimate[1]
+   
+   # result を返す
+   result
+}
+```
+
+　それではやってみよう。
+
+```{r}
+rdd_tidy(rdd_female_2000)
+```
+
+　Robust行をベースにConventionalの点推定値で上書きされた推定結果が出力される。これを`bind_rows()`関数で一つのデータフレームにまとめてみよう。`bind_rows()`関数の使い方は「[Rの復習](r.qmd)」を参照すること。
+
+```{r}
+list("Female" = rdd_tidy(rdd_female_2000),
+     "Male"   = rdd_tidy(rdd_male_2000)) |> 
    bind_rows(.id = "gender")
 ```
 
@@ -219,10 +255,9 @@ list("Female" = tidy(rdd_female_2000),
 #| fig-width: 5
 #| fig-height: 3
 #| out-width: 500px
-list("Female" = tidy(rdd_female_2000),
-     "Male"   = tidy(rdd_male_2000)) |> 
+list("Female" = rdd_tidy(rdd_female_2000),
+     "Male"   = rdd_tidy(rdd_male_2000)) |> 
    bind_rows(.id = "gender") |> 
-   filter(term == "Robust") |> 
    ggplot() +
    geom_hline(yintercept = 0, linetype = "dashed") +
    geom_pointrange(aes(x = gender, y = estimate, ymin = conf.low, ymax = conf.high)) +
@@ -466,7 +501,7 @@ male_90   <- rdrobust(y = male_hs_1990, x = iwm, data = df, cluster = province, 
 
 　しかし、こういった図からでは統計的有意性検定はできず、あくまでも「傾向」を確認することが主な目的である。曲線のジャンプの幅や信頼区間はLOESSの設定によっていくらでも変わるものであり、この図から効果の有無を語ることはできない。処置効果の有無やその効果量の大きさを語る際には図ではなく、推定結果そのものの図表を使おう。
 
-[^late-1990]: 1990年の女性を結果変数とした場合のLATEの推定値は`r sprintf("%.3f", tidy(female_90)$estimate[3])`（*p* = `r sprintf("%.3f", tidy(female_90)$p.value[3])`）、男性のそれは`r sprintf("%.3f", tidy(male_90)$estimate[3])`（*p* = `r sprintf("%.3f", tidy(male_90)$p.value[3])`）である。論文の付録にも同様の分析結果が掲載されている。先述の通り、使用しているカーネル関数やバンド幅が異なるため、そこそこギャップがあるが、これらを一致させるとほぼ同じ結果が得られる。しかし、なぜかこの分析においては共変量を投入していない。たしかに、共変量は2000年時点での変数だから共変量として不適切かも知れないが、ここは玉に瑕とも言えよう。
+[^late-1990]: 1990年の女性を結果変数とした場合のLATEの推定値は`r sprintf("%.3f", rdd_tidy(female_90)$estimate[3])`（*p* = `r sprintf("%.3f", rdd_tidy(female_90)$p.value[3])`）、男性のそれは`r sprintf("%.3f", rdd_tidy(male_90)$estimate[3])`（*p* = `r sprintf("%.3f", rdd_tidy(male_90)$p.value[3])`）である。論文の付録にも同様の分析結果が掲載されている。先述の通り、使用しているカーネル関数やバンド幅が異なるため、そこそこギャップがあるが、これらを一致させるとほぼ同じ結果が得られる。しかし、なぜかこの分析においては共変量を投入していない。たしかに、共変量は2000年時点での変数だから共変量として不適切かも知れないが、ここは玉に瑕とも言えよう。
 
 :::: {.callout-tip title="`rdplot()`を使った簡単な作り方" collapse=true}
 　{rdrobust}を使った`rdplot()`を使えばより簡単に上記の図が作れる。`rdplot()`の`y`、`x`、`c`、`data`引数は`rdrobust()`のそれと同じだ。ここに`nbins`引数を使うことで、閾値を中心とし左右に何個の点を出力するかが調節できる。
@@ -519,14 +554,14 @@ median(df_c$iwm)
 median(df_t$iwm)
 ```
 
-　あとはこの2つのデータセットと閾値を使用し、同じRDDを行えば良い。今回は`tidy()`関数でLATEの推定値だけ確認しよう。
+　あとはこの2つのデータセットと閾値を使用し、同じRDDを行えば良い。今回は`rdd_tidy()`関数でLATEの推定値だけ確認しよう。
 
 ```{r}
 rdrobust(y = female_hs_2000, x = iwm, data = df_c, c = median(df_c$iwm)) |> 
-   tidy()
+   rdd_tidy()
 
 rdrobust(y = female_hs_2000, x = iwm, data = df_t, c = median(df_t$iwm)) |> 
-   tidy()
+   rdd_tidy()
 ```
 
 　いずれも統計的有意なジャンプが見られなかった。これが潜在的結果の連続性を保証するわけではないが、少なくとも潜在的結果の非連続性の証拠は**まだ**見つかってないことを意味している。
@@ -818,60 +853,89 @@ df |>
 
 # 感度分析
 
-RDDの推定結果が、分析方法やRDDの仮定を少し変えてもどの程度安定しているか
+　感度分析とはデータ分析やモデリングにおいて、パラメーターやモデルを変化させたときに、出力結果がどの程度変化するかを調べる手法だ。たとえば、今回のメインの結果はバンド幅が約0.096、三角形カーネル関数、対数人口、若年層と高齢層の人口割合などの共変量を入れたモデルから得られた結果だ。もし、バンド幅が2倍になったらどうなるだろうか。バンド幅が半分になったら?カーネル関数をエパネクニコフ（Epanechnikov）関数にしたら?まったく同じ結果にはならないだろうが、これらの設定を少しいじるだけで結果が大きく変わったら（統計的有意性が変わったり、符号が変わったり）、今回の結果は「この設定でたまたま得られたもの」となり、信頼性の低い推定値になる。
 
-| 感度分析                 | 何を変える？                     | 何を見る？                   |
-| -------------------- | -------------------------- | ----------------------- |
-| **Bandwidth**        | $h$（cutoffから何の範囲を使うか）      | 効果推定値が安定しているか           |
-| **Polynomial order** | local linear / quadraticなど | 関数形に依存していないか            |
-| **Kernel**           | triangular / uniformなど     | 重み付けに依存していないか           |
-| **Covariates**       | 共変量を入れる/入れない               | 共変量調整に依存していないか          |
-| **Donut RDD**        | cutoff直近の観測を除外             | cutoff付近の特殊な観測に依存していないか |
+　したがって、RDDの推定結果が分析方法やモデルを少し変えてもどの程度安定しているかを確認することは非常に重要である（実はあらゆるデータ分析において重要である）。ここでは論文等でよく見られる感度分析の手法をMeyersson（2014）のデータを使ってやってみる。具体的にはバンド幅、局所回帰における多項式の次数、カーネル関数、共変量、そして近年注目されているドーナツRDDについて解説する。
 
 ## バンド幅
 
+　RDDの感度分析の定番はバンド幅である。まず、メインの分析結果（`rdd_female_2000`）のバンド幅を確認してみよう。`summary(rdrobustオブジェクト名)`でもバンド幅は出力されるが、小数点3桁まで表示されない。`rdrobustオブジェクト名$bws`と入力すれば、より正確なバンド幅が分かる。
+
 ```{r}
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
-         cluster = province, vce = "CR2")
+rdd_female_2000$bws
+```
 
+　左側と右側のバンド幅が2列で表示されるが、通常のRDDだとバンド幅は左右対称だからどこを見ても良い。そして、`h`と`b`行があるが、通常、我々が言っているバンド幅は`h`だ。`b`はバイアス補正のために使用するもう一つのバンド幅であり、論文等で報告するのは基本的に`h`の方だ。今回のバンド幅は約`r sprintf("%.3f", rdd_female_2000$bws[1, 1])`である。
+
+　それではこのバンド幅を`h`関数の実引数として割り当ててみよう。`rdd_female_2000`と同じ結果が得られるだろうか。
+
+```{r}
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula,
-         cluster = province, vce = "CR2") |> 
-   summary()
-
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = 0.096 / 2,
-         cluster = province, vce = "CR2") |> 
-   summary()
-
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = 0.096 * 2,
-         cluster = province, vce = "CR2") |> 
+         cluster = province, vce = "CR2", h = 0.09593258) |> 
    summary()
 ```
 
-　バイアス補正のためにバンド幅が2つ用意される。推定用の$h$とバイアス補正用の$b$。もし`h`のみ調整すると`b`が機能したい。だから、計算された最適バンド幅を入れても結果が一致しない。なので$\rho = \frac{h}{b}$を計算し、この$\rho$が一定になるように$b$を計算し、`b`引数で指定する（$b = \frac{h}{\rho}$）。今回は$\rho$が0.461だから、新しい$h$に0.461を書けた値を`b`に指定する。厳密な値が欲しいのであれば、`rdrobust()`から推定したオブジェクトを利用し、`オブジェクト名$bws`で取得
+　`rdd_female_2000`の点推定値は`r sprintf("%.3f", rdd_tidy(rdd_female_2000)$estimate)`で、*p* 値は`r sprintf("%.3f", rdd_tidy(rdd_female_2000)$p.value)`だった。一致しない。なぜだろうか。それはバイアス補正に使われる`b`が原因である。
+
+　`rdd_female_2000`の`b`は`r sprintf("%.3f", rdd_female_2000$bws[2, 1])`であるが、`h`を指定した場合、`b`は`h`と同じ値をとる。だから、`h`だけを動かしながら感度分析することは推奨しない。
+
+　バイアス補正のためにバンド幅が2つ用意される。推定用の$h$とバイアス補正用の$b$。もし`h`のみ調整すると`b`が機能したい。だから、計算された最適バンド幅を入れても結果が一致しない。なので$\rho = \frac{h}{b}$を計算し、この$\rho$が一定になるように$b$を計算し、`b`引数で指定する（$b = \frac{h}{\rho}$）。今回は$\rho$が0.461だから、新しい$h$に0.461を割った値を`b`に指定する。つまり、$\rho$を0.461に維持しながら$h$を動かすと、$b$も自然に動くことになる。
+
+```{r}
+# h と rho の正確な値は rdd_female_2000$bws をベースに計算した
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
+         data = df, cluster = province, vce = "CR2", 
+         h = 0.09593258, b = 0.09593258 / 0.4607325) |> 
+   summary()
+```
+
+　それではバンド幅を最適ハンド幅の半分にして推定するためにはどうすれば良いだろうか。まず、`h`は最適バンド幅である0.09593258を半分にすれば良い。つづいて、`b`はその新しい`h`を0.4607325で割った値を指定する。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
+         data = df, cluster = province, vce = "CR2", 
+         h = 0.09593258 / 2, b = (0.09593258 / 2) / 0.4607325) |> 
+   rdd_tidy()
+```
+
+　同じやり方でバンド幅を2倍にして推定してみよう。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
+         data = df, cluster = province, vce = "CR2", 
+         h = 0.09593258 * 2, b = (0.09593258 * 2) / 0.4607325) |> 
+   rdd_tidy()
+```
+
+　バンド幅を半分にしても、2倍にしても、LATEの点推定値は変動するものの、LATEの符号および統計的有意性は変わらなかった。RDDにおいて推定結果に最も大きく影響する要因はバンド幅であるため、バンド幅の感度分析は必須である（少なくとも最適バンド幅の半分と2倍は検証すべき）。
+
+:::: {.callout-note title="バンド幅の感度分析・極" collapse=true}
+　以下の図はバンド幅を0.05から0.2まで0.01ずつ大きくしながらLATEとその95%信頼区間を示した図である。また、最適バンド幅の箇所にはpointrangeを加えた。以下の図を効率よく作るためには{purrr}の`map()`関数の使い方を理解する必要がある。興味のある人は『私たちのR』の「[反復処理](https://www.jaysong.net/RBook/iteration.html)」を読んでみよう。
 
 ```{r}
 #| code-fold: true
 #| fig-width: 5
 #| fig-height: 3
 #| out-width: 600px
-c(seq(0.2, 0.05, by = -0.01)) |> 
+c(seq(0.05, 0.2, by = 0.01)) |> 
    enframe() |> 
-   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = x, b = x / 0.461,
+   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = x, b = x / 0.4607325,
                                          cluster = province, vce = "CR2")),
-          rdd = map(rdd, \(x) tidy(x))) |> 
+          rdd = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
-   filter(term == "Robust") |> 
    ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high)) +
    geom_hline(yintercept = 0) +
    geom_ribbon(alpha = 0, linetype = "dashed", color = "black") +
    geom_line() +
-   annotate("pointrange", x = 0.096, y = 0.02590521, ymin = 0.008617295, ymax = 0.04319313,
+   annotate("pointrange", x = 0.096, y = 0.02482684, 
+            ymin = 0.008617295, ymax = 0.04319313,
             color = "tomato") +
    labs(x = "Bandwidth", y = "Estimated LATE with 95% CI") +
    coord_cartesian(ylim = c(-0.025, 0.1)) +
    theme_classic() +
    theme(legend.position = "none")
 ```
+::::
 
 ## 高次多項式
 
@@ -897,6 +961,7 @@ rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 5,
    summary()
 ```
 
+:::: {.callout-note title="多項式次数の感度分析・極" collapse=true}
 ```{r}
 #| code-fold: true
 #| fig-width: 5
@@ -905,9 +970,8 @@ rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 5,
 enframe(1:5) |> 
    mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = x,
                                          cluster = province, vce = "CR2")),
-          rdd = map(rdd, \(x) tidy(x))) |> 
+          rdd = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
-   filter(term == "Robust") |> 
    ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high)) +
    geom_hline(yintercept = 0) +
    geom_pointrange() +
@@ -915,6 +979,7 @@ enframe(1:5) |>
    coord_cartesian(ylim = c(-0.025, 0.1)) +
    theme_classic()
 ```
+::::
 
 ## カーネル関数
 
@@ -928,9 +993,8 @@ c("triangular", "epanechnikov", "uniform") |>
    mutate(value = fct_relevel(value, "triangular", "epanechnikov", "uniform")) |> 
    mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, kernel = x,
                                          cluster = province, vce = "CR2")),
-          rdd = map(rdd, \(x) tidy(x))) |> 
+          rdd = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
-   filter(term == "Robust") |> 
    ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high)) +
    geom_hline(yintercept = 0) +
    geom_pointrange() +
@@ -942,6 +1006,8 @@ c("triangular", "epanechnikov", "uniform") |>
 ## 共変量の有無
 
 もうやったよね。
+
+共変量の有無以外にも、どの共変量を入れるかに関する感度分析もあり
 
 ## ドーナツRDD
 
@@ -957,19 +1023,22 @@ Donut RDDはBarreca *et al.*（2011）[^barreca-et-al]で提案され、Noack an
 
 ```{r}
 df |> 
-   filter(abs(iwm) >= 0.01) |> 
-   filter(abs(iwm) <= 0.1) |> 
-   ggplot(aes(x = iwm, y = female_hs_2000)) +
-   geom_rect(aes(xmin = -0.01, xmax = 0.01, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.1, color = "black", linetype = "dashed") +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray30") +
-   geom_point() +
-   labs(x = "割当変数", y = "結果変数", fill = NULL) +
-   scale_fill_manual(values = c("ドーナツ・ホール" = "gray80")) +
-   scale_x_continuous(breaks = 0, label = "閾値（c）") +
-   scale_y_continuous(breaks = NULL) +
-   coord_cartesian(ylim = c(0, 0.5)) +
-   theme_classic() +
-   theme(legend.position = "bottom")
+  filter(abs(iwm) >= 0.01) |> 
+  filter(abs(iwm) <= 0.1) |> 
+  ggplot(aes(x = iwm, y = female_hs_2000)) +
+  geom_rect(data = df[1, ], 
+            aes(xmin = -0.01, xmax = 0.01, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), 
+            alpha = 0.35) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
+  geom_point() +
+  labs(x = "割当変数", y = "結果変数", fill = NULL) +
+  scale_fill_manual(values = c("ドーナツ・ホール" = "tomato")) +
+  scale_x_continuous(breaks = 0, label = "閾値（c）") +
+  scale_y_continuous(breaks = NULL) +
+  coord_cartesian(xlim = c(-0.1, 0.1), ylim = c(0, 0.5)) +
+  theme_classic() +
+  theme(legend.position = "bottom")
+
 ```
 
 ```{r}
@@ -980,17 +1049,18 @@ df |>
    filter(abs(iwm) >= 0.05) |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
    ggplot(aes(x = iwm, y = female_hs_2000)) +
-   geom_rect(aes(xmin = -0.05, xmax = 0.05, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.1, color = "black", linetype = "dashed") +
-   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_rect(data = df[1, ],
+             aes(xmin = -0.05, xmax = 0.05, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.35) +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
    stat_summary_bin(fun = "mean", geom = "point", 
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
    labs(x = "割当変数", y = "結果変数", fill = NULL) +
-   scale_fill_manual(values = c("ドーナツ・ホール" = "gray80")) +
+   scale_fill_manual(values = c("ドーナツ・ホール" = "tomato")) +
    scale_x_continuous(breaks = 0, label = "閾値（c）") +
    scale_y_continuous(breaks = NULL) +
-   coord_cartesian(ylim = c(-0.05, 0.25)) +
+   coord_cartesian(xlim = c(-0.5, 0.5), ylim = c(-0.05, 0.25)) +
    theme_classic() +
    theme(legend.position = "bottom")
 ```
@@ -1008,6 +1078,7 @@ rdrobust(y = female_hs_2000, x = iwm, data = df_donut, covs = cov_formula,
    summary(all = TRUE)
 ```
 
+:::: {.callout-note title="Donut RDD・極" collapse=true}
 ```{r}
 #| code-fold: true
 #| fig-width: 6
@@ -1018,9 +1089,8 @@ c(0.096 * seq(0.01, 0.1, by = 0.01)) |>
    mutate(data = map(value, \(x) filter(df, abs(iwm) >= x)),
           rdd  = map(data, \(x) rdrobust(y = female_hs_2000, x = iwm, data = x, covs = cov_formula,
                                          cluster = province, vce = "CR2")),
-          rdd  = map(rdd, \(x) tidy(x))) |> 
+          rdd  = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
-   filter(term == "Robust") |> 
    ggplot(aes(x = value, y = estimate, ymin = conf.low, ymax = conf.high,
               color = p.value <= 0.05)) +
    geom_hline(yintercept = 0) +
@@ -1031,3 +1101,4 @@ c(0.096 * seq(0.01, 0.1, by = 0.01)) |>
    theme_classic() +
    theme(legend.position = "none")
 ```
+::::

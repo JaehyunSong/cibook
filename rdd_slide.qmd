@@ -1520,21 +1520,19 @@ senate |>
        y = "民主党候補者の得票率（t+1）")
 ```
 
-## 感度分析[（要検討）]{.strong}
+## 感度分析[（sensitivity analysis）]{.small}
 
-[（Donut RDDを含むいろんな感度分析を紹介）]{.strong}
+RDDの推定結果が、分析方法を少し変えてもどの程度安定しているか
 
-**バンド幅**（左）と**高次多項式**（右）の感度分析の例
+- バンド幅や関数形、カーネル関数など若干の変更が分析結果を大きく変える場合、今回得られた結果も<ruby>たまたま<rt>・・・・</rt></ruby>のものである可能性が高い
+- 感度分析の例
+   - **バンド幅**（ほぼ必須; 最適バンド幅の1/2、2倍が定番）
+   - **多項式の次数** 
+   - **カーネル関数**
+   - **共変量の有無**
+   - **ドーナツRDD**（閾値周辺のケースを除外）
 
-- 以下は[Ariga et al.（2016）](https://doi.org/10.1016/j.electstud.2016.03.006)の例（Figure 2の一部）
-
-![](figs/rdd/ariga_2016.png){width=1200px fig-align="center"}
-
-:::: {.aside}
-- Ariga, Kenichi, Yusaku Horiuchi, Roland Mansilla, and Michio Umeda. 2016. "[No sorting, no advantage: Regression discontinuity estimates of incumbency advantage in Japan](https://doi.org/10.1016/j.electstud.2016.03.006)." *Electoral Studies*, 43: 21-31.
-::::
-
-## プラセボ検定
+## プラセボ検定[（placebo test）]{.small}
 
 [閾値周辺における潜在的結果の連続性]{.alert}の確認[（Imbens and Lemieux 2008）]{.small}
 
