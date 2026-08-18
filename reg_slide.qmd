@@ -1,5 +1,5 @@
 ---
-subtitle: "5/ 回帰分析"
+subtitle: "6/ 回帰分析"
 modified-date: today
 format: 
   revealjs:

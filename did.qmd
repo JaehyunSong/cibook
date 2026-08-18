@@ -131,7 +131,7 @@ $$
 [^hassell-holbein-2025]: Hassell, Hans J. G. and John B. Holbein. 2025. "[Navigating Potential Pitfalls in Difference-in-Differences Designs: Reconciling Conflicting Findings on Mass Shootings' Effect on Electoral Outcomes](https://doi.org/10.1017/S0003055424000108)." *American Political Science Review,* 119(1): 240-60.
 
 ```{r}
-did_fit1 <- feols(turnout ~ shooting | county + year, 
+did_fit1 <- feols(turnout ~ shooting | county_f + year_f, 
                   data    = did_df, 
                   cluster = ~ state_f)
 
@@ -234,6 +234,21 @@ did_est1 <- did_est1 |>
 
 　つづいて、`Model`列を`Model`と`Treat`列へ分割する。
 
+:::: {.callout-tip title="参考）`separate()`関数" collapse=true}
+　`separate()`関数は列を任意の文字列を基準に複数の列へ分割する関数だ。{tidyr}に含まれている関数だが、{tidyr}は{tidyverse}を構成する一部だから、{tidyverse}を読み込んでおいたのであれば、別途読み込む必要はない。
+
+　必要な必須引数は3つ、`col`、`into`、`sep`だ。`col`は分割する列名、`into`分割後に列名（`c()`でベクトルとして指定する）、`sep`が分割の基準となる文字列だ。以下の例では`Model`列を「-」（ハイフン）を基準に`Model`、`Treat`の2列に分割するコードだ。
+
+```{r}
+データ |>
+  separate(col  = Model,
+           into = c("Model", "Treat"),
+           sep  = "-")
+```
+
+　これを利用すれば、`r today()`のような値が格納されている列を年、月、日に分割できる。
+::::
+
 ```{r}
 did_est1 <- did_est1 |>
   separate(col  = Model,
@@ -244,6 +259,10 @@ did_est1
 ```
 
 　可視化に入る前に`Model`列と`Treat`列の値を修正する。`Model`列の値が`"M1"`なら`"County-Year FE"`に、それ以外なら`"County-Year FE + Covariates"`とリコーディングする。戻り値が2種類だから`if_else()`を使う。`Treat`列の場合、戻り値が3つなので、`recode()`か`case_when()`を使う。ここでは`recode()`を使ってリコーディングする。最後に`Model`と`Treat`を表示順番でfactor化し（`fct_inorder()`）、更に順番を逆転する（`fct_rev()`）。
+
+:::: {.callout-tip title="参考）`rec_rev()`関数" collapse=true}
+　`fct_rev()`関数はfactor型の要素の順番を逆転する関数だ。{forcats}に含まれている関数だが、{forcats}は{tidyverse}を構成する一部だから、{tidyverse}を読み込んでおいたのであれば、別途読み込む必要はない。
+::::
 
 ```{r}
 did_est1 <- did_est1 |>
@@ -260,7 +279,7 @@ did_est1 <- did_est1 |>
 did_est1
 ```
 
-　それでは{ggplot2}を使ってpoint-rangeプロットを作成してみよう。
+　それでは{ggplot2}を使ってpointrangeプロットを作成してみよう。
 
 ```{r}
 #| fig-width: 9
@@ -364,7 +383,7 @@ modelsummary(list("Model 7"  = did_fit7,  "Model 8"  = did_fit8,
 
 　今回はいずれも統計的に有意な結果が得られている。例えば、モデル7（`did_fit7`）の場合、処置効果の推定値は`r sprintf("%.3f", coef(did_fit7)[1])`である。これは学校内銃撃事件が発生したカウンティーの場合、大統領選挙において民主党候補者の得票率が約`r sprintf("%.3f", coef(did_fit7)[1])`pp増加することを意味する。
 
-　以上の結果を図としてまとめてみよう。
+　以上の結果を図としてまとめてみよう。これまでのコードと同じ手順で作図するため、説明は割愛する。
 
 ```{r}
 tidy_fit7  <- tidy(did_fit7, conf.int = TRUE)
