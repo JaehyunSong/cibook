@@ -40,7 +40,7 @@ df <- lalonde
    - $\tau_{\tiny{\textsf{ATE}}}$ = $\mathbb{E}[Y(1) - Y(0)]$
 - ATT (Average Treatment Effect on the Treated): 処置群における平均効果
    - $\tau_{\tiny{\textsf{ATT}}}$ = $\mathbb{E}[Y(1) - Y(0) | D = 1]$
-- ATC (Average Treatment Effect on the Controls): 対照群における平均効果
+- ATC (Average Treatment Effect on the Controls): 統制群における平均効果
    - $\tau_{\tiny{\textsf{ATC}}}$ = $\mathbb{E}[Y(1) - Y(0) | D = 0]$
 
 <!---
@@ -84,7 +84,7 @@ $$
 
 - **サブクラス化**[（sub-classification）]{.small}：$X$のカテゴリごとにグループ化し、グループ内効果の加重平均を求める
    - 例）男女ごとにゲームプレイ時間と身長の関係を推定し、加重平均
-- **正確マッチング**[（exact matching）]{.small}：各処置個体に対し、全く同じ$X$を持つ対照個体を割り当てる
+- **正確マッチング**[（exact matching）]{.small}：各処置個体に対し、全く同じ$X$を持つ統制群の個体を割り当てる
 - **回帰分析**[（regression）]{.small}：$Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i$をOLSで推定
    - 前回のスライド参照
    - 参考）処置変数を含む全変数の交差項を入れた飽和モデル[（saturated model）]{.small}[^saturated]は正確マッチングと等価
@@ -422,7 +422,7 @@ $$
 \forall x,\,\,0 < P(D = 1 | X = x) < 1
 $$
 
-- 任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する[（逆も然り）]{.small}
+- 任意の処置群の個体に対し、比較可能な統制群の個体が必ず確率的に存在する[（逆も然り）]{.small}
 - データから検証可能な仮定
 
 :::: {.aside}
@@ -1584,7 +1584,7 @@ list("共変量なし" = lm(re78 ~ treat, data = df, weights = ipw_obj$weights),
    - メリット：重みのスケール変動を滑らかに抑え、通常の IPW（Horvitz-Thompson）より小標本での挙動が安定する。
    - ただし、「Weights are normalized but no longer unbiased（重みは正規化されるが、もはや不偏ではなくなる）」
 1. オーバーラップ重み付け（Overlap Weighting: OW / ATO）
-   - 手法：処置群に $1-e(X_i)$、対照群に $e(X_i)$ の重みを与える（Li et al., 2018）。
+   - 手法：処置群に $1-e(X_i)$、統制群に $e(X_i)$ の重みを与える（Li et al., 2018）。
    - メリット：重みが常に 0〜1 に収まり構造的に爆発しない。$e(X_i) \approx 0.5$（比較可能性が最も高い領域）に最大重みを与える。
 --->
 

@@ -233,7 +233,7 @@
 </li>
 </ul>
 </li>
-<li>ATC (Average Treatment Effect on the Controls): 対照群における平均効果
+<li>ATC (Average Treatment Effect on the Controls): 統制群における平均効果
 <ul>
 <li>
 <span class="math inline">\(\tau_{\tiny{\textsf{ATC}}}\)</span> = <span class="math inline">\(\mathbb{E}[Y(1) - Y(0) | D = 0]\)</span>
@@ -294,7 +294,7 @@
 </ul>
 </li>
 <li>
-<strong>正確マッチング</strong><span class="small">（exact matching）</span>：各処置個体に対し、全く同じ<span class="math inline">\(X\)</span>を持つ対照個体を割り当てる</li>
+<strong>正確マッチング</strong><span class="small">（exact matching）</span>：各処置個体に対し、全く同じ<span class="math inline">\(X\)</span>を持つ統制群の個体を割り当てる</li>
 <li>
 <strong>回帰分析</strong><span class="small">（regression）</span>：<span class="math inline">\(Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\)</span>をOLSで推定
 <ul>
@@ -983,7 +983,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 \forall x,\,\,0 &lt; P(D = 1 | X = x) &lt; 1
 \]</span></p>
 <ul>
-<li>任意の処置群個体に対し、比較可能な対照群個体が必ず確率的に存在する<span class="small">（逆も然り）</span>
+<li>任意の処置群の個体に対し、比較可能な統制群の個体が必ず確率的に存在する<span class="small">（逆も然り）</span>
 </li>
 <li>データから検証可能な仮定</li>
 </ul>
@@ -997,7 +997,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>統制群と処置群のサポートが同じ</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1017,7 +1017,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>左：ATT推定可　／　右：ATC推定可</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1037,7 +1037,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>右の例の場合、ATO（後述）は推定可能</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1846,7 +1846,7 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 </ul>
 </li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="4">
+<div class="cell quarto-layout-panel" data-layout-ncol="4" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -2052,7 +2052,7 @@ d_X = \frac{\overline{X}_{\sf treat} - \overline{X}_{\sf control}}{\sqrt{\frac{1
    - メリット：重みのスケール変動を滑らかに抑え、通常の IPW（Horvitz-Thompson）より小標本での挙動が安定する。
    - ただし、「Weights are normalized but no longer unbiased（重みは正規化されるが、もはや不偏ではなくなる）」
 1. オーバーラップ重み付け（Overlap Weighting: OW / ATO）
-   - 手法：処置群に $1-e(X_i)$、対照群に $e(X_i)$ の重みを与える（Li et al., 2018）。
+   - 手法：処置群に $1-e(X_i)$、統制群に $e(X_i)$ の重みを与える（Li et al., 2018）。
    - メリット：重みが常に 0〜1 に収まり構造的に爆発しない。$e(X_i) \approx 0.5$（比較可能性が最も高い領域）に最大重みを与える。
 --->
 <!---

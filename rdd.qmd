@@ -917,9 +917,10 @@ rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
 #| fig-width: 5
 #| fig-height: 3
 #| out-width: 600px
-c(seq(0.05, 0.2, by = 0.01)) |> 
+seq(0.05, 0.2, by = 0.01) |> 
    enframe() |> 
-   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, h = x, b = x / 0.4607325,
+   mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
+                                         h = x, b = x / 0.4607325,
                                          cluster = province, vce = "CR2")),
           rdd = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
@@ -927,44 +928,83 @@ c(seq(0.05, 0.2, by = 0.01)) |>
    geom_hline(yintercept = 0) +
    geom_ribbon(alpha = 0, linetype = "dashed", color = "black") +
    geom_line() +
-   annotate("pointrange", x = 0.096, y = 0.02482684, 
-            ymin = 0.008617295, ymax = 0.04319313,
-            color = "tomato") +
+   annotate("pointrange", color = "tomato",
+            x = 0.096, y = 0.02482684, ymin = 0.008617295, ymax = 0.04319313) +
    labs(x = "Bandwidth", y = "Estimated LATE with 95% CI") +
    coord_cartesian(ylim = c(-0.025, 0.1)) +
-   theme_classic() +
-   theme(legend.position = "none")
+   theme_classic()
 ```
 ::::
 
 ## 高次多項式
 
-- {rdrobust}の局所回帰分析は基本的に1次関数 + 交差項
-- `p`引数で多項式の次数が調整可能
+　通常、RDDのLATEはバンド幅内のケースを対象とし、交差項（処置変数 $\times$ 割当変数）付きの回帰分析を行う。{rdrobust}の`rdrobust()`の場合、以下のようなモデルを推定する（$Y$、$D$、$R$はそれぞれ結果変数、処置変数、割当変数）。
+
+$$
+\textsf{for}\,\, -h \leq X \leq h:\,\,\,\,\widehat{Y}_i = \alpha + \tau D_i + \beta R_i + \gamma D_i \cdot R_i \quad
+$$
+
+　バンド幅内では割当変数と結果変数間の関係がシンプルな関数で表現できるケースが多いため、ほとんどの場合、一次関数で十分だろう。もし、一次関数だけではバンド幅内の関係性がうまく説明できなさそうであれば、二次関数や三次関数のような多項式モデルを推定することになる。もう一つのケースとしては感度分析としての多項式だ。バンド幅内を設定すると、必然的にサンプルサイズが小さくなってしまう。モデルのバイアス---分散トレードオフ関係を考えると、バイアスは小さくなると考えられるが、その一方、モデルの分散が大きくなりがちだ。若干のパラメーターの変動が結果を歪ませる可能性は否定できない。だから、感度分析を通じて、多項式でも推定値が安定することを示す必要がある。
+
+　割当変数の二乗項を投入した局所回帰のモデルは以下の通りだ。
+
+$$
+\textsf{for}\,\, -h \leq X \leq h:\,\,\,\,\widehat{Y}_i = \alpha + \tau D_i + \beta_1 R_i + \beta_2 R_i^2 + \gamma_1 D_i \cdot R_i + \gamma_2 D_i \cdot R_i \quad
+$$
+
+　2つを比較すると以下のようなものになる。
 
 ```{r}
-# 次数 = 1 （線形）
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 1,
-         cluster = province, vce = "CR2") |> 
-   summary()
+#| echo: false
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+set.seed(123)
+poly_df <- tibble(x = runif(2000, -3, 3), 
+                  y = 0.3 * x + 0.5 * x^2 - 0.4 * 
+                     x^3 + 0.5 * (x >= 0) + rnorm(2000, sd = 0.5))
 
-# 次数 = 2 （quadratic）
+poly1 <- predict(lm(y ~ I(x >= 0) * poly(x, 1), 
+                    data = filter(poly_df, abs(x) <= 1)), 
+                 newdata = data.frame(x = seq(-1, 1, by = 0.1)))
+poly2 <- predict(lm(y ~ I(x >= 0) * poly(x, 2), 
+                    data = filter(poly_df, abs(x) <= 1)), 
+                 newdata = data.frame(x = seq(-1, 1, by = 0.1)))
+
+tibble(x  = seq(-1, 1, by = 0.1),
+       "1次関数の例" = poly1,
+       "2次関数の例" = poly2) |> 
+   pivot_longer(cols = -x) |> 
+   mutate(treat = if_else(x >=0, "treat", "control")) |> 
+   ggplot() +
+   geom_vline(xintercept = -0.05, linetype = "dashed") +
+   geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "gray") +
+   geom_point(data = poly_df, aes(x = x, y = y), 
+              alpha = 0.1, color = "gray") +
+   geom_line(aes(x = x, y = value, group = treat),
+             linewidth= 1, color = "tomato") +
+   labs(x = "割当変数", y = "結果変数") +
+   scale_x_continuous(breaks = -0.05, labels = "閾値") +
+   scale_y_continuous(breaks = NULL) +
+   coord_cartesian(xlim = c(-2, 3), ylim = c(-2, 2)) +
+   facet_wrap(~name) +
+   theme_classic() +
+   theme(strip.background = element_blank())
+```
+
+　ある程度の変動は見られるが、推定値が大きく変わるレベルの変動ではないことがわかる。{rdrobust}の`rdrobust()`で局所回帰分析における多項式の次数を変えるためには`p`引数を使用する。既定値は1だが、これを2にすると二次（quadratic）関数、3にすると三次（cubic）関数、4にすると四次（quartic）関数が回帰モデルとして使われる。以下はバンド幅内で二次関数 + 交差項でLATEを推定する例だ。
+
+```{r}
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 2,
-         cluster = province, vce = "CR2") |> 
-   summary()
-
-# 次数 = 3 （cubic）
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 3,
-         cluster = province, vce = "CR2") |> 
-   summary()
-
-# 次数 = 4 （quartic）
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 4,
          cluster = province, vce = "CR2") |> 
    summary()
 ```
 
-:::: {.callout-note title="多項式次数の感度分析・極" collapse=true}
+　LATEが若干大きくなったが、符号および統計的有意性は変わらなかった。このような手順で次数を3、または4まで1ずつ増やしながら推定値の傾向が安定していることを示そう（どこまで試すかに関する議論はないが、3〜4程度で十分だ）。
+
+:::: {.callout-note title="多項式次数の感度分析の可視化" collapse=true}
+　3〜4パターンの次数しか試さないので表や脚注の文章でも十分だが、以下のように可視化することもできる。
+
 ```{r}
 #| code-fold: true
 #| fig-width: 5
@@ -985,6 +1025,48 @@ enframe(1:4) |>
 ::::
 
 ## カーネル関数
+
+　局所回帰分析に使用するカネール関数は`rdrobust()`関数の`kernel`引数で変更できる。既定値は三角形（`"triangular"`）カーネル関数だが、他にもエパネチニコフ（`"epanechnikov"`）カーネル関数、長方形・一様（`"uniform"`）カーネル関数も使える。一様カーネル関数を使う例は一回登場したので、ここではエパネチニコフカーネル関数を使ってみよう。
+
+```{r}
+rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, 
+         cluster = province, vce = "CR2", kernel = "epanechnikov") |> 
+   summary()
+```
+
+　結果はほぼ変わらない。一様カーネル関数を除くカーネル関数は閾値を頂点とした左右対称の山形である。以下は`rdrobust()`が提供する三種類のカーネル関数の形を可視化したものである。三角形とエパネチニコフの形はかなり似ていることが分かる。これにより、カーネル関数が選択がLATEの推定結果に影響しにくいことが分かるだろう（一様カーネル関数を除く）。
+
+```{r}
+#| code-fold: true
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 600px
+tibble(x = seq(-2, 2, by = 0.1),
+       t = if_else(abs(x) <= 1, 1 - abs(x), 0),
+       e = if_else(abs(x) <= 1, (3/4) * (1 - x^2), 0),
+       u = if_else(abs(x) <= 1, 0.5, NA)) |> 
+   ggplot() +
+   geom_line(aes(x = x, y = t, color = "Triangular"), 
+             linewidth = 1) +
+   geom_line(aes(x = x, y = e, color = "Epanechnikov"), 
+             linewidth = 1) +
+   geom_line(aes(x = x, y = u, color = "Uniform/Rectangular"), 
+             linewidth = 1) +
+   annotate("segment", x = -2, xend = -1, y = 0, yend = 0, linewidth = 1) +
+   annotate("segment", x = 1, xend = 2, y = 0, yend = 0, linewidth = 1) +
+   annotate("segment", x = -1, xend = -1, y = 0, yend = 0.5, linewidth = 1) +
+   annotate("segment", x = 1, xend = 1, y = 0, yend = 0.5, linewidth = 1) +
+   labs(x = "割当変数", y = "重み", color = NULL) +
+   scale_x_continuous(breaks = c(-1, 0, 1), labels = c("-h", "閾値", "h")) +
+   scale_y_continuous(breaks = NULL) +
+   scale_color_manual(values = c("Triangular" = "tomato",
+                                "Epanechnikov" = "royalblue",
+                                "Uniform/Rectangular" = "black")) +
+   theme_classic() +
+   theme(legend.position = "bottom")
+```
+
+　一様カーネル関数はRDDではあまり使われていいたいので、カーネル関数の感度分析は省略しても良いかも知れない。もし、付録等で掲載するのであれば、以下のような図で良いだろう。
 
 ```{r}
 #| code-fold: true

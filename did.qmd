@@ -118,7 +118,17 @@ $$
 |モデル11|`did_fit11`|`demvote`|`non_fatal_shooting`|-|
 |モデル12|`did_fit12`|`demvote`|`non_fatal_shooting`|$\bigcirc$|
 
-　まずはモデル1を推定し、`did_fit1`という名のオブジェクトとして格納する。基本的には線形回帰分析であるため、`lm()`でも推定はできる。しかし、差分の差分法の場合、通常、クラスター化した頑健な標準誤差（cluster robust standard error）を使う。`lm()`単体ではこれが計算できないため、今回は{fixest}パッケージが提供する`feols()`関数を使用する。使い方は`lm()`に似ている。まず、回帰式を書く。たとえば、モデル1の場合、`trunout ~ shooting`である。ただし、`feols()`で固定効果を投入するには、回帰式の右側に`|`を追加し、その右側に固定効果として投入する変数を指定する必要がある。たとえば、`county_f`変数と`year_f`変数が固定効果として投入される場合、`trunout ~ shooting | county_f + year_f`が回帰式である^[この2つの変数は予めcharacter型、またはfactor型に変換しておこう。`feols()`の場合、numeric型でもダミー変数に変換し、問題なく推定できるが、固定効果モデルにおけるユニットや時間の変数はcharacter型、またはfactor型変数に変換してから使う習慣を付けておいた方が良い。なぜなら、固定効果モデルの推定ができる他のパッケージではcharacter型、factor型が強制されるケースも多いからだ。]。
+　まずはモデル1を推定し、`did_fit1`という名のオブジェクトとして格納する。基本的には線形回帰分析であるため、`lm()`でも推定はできる。しかし、差分の差分法の場合、通常、クラスター化した頑健な標準誤差（cluster robust standard error）を使う。`lm()`単体ではこれが計算できないため、今回は{fixest}パッケージが提供する`feols()`関数を使用する。使い方は`lm()`に似ている。まず、回帰式を書く。たとえば、モデル1の場合、`trunout ~ shooting`である。ただし、`feols()`で固定効果を投入するには、回帰式の右側に`|`を追加し、その右側に固定効果として投入する変数を指定する必要がある。たとえば、`county_f`変数と`year_f`変数が固定効果として投入される場合、`trunout ~ shooting | county_f + year_f`が回帰式である^[この2つの変数は予めcharacter型、またはfactor型に変換しておこう。`feols()`の場合、numeric型でもダミー変数に変換し、問題なく推定できるが、固定効果モデルにおけるユニットや時間の変数はcharacter型、またはfactor型変数に変換してから使う習慣を付けておいた方が良い。なぜなら、固定効果モデルの推定ができる他のパッケージではcharacter型、factor型が強制されるケースも多いからだ。]。最後に標準誤差をクラスタリングする単位は`cluster`引数で指定する。たとえば、州（`state_f`）単位で標準誤差をクラスタリングしたい時は`cluster = ~ state_f`と書く。
+
+:::: {.callout-note title="なぜカウンティでなく、州でクラスタリングするのか" collapse=true}
+　本研究のデータは1行がCounty $\times$ Yearを意味するパネルデータだが、クラスター標準誤差を推定する際、カウンティでなく、州でクラスタリングしている。これについては明確な理由は述べられていない。もしかしたら、同一州内のカウンティ間の政治的トレンドの相関が理論的に懸念されたかも知れない。また、より保守的にアプローチし、より粗い方でクラスタイングをした可能性もある（Abadie *et al.* 2023）[^Abadie-et-al-2023]。
+
+　そもそも、本研究は政治学トップジャーナルであるAmerican Political Science Review（*APSR*）に掲載された論文であるが、APSRへの掲載が本論文の方法論的正しさを保証するわけではない（むろん、トップジャーナルであれば相対的にクオリティーの良い論文が見つかりやすいだろう）。実際、本研究に対して方法論的に辛辣な批判をした研究もあり、彼らの研究によると、García-Montoya *et al.*（2022）の結果は過大評価されており、実際の因果効果はほぼゼロだという（Hassell and Holbein 2025）[^hassell-holbein-2025]。また、Hassell and Holbein（2025）では州単位でクラスタリングした標準誤差が使用されており、州単位でのクラスタリングが適切だった可能性もある。。
+::::
+
+[^Abadie-et-al-2023]: Abadie, Alberto, Susan Athey, Guido W Imbens, Jeffrey M Wooldridge. 2023. "[When Should You Adjust Standard Errors for Clustering?](https://doi.org/10.1093/qje/qjac038)," *The Quarterly Journal of Economics,* 138(1): 1-35.
+
+[^hassell-holbein-2025]: Hassell, Hans J. G. and John B. Holbein. 2025. "[Navigating Potential Pitfalls in Difference-in-Differences Designs: Reconciling Conflicting Findings on Mass Shootings' Effect on Electoral Outcomes](https://doi.org/10.1017/S0003055424000108)." *American Political Science Review,* 119(1): 240-60.
 
 ```{r}
 did_fit1 <- feols(turnout ~ shooting | county + year, 
