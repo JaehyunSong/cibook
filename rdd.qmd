@@ -4,7 +4,7 @@ modified-date: today
 format: 
   html:
     toc: true
-    toc-depth: 1
+    toc-depth: 2
 metadata-files: 
   - "_style/exercise.yml"
 ---
@@ -853,7 +853,7 @@ df |>
 
 # 感度分析
 
-　感度分析とはデータ分析やモデリングにおいて、パラメーターやモデルを変化させたときに、出力結果がどの程度変化するかを調べる手法だ。たとえば、今回のメインの結果はバンド幅が約0.096、三角形カーネル関数、対数人口、若年層と高齢層の人口割合などの共変量を入れたモデルから得られた結果だ。もし、バンド幅が2倍になったらどうなるだろうか。バンド幅が半分になったら?カーネル関数をエパネクニコフ（Epanechnikov）関数にしたら?まったく同じ結果にはならないだろうが、これらの設定を少しいじるだけで結果が大きく変わったら（統計的有意性が変わったり、符号が変わったり）、今回の結果は「この設定でたまたま得られたもの」となり、信頼性の低い推定値になる。
+　感度分析とはデータ分析やモデリングにおいて、パラメーターやモデルを変化させたときに、出力結果がどの程度変化するかを調べる手法だ。たとえば、今回のメインの結果はバンド幅が約0.096、三角形カーネル関数、対数人口、若年層と高齢層の人口割合などの共変量を入れたモデルから得られた結果だ。もし、バンド幅が2倍になったらどうなるだろうか。バンド幅が半分になったら?カーネル関数をエパネチニコフ（Epanechnikov）関数にしたら?まったく同じ結果にはならないだろうが、これらの設定を少しいじるだけで結果が大きく変わったら（統計的有意性が変わったり、符号が変わったり）、今回の結果は「この設定でたまたま得られたもの」となり、信頼性の低い推定値になる。
 
 　したがって、RDDの推定結果が分析方法やモデルを少し変えてもどの程度安定しているかを確認することは非常に重要である（実はあらゆるデータ分析において重要である）。ここでは論文等でよく見られる感度分析の手法をMeyersson（2014）のデータを使ってやってみる。具体的にはバンド幅、局所回帰における多項式の次数、カーネル関数、共変量、そして近年注目されているドーナツRDDについて解説する。
 
@@ -910,7 +910,7 @@ rdrobust(y = female_hs_2000, x = iwm, covs = cov_formula,
 　バンド幅を半分にしても、2倍にしても、LATEの点推定値は変動するものの、LATEの符号および統計的有意性は変わらなかった。RDDにおいて推定結果に最も大きく影響する要因はバンド幅であるため、バンド幅の感度分析は必須である（少なくとも最適バンド幅の半分と2倍は検証すべき）。
 
 :::: {.callout-note title="バンド幅の感度分析・極" collapse=true}
-　以下の図はバンド幅を0.05から0.2まで0.01ずつ大きくしながらLATEとその95%信頼区間を示した図である。また、最適バンド幅の箇所にはpointrangeを加えた。以下の図を効率よく作るためには{purrr}の`map()`関数の使い方を理解する必要がある。興味のある人は『私たちのR』の「[反復処理](https://www.jaysong.net/RBook/iteration.html)」を読んでみよう。
+　以下の図はバンド幅を0.05から0.2まで0.01ずつ大きくしながらLATEとその95%信頼区間を示した図である。また、最適バンド幅の箇所にはpointrangeを加えた。以下の図を効率よく作るためには{purrr}の`map()`関数の使い方を理解する必要がある（知らなくても作れるが、かなりコードが長くなる）。興味のある人は『私たちのR』の「[反復処理](https://www.jaysong.net/RBook/iteration.html)」を読んでみよう。
 
 ```{r}
 #| code-fold: true
@@ -939,24 +939,27 @@ c(seq(0.05, 0.2, by = 0.01)) |>
 
 ## 高次多項式
 
+- {rdrobust}の局所回帰分析は基本的に1次関数 + 交差項
+- `p`引数で多項式の次数が調整可能
+
 ```{r}
+# 次数 = 1 （線形）
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 1,
          cluster = province, vce = "CR2") |> 
    summary()
 
+# 次数 = 2 （quadratic）
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 2,
          cluster = province, vce = "CR2") |> 
    summary()
 
+# 次数 = 3 （cubic）
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 3,
          cluster = province, vce = "CR2") |> 
    summary()
 
+# 次数 = 4 （quartic）
 rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 4,
-         cluster = province, vce = "CR2") |> 
-   summary()
-
-rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 5,
          cluster = province, vce = "CR2") |> 
    summary()
 ```
@@ -967,7 +970,7 @@ rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = 5,
 #| fig-width: 5
 #| fig-height: 3
 #| out-width: 600px
-enframe(1:5) |> 
+enframe(1:4) |> 
    mutate(rdd = map(value, \(x) rdrobust(y = female_hs_2000, x = iwm, data = df, covs = cov_formula, p = x,
                                          cluster = province, vce = "CR2")),
           rdd = map(rdd, \(x) rdd_tidy(x))) |> 
