@@ -514,14 +514,14 @@
     "href": "did_slide.html#つの推定方法1",
     "title": "社会科学における因果推論",
     "section": "2つの推定方法（1）",
-    "text": "2つの推定方法（1）\n\n\n\n\n\n\n\n\n処置前（Pre）\n処置後（Post）\n\n\n\n統制（\\(D_i = 0\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 0]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\n\n処置（\\(D_i = 1\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\)\n\n\n\n\\[\n\\textsf{ATT} = \\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\underbrace{\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 1]}_{\\scriptstyle \\textsf{counterfactual}}\n\\]\n\n群間比較（Cross-sectional design）\n\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1] = \\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)"
+    "text": "2つの推定方法（1）\n\n\n\n\n\n\n\n\n処置前（Pre）\n処置後（Post）\n\n\n\n統制（\\(D_i = 0\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 0]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\n\n処置（\\(D_i = 1\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\)\n\n\n\n\\[\n\\textsf{ATT} = \\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\underbrace{\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1]}_{\\scriptstyle \\textsf{counterfactual}}\n\\]\n\n群間比較（Cross-sectional design）\n\n私たちにできる計算：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\) - \\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1]\\) = \\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)"
   },
   {
     "objectID": "did_slide.html#つの推定方法2",
     "href": "did_slide.html#つの推定方法2",
     "title": "社会科学における因果推論",
     "section": "2つの推定方法（2）",
-    "text": "2つの推定方法（2）\n\n\n\n\n\n\n\n\n処置前（Pre）\n処置後（Post）\n\n\n\n統制（\\(D_i = 0\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 0]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\n\n処置（\\(D_i = 1\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\)\n\n\n\n\\[\n\\textsf{ATT} = \\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\underbrace{\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 1]}_{\\scriptstyle \\textsf{counterfactual}}\n\\]\n\n前後比較（Before-and-after design）\n\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1] = \\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)"
+    "text": "2つの推定方法（2）\n\n\n\n\n\n\n\n\n処置前（Pre）\n処置後（Post）\n\n\n\n統制（\\(D_i = 0\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^0|D_i = 0]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 0]\\)\n\n\n処置（\\(D_i = 1\\)）\n\\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\n\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\)\n\n\n\n\\[\n\\textsf{ATT} = \\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1] - \\underbrace{\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1]}_{\\scriptstyle \\textsf{counterfactual}}\n\\]\n\n前後比較（Before-and-after design）\n\n私たちにできる計算：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^1|D_i = 1]\\) - \\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)\n\nATTが推定可能となる仮定：\\(\\mathbb{E}[Y_{i, \\textsf{post}}^0|D_i = 1]\\) = \\(\\mathbb{E}[Y_{i, \\textsf{pre}}^1|D_i = 1]\\)"
   },
   {
     "objectID": "did_slide.html#前後-群間比較",
@@ -542,14 +542,14 @@
     "href": "did_slide.html#電子投票の因果効果の推定",
     "title": "社会科学における因果推論",
     "section": "電子投票の因果効果の推定",
-    "text": "電子投票の因果効果の推定\n\n処置効果\\(\\delta\\)は処置群における変化量と統制群における変化量の差分\n\n\n\\(A\\)：処置群における差分 = 観測された処置群の変化量\n\n\\(B\\)：統制群における差分 = もし処置群が処置を受けなかった場合の処置群の変化量の推定値（反事実）\n\n\\(\\delta_{\\textsf{ATT}} = A - B\\)：因果効果・処置効果\n\n\n\n\\[\n\\begin{align}\n\\delta_{\\textsf{ATT}} & = (Y_{\\textsf{treat}, \\textsf{pre}} - Y_{\\textsf{treat}, \\textsf{post}}) - (Y_{\\textsf{control}, \\textsf{pre}} - Y_{\\textsf{control}, \\textsf{post}}) \\\\\n& = (0.435 - 0.456) - (0.404 - 0.487) \\\\\n& = (-0.021) - (-0.083) \\\\\n& = 0.062\n\\end{align}\n\\]"
+    "text": "電子投票の因果効果の推定\n\n処置効果\\(\\delta\\)は処置群における変化量と統制群における変化量の差分\n\n\n\\(A\\)：処置群における差分 = 観測された処置群の変化量\n\n\\(B\\)：統制群における差分 = もし処置群が処置を受けなかった場合の処置群の変化量の推定値（反事実）\n\n\\(\\delta_{\\textsf{ATT}} = A - B\\)：因果効果・処置効果\n\n\n\n\\[\n\\begin{align}\n\\delta_{\\textsf{ATT}} & = (Y_{\\textsf{treat}, \\textsf{post}} - Y_{\\textsf{treat}, \\textsf{pre}}) - (Y_{\\textsf{control}, \\textsf{post}} - Y_{\\textsf{control}, \\textsf{pre}}) \\\\\n& = (0.435 - 0.456) - (0.404 - 0.487) \\\\\n& = (-0.021) - (-0.083) \\\\\n& = 0.062\n\\end{align}\n\\]"
   },
   {
     "objectID": "did_slide.html#差分の差分法-1",
     "href": "did_slide.html#差分の差分法-1",
     "title": "社会科学における因果推論",
     "section": "差分の差分法",
-    "text": "差分の差分法\nDifference-in-Differences（DD / DID / Diff-in-Diff / Dif-in-Dif）\n\n処置群と統制群の変化の差を比較することで、因果効果を推定する準実験的手法\n\n主に政策介入や制度変更などの因果効果を推定する際に使用\n\n\n時間を通じた結果変数の変化の差を、処置群と統制群の間で比較\n\n時系列データを使って対象の経時的変化のみを分析（\\(\\times\\)）\nある時点における介入群と対照群の差異のみを分析（\\(\\times\\)）\n\n\n推定量はATEでなく、ATT\n\n\nパネルデータ（panel data）が必要"
+    "text": "差分の差分法\nDifference-in-Differences（DD / DID / Diff-in-Diff / Dif-in-Dif）\n\n処置群と統制群の変化の差を比較することで、因果効果を推定する準実験的手法\n\n主に政策介入や制度変更などの因果効果を推定する際に使用\n\n\n時間を通じた結果変数の変化の差を、処置群と統制群の間で比較\n\n時系列データを使って対象の経時的変化のみを分析（\\(\\times\\)）\nある時点における処置群と統制群の差異のみを分析（\\(\\times\\)）\n\n\n推定量はATEでなく、ATT\n\n\nパネルデータ（panel data）が必要"
   },
   {
     "objectID": "did_slide.html#パネルデータ",
@@ -619,7 +619,7 @@
     "href": "did_slide.html#did回帰の仕組み",
     "title": "社会科学における因果推論",
     "section": "DID回帰の仕組み",
-    "text": "DID回帰の仕組み\n\\[\n\\hat{y}_{it} = \\alpha + \\delta (D_i \\times P_t) - \\beta D_{i} - \\gamma P_{t}\n\\]\n\n処置群の差分：\\(\\hat{y}_{it}(D_i = 1, P_t = 1) − \\hat{y}_{it}(D_i = 1, P_t = 0)\\)\n\n\\(\\delta + \\gamma = \\underbrace{(\\alpha + \\delta + \\beta + \\gamma)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)} - \\underbrace{(\\alpha + \\beta)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)}\\)\n\n\n統制群の差分：\\(\\hat{y}_{it}(D_i = 0, P_t = 1) − \\hat{y}_{it}(D_0 = 1, P_t = 0)\\)\n\n\\(\\gamma = \\underbrace{(\\alpha + \\gamma)}_{\\hat{y}_{it}(D_i = 0, P_t = 1)} - \\underbrace{(\\alpha)}_{\\hat{y}_{it}(D_i = 0, P_t = 0)}\\)\n\n\n差分の差分：\\(\\delta = (\\delta + \\gamma) - (\\gamma)\\)\n\n\n\\(\\Rightarrow \\delta\\)：処置効果"
+    "text": "DID回帰の仕組み\n\\[\n\\hat{y}_{it} = \\alpha + \\delta (D_i \\times P_t) + \\beta D_{i} + \\gamma P_{t}\n\\]\n\n処置群の差分：\\(\\hat{y}_{it}(D_i = 1, P_t = 1) − \\hat{y}_{it}(D_i = 1, P_t = 0)\\)\n\n\\(\\delta + \\gamma = \\underbrace{(\\alpha + \\delta + \\beta + \\gamma)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)} - \\underbrace{(\\alpha + \\beta)}_{\\hat{y}_{it}(D_i = 1, P_t = 0)}\\)\n\n\n統制群の差分：\\(\\hat{y}_{it}(D_i = 0, P_t = 1) − \\hat{y}_{it}(D_0 = 0, P_t = 0)\\)\n\n\\(\\gamma = \\underbrace{(\\alpha + \\gamma)}_{\\hat{y}_{it}(D_i = 0, P_t = 1)} - \\underbrace{(\\alpha)}_{\\hat{y}_{it}(D_i = 0, P_t = 0)}\\)\n\n\n差分の差分：\\(\\delta = (\\delta + \\gamma) - (\\gamma)\\)\n\n\n\\(\\Rightarrow \\delta\\)：処置効果"
   },
   {
     "objectID": "did_slide.html#より一般化したdid回帰",
@@ -717,7 +717,7 @@
     "href": "did_slide.html#イベントスタディのイメージデータ",
     "title": "社会科学における因果推論",
     "section": "イベント・スタディのイメージ（データ）",
-    "text": "イベント・スタディのイメージ（データ）\n\n\n\n\ni\nt\nD\nY\n\n\n\n1\n1\n0\n4\n\n\n1\n2\n0\n3\n\n\n1\n3\n0\n3\n\n\n1\n4\n0\n4\n\n\n2\n1\n0\n3\n\n\n2\n2\n0\n2\n\n\n2\n3\n1\n5\n\n\n1\n4\n1\n6\n\n\n3\n1\n0\n4\n\n\n3\n2\n0\n3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ni\nt\nD\nY\n\nD1\n\n\nD2\n\n\nD3\n\n\nD4\n\n\n\n\n1\n1\n0\n4\n0\n0\n0\n0\n\n\n1\n2\n0\n3\n0\n0\n0\n0\n\n\n1\n3\n0\n3\n0\n0\n0\n0\n\n\n1\n4\n0\n4\n0\n0\n0\n0\n\n\n2\n1\n0\n3\n1\n0\n0\n0\n\n\n2\n2\n0\n2\n0\n1\n0\n0\n\n\n2\n3\n1\n5\n0\n0\n1\n0\n\n\n2\n4\n1\n6\n0\n0\n0\n1\n\n\n3\n1\n0\n4\n0\n0\n0\n0\n\n\n3\n2\n0\n3\n0\n0\n0\n0"
+    "text": "イベント・スタディのイメージ（データ）\n\n\n\n\ni\nt\nD\nY\n\n\n\n1\n1\n0\n4\n\n\n1\n2\n0\n3\n\n\n1\n3\n0\n3\n\n\n1\n4\n0\n4\n\n\n2\n1\n0\n3\n\n\n2\n2\n0\n2\n\n\n2\n3\n1\n5\n\n\n2\n4\n1\n6\n\n\n3\n1\n0\n4\n\n\n3\n2\n0\n3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ni\nt\nD\nY\n\nD1\n\n\nD2\n\n\nD3\n\n\nD4\n\n\n\n\n1\n1\n0\n4\n0\n0\n0\n0\n\n\n1\n2\n0\n3\n0\n0\n0\n0\n\n\n1\n3\n0\n3\n0\n0\n0\n0\n\n\n1\n4\n0\n4\n0\n0\n0\n0\n\n\n2\n1\n0\n3\n1\n0\n0\n0\n\n\n2\n2\n0\n2\n0\n1\n0\n0\n\n\n2\n3\n1\n5\n0\n0\n1\n0\n\n\n2\n4\n1\n6\n0\n0\n0\n1\n\n\n3\n1\n0\n4\n0\n0\n0\n0\n\n\n3\n2\n0\n3\n0\n0\n0\n0"
   },
   {
     "objectID": "did_slide.html#イベントスタディのイメージ可視化",
@@ -731,7 +731,7 @@
     "href": "did_slide.html#プラセボテスト",
     "title": "社会科学における因果推論",
     "section": "プラセボテスト",
-    "text": "プラセボテスト\n並行トレンドの仮定が満たされていないことは確認するための検定1\n\nタイミングをずらす：本来は何もないはずの時期に効果が見られないか\n対象をずらす：本来は影響がないはずのグループに効果が見られないか\n客観的な数値（係数やp値）で仮定の妥当性を示すことが可能\n\\(n\\)が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性\n逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性\n\n\n\n\nBertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “How Much Should We Trust Differences-in-Differences Estimates?” The Quarterly Journal of Economics, 119 (1) pp. 249-275.\nGruber, Jonathan and Daniel M. Hungerman. 2008. “The Effect of the Blue Laws on Religious and Secular Activity” The Quarterly Journal of Economics, 123 (2) pp. 711-744.\nCard, David, Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania” The American Economic Review, 84 (4) pp. 772-793.\n\n並行トレンドの仮定の確認以外にも、処置以外の未観測ショックの影響や推定結果が単なる確率的な偶然ではないと示すためにも使われる。"
+    "text": "プラセボテスト\n並行トレンドの仮定が満たされていないことは確認するための検定1\n\nタイミングをずらす：本来は何もないはずの時期に効果が見られないか\n対象をずらす：本来は影響がないはずのグループに効果が見られないか\n客観的な数値（係数や p 値）で仮定の妥当性を示すことが可能\n\\(n\\)が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性\n逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性\n\n\n\n\nBertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “How Much Should We Trust Differences-in-Differences Estimates?” The Quarterly Journal of Economics, 119 (1) pp. 249-275.\nGruber, Jonathan and Daniel M. Hungerman. 2008. “The Effect of the Blue Laws on Religious and Secular Activity” The Quarterly Journal of Economics, 123 (2) pp. 711-744.\nCard, David, Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania” The American Economic Review, 84 (4) pp. 772-793.\n\n並行トレンドの仮定の確認以外にも、処置以外の未観測ショックの影響や推定結果が単なる確率的な偶然ではないと示すためにも使われる。"
   },
   {
     "objectID": "did_slide.html#時間のプラセボテスト",
@@ -759,7 +759,7 @@
     "href": "did_slide.html#段階的導入の例",
     "title": "社会科学における因果推論",
     "section": "段階的導入の例",
-    "text": "段階的導入の例\n\n娯楽用マリファナの合法化\n\nCO & WA（2012） \\(\\rightarrow\\) AK & OR（2014） \\(\\rightarrow\\) CA & NV & MA & ME（2016） \\(\\rightarrow\\) …\n\n\n京都府の電子投票1\n\n東山区（2004年）、上京区（2008年）\n\n\n\n\n\n\n\n\n\n\n\n厳密にいえば、東山区も上京区も2016年以降、電子投票を導入していない。このように未処置に戻ることを処置のスイッチングや可逆的な処置と呼ぶ。"
+    "text": "段階的導入の例\n\n例）女性参政権\n\nWY（1869） \\(\\rightarrow\\) CO（1893） \\(\\rightarrow\\) IL（1913） \\(\\rightarrow\\) 全米（1920）\n\n\n娯楽用マリファナの合法化\n\nCO & WA（2012） \\(\\rightarrow\\) AK & OR（2014） \\(\\rightarrow\\) CA & NV & MA & ME（2016） \\(\\rightarrow\\) …"
   },
   {
     "objectID": "did_slide.html#合成コントロール法",
@@ -2710,5 +2710,12 @@
     "title": "社会科学における因果推論",
     "section": "セレクションへの対処",
     "text": "セレクションへの対処\n\n\n無作為抽出（random sampling）\n\nサンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合\n\n\n\nランダム割り当て（無作為割当; random assignment）\n\nあらゆる内生性を（理論上）完全に除去できる因果推論の王道\n\n\n\n統計的因果推論（statistical causal inference）\n\n共変量調整\n\n自然実験、疑似実験など"
+  },
+  {
+    "objectID": "did_slide.html#処置の反転の例",
+    "href": "did_slide.html#処置の反転の例",
+    "title": "社会科学における因果推論",
+    "section": "処置の反転の例",
+    "text": "処置の反転の例\n処置の反転（Treatment Reversal）：処置状態が0 \\(\\rightarrow\\) 1 \\(\\rightarrow\\) 0のように変化するケース\n\n例）京都府の電子投票：東山区（2004〜2012年）、上京区（2008〜2012年）\n\n段階的導入 & 処置反転の例"
   }
 ]

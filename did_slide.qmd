@@ -246,33 +246,33 @@ dagify(Y ~ D + e,
 
 ||処置前（Pre）|処置後（Post）|
 |:---:|:---:|:---:|
-|統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$|
-|処置（$D_i = 1$）|$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$|$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$|
+|統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|[$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}|
+|処置（$D_i = 1$）|$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$|[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red}|
 
 $$
-\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
+\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
 $$
 
 #### **群間比較**（Cross-sectional design）
 
-- $\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$
-- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$
+- 私たちにできる計算：[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red} - [$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}
+- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]$ = $\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$
 
 ## 2つの推定方法（2）
 
 ||処置前（Pre）|処置後（Post）|
 |:---:|:---:|:---:|
 |統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$|
-|処置（$D_i = 1$）|$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$|$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$|
+|処置（$D_i = 1$）|[$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$]{.hl_blue}|[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red}|
 
 $$
-\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
+\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
 $$
 
 #### **前後比較**（Before-and-after design）
 
-- $\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$
-- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1] = \mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$
+- 私たちにできる計算：[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red} - [$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$]{.hl_blue}
+- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]$ = $\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$
 
 ## 前後 + 群間比較
 
@@ -358,7 +358,7 @@ eVote |>
 
 $$
 \begin{align}
-\delta_{\textsf{ATT}} & = (Y_{\textsf{treat}, \textsf{pre}} - Y_{\textsf{treat}, \textsf{post}}) - (Y_{\textsf{control}, \textsf{pre}} - Y_{\textsf{control}, \textsf{post}}) \\
+\delta_{\textsf{ATT}} & = (Y_{\textsf{treat}, \textsf{post}} - Y_{\textsf{treat}, \textsf{pre}}) - (Y_{\textsf{control}, \textsf{post}} - Y_{\textsf{control}, \textsf{pre}}) \\
 & = (0.435 - 0.456) - (0.404 - 0.487) \\
 & = (-0.021) - (-0.083) \\
 & = 0.062
@@ -373,7 +373,7 @@ $$
    - 主に[政策介入]{.strong}や[制度変更]{.strong}などの因果効果を推定する際に使用
 - 時間を通じた結果変数の変化の差を、処置群と統制群の間で比較
    - 時系列データを使って対象の経時的変化のみを分析（$\times$）
-   - ある時点における介入群と対照群の差異のみを分析（$\times$）
+   - ある時点における処置群と統制群の差異のみを分析（$\times$）
 - 推定量はATEでなく、[ATT]{.strong}
 - [パネルデータ]{.strong}（panel data）が必要
 
@@ -611,12 +611,12 @@ $$
 ## DID回帰の仕組み
 
 $$
-\hat{y}_{it} = \alpha + \delta (D_i \times P_t) - \beta D_{i} - \gamma P_{t}
+\hat{y}_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t}
 $$
 
 - 処置群の差分：$\hat{y}_{it}(D_i = 1, P_t = 1) − \hat{y}_{it}(D_i = 1, P_t = 0)$
    - $\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\hat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\hat{y}_{it}(D_i = 1, P_t = 0)}$
-- 統制群の差分：$\hat{y}_{it}(D_i = 0, P_t = 1) − \hat{y}_{it}(D_0 = 1, P_t = 0)$
+- 統制群の差分：$\hat{y}_{it}(D_i = 0, P_t = 1) − \hat{y}_{it}(D_0 = 0, P_t = 0)$
    - $\gamma = \underbrace{(\alpha + \gamma)}_{\hat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\hat{y}_{it}(D_i = 0, P_t = 0)}$
 - 差分の差分：$\delta = (\delta + \gamma) - (\gamma)$
    - $\Rightarrow \delta$：[**処置効果**]{.alert}
@@ -1009,7 +1009,7 @@ panel_plt +
 |2|1|0|3|
 |2|2|0|2|
 |2|3|1|5|
-|1|4|1|6|
+|2|4|1|6|
 |3|1|0|4|
 |3|2|0|3|
 :::
@@ -1077,7 +1077,7 @@ eVote |>
 - タイミングをずらす：本来は何もないはずの時期に効果が見られないか
 - 対象をずらす：本来は影響がないはずのグループに効果が見られないか
 
-- <i class="bi bi-emoji-sunglasses"></i>客観的な数値（係数やp値）で仮定の妥当性を示すことが可能
+- <i class="bi bi-emoji-sunglasses"></i>客観的な数値[（係数や *p* 値）]{.small}で仮定の妥当性を示すことが可能
 - <i class="bi bi-emoji-tear"></i>$n$が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性
 - <i class="bi bi-emoji-tear"></i>逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性
 
@@ -1162,10 +1162,10 @@ list("通常のデータ" = placebo_fit1,
 
 ## 段階的導入の例
 
+- 例）女性参政権
+   - WY（1869） $\rightarrow$ CO（1893） $\rightarrow$ IL（1913） $\rightarrow$ 全米（1920）
 - 娯楽用マリファナの合法化
    - CO & WA（2012） $\rightarrow$ AK & OR（2014） $\rightarrow$ CA & NV & MA & ME（2016） $\rightarrow$ ...
-- 京都府の電子投票^[厳密にいえば、東山区も上京区も2016年以降、電子投票を導入していない。このように未処置に戻ることを処置のスイッチングや可逆的な処置と呼ぶ。]
-   - 東山区（2004年）、上京区（2008年）
 
 ```{r}
 #| echo: false
@@ -1194,6 +1194,69 @@ df_staggered <- expand.grid(unit = 1:n_units, time = 1:n_periods) |>
 
 df_all <- bind_rows(df_normal, df_staggered) |> 
   mutate(type = factor(type, levels = c("Single Timing", "Staggered Adoption")))
+
+df_all |> 
+  ggplot(aes(x = factor(time), y = factor(unit, levels = rev(unique(unit))), fill = factor(D))) +
+  geom_tile(color = "white", linewidth = 0.8) +
+  facet_wrap(~ type, ncol = 2) +
+  scale_fill_manual(
+    values = c("0" = "#EAEAEA", "1" = "#2B5C8F"),
+    labels = c("Pre-treatment", "Post-treatment"),
+    name = "Status"
+  ) +
+  labs(
+    x = "Time",
+    y = "Unit"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5, margin = margin(b = 10)),
+    strip.text = element_text(face = "bold", size = 11),
+    panel.grid = element_blank(),
+    axis.text = element_text(size = 10),
+    legend.title = element_text(face = "bold"),
+    legend.position = "bottom",
+    panel.background      = element_rect(fill = "transparent", color = NA),
+    plot.background       = element_rect(fill = "transparent", color = NA),
+    legend.background     = element_rect(fill = "transparent", color = NA),
+    legend.box.background = element_rect(fill = "transparent", color = NA)
+  )
+```
+
+## 処置の反転の例
+
+処置の反転[（Treatment Reversal）]{.small}：処置状態が0 $\rightarrow$ 1 $\rightarrow$ 0のように変化するケース
+
+- 例）京都府の電子投票：東山区（2004〜2012年）、上京区（2008〜2012年）
+   - 段階的導入 & 処置反転の例
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3
+set.seed(42)
+n_units <- 5
+n_periods <- 8
+
+df_normal <- expand.grid(unit = 1:n_units, time = 1:n_periods) |> 
+  mutate(
+    type = "Single Timing",
+    D = ifelse(unit %in% c(1, 2) & time >= 5, 1, 0)
+  )
+
+df_reverse <- expand.grid(unit = 1:n_units, time = 1:n_periods) |> 
+  mutate(
+    type = "Reversible",
+    D = case_when(
+      unit == 1 & time %in% 3:6 ~ 1,
+      unit == 2 & time >= 5 ~ 1,
+      unit == 3 & time %in% 6:7 ~ 1,
+      TRUE ~ 0
+    )
+  )
+
+df_all <- bind_rows(df_normal, df_reverse) |> 
+  mutate(type = factor(type, levels = c("Single Timing", "Reversible")))
 
 df_all |> 
   ggplot(aes(x = factor(time), y = factor(unit, levels = rev(unique(unit))), fill = factor(D))) +
