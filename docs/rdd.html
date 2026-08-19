@@ -317,28 +317,12 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">目次</h2>
    
-  <ul class="collapse">
+  <ul>
   <li><a href="#セットアップ" id="toc-セットアップ" class="nav-link active" data-scroll-target="#セットアップ"><span class="header-section-number">1</span> セットアップ</a></li>
   <li><a href="#記述統計量" id="toc-記述統計量" class="nav-link" data-scroll-target="#記述統計量"><span class="header-section-number">2</span> 記述統計量</a></li>
-  <li><a href="#推定" id="toc-推定" class="nav-link" data-scroll-target="#推定"><span class="header-section-number">3</span> 推定</a>
-  <ul class="collapse">
-  <li><a href="#lateの推定" id="toc-lateの推定" class="nav-link" data-scroll-target="#lateの推定"><span class="header-section-number">3.1</span> LATEの推定</a></li>
-  <li><a href="#可視化" id="toc-可視化" class="nav-link" data-scroll-target="#可視化"><span class="header-section-number">3.2</span> 可視化</a></li>
-  </ul></li>
-  <li><a href="#rddの仮定" id="toc-rddの仮定" class="nav-link" data-scroll-target="#rddの仮定"><span class="header-section-number">4</span> RDDの仮定</a>
-  <ul class="collapse">
-  <li><a href="#プラセボ検定" id="toc-プラセボ検定" class="nav-link" data-scroll-target="#プラセボ検定"><span class="header-section-number">4.1</span> プラセボ検定</a></li>
-  <li><a href="#密度検定" id="toc-密度検定" class="nav-link" data-scroll-target="#密度検定"><span class="header-section-number">4.2</span> 密度検定</a></li>
-  <li><a href="#バランスチェック" id="toc-バランスチェック" class="nav-link" data-scroll-target="#バランスチェック"><span class="header-section-number">4.3</span> バランスチェック</a></li>
-  </ul></li>
-  <li><a href="#感度分析" id="toc-感度分析" class="nav-link" data-scroll-target="#感度分析"><span class="header-section-number">5</span> 感度分析</a>
-  <ul class="collapse">
-  <li><a href="#バンド幅" id="toc-バンド幅" class="nav-link" data-scroll-target="#バンド幅"><span class="header-section-number">5.1</span> バンド幅</a></li>
-  <li><a href="#高次多項式" id="toc-高次多項式" class="nav-link" data-scroll-target="#高次多項式"><span class="header-section-number">5.2</span> 高次多項式</a></li>
-  <li><a href="#カーネル関数" id="toc-カーネル関数" class="nav-link" data-scroll-target="#カーネル関数"><span class="header-section-number">5.3</span> カーネル関数</a></li>
-  <li><a href="#共変量の有無" id="toc-共変量の有無" class="nav-link" data-scroll-target="#共変量の有無"><span class="header-section-number">5.4</span> 共変量の有無</a></li>
-  <li><a href="#ドーナツrdd" id="toc-ドーナツrdd" class="nav-link" data-scroll-target="#ドーナツrdd"><span class="header-section-number">5.5</span> ドーナツRDD</a></li>
-  </ul></li>
+  <li><a href="#推定" id="toc-推定" class="nav-link" data-scroll-target="#推定"><span class="header-section-number">3</span> 推定</a></li>
+  <li><a href="#rddの仮定" id="toc-rddの仮定" class="nav-link" data-scroll-target="#rddの仮定"><span class="header-section-number">4</span> RDDの仮定</a></li>
+  <li><a href="#感度分析" id="toc-感度分析" class="nav-link" data-scroll-target="#感度分析"><span class="header-section-number">5</span> 感度分析</a></li>
   </ul>
 </nav>
     </div>
@@ -576,20 +560,20 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_cy2769hwwhf3hgx1ruun = TinyTable.createTableFunctions("tinytable_cy2769hwwhf3hgx1ruun");
+      const tableFns_cwh7nbtodz6g5bddcsbk = TinyTable.createTableFunctions("tinytable_cwh7nbtodz6g5bddcsbk");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_iwq5wfta7vwwxw7tw1m5',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_r4igdxnpv4fyhi8me0mo',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_y3npe0swqffat4al09wx',}, 
+          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 }, { i: '13', j: 6 }, { i: '13', j: 7 }, { i: '13', j: 8 }, { i: '13', j: 9 } ], css_id: 'tinytable_css_dzfthr7l7ca2tc0q6glj',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '9', j: 8 }, { i: '10', j: 8 }, { i: '11', j: 8 }, { i: '12', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '9', j: 9 }, { i: '10', j: 9 }, { i: '11', j: 9 }, { i: '12', j: 9 } ], css_id: 'tinytable_css_7dvndz76uz9kfu15204h',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_07rahxzpzi9quxgv2sjp',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_cy2769hwwhf3hgx1ruun.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_cwh7nbtodz6g5bddcsbk.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -598,12 +582,12 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_cy2769hwwhf3hgx1ruun td.tinytable_css_iwq5wfta7vwwxw7tw1m5, #tinytable_cy2769hwwhf3hgx1ruun th.tinytable_css_iwq5wfta7vwwxw7tw1m5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_cy2769hwwhf3hgx1ruun td.tinytable_css_r4igdxnpv4fyhi8me0mo, #tinytable_cy2769hwwhf3hgx1ruun th.tinytable_css_r4igdxnpv4fyhi8me0mo { text-align: left }
-    #tinytable_cy2769hwwhf3hgx1ruun td.tinytable_css_y3npe0swqffat4al09wx, #tinytable_cy2769hwwhf3hgx1ruun th.tinytable_css_y3npe0swqffat4al09wx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cwh7nbtodz6g5bddcsbk td.tinytable_css_dzfthr7l7ca2tc0q6glj, #tinytable_cwh7nbtodz6g5bddcsbk th.tinytable_css_dzfthr7l7ca2tc0q6glj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_cwh7nbtodz6g5bddcsbk td.tinytable_css_7dvndz76uz9kfu15204h, #tinytable_cwh7nbtodz6g5bddcsbk th.tinytable_css_7dvndz76uz9kfu15204h { text-align: left }
+    #tinytable_cwh7nbtodz6g5bddcsbk td.tinytable_css_07rahxzpzi9quxgv2sjp, #tinytable_cwh7nbtodz6g5bddcsbk th.tinytable_css_07rahxzpzi9quxgv2sjp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_cy2769hwwhf3hgx1ruun" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_cwh7nbtodz6g5bddcsbk" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -783,26 +767,26 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_gyvakn9f7z80w8kk1ite = TinyTable.createTableFunctions("tinytable_gyvakn9f7z80w8kk1ite");
+      const tableFns_1o1fecpq054as1cwf9of = TinyTable.createTableFunctions("tinytable_1o1fecpq054as1cwf9of");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_ee62nd1gkddvd1ko17tm',}, 
-          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_l29c9q224rxhuoh0s9x3',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_chq3vqofy4wtymhe6pn3',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_qd87mz3c6s9d2vntfwpf',}, 
-          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_9t9w7iboazbyxwitb5l3',}, 
-          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_qbi9ek3zac5r45aahtz9',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_db2ghhcnbrm6r7evxdi1',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_n7pk46h6yvcbku7dt9br',}, 
-          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_16pig09rz3m6jrz751hd',}, 
+          { positions: [ { i: '-1', j: 3 }, { i: '-1', j: 5 } ], css_id: 'tinytable_css_3tkq168z0gc46xuqj3zu',}, 
+          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 }, { i: '12', j: 7 } ], css_id: 'tinytable_css_us2q9cxqi4ccie2ti86k',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 } ], css_id: 'tinytable_css_gql5jh6yktit8hlq9bz8',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_3j6vrr4983hajw556jd4',}, 
+          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 4 } ], css_id: 'tinytable_css_i7nr0mw01btq8c9mygzi',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_uglqba2b7m85rx1zfj7q',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_oklkssbiz98uwsap2j85',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ems2luj5rlh011v52tmp',}, 
+          { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 6 }, { i: '-1', j: 7 } ], css_id: 'tinytable_css_h28y1ijqmzypbxfmj1cw',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_gyvakn9f7z80w8kk1ite.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_1o1fecpq054as1cwf9of.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -811,18 +795,18 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_ee62nd1gkddvd1ko17tm, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_ee62nd1gkddvd1ko17tm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_l29c9q224rxhuoh0s9x3, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_l29c9q224rxhuoh0s9x3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_chq3vqofy4wtymhe6pn3, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_chq3vqofy4wtymhe6pn3 { text-align: right }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_qd87mz3c6s9d2vntfwpf, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_qd87mz3c6s9d2vntfwpf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_9t9w7iboazbyxwitb5l3, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_9t9w7iboazbyxwitb5l3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_qbi9ek3zac5r45aahtz9, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_qbi9ek3zac5r45aahtz9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_db2ghhcnbrm6r7evxdi1, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_db2ghhcnbrm6r7evxdi1 { text-align: left }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_n7pk46h6yvcbku7dt9br, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_n7pk46h6yvcbku7dt9br {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_gyvakn9f7z80w8kk1ite td.tinytable_css_16pig09rz3m6jrz751hd, #tinytable_gyvakn9f7z80w8kk1ite th.tinytable_css_16pig09rz3m6jrz751hd {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_3tkq168z0gc46xuqj3zu, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_3tkq168z0gc46xuqj3zu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_us2q9cxqi4ccie2ti86k, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_us2q9cxqi4ccie2ti86k {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_gql5jh6yktit8hlq9bz8, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_gql5jh6yktit8hlq9bz8 { text-align: right }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_3j6vrr4983hajw556jd4, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_3j6vrr4983hajw556jd4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_i7nr0mw01btq8c9mygzi, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_i7nr0mw01btq8c9mygzi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_uglqba2b7m85rx1zfj7q, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_uglqba2b7m85rx1zfj7q {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_oklkssbiz98uwsap2j85, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_oklkssbiz98uwsap2j85 { text-align: left }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_ems2luj5rlh011v52tmp, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_ems2luj5rlh011v52tmp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_1o1fecpq054as1cwf9of td.tinytable_css_h28y1ijqmzypbxfmj1cw, #tinytable_1o1fecpq054as1cwf9of th.tinytable_css_h28y1ijqmzypbxfmj1cw {  position: relative; --border-bottom: 0; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_gyvakn9f7z80w8kk1ite" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_1o1fecpq054as1cwf9of" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
 <tr>
@@ -2369,120 +2353,100 @@ Unique Obs.                    2312          315
 </section>
 <section id="ドーナツrdd" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="ドーナツrdd"><span class="header-section-number">5.5</span> ドーナツRDD</h2>
-<p>　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）の影響を受けている可能性をある。だから、閾値周辺の一部の個体をデータから除外して分析をする。</p>
-<p>どれくらいの個体を落とすかに関するガイドラインはない。ここでは通常のバンド幅の<span class="math inline">\(\bigcirc\)</span>%という基準でやる。</p>
-<p>Donut RDDはBarreca <em>et al.</em>（2011）<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>で提案され、Noack and Rothe（2023）<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>によって方法論的にまとめられるようになった。</p>
+<p>　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）がある場合、その異常値の影響を強く受けている可能性をある。これは、今回得られたLATEが閾値周辺の異常値の影響を受けており、この異常値がなければ異なる結果が得られる可能性を示唆する。この閾値周辺の異常値の影響を検証することがDount RDDである。</p>
+<p>　Donut RDDはBarreca <em>et al.</em>（2011）<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>で提案され、Noack and Rothe（2023）<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>によって方法論的にまとめられるようになったが、簡単にいえば、以下のように、閾値周辺の個体を除外した状態でRDD推定する手法だ。むろん、通常のRDD同様、バンド幅外の個体も推定には使用しない。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> <span class="fl">0.01</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&lt;=</span> <span class="fl">0.1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">data =</span> df[<span class="dv">1</span>, ], </span>
-<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="fl">0.01</span>, <span class="at">xmax =</span> <span class="fl">0.01</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">ymax =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"ドーナツ・ホール"</span>), </span>
-<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"割当変数"</span>, <span class="at">y =</span> <span class="st">"結果変数"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ドーナツ・ホール"</span> <span class="ot">=</span> <span class="st">"tomato"</span>)) <span class="sc">+</span></span>
-<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"閾値（c）"</span>) <span class="sc">+</span></span>
-<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb82-15"><a href="#cb82-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb82-16"><a href="#cb82-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1800"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>　問題はどれくらいの個体を落とすかだ。このドーナツ・ホール（donut hole）の大きさに関するガイドラインはなく、通常、最適バンド幅の<span class="math inline">\(\bigcirc\)</span>%という基準を採用することが多い。今回は最適バンド幅の5%のデータを落としてみよう。<code>iwm</code>の絶対値（<code>abs(iwm)</code>）が最適バンド幅の5%（0.09593258 <span class="math inline">\(\times\)</span> 0.05）より大きい個体だけを残し、<code>df_donut</code>と名付ける。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> <span class="fl">0.05</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(iwm <span class="sc">&gt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">&amp;</span> iwm <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> iwm, <span class="at">y =</span> female_hs_2000)) <span class="sc">+</span></span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_rect</span>(<span class="at">data =</span> df[<span class="dv">1</span>, ],</span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="fl">0.05</span>, <span class="at">xmax =</span> <span class="fl">0.05</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">ymax =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"ドーナツ・ホール"</span>), <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">stat_summary_bin</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, </span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">group =</span> treat), <span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"割当変数"</span>, <span class="at">y =</span> <span class="st">"結果変数"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"ドーナツ・ホール"</span> <span class="ot">=</span> <span class="st">"tomato"</span>)) <span class="sc">+</span></span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"閾値（c）"</span>) <span class="sc">+</span></span>
-<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb83-16"><a href="#cb83-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb83-17"><a href="#cb83-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb83-18"><a href="#cb83-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>df_donut <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> <span class="fl">0.096</span> <span class="sc">*</span> <span class="fl">0.05</span>)</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df_donut <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> <span class="fl">0.09593258</span> <span class="sc">*</span> <span class="fl">0.05</span>)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df_donut)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,629 × 19
-   province district   is_district_center is_province_center is_sub_metro is_metro    iwm     ivs
-   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
- 1 Adana    Aladag                      1                  0            0        0 -0.356 0.0154 
- 2 Adana    Aladag                      0                  0            0        0 -0.543 0.0251 
- 3 Adana    Buyuksehir                  1                  0            0        1 -0.204 0.111  
- 4 Adana    Ceyhan                      0                  0            0        0 -0.201 0.102  
- 5 Adana    Ceyhan                      0                  0            0        0 -0.430 0.0206 
- 6 Adana    Ceyhan                      0                  0            0        0 -0.450 0.0559 
- 7 Adana    Ceyhan                      0                  0            0        0 -0.519 0.00249
- 8 Adana    Ceyhan                      1                  0            0        0 -0.207 0.0806 
- 9 Adana    Ceyhan                      0                  0            0        0 -0.514 0.00656
-10 Adana    Ceyhan                      0                  0            0        0 -0.578 0.00706
-# ℹ 2,619 more rows
-# ℹ 11 more variables: n_parties &lt;dbl&gt;, log_pop &lt;dbl&gt;, female_hs_2000 &lt;dbl&gt;, male_hs_2000 &lt;dbl&gt;,
-#   female_hs_1990 &lt;dbl&gt;, male_hs_1990 &lt;dbl&gt;, hh_size &lt;dbl&gt;, pop_young &lt;dbl&gt;, pop_old &lt;dbl&gt;,
-#   gender_ratio &lt;dbl&gt;, treat &lt;dbl&gt;</code></pre>
+<pre><code>[1] 2604   19</code></pre>
 </div>
 </div>
+<p>　25個の個体が除外された（<code>df</code>の行数は2629行）。 <a href="#fig-donut-rdd-data" class="quarto-xref">図&nbsp;6</a> は-0.1〜0.1の範囲内の<code>iwm</code>をヒストグラムで示したものである。棒（bin）の幅は0.005である。<code>iwm</code> = 0周辺に若干の個体が残っているが、今回のドーナツ・ホールの大きさが0.0047966であるため、-0.005〜0.005内に個体が若干残っている。</p>
+<div id="fig-donut-rdd-data" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-donut-rdd-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-donut-rdd-data" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-donut-rdd-data-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-donut-rdd-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rdd_files/figure-html/fig-donut-rdd-data-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-donut-rdd-data" width="400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-donut-rdd-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) ドーナツ・ホールを開ける前
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-donut-rdd-data" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-donut-rdd-data-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-donut-rdd-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rdd_files/figure-html/fig-donut-rdd-data-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-donut-rdd-data" width="400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-donut-rdd-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) ドーナツ・ホールを開けた後
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-donut-rdd-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+図&nbsp;6: Donut RDDに使用するデータ
+</figcaption>
+</figure>
+</div>
+<p>　それではこの<code>df_donut</code>を使用し、LATEを推定してみよう。推定の際はバンド幅を最適バンド幅に固定することには注意されたい。<code>df</code>と<code>df_donut</code>は別のデータセットだから、<code>h</code>と<code>b</code>引数でバンド幅を固定しないと、バンド幅が変わってしまう。もしDonut RDDの結果、従来の結果に反するものが出たらこれが異常値のせいなのか、新しいバンド幅のせいなのかが識別できない。ただし、閾値周辺の個体をドロップしてからもう一度バンド幅を計算するアプローチもある。大事なのは再現可能性のために、どの手順・方法でDonut RDDを実行したかをしっかりと示すことだろう。</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df_donut, <span class="at">covs =</span> cov_formula, </span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(<span class="at">all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rdd_female_2000$bws で正確なバンド幅の値を抽出した</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> df_donut, <span class="at">covs =</span> cov_formula, </span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">h =</span> <span class="fl">0.09593258</span>, <span class="at">b =</span> <span class="fl">0.20821751</span>,</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: rdrobust
 
 Covariate-adjusted Sharp RD estimates using local polynomial regression. Std. errors are clustered (120 clusters).
 
 Number of Obs.                 2604
-BW type                       mserd
+BW type                      Manual
 Kernel                   Triangular
 VCE method                      CR2
 
                                Left        Right
 Number of Obs.                 2302          302
-Eff. Number of Obs.             250          163
+Eff. Number of Obs.             270          173
 Order est. (p)                    1            1
 Order bias (q)                    2            2
-BW est. (h)                   0.090        0.090
-BW bias (b)                   0.179        0.179
-rho (h/b)                     0.501        0.501
+BW est. (h)                   0.096        0.096
+BW bias (b)                   0.208        0.208
+rho (h/b)                     0.461        0.461
 Clusters (g)                     67           53
 Unique Obs.                    2300          302
 
-=======================================================================================
-        Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
-=======================================================================================
-  Conventional     0.025     0.009     2.914     0.004     [0.008 , 0.043]     
-Bias-Corrected     0.027     0.009     3.088     0.002     [0.010 , 0.044]     
-        Robust     0.027     0.010     2.635     0.008     [0.007 , 0.047]     
-=======================================================================================</code></pre>
+=====================================================================
+                   Point    Robust Inference
+                Estimate         z     P&gt;|z|      [ 95% C.I. ]       
+---------------------------------------------------------------------
+     RD Effect     0.025     2.762     0.006     [0.008 , 0.046]     
+=====================================================================</code></pre>
 </div>
 </div>
+<p>　従来のLATEの点推定値が0.025、95%信頼区間は[0.009, 0.043]だつたが、これに比べるとDonut RDDの結果は大きく変わらず推定結果がかなり安定していることが分かる。</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Donut RDD・極">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2495,34 +2459,37 @@ Bias-Corrected     0.027     0.009     3.088     0.002     [0.010 , 0.044]
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>　Donut RDDを行う際、最適バンド幅の<span class="math inline">\(\bigcirc\)</span>%の穴を開けるが、このドーナツ・ホールの大きさも恣意的に決めるものである。できれば最適バンド幅の1%、2%、3%、…でDonut RDDを実行し、結果を報告するのは良いだろう。</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>コード</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fl">0.096</span> <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">enframe</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">data =</span> <span class="fu">map</span>(value, \(x) <span class="fu">filter</span>(df, <span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> x)),</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">rdd  =</span> <span class="fu">map</span>(data, \(x) <span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> x, <span class="at">covs =</span> cov_formula,</span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>)),</span>
-<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">rdd  =</span> <span class="fu">map</span>(rdd, \(x) <span class="fu">rdd_tidy</span>(x))) <span class="sc">|&gt;</span> </span>
-<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unnest</span>(rdd) <span class="sc">|&gt;</span> </span>
-<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high,</span>
-<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> p.value <span class="sc">&lt;=</span> <span class="fl">0.05</span>)) <span class="sc">+</span></span>
-<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
-<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Donut hole size (% of bandwidth)"</span>, <span class="at">y =</span> <span class="st">"Estimated LATE with 95% CI"</span>) <span class="sc">+</span></span>
-<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.096</span> <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)), <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fl">0.096</span> <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">enframe</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">data =</span> <span class="fu">map</span>(value, \(x) <span class="fu">filter</span>(df, <span class="fu">abs</span>(iwm) <span class="sc">&gt;=</span> x)),</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">rdd  =</span> <span class="fu">map</span>(data, \(x) <span class="fu">rdrobust</span>(<span class="at">y =</span> female_hs_2000, <span class="at">x =</span> iwm, <span class="at">data =</span> x, <span class="at">covs =</span> cov_formula,</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">h =</span> <span class="fl">0.09593258</span>, <span class="at">b =</span> <span class="fl">0.20821751</span>,</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">cluster =</span> province, <span class="at">vce =</span> <span class="st">"CR2"</span>)),</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">rdd  =</span> <span class="fu">map</span>(rdd, \(x) <span class="fu">rdd_tidy</span>(x))) <span class="sc">|&gt;</span> </span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unnest</span>(rdd) <span class="sc">|&gt;</span> </span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high,</span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> p.value <span class="sc">&lt;=</span> <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Donut hole size (% of bandwidth)"</span>, <span class="at">y =</span> <span class="st">"Estimated LATE with 95% CI"</span>) <span class="sc">+</span></span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.096</span> <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)), <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="rdd_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="rdd_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>　一部において統計的非有意なLATEが得られているが、全体的な傾向（トレンド）を考慮するとかなり頑健な結果だと考えられる。</p>
 </div>
 </div>
 </div>

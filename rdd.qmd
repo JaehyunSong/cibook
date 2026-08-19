@@ -4,7 +4,7 @@ modified-date: today
 format: 
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 1
 metadata-files: 
   - "_style/exercise.yml"
 ---
@@ -1114,74 +1114,98 @@ rdrobust(y = female_hs_2000, x = iwm, data = df,
 
 ## ドーナツRDD
 
-　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）の影響を受けている可能性をある。だから、閾値周辺の一部の個体をデータから除外して分析をする。
+　RDDは閾値周辺の個体の重みが高く付くカーネル関数を使っているため、閾値周辺の異常な値（outlier）がある場合、その異常値の影響を強く受けている可能性をある。これは、今回得られたLATEが閾値周辺の異常値の影響を受けており、この異常値がなければ異なる結果が得られる可能性を示唆する。この閾値周辺の異常値の影響を検証することがDount RDDである。
 
-どれくらいの個体を落とすかに関するガイドラインはない。ここでは通常のバンド幅の$\bigcirc$%という基準でやる。
-
-Donut RDDはBarreca *et al.*（2011）[^barreca-et-al]で提案され、Noack and Rothe（2023）[^noack-rothe]によって方法論的にまとめられるようになった。
+　Donut RDDはBarreca *et al.*（2011）[^barreca-et-al]で提案され、Noack and Rothe（2023）[^noack-rothe]によって方法論的にまとめられるようになったが、簡単にいえば、以下のように、閾値周辺の個体を除外した状態でRDD推定する手法だ。むろん、通常のRDD同様、バンド幅外の個体も推定には使用しない。
 
 [^barreca-et-al]: Barreca, Alan I., Melanie Guldi, Jason M. Lindo, and Glen R. Waddell. 2011. "[Saving Babies? Revisiting the Effect of Very Low Birth Weight Classification](https://doi.org/10.1093/qje/qjr042)," *Quarterly Journal of Economics*, 126(4): 2117-2123.
 
 [^noack-rothe]: Noack, Cladia and Chistoph Rothe. 2023. "[Donut Regression Discontinuity Designs](https://doi.org/10.48550/arXiv.2308.14464)," *arXiv.*
 
 ```{r}
-df |> 
-  filter(abs(iwm) >= 0.01) |> 
-  filter(abs(iwm) <= 0.1) |> 
-  ggplot(aes(x = iwm, y = female_hs_2000)) +
-  geom_rect(data = df[1, ], 
-            aes(xmin = -0.01, xmax = 0.01, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), 
-            alpha = 0.35) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
-  geom_point() +
-  labs(x = "割当変数", y = "結果変数", fill = NULL) +
-  scale_fill_manual(values = c("ドーナツ・ホール" = "tomato")) +
-  scale_x_continuous(breaks = 0, label = "閾値（c）") +
-  scale_y_continuous(breaks = NULL) +
-  coord_cartesian(xlim = c(-0.1, 0.1), ylim = c(0, 0.5)) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-```
-
-```{r}
+#| echo: false
 #| fig-width: 4
 #| fig-height: 4
 #| out-width: 400px
 df |> 
-   filter(abs(iwm) >= 0.05) |> 
-   filter(iwm >= -0.5 & iwm <= 0.5) |> 
+   filter(abs(iwm) >= 0.01) |> 
+   filter(abs(iwm) <= 0.1) |> 
    ggplot(aes(x = iwm, y = female_hs_2000)) +
-   geom_rect(data = df[1, ],
-             aes(xmin = -0.05, xmax = 0.05, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), alpha = 0.35) +
+   geom_rect(data = df[1, ], 
+             aes(xmin = -0.01, xmax = 0.01, ymin = -1, ymax = 1, fill = "ドーナツ・ホール"), 
+             alpha = 0.35) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
-   stat_summary_bin(fun = "mean", geom = "point", 
-                    binwidth = 0.04, boundary = 0,
-                    size = 3, shape = 21, color = "black", fill = "gray") +
-   geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5) +
+   geom_vline(xintercept = c(-0.035, 0.035), linetype = "dashed", color = "black") +
+   geom_point(aes(color = abs(iwm) >= 0.035)) +
+   guides(color = "none") +
    labs(x = "割当変数", y = "結果変数", fill = NULL) +
    scale_fill_manual(values = c("ドーナツ・ホール" = "tomato")) +
-   scale_x_continuous(breaks = 0, label = "閾値（c）") +
+   scale_color_manual(values = c("TRUE" = "gray80", "FALSE" = "black")) +
+   scale_x_continuous(breaks = c(-0.035, 0, 0.035), label = c("-h", "閾値（c）", "h")) +
    scale_y_continuous(breaks = NULL) +
-   coord_cartesian(xlim = c(-0.5, 0.5), ylim = c(-0.05, 0.25)) +
+   coord_cartesian(xlim = c(-0.1, 0.1), ylim = c(0, 0.5)) +
    theme_classic() +
    theme(legend.position = "bottom")
 ```
 
+　問題はどれくらいの個体を落とすかだ。このドーナツ・ホール（donut hole）の大きさに関するガイドラインはなく、通常、最適バンド幅の$\bigcirc$%という基準を採用することが多い。今回は最適バンド幅の5%のデータを落としてみよう。`iwm`の絶対値（`abs(iwm)`）が最適バンド幅の5%（0.09593258 $\times$ 0.05）より大きい個体だけを残し、`df_donut`と名付ける。
+
 ```{r}
 df_donut <- df |> 
-   filter(abs(iwm) >= 0.096 * 0.05)
+   filter(abs(iwm) >= 0.09593258 * 0.05)
 
-df
+dim(df_donut)
 ```
+
+　25個の個体が除外された（`df`の行数は`r nrow(df)`行）。 @fig-donut-rdd-data は-0.1〜0.1の範囲内の`iwm`をヒストグラムで示したものである。棒（bin）の幅は0.005である。`iwm` = 0周辺に若干の個体が残っているが、今回のドーナツ・ホールの大きさが`r 0.09593258 * 0.05`であるため、-0.005〜0.005内に個体が若干残っている。
 
 ```{r}
-rdrobust(y = female_hs_2000, x = iwm, data = df_donut, covs = cov_formula, 
-         cluster = province, vce = "CR2") |> 
-   summary(all = TRUE)
+#| layout-ncol: 2
+#| echo: false
+#| label: fig-donut-rdd-data
+#| fig-width: 3
+#| fig-height: 3
+#| out-width: 400px
+#| fig-cap: "Donut RDDに使用するデータ"
+#| fig-subcap: 
+#|   - ドーナツ・ホールを開ける前
+#|   - ドーナツ・ホールを開けた後
+df |> 
+   filter(abs(iwm) <= 0.1) |> 
+   ggplot() +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_histogram(aes(x = iwm), 
+                  boundary = 0, binwidth = 0.005,
+                  color = "white") +
+   labs(y = "度数") +
+   theme_classic()
+
+df_donut |> 
+   filter(abs(iwm) <= 0.1) |> 
+   ggplot() +
+   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+   geom_histogram(aes(x = iwm), 
+                  boundary = 0, binwidth = 0.005,
+                  color = "white") +
+   labs(y = "度数") +
+   theme_classic()
 ```
 
+　それではこの`df_donut`を使用し、LATEを推定してみよう。推定の際はバンド幅を最適バンド幅に固定することには注意されたい。`df`と`df_donut`は別のデータセットだから、`h`と`b`引数でバンド幅を固定しないと、バンド幅が変わってしまう。もしDonut RDDの結果、従来の結果に反するものが出たらこれが異常値のせいなのか、新しいバンド幅のせいなのかが識別できない。ただし、閾値周辺の個体をドロップしてからもう一度バンド幅を計算するアプローチもある。大事なのは再現可能性のために、どの手順・方法でDonut RDDを実行したかをしっかりと示すことだろう。
+
+```{r}
+# rdd_female_2000$bws で正確なバンド幅の値を抽出した
+rdrobust(y = female_hs_2000, x = iwm, data = df_donut, covs = cov_formula, 
+         h = 0.09593258, b = 0.20821751,
+         cluster = province, vce = "CR2") |> 
+   summary()
+```
+
+　従来のLATEの点推定値が`r sprintf("%.3f", rdd_tidy(rdd_female_2000)$estimate)`、95%信頼区間は[`r sprintf("%.3f", rdd_tidy(rdd_female_2000)$conf.low)`, `r sprintf("%.3f", rdd_tidy(rdd_female_2000)$conf.high)`]だつたが、これに比べるとDonut RDDの結果は大きく変わらず推定結果がかなり安定していることが分かる。
+
 :::: {.callout-note title="Donut RDD・極" collapse=true}
+　Donut RDDを行う際、最適バンド幅の$\bigcirc$%の穴を開けるが、このドーナツ・ホールの大きさも恣意的に決めるものである。できれば最適バンド幅の1%、2%、3%、...でDonut RDDを実行し、結果を報告するのは良いだろう。
+
 ```{r}
 #| code-fold: true
 #| fig-width: 6
@@ -1191,6 +1215,7 @@ c(0.096 * seq(0.01, 0.1, by = 0.01)) |>
    enframe() |> 
    mutate(data = map(value, \(x) filter(df, abs(iwm) >= x)),
           rdd  = map(data, \(x) rdrobust(y = female_hs_2000, x = iwm, data = x, covs = cov_formula,
+                                         h = 0.09593258, b = 0.20821751,
                                          cluster = province, vce = "CR2")),
           rdd  = map(rdd, \(x) rdd_tidy(x))) |> 
    unnest(rdd) |> 
@@ -1204,4 +1229,6 @@ c(0.096 * seq(0.01, 0.1, by = 0.01)) |>
    theme_classic() +
    theme(legend.position = "none")
 ```
+
+　一部において統計的非有意なLATEが得られているが、全体的な傾向（トレンド）を考慮するとかなり頑健な結果だと考えられる。
 ::::
