@@ -636,7 +636,7 @@
     "href": "did_slide.html#より一般化したdid回帰",
     "title": "社会科学における因果推論",
     "section": "より一般化したDID回帰",
-    "text": "より一般化したDID回帰\n二元配置固定効果モデル（two-way fixed effect model; TWFE）\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\varepsilon_{it}\n\\]\n\n個体と時間の固定効果モデル\n\n\n\\(\\gamma_i\\)：個体のダミー変数\n\n\\(\\lambda_t\\)：時間のダミー変数\n\n\n注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。"
+    "text": "より一般化したDID回帰\n二元配置固定効果モデル（two-way fixed effect model; TWFE）\n\\[\ny_{it} = \\alpha + \\delta D_{it} + \\gamma_i + \\lambda_t + \\varepsilon_{it}\n\\]\n\n個体と時間の固定効果モデル\n\n\n\\(\\gamma_i\\)：個体のダミー変数\n\n\\(\\lambda_t\\)：時間のダミー変数\n\n\n\n\\(\\delta\\)：処置効果（ATT）\n\n全処置群において処置を受けるタイミングが同じ場合のみ\n処置のタイミングが異なる場合、\\(\\delta\\)はATEでも、ATTでもない\n\n\n注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。"
   },
   {
     "objectID": "did_slide.html#系列相関と標準誤差",
@@ -762,7 +762,7 @@
     "href": "did_slide.html#処置の段階的導入staggered-adoption",
     "title": "社会科学における因果推論",
     "section": "処置の段階的導入（Staggered Adoption）\n",
-    "text": "処置の段階的導入（Staggered Adoption）\n\n\nパネルデータにおいて、個々のユニット（自治体、企業、個人など）がそれぞれ異なるタイミングで処置（政策介入や新制度導入など）を受ける状態\n\n一度処置を受けると分析期間中は処置状態が継続する（処置の撤回がない）\n\n\n\nこの状況下における伝統的なTWFEの推定値は深刻なバイアスを含む（Goodman-Bacon 2021）\n\n段階的導入への対処\n\nSun & Abraham補正（Sun and Abraham 2021）\n\n反事実予測アプローチ（Liu et al. 2024）1など\n\n\n\n\n\n\nGoodman-Bacon, Andrew. (2021). “Difference-in-differences with variation in treatment timing.” Journal of Econometrics, 225(2), 254–277.\nSun, L., & Abraham, S. (2021). “Estimating dynamic treatment effects in event studies with heterogeneous treatment effects.” Journal of Econometrics, 225(2), 175–199.\nLiu, L., Wang, Y., & Xu, Y. (2024). “A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science, 68(1), 160–176.\n\n処置が0に戻るような逆転可能な処置（Reversible treatments / Switching treatments）でも使用可能"
+    "text": "処置の段階的導入（Staggered Adoption）\n\n\nパネルデータにおいて、個々のユニット（自治体、企業、個人など）がそれぞれ異なるタイミングで処置（政策介入や新制度導入など）を受ける状態\n\n一度処置を受けると分析期間中は処置状態が継続する（処置の撤回がない）\n\n\n\nこの状況下における伝統的なTWFEの推定値は深刻なバイアスを含む（Goodman-Bacon 2021）\n\nこの場合、TWFEの推定値はATEでも、ATTでもない\n\n\n段階的導入への対処\n\nSun & Abraham補正（Sun and Abraham 2021）\n\n反事実予測アプローチ（Liu et al. 2024）1など\n\n\n\n\n\n\nGoodman-Bacon, Andrew. (2021). “Difference-in-differences with variation in treatment timing.” Journal of Econometrics, 225(2), 254–277.\nSun, L., & Abraham, S. (2021). “Estimating dynamic treatment effects in event studies with heterogeneous treatment effects.” Journal of Econometrics, 225(2), 175–199.\nLiu, L., Wang, Y., & Xu, Y. (2024). “A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science, 68(1), 160–176.\n\n処置が0に戻るような逆転可能な処置（Reversible treatments / Switching treatments）でも使用可能"
   },
   {
     "objectID": "did_slide.html#段階的導入の例",
@@ -2769,5 +2769,222 @@
     "title": "社会科学における因果推論",
     "section": "セレクションへの対処",
     "text": "セレクションへの対処\n\n\n無作為抽出（random sampling）\n\nサンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合\n\n\n\nランダム割り当て（無作為割当; random assignment）\n\nあらゆる内生性を（理論上）完全に除去できる因果推論の王道\n\n\n\n統計的因果推論（statistical causal inference）\n\n共変量調整\n\n自然実験、疑似実験など"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#本日の位置づけ",
+    "href": "naturalexperiment_slide.html#本日の位置づけ",
+    "title": "社会科学における因果推論",
+    "section": "本日の位置づけ",
+    "text": "本日の位置づけ\nこれまでの流れ：\n\n因果関係と因果推論（潜在的結果枠組み）\n内生性（セレクションバイアス）\nランダム化比較試験（RCT）\n回帰分析\n傾向スコア（層化・重み付け）\n\n→ 今日は 「実際のデータでどうやって“ランダム化”に近い状況を見つけるか」 を学ぶ\nこれから学ぶ手法（DID・RDD・IV・合成統制法）は、すべて自然実験の「発見」から始まる"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#復習rctはなぜ強力か",
+    "href": "naturalexperiment_slide.html#復習rctはなぜ強力か",
+    "title": "社会科学における因果推論",
+    "section": "復習：RCTはなぜ強力か",
+    "text": "復習：RCTはなぜ強力か\n\n処置（介入）をランダムに割り当てることで、観察されない交絡因子も含めて処置群と統制群が平均的に同質になる\n内生性（セレクションバイアス）に対する（理論上）根本的な解決策\n\nしかし現実には…\n\n倫理的に実行できない（例：喫煙をランダムに割り当てる）\n\n費用・時間がかかりすぎる\n政策はすでに実施されてしまっている（介入前に戻れない）\n\n社会実験自体が政治的・制度的に不可能なことが多い"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#復習観察データの限界",
+    "href": "naturalexperiment_slide.html#復習観察データの限界",
+    "title": "社会科学における因果推論",
+    "section": "復習：観察データの限界",
+    "text": "復習：観察データの限界\n回帰分析や傾向スコア法は「観察可能な変数」を統制することで内生性に対処する\n\n比較可能な状態にするために、条件を揃えたり、重みを調整\n\nしかし…\n\n\n特定・観察されなかった交絡因子（本人の能力、意欲、地域特性など）が存在する可能性\n「似たもの同士を比較する」だけでは解決できないケースも多い\n\n問い：ランダム化実験ができない状況で、それでも「ランダム化に近い」変動を見つけることはできないか \\(\\Rightarrow\\) 自然実験（Natural Experiment）"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#因果推論の本質比較可能な集団の比較",
+    "href": "naturalexperiment_slide.html#因果推論の本質比較可能な集団の比較",
+    "title": "社会科学における因果推論",
+    "section": "因果推論の本質：比較可能な集団の比較",
+    "text": "因果推論の本質：比較可能な集団の比較\n\n因果効果とは本来、同じ対象が「処置を受けた場合」と「受けなかった場合」の結果の差\n\n因果効果 = 同一個体における潜在的結果の差\n\n\nしかし同一人物について両方を同時に観察することはできない（因果推論の根本問題）\n\n集団レベルでも同じ：集団の全員が処置を受けると、その集団が処置を受けなかった場合の潜在的結果は観察不可能\n\n\n\n\\(\\Rightarrow\\) 処置（統制）群と比較可能な「別の」集団を用意し、その差を処置効果の代わりに使う\n\n\nこれまで・これから学ぶ手法は、すべてどうやって比較可能な集団を用意するかという”一つの問い”に対する、異なるアプローチ"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#比較可能性をどう実現するか3つのアプローチ",
+    "href": "naturalexperiment_slide.html#比較可能性をどう実現するか3つのアプローチ",
+    "title": "社会科学における因果推論",
+    "section": "比較可能性をどう実現するか：3つのアプローチ",
+    "text": "比較可能性をどう実現するか：3つのアプローチ\n\n\n\n\n\n\n\nアプローチ\n比較可能性の作り方\n代表的手法\n\n\n\n人為的に作る\n\nランダム化によって処置群・統制群を無作為に分割\nRCT\n\n\n観察範囲内で揃える\n\n観察された共変量の値を揃える・統制\n回帰分析、傾向スコア\n\n\n既に存在する状況を見つける\n\n外生的な出来事による as-if random な変動を利用\n自然実験・準実験\n\n\n\n\n「作る」「揃える」「見つける」は比較可能性を得るための3つの戦略であり、優劣ではなく 実行可能性とのトレードオフ\n\n自然実験は、この3つ目「見つける」に分類される"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#自然実験とは何か",
+    "href": "naturalexperiment_slide.html#自然実験とは何か",
+    "title": "社会科学における因果推論",
+    "section": "自然実験とは何か",
+    "text": "自然実験とは何か\n\n研究者が意図的に処置を割り当てるのではなく、法律の変更・制度の違い・自然災害・偶然の出来事などによって、あたかもランダムに割り当てられたかのような処置のばらつきが生じている状況\n\nキーワード：“as-if random”（あたかもランダムであるかのような）変動\n\n処置を受けるかどうかが、個人の意思や能力とは無関係な外生的要因で決まる\n研究者は実験を「作る」のではなく、社会の中に「すでに存在する」実験を 発見 する"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#自然実験の基本アイデア",
+    "href": "naturalexperiment_slide.html#自然実験の基本アイデア",
+    "title": "社会科学における因果推論",
+    "section": "自然実験の基本アイデア",
+    "text": "自然実験の基本アイデア\n通常の観察研究：\n  処置 ← 個人の選択・能力・環境 → 結果\n  （交絡あり・内生性の問題）\n\n自然実験：\n  処置 ← 外生的な出来事（as-if random）→ 結果\n  （交絡が少ない・RCTに近い）\nRCT：研究者が乱数でコインを投げる 自然実験：社会や自然そのものがコインを投げてくれている状況を見つける"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#これまでの手法との違い①内生性への対処法",
+    "href": "naturalexperiment_slide.html#これまでの手法との違い①内生性への対処法",
+    "title": "社会科学における因果推論",
+    "section": "これまでの手法との違い①：内生性への対処法",
+    "text": "これまでの手法との違い①：内生性への対処法\n\n\n\n\n\n\n\n手法\n内生性への対処\n観察されない交絡因子\n\n\n\nRCT\n研究者が処置をランダムに割り当て\n平均的に均衡（対処済み）\n\n\n共変量調整\n観察された共変量を統制\n\n対処できない（未観測の交絡は残る）\n\n\n自然実験\n社会に既に存在する外生的変動を利用\n\nas-if random なら平均的に均衡\n\n\n\n\n回帰分析や傾向スコア法は「observables（観察可能な変数）」の調整にとどまる\n自然実験は、観察できない交絡因子も含めてバイアスを除去できる可能性がある点でRCTに近い"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#これまでの手法との違い②識別の根拠と仮定",
+    "href": "naturalexperiment_slide.html#これまでの手法との違い②識別の根拠と仮定",
+    "title": "社会科学における因果推論",
+    "section": "これまでの手法との違い②：識別の根拠と仮定",
+    "text": "これまでの手法との違い②：識別の根拠と仮定\n\n\n\n\n\n\n\n手法\n識別の根拠\n主な仮定\n\n\n\nRCT\n研究者による無作為割り当て\n独立性（交換可能性・無視可能性）\n\n\n共変量調整\n「観察された変数を統制すれば処置群と統制群は比較可能」という仮定\n条件付き（平均）独立\n\n\n自然実験\n「外生的な出来事による割り当ては、あたかもランダムである」という仮定\nas-if random\n\n\n\n\n共変量調整は「観察された変数さえ揃えれば大丈夫」という強い・検証しづらい仮定に依存する\n自然実験の”as-if random”も仮定であり自明ではない → プラセボ検定・balance test等での間接的な検証が必要（後述）"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#これまでの手法との違い③実行可能性とトレードオフ",
+    "href": "naturalexperiment_slide.html#これまでの手法との違い③実行可能性とトレードオフ",
+    "title": "社会科学における因果推論",
+    "section": "これまでの手法との違い③：実行可能性とトレードオフ",
+    "text": "これまでの手法との違い③：実行可能性とトレードオフ\n\n\n\n\n\n\n\n\n手法\n実行可能性\n長所\n短所\n\n\n\nRCT\n低い（コスト・倫理・時間の制約）\n高い内的妥当性\n実施できる場面が限られる\n\n\n共変量調整\n高い（既存データがあればすぐ実行可）\nデータの入手・実行が容易\n未観測の交絡に脆弱非常に強い仮定\n\n\n自然実験\n中程度（適切な「出来事」を見つける必要）\n未観測交絡にも対応でき、実データで検証可能\n都合の良い自然実験が常に存在するとは限らない外的妥当性が限定的なことも\n\n\n\n\n自然実験は、RCTの「内的妥当性の高さ」と、共変量調整の「実データで実行できる現実性」の中間\n適切な状況さえ見つかれば実験に準ずる強力な因果推論の手法"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#まとめると",
+    "href": "naturalexperiment_slide.html#まとめると",
+    "title": "社会科学における因果推論",
+    "section": "まとめると",
+    "text": "まとめると\n\n自然実験は、RCTの「内的妥当性の高さ」と、共変量調整の「実データで実行できる現実性」の中間に位置する\n「実験はできないが、観察データの単純な調整だけでは信用できない」という状況を埋める発想"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#自然実験の主な発生源",
+    "href": "naturalexperiment_slide.html#自然実験の主な発生源",
+    "title": "社会科学における因果推論",
+    "section": "自然実験の主な発生源",
+    "text": "自然実験の主な発生源\n\n\n\n\n\n\n発生源\n例\n\n\n\n制度・政策の変更\n最低賃金改定、税制改革、法改正\n\n\n地理的・行政的境界\n州境、学区境界での制度の違い\n\n\nくじ・抽選\n徴兵くじ、学校選択の抽選\n\n\n恣意性の低いルール\n誕生日、試験の閾値点\n\n\n自然災害・突発的事象\n地震、移民の急激な流入\n\n\n制度導入のタイミングのズレ\n一部地域が先行して政策導入"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#用語整理準実験と自然実験",
+    "href": "naturalexperiment_slide.html#用語整理準実験と自然実験",
+    "title": "社会科学における因果推論",
+    "section": "用語整理：準実験と自然実験",
+    "text": "用語整理：準実験と自然実験\n\n\n準実験（quasi-experiment）：研究者が処置を割り当てないが、何らかの構造（ルール・閾値・タイミングのズレなど）によって処置群・統制群が識別できる研究デザイン全般を指す 広い上位概念\n\nDID・RDD・IVを使う状況の多くはここに含まれる\n\n\n\n自然実験（natural experiment）：準実験の中でも特に、研究者が全く関与しない、自然や社会に元々存在する外生的な出来事（災害、抽選、政策変更のタイミングなど）による変動を指す代表的なサブカテゴリ\n\n整理の目安\n準実験 ＝ 広い傘 ／ 自然実験 ＝ その代表的な一種\n実務上はほぼ同義に使われることも多いが、この講義では上記のように整理して用語を使う"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#整理の目安",
+    "href": "naturalexperiment_slide.html#整理の目安",
+    "title": "社会科学における因果推論",
+    "section": "整理の目安",
+    "text": "整理の目安\n準実験 ＝ 広い傘 ／ 自然実験 ＝ その代表的な一種\n実務上はほぼ同義に使われることも多いが、この講義では上記のように整理して用語を使う"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#例1ジョンスノウのコレラ研究1854年",
+    "href": "naturalexperiment_slide.html#例1ジョンスノウのコレラ研究1854年",
+    "title": "社会科学における因果推論",
+    "section": "例1：ジョン・スノウのコレラ研究（1854年）",
+    "text": "例1：ジョン・スノウのコレラ研究（1854年）\n\nロンドンの2つの水道会社が、たまたま取水口の位置（きれいな上流／汚染された下流）が異なっていた\n家庭がどちらの会社と契約するかは、コレラへの感染リスクとは無関係に決まっていた（as-if random）\n結果：汚染水を供給する会社と契約した家庭でコレラによる死亡率が顕著に高かった\n\n因果推論の歴史上最初期の自然実験の一つ。水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#例2ベトナム戦争の徴兵くじangrist-1990",
+    "href": "naturalexperiment_slide.html#例2ベトナム戦争の徴兵くじangrist-1990",
+    "title": "社会科学における因果推論",
+    "section": "例2：ベトナム戦争の徴兵くじ（Angrist, 1990）",
+    "text": "例2：ベトナム戦争の徴兵くじ（Angrist, 1990）\nRQ：軍役経験は、その後の生涯賃金にどう影響するか\n\n米国は1970年代、誕生日に基づく抽選（くじ）で徴兵順位を決定\n誕生日は本人の能力や将来の所得とは無関係 \\(\\rightarrow\\) as-if random\n\n\n\\(\\rightarrow\\) くじの番号を操作変数（instrumental variable; IV）として利用"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#例3マリエルボートリフトcard-1990",
+    "href": "naturalexperiment_slide.html#例3マリエルボートリフトcard-1990",
+    "title": "社会科学における因果推論",
+    "section": "例3：マリエル・ボートリフト（Card, 1990）\n",
+    "text": "例3：マリエル・ボートリフト（Card, 1990）\n\nRQ：移民の急増は、既存住民の賃金・雇用にどう影響するか\n\n1980年、キューバのマリエル港からの出国が突然自由化\n数か月でマイアミの労働力人口が 約7%急増（移民の大量流入）\n移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象\n\n\n\\(\\rightarrow\\) マイアミを「処置群」、類似都市を「統制群」として比較"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#例4出生月と教育年数angrist-krueger-1991",
+    "href": "naturalexperiment_slide.html#例4出生月と教育年数angrist-krueger-1991",
+    "title": "社会科学における因果推論",
+    "section": "例4：出生月と教育年数（Angrist & Krueger, 1991）",
+    "text": "例4：出生月と教育年数（Angrist & Krueger, 1991）\nRQ：教育年数は将来の賃金にどう影響するか？\n\n米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学\n一方、義務教育は「16歳になるまで」で退学可能\n\n\n\\(\\rightarrow\\) 早生まれの子ほど、法律上は短い年数で義務教育を終えられる\n\n\n\n出生月（＝誕生日）は本人の能力とは無関係 \\(\\rightarrow\\) as-if random な教育年数の変動\n\n\n\\(\\rightarrow\\) 出生月を教育年数の操作変数として利用"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#例5ニュージャージー州の最低賃金card-krueger-1994",
+    "href": "naturalexperiment_slide.html#例5ニュージャージー州の最低賃金card-krueger-1994",
+    "title": "社会科学における因果推論",
+    "section": "例5：ニュージャージー州の最低賃金（Card & Krueger, 1994）",
+    "text": "例5：ニュージャージー州の最低賃金（Card & Krueger, 1994）\n\n1992年、NJ州のみが最低賃金を引き上げ、隣接するPA州は据え置き\n地理的に隣接し経済状況が似た2州のうち、制度変更のタイミングが偶然ズレた\n\nNJ＝処置群、PA＝統制群として、引き上げ前後のファストフード店の雇用者数を比較\n最低賃金引き上げ後もNJの雇用は減少せず、通説（雇用への負の影響）に反する結果に"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#良い自然実験の条件",
+    "href": "naturalexperiment_slide.html#良い自然実験の条件",
+    "title": "社会科学における因果推論",
+    "section": "「良い自然実験」の条件",
+    "text": "「良い自然実験」の条件\n\n\n外生性（Exogeneity）：処置の割り当てが、結果に影響しうる他の要因と無関係であること\n\n無視できる操作可能性：個人が処置の有無を自らの意思で選べない、または選びにくいこと\n\n十分なばらつき：処置群・統制群の両方に十分な観測数があること\n\n関連する結果への明確な経路：処置が結果に影響するメカニズムが説明できること（IVの場合は「除外制約」）\n\n\\(\\rightarrow\\) これらが崩れると、せっかくの自然実験も再びバイアスの問題に逆戻りする"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#自然実験の落とし穴注意点",
+    "href": "naturalexperiment_slide.html#自然実験の落とし穴注意点",
+    "title": "社会科学における因果推論",
+    "section": "自然実験の落とし穴・注意点",
+    "text": "自然実験の落とし穴・注意点\n\n\n見せかけの外生性：実は処置群になった人々が何らかの形で「選ばれている」ケースがある（例：制度変更前から異なるトレンドがあった）\n\n並行トレンドの仮定：処置がなければ処置群と統制群は同じ経路を辿っていたはずという仮定（DIDで重要）\n\nSUTVA違反：処置群の変化が統制群に波及する（一般均衡効果、スピルオーバー）\n\n外的妥当性の限界：特定の集団・時期・状況でのみ成り立つ結果かもしれない（LATE の解釈問題、IVの回で詳述）\n\n\n自然実験は「発見したら終わり」ではなく、妥当性の検証（プラセボテスト、事前トレンドの確認など）が不可欠"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#自然実験からどう分析するか",
+    "href": "naturalexperiment_slide.html#自然実験からどう分析するか",
+    "title": "社会科学における因果推論",
+    "section": "自然実験からどう分析するか？",
+    "text": "自然実験からどう分析するか？\n自然実験で得られる「変動のタイプ」によって、使うべき分析手法が変わる\n\n\n\n\n\n\n\n変動のタイプ\n例\n分析手法\n\n\n\n処置群・統制群＋前後比較\nNJ vs PA 最低賃金\n差分の差分法\n\n\n単一の処置群（少数）と多数の統制群候補\n特定地域のみの政策導入\n合成統制法\n\n\n閾値・カットオフによる割り当て\n試験の合格点、年齢制限\n回帰不連続デザイン\n\n\n処置に影響するが結果に直接影響しない外生変数\n徴兵くじ、出生月\n操作変数法"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#差分の差分法did",
+    "href": "naturalexperiment_slide.html#差分の差分法did",
+    "title": "社会科学における因果推論",
+    "section": "差分の差分法（DID）",
+    "text": "差分の差分法（DID）\n差分の差分法（difference in differences; DID/DD/Diff-in-Diff）\n\n処置群と統制群の処置前後の変化量を比較する\n\n並行トレンドの仮定がカギ\n応用として合成統制法\n\n例）Card & Krueger のNJ vs PAはDIDの典型例"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#回帰不連続デザインrdd",
+    "href": "naturalexperiment_slide.html#回帰不連続デザインrdd",
+    "title": "社会科学における因果推論",
+    "section": "回帰不連続デザイン（RDD）",
+    "text": "回帰不連続デザイン（RDD）\n\n何らかの閾値・カットオフルールによって処置の有無が決まる状況を利用\nカットオフ付近では、閾値のわずか上と下の対象者は「ほぼ同質」→ as-if random\n例）奨学金の所得閾値、合格最低点、法定年齢制限"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#操作変数法iv",
+    "href": "naturalexperiment_slide.html#操作変数法iv",
+    "title": "社会科学における因果推論",
+    "section": "操作変数法（IV）",
+    "text": "操作変数法（IV）\n\n処置そのものに内生性が残る場合、処置に影響を与えるが結果には直接影響しない外生変数（操作変数）を利用\n徴兵くじ、出生月はいずれも操作変数の例\n「除外制約」の妥当性の議論が中心的な論点になる"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#まとめ",
+    "href": "naturalexperiment_slide.html#まとめ",
+    "title": "社会科学における因果推論",
+    "section": "まとめ",
+    "text": "まとめ\n\n自然実験とは、社会の制度・偶然の出来事によって生じる as-if random な変動 を利用する研究デザイン\nRCTが実施できない場面でも、内生性の問題に対処できる可能性を開く\nジョン・スノウのコレラ研究から徴兵くじ、最低賃金政策まで、経済学・疫学の重要な知見の多くが自然実験から生まれてきた\nただし「本当に外生的か」を疑い、検証する姿勢が不可欠\n自然実験で得られる変動のタイプに応じて、DID・合成統制法・RDD・IV という具体的な分析手法へとつながっていく"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#これまでの内容",
+    "href": "naturalexperiment_slide.html#これまでの内容",
+    "title": "社会科学における因果推論",
+    "section": "これまでの内容",
+    "text": "これまでの内容\n\n因果関係と因果推論（潜在的結果枠組み）\n内生性（セレクションバイアス）\nランダム化比較試験（RCT）\n回帰分析\n傾向スコア（層化・重み付け）\n\n今回の内容\n「実際のデータでどうやって”ランダム化”に近い状況を見つけるか」\nこれから学ぶ手法（DID・RDD・IV・合成統制法）は、すべて自然実験の「発見」から始まる"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#準実験と自然実験",
+    "href": "naturalexperiment_slide.html#準実験と自然実験",
+    "title": "社会科学における因果推論",
+    "section": "準実験と自然実験",
+    "text": "準実験と自然実験\nほぼ同義に使われることも多い\n\n\n準実験（quasi-experiment）：研究者が処置を割り当てないが、何らかの構造（ルール・閾値・タイミングのズレなど）によって処置群・統制群が識別できる研究デザイン全般を指す広い概念\n\n自然実験（natural experiment）：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事（災害、抽選、政策変更のタイミングなど）を処置として使用"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#回帰不連続デザイン",
+    "href": "naturalexperiment_slide.html#回帰不連続デザイン",
+    "title": "社会科学における因果推論",
+    "section": "回帰不連続デザイン",
+    "text": "回帰不連続デザイン\n回帰不連続デザイン（regression discontinuity design; RDD）\n\n何らかの閾値・カットオフルールによって処置の有無が決まる状況を利用\nカットオフ付近では、閾値のわずか上と下の対象者は「ほぼ同質」→ as-if random\n例）奨学金の所得閾値、合格最低点、法定年齢制限\n\n何かの図を入れる"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#操作変数法",
+    "href": "naturalexperiment_slide.html#操作変数法",
+    "title": "社会科学における因果推論",
+    "section": "操作変数法",
+    "text": "操作変数法\n操作変数法（instrumental variable; IV）\n\n処置そのものに内生性が残る場合、処置に影響を与えるが結果には直接影響しない外生変数（操作変数）を利用\n「除外制約」の妥当性の議論が中心的な論点になる\n例）徴兵くじ、出生月、テレビの電波\n\nここに図は無理か"
+  },
+  {
+    "objectID": "naturalexperiment_slide.html#差分の差分法",
+    "href": "naturalexperiment_slide.html#差分の差分法",
+    "title": "社会科学における因果推論",
+    "section": "差分の差分法",
+    "text": "差分の差分法\n差分の差分法（difference in differences; DID/DD/Diff-in-Diff）\n\n処置群と統制群の処置前後の変化量を比較する\n\n並行トレンドの仮定がカギ\n応用として合成統制法\n\n例）Card & Krueger のNJ vs PAはDIDの典型例\n\n何かの図を入れる"
   }
 ]

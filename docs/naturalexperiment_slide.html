@@ -133,7 +133,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
-  <p class="subtitle">8/ 自然実験</p>
+  <p class="subtitle">8/ 自然実験（ドラフト作成中）</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -143,11 +143,453 @@
 </div>
 </div>
 
-</section><section id="にゃー" class="title-slide slide level1 center"><h1>
-<strong>1</strong> にゃー</h1>
+</section><section><section id="なぜ自然実験が必要か" class="title-slide slide level1 center"><h1>
+<strong>1</strong> なぜ自然実験が必要か</h1>
 
+</section><section id="これまでの内容" class="slide level2"><h2>これまでの内容</h2>
+<ol type="1">
+<li>因果関係と因果推論（潜在的結果枠組み）</li>
+<li>内生性（セレクションバイアス）</li>
+<li>ランダム化比較試験（RCT）</li>
+<li>回帰分析</li>
+<li>傾向スコア（層化・重み付け）</li>
+</ol>
+<p><strong>今回の内容</strong></p>
+<p>「実際のデータでどうやって”ランダム化”に近い状況を見つけるか」</p>
+<p>これから学ぶ手法（DID・RDD・IV・合成統制法）は、すべて自然実験の「発見」から始まる</p>
+</section><section id="復習rctはなぜ強力か" class="slide level2"><h2>復習：RCTはなぜ強力か</h2>
+<ul>
+<li>処置<span class="small">（介入）</span>をランダムに割り当てることで、観察されない交絡因子も含めて<strong>処置群と統制群が平均的に同質</strong>になる</li>
+<li>内生性<span class="small">（セレクションバイアス）</span>に対する（理論上）<strong>根本的</strong>な解決策</li>
+</ul>
+<p><strong>しかし現実には…</strong></p>
+<ul>
+<li>倫理的に実行できない<span class="small">（例：喫煙をランダムに割り当てる）</span>
+</li>
+<li>費用・時間がかかりすぎる</li>
+<li>政策はすでに実施されてしまっている<span class="small">（介入前に戻れない）</span>
+</li>
+<li>社会実験自体が政治的・制度的に不可能なことが多い</li>
+</ul></section><section id="復習観察データの限界" class="slide level2"><h2>復習：観察データの限界</h2>
+<p>回帰分析や傾向スコア法は「観察可能な変数」を統制することで内生性に対処する</p>
+<ul>
+<li>比較可能な状態にするために、条件を揃えたり、重みを調整</li>
+</ul>
+<p><strong>しかし…</strong></p>
+<ul>
+<li>
+<strong>特定・観察されなかった交絡因子</strong>（本人の能力、意欲、地域特性など）が存在する可能性</li>
+<li>「似たもの同士を比較する」だけでは解決できないケースも多い</li>
+</ul>
+<p><strong>問い</strong>：ランダム化実験ができない状況で、それでも「ランダム化に近い」変動を見つけることはできないか <span class="math inline">\(\Rightarrow\)</span> <span class="strong">自然実験</span><span class="small">（Natural Experiment）</span></p>
+</section></section><section><section id="因果推論の本質" class="title-slide slide level1 center"><h1>
+<strong>2</strong> 因果推論の本質</h1>
 
-</section>
+</section><section id="因果推論の本質比較可能な集団の比較" class="slide level2"><h2>因果推論の本質：比較可能な集団の比較</h2>
+<ul>
+<li>因果効果とは本来、<strong>同じ対象</strong>が「処置を受けた場合」と「受けなかった場合」の結果の差
+<ul>
+<li><span class="strong">因果効果 = 同一個体における潜在的結果の差</span></li>
+</ul>
+</li>
+<li>しかし同一人物について両方を同時に観察することはできない<span class="small">（因果推論の根本問題）</span>
+<ul>
+<li>集団レベルでも同じ：集団の全員が処置を受けると、その集団が処置を受けなかった場合の潜在的結果は観察不可能</li>
+</ul>
+</li>
+<li>
+<span class="math inline">\(\Rightarrow\)</span> 処置（統制）群と<span class="strong">比較可能な「別の」集団</span>を用意し、その差を処置効果の代わりに使う</li>
+</ul>
+<blockquote>
+<p>これまで・これから学ぶ手法は、すべて<span class="strong">どうやって比較可能な集団を用意するか</span>という”一つの問い”に対する、異なるアプローチ</p>
+</blockquote>
+</section><section id="比較可能性をどう実現するか3つのアプローチ" class="slide level2"><h2>比較可能性をどう実現するか：3つのアプローチ</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 50%">
+<col style="width: 22%">
+</colgroup>
+<thead><tr class="header">
+<th>アプローチ</th>
+<th>比較可能性の作り方</th>
+<th>代表的手法</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>人為的に<strong>作る</strong>
+</td>
+<td>ランダム化によって処置群・統制群を無作為に分割</td>
+<td>RCT</td>
+</tr>
+<tr class="even">
+<td>観察範囲内で<strong>揃える</strong>
+</td>
+<td>観察された共変量の値を揃える・統制</td>
+<td>回帰分析、傾向スコア</td>
+</tr>
+<tr class="odd">
+<td>既に存在する状況を<strong>見つける</strong>
+</td>
+<td>外生的な出来事による <em>as-if random</em> な変動を利用</td>
+<td><span class="strong">自然実験・準実験</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>「作る」「揃える」「見つける」は比較可能性を得るための3つの戦略であり、優劣ではなく <strong>実行可能性とのトレードオフ</strong>
+</li>
+<li>自然実験は、この3つ目「見つける」に分類される</li>
+</ul></section></section><section><section id="自然実験の基礎概念" class="title-slide slide level1 center"><h1>
+<strong>3</strong> 自然実験の基礎概念</h1>
+
+</section><section id="自然実験とは何か" class="slide level2"><h2>自然実験とは何か</h2>
+<blockquote>
+<p>研究者が意図的に処置を割り当てるのではなく、<strong>法律の変更・制度の違い・自然災害・偶然の出来事</strong>などによって、あたかもランダムに割り当てられたかのような処置のばらつきが生じている状況</p>
+</blockquote>
+<p>キーワード：<strong>“as-if random”（あたかもランダムであるかのような）変動</strong></p>
+<ul>
+<li>処置を受けるかどうかが、個人の意思や能力とは無関係な外生的要因で決まる</li>
+<li>研究者は実験を「作る」のではなく、社会の中に「すでに存在する」実験を <strong>発見</strong> する</li>
+</ul></section><section id="自然実験の基本アイデア" class="slide level2"><h2>自然実験の基本アイデア</h2>
+<pre><code>通常の観察研究：
+  処置 ← 個人の選択・能力・環境 → 結果
+  （交絡あり・内生性の問題）
+
+自然実験：
+  処置 ← 外生的な出来事（as-if random）→ 結果
+  （交絡が少ない・RCTに近い）</code></pre>
+<p>RCT：研究者が乱数でコインを投げる 自然実験：<strong>社会や自然そのものがコインを投げてくれている</strong>状況を見つける</p>
+</section><section id="これまでの手法との違い①内生性への対処法" class="slide level2"><h2>これまでの手法との違い①：内生性への対処法</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 40%">
+<col style="width: 40%">
+</colgroup>
+<thead><tr class="header">
+<th>手法</th>
+<th>内生性への対処</th>
+<th>観察されない交絡因子</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>RCT</strong></td>
+<td>研究者が処置をランダムに割り当て</td>
+<td>平均的に均衡（対処済み）</td>
+</tr>
+<tr class="even">
+<td><strong>共変量調整</strong></td>
+<td>観察された共変量を統制</td>
+<td>
+<strong>対処できない</strong>（未観測の交絡は残る）</td>
+</tr>
+<tr class="odd">
+<td><strong>自然実験</strong></td>
+<td>社会に既に存在する外生的変動を利用</td>
+<td>
+<em>as-if random</em> なら平均的に均衡</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>回帰分析や傾向スコア法は「observables（観察可能な変数）」の調整にとどまる</li>
+<li>自然実験は、<strong>観察できない交絡因子も含めて</strong>バイアスを除去できる可能性がある点でRCTに近い</li>
+</ul></section><section id="これまでの手法との違い②識別の根拠と仮定" class="slide level2"><h2>これまでの手法との違い②：識別の根拠と仮定</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 45%">
+<col style="width: 40%">
+</colgroup>
+<thead><tr class="header">
+<th>手法</th>
+<th>識別の根拠</th>
+<th>主な仮定</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>RCT</strong></td>
+<td>研究者による無作為割り当て</td>
+<td>独立性（交換可能性・無視可能性）</td>
+</tr>
+<tr class="even">
+<td><strong>共変量調整</strong></td>
+<td>「観察された変数を統制すれば処置群と統制群は比較可能」という仮定</td>
+<td>条件付き（平均）独立</td>
+</tr>
+<tr class="odd">
+<td><strong>自然実験</strong></td>
+<td>「外生的な出来事による割り当ては、あたかもランダムである」という仮定</td>
+<td><em>as-if random</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>共変量調整は「観察された変数さえ揃えれば大丈夫」という<strong>強い・検証しづらい仮定</strong>に依存する</li>
+<li>自然実験の”<em>as-if random</em>”も仮定であり自明ではない → プラセボ検定・balance test等での間接的な検証が必要（後述）</li>
+</ul></section><section id="これまでの手法との違い③実行可能性とトレードオフ" class="slide level2"><h2>これまでの手法との違い③：実行可能性とトレードオフ</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead><tr class="header">
+<th>手法</th>
+<th>実行可能性</th>
+<th>長所</th>
+<th>短所</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>RCT</strong></td>
+<td>低い（コスト・倫理・時間の制約）</td>
+<td>高い内的妥当性</td>
+<td>実施できる場面が限られる</td>
+</tr>
+<tr class="even">
+<td><strong>共変量調整</strong></td>
+<td>高い（既存データがあればすぐ実行可）</td>
+<td>データの入手・実行が容易</td>
+<td>未観測の交絡に脆弱<br>非常に強い仮定</td>
+</tr>
+<tr class="odd">
+<td><strong>自然実験</strong></td>
+<td>中程度（適切な「出来事」を見つける必要）</td>
+<td>未観測交絡にも対応でき、実データで検証可能</td>
+<td>都合の良い自然実験が常に存在するとは限らない<br>外的妥当性が限定的なことも</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>自然実験は、<strong>RCTの「内的妥当性の高さ」</strong>と、<strong>共変量調整の「実データで実行できる現実性」</strong>の中間</li>
+<li>適切な状況さえ見つかれば実験に準ずる強力な因果推論の手法</li>
+</ul></section><section id="自然実験の主な発生源" class="slide level2"><h2>自然実験の主な発生源</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 65%">
+</colgroup>
+<thead><tr class="header">
+<th>発生源</th>
+<th>例</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>制度・政策の変更</td>
+<td>最低賃金改定、税制改革、法改正</td>
+</tr>
+<tr class="even">
+<td>地理的・行政的境界</td>
+<td>州境、学区境界での制度の違い</td>
+</tr>
+<tr class="odd">
+<td>くじ・抽選</td>
+<td>徴兵くじ、学校選択の抽選</td>
+</tr>
+<tr class="even">
+<td>恣意性の低いルール</td>
+<td>誕生日、試験の閾値点</td>
+</tr>
+<tr class="odd">
+<td>自然災害・突発的事象</td>
+<td>地震、移民の急激な流入</td>
+</tr>
+<tr class="even">
+<td>制度導入のタイミングのズレ</td>
+<td>一部地域が先行して政策導入</td>
+</tr>
+</tbody>
+</table></section><section id="準実験と自然実験" class="slide level2"><h2>準実験と自然実験</h2>
+<p>ほぼ同義に使われることも多い</p>
+<ul>
+<li>
+<span class="strong">準実験</span><span class="small">（quasi-experiment）</span>：研究者が処置を割り当てないが、何らかの構造<span class="small">（ルール・閾値・タイミングのズレなど）</span>によって処置群・統制群が識別できる研究デザイン全般を指す広い概念</li>
+<li>
+<span class="strong">自然実験</span><span class="small">（natural experiment）</span>：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事<span class="small">（災害、抽選、政策変更のタイミングなど）</span>を処置として使用</li>
+</ul></section></section><section><section id="事例" class="title-slide slide level1 center"><h1>
+<strong>4</strong> 事例</h1>
+
+</section><section id="例1ジョンスノウのコレラ研究1854年" class="slide level2"><h2>例1：ジョン・スノウのコレラ研究（1854年）</h2>
+<ul>
+<li>ロンドンの2つの水道会社が、たまたま取水口の位置（きれいな上流／汚染された下流）が異なっていた</li>
+<li>家庭がどちらの会社と契約するかは、<strong>コレラへの感染リスクとは無関係</strong>に決まっていた（as-if random）</li>
+<li>結果：汚染水を供給する会社と契約した家庭でコレラによる死亡率が顕著に高かった</li>
+</ul>
+<p><strong>因果推論の歴史上最初期の自然実験の一つ</strong>。水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能</p>
+</section><section id="例2ベトナム戦争の徴兵くじangrist-1990" class="slide level2"><h2>例2：ベトナム戦争の徴兵くじ（Angrist, 1990）</h2>
+<p><strong>RQ</strong>：軍役経験は、その後の生涯賃金にどう影響するか</p>
+<ul>
+<li>米国は1970年代、誕生日に基づく<strong>抽選（くじ）</strong>で徴兵順位を決定</li>
+<li>誕生日は本人の能力や将来の所得とは無関係 <span class="math inline">\(\rightarrow\)</span> <em>as-if random</em>
+<ul>
+<li>
+<span class="math inline">\(\rightarrow\)</span> くじの番号を<strong>操作変数</strong><span class="small">（instrumental variable; IV）</span>として利用</li>
+</ul>
+</li>
+</ul></section><section id="例3マリエルボートリフトcard-1990" class="slide level2"><h2>例3：マリエル・ボートリフト（Card, 1990）<!--- DID --->
+</h2>
+<p><strong>RQ</strong>：移民の急増は、既存住民の賃金・雇用にどう影響するか</p>
+<ul>
+<li>1980年、キューバのマリエル港からの出国が突然自由化</li>
+<li>数か月でマイアミの労働力人口が <strong>約7%急増</strong>（移民の大量流入）</li>
+<li>移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象
+<ul>
+<li>
+<span class="math inline">\(\rightarrow\)</span> マイアミを「処置群」、類似都市を「統制群」として比較</li>
+</ul>
+</li>
+</ul></section><section id="例4出生月と教育年数angrist-krueger-1991" class="slide level2"><h2>例4：出生月と教育年数（Angrist &amp; Krueger, 1991）</h2>
+<p><strong>RQ</strong>：教育年数は将来の賃金にどう影響するか？</p>
+<ul>
+<li>米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学</li>
+<li>一方、義務教育は「16歳になるまで」で退学可能
+<ul>
+<li>
+<span class="math inline">\(\rightarrow\)</span> <strong>早生まれの子ほど、法律上は短い年数で義務教育を終えられる</strong>
+</li>
+</ul>
+</li>
+<li>出生月<span class="small">（＝誕生日）</span>は本人の能力とは無関係 <span class="math inline">\(\rightarrow\)</span> <em>as-if random</em> な教育年数の変動
+<ul>
+<li>
+<span class="math inline">\(\rightarrow\)</span> 出生月を教育年数の<strong>操作変数</strong>として利用</li>
+</ul>
+</li>
+</ul></section><section id="例5ニュージャージー州の最低賃金card-krueger-1994" class="slide level2"><h2>例5：ニュージャージー州の最低賃金（Card &amp; Krueger, 1994）</h2>
+<ul>
+<li>1992年、NJ州のみが最低賃金を引き上げ、隣接するPA州は据え置き</li>
+<li>地理的に隣接し経済状況が似た2州のうち、<strong>制度変更のタイミングが偶然ズレた</strong>
+</li>
+<li>NJ＝処置群、PA＝統制群として、引き上げ前後のファストフード店の雇用者数を比較</li>
+<li>最低賃金引き上げ後もNJの雇用は減少せず、通説（雇用への負の影響）に反する結果に</li>
+</ul></section></section><section><section id="自然実験の評価と注意点" class="title-slide slide level1 center"><h1>
+<strong>5</strong> 自然実験の評価と注意点</h1>
+
+</section><section id="良い自然実験の条件" class="slide level2"><h2>「良い自然実験」の条件</h2>
+<ol type="1">
+<li>
+<strong>外生性（Exogeneity）</strong>：処置の割り当てが、結果に影響しうる他の要因と無関係であること</li>
+<li>
+<strong>無視できる操作可能性</strong>：個人が処置の有無を自らの意思で選べない、または選びにくいこと</li>
+<li>
+<strong>十分なばらつき</strong>：処置群・統制群の両方に十分な観測数があること</li>
+<li>
+<strong>関連する結果への明確な経路</strong>：処置が結果に影響するメカニズムが説明できること（IVの場合は「除外制約」）</li>
+</ol>
+<p><span class="math inline">\(\rightarrow\)</span> これらが崩れると、せっかくの自然実験も再びバイアスの問題に逆戻りする</p>
+</section><section id="自然実験の落とし穴注意点" class="slide level2"><h2>自然実験の落とし穴・注意点</h2>
+<ul>
+<li>
+<strong>見せかけの外生性</strong>：実は処置群になった人々が何らかの形で「選ばれている」ケースがある（例：制度変更前から異なるトレンドがあった）</li>
+<li>
+<strong>並行トレンドの仮定</strong>：処置がなければ処置群と統制群は同じ経路を辿っていたはずという仮定（DIDで重要）</li>
+<li>
+<strong>SUTVA違反</strong>：処置群の変化が統制群に波及する（一般均衡効果、スピルオーバー）</li>
+<li>
+<strong>外的妥当性の限界</strong>：特定の集団・時期・状況でのみ成り立つ結果かもしれない（LATE の解釈問題、IVの回で詳述）</li>
+</ul>
+<blockquote>
+<p>自然実験は「発見したら終わり」ではなく、<span class="strong">妥当性の検証<span class="small">（プラセボテスト、事前トレンドの確認など）</span>が不可欠</span></p>
+</blockquote>
+</section></section><section><section id="次回以降について" class="title-slide slide level1 center"><h1>
+<strong>6</strong> 次回以降について</h1>
+
+</section><section id="自然実験からどう分析するか" class="slide level2"><h2>自然実験からどう分析するか？</h2>
+<p>自然実験で得られる「変動のタイプ」によって、使うべき分析手法が変わる</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead><tr class="header">
+<th>変動のタイプ</th>
+<th>例</th>
+<th>分析手法</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>処置群・統制群＋前後比較</td>
+<td>NJ vs PA 最低賃金</td>
+<td><strong>差分の差分法</strong></td>
+</tr>
+<tr class="even">
+<td>単一の処置群（少数）と多数の統制群候補</td>
+<td>特定地域のみの政策導入</td>
+<td><strong>合成統制法</strong></td>
+</tr>
+<tr class="odd">
+<td>閾値・カットオフによる割り当て</td>
+<td>試験の合格点、年齢制限</td>
+<td><strong>回帰不連続デザイン</strong></td>
+</tr>
+<tr class="even">
+<td>処置に影響するが結果に直接影響しない外生変数</td>
+<td>徴兵くじ、出生月</td>
+<td><strong>操作変数法</strong></td>
+</tr>
+</tbody>
+</table></section><section id="差分の差分法" class="slide level2"><h2>差分の差分法</h2>
+<p><span class="strong">差分の差分法</span>（difference in differences; <span class="strong">DID/DD/Diff-in-Diff</span>）</p>
+<ul>
+<li>処置群と統制群の<span class="strong">処置前後の変化量</span>を比較する</li>
+<li>
+<span class="strong">並行トレンドの仮定</span>がカギ</li>
+<li>応用として<strong>合成統制法</strong>
+</li>
+<li>例）Card &amp; Krueger のNJ vs PAはDIDの典型例</li>
+</ul>
+<aside class="notes"><p>何かの図を入れる</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside></section><section id="回帰不連続デザイン" class="slide level2"><h2>回帰不連続デザイン</h2>
+<p><span class="strong">回帰不連続デザイン</span>（regression discontinuity design; <span class="strong">RDD</span>）</p>
+<ul>
+<li>何らかの<strong>閾値・カットオフルール</strong>によって処置の有無が決まる状況を利用</li>
+<li>カットオフ付近では、閾値のわずか上と下の対象者は「ほぼ同質」→ as-if random</li>
+<li>例）奨学金の所得閾値、合格最低点、法定年齢制限</li>
+</ul>
+<aside class="notes"><p>何かの図を入れる</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside></section><section id="操作変数法" class="slide level2"><h2>操作変数法</h2>
+<p><span class="strong">操作変数法</span>（instrumental variable; <span class="strong">IV</span>）</p>
+<ul>
+<li>処置そのものに内生性が残る場合、<strong>処置に影響を与えるが結果には直接影響しない外生変数（操作変数）</strong>を利用</li>
+<li>「除外制約」の妥当性の議論が中心的な論点になる</li>
+<li>例）徴兵くじ、出生月、テレビの電波</li>
+</ul>
+<aside class="notes"><p>ここに図は無理か</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside></section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
