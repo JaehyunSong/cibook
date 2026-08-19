@@ -698,6 +698,20 @@ fit1_coef |>
 
 　全体的に信頼区間が広くなり、統計的有意な結果は得られにくくなったもののHawhtrone、Neighborsの処置効果はいずれも統計的に有意な結果が得られた。
 
+:::: {.callout-tip title="{multcomp}パッケージを使った補正" collaspe=true}
+
+```{r}
+#| eval: false
+pacman::p_load(tidyverse)
+multicomp <- glht(fit1, linfct = mcp(treatment = "Tukey"))
+summary(multicomp)
+summary(multicomp, test = adjusted(type = "bonferroni"))
+summary(multicomp, test = adjusted(type = "holm"))
+glht(fit1, linfct = mcp(treatment = "Dunnett")) |> 
+  summary() |> modelsummary()
+```
+::::
+
 ## 統計的推定（重回帰分析）
 
 　今回の例は無作為割当が失敗したという直接的な証拠もなく、共変量（処置前変数）の大きな偏りは見られなかった。しかし、何らかの理由で処置前変数の偏りが生じる場合がある。その何らかの理由でバランスが崩れた共変量が応答変数にまで影響を与えるのであれば、それは交絡変数（confounder）となり、バイアスの原因となる。たとえば、今回の例でいうと、なんらかの理由で年齢のバランスが崩れたとしよう。年齢と投票率の間には強い関連があると言われており、今まで通りに処置群のみの回帰分析を行うとバイアスが発生してしまう。この場合、偏りが生じている処置前変数を統制（control）することによってバイアスを小さくすることができる。今回はバランスチェックで問題は見られなかったから不要であるが、性別や誕生年などの共変量を統制した推定をしてみよう。

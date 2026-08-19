@@ -1,5 +1,5 @@
 ---
-subtitle: "8/ 差分の差分法"
+subtitle: "9/ 差分の差分法"
 modified-date: today
 format: 
   revealjs:

@@ -31,15 +31,17 @@ website:
         href: reg.qmd
       - text: "7/ 傾向スコア"
         href: ps.qmd
-      - text: "8/ 差分の差分法"
+      - text: "8/ 自然実験"
+        href: naturalexperiment.qmd
+      - text: "9/ 差分の差分法"
         href: did.qmd
-      - text: "9/ 回帰不連続デザイン"
+      - text: "10/ 回帰不連続デザイン"
         href: rdd.qmd
-      - text: "10/ 操作変数法"
+      - text: "11/ 操作変数法"
         href: iv.qmd
       - section: "資料"
         contents:
-          - text: "11/マッチング"
+          - text: "12/マッチング"
             href: matching.qmd
           - text: "私たちのR"
             href: https://www.jaysong.net/RBook

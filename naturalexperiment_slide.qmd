@@ -1,9 +1,9 @@
 ---
-subtitle: "11/ 操作変数法"
+subtitle: "8/ 自然実験"
 modified-date: today
 format: 
   revealjs:
-    footer: "操作変数法"
+    footer: "自然実験"
 metadata-files: 
   - "_style/slide.yml"
 ---
@@ -15,12 +15,4 @@ pacman::p_load(tidyverse)
 
 {{< include _common.qmd >}}
 
-# **1** 操作変数法
-
-# **2** 仮定
-
-# **3** 2段階回帰
-
-# **4** 推定
-
-# **5** 実装例
+# **1** にゃー

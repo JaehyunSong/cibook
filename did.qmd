@@ -260,7 +260,7 @@ did_est1
 
 　可視化に入る前に`Model`列と`Treat`列の値を修正する。`Model`列の値が`"M1"`なら`"County-Year FE"`に、それ以外なら`"County-Year FE + Covariates"`とリコーディングする。戻り値が2種類だから`if_else()`を使う。`Treat`列の場合、戻り値が3つなので、`recode()`か`case_when()`を使う。ここでは`recode()`を使ってリコーディングする。最後に`Model`と`Treat`を表示順番でfactor化し（`fct_inorder()`）、更に順番を逆転する（`fct_rev()`）。
 
-:::: {.callout-tip title="参考）`rec_rev()`関数" collapse=true}
+:::: {.callout-tip title="参考）`fct_rev()`関数" collapse=true}
 　`fct_rev()`関数はfactor型の要素の順番を逆転する関数だ。{forcats}に含まれている関数だが、{forcats}は{tidyverse}を構成する一部だから、{tidyverse}を読み込んでおいたのであれば、別途読み込む必要はない。
 ::::
 

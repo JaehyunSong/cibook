@@ -1,5 +1,5 @@
 ---
-subtitle: "9/ 回帰不連続デザイン"
+subtitle: "10/ 回帰不連続デザイン"
 modified-date: today
 format: 
   revealjs:
@@ -48,7 +48,7 @@ senate <- rdrobust_RDsenate
 ```{r}
 #| fig-width: 8
 #| fig-height: 4
-read_csv("data/rdd/ElectoralSystem_Turnout.csv") |> 
+read_csv("_data_slide//rdd/ElectoralSystem_Turnout.csv") |> 
   filter(!is.na(System) & System != "Not applicable") |> 
   mutate(System = recode(System, 
                          "PR"     = "比例代表制（79）",
@@ -768,6 +768,7 @@ df |>
               mutate(y = 1 / (1 + exp(-x))),
             aes(x = x, y = y),
             linewidth = 2, linetype = "dashed", color = "royalblue") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
   annotate("segment", x = -10, xend = 0, y = -0.0554, yend = 0.2035,
            linewidth = 2, color = "firebrick") +
   annotate("segment", x = 0, xend = 10, y = 0.74, yend = 1.11,
