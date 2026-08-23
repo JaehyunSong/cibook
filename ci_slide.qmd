@@ -36,7 +36,7 @@ pacman::p_load(tidyverse,
 
 **アメリカにおける1世帯当たりと年間果物消費量**と[**カナダ国鉄の株価**]{.alert}の関係
 
-- $\rho$ = 0.986（$p$ < 0.001）
+- $\rho$ = 0.986（*p* < 0.001）
 
 ![](figs/ci/supurious1.svg){fig-align="center"}
 
@@ -44,7 +44,7 @@ pacman::p_load(tidyverse,
 
 **ワシントンDC内の政治学者数**と[**Whole Foodsに対する顧客満足度**]{.alert}の関係
 
-- $\rho$ = 0.856（$p$ < 0.001）
+- $\rho$ = 0.856（*p* < 0.001）
 
 ![](figs/ci/supurious2.svg){fig-align="center"}
 
@@ -52,14 +52,14 @@ pacman::p_load(tidyverse,
 
 #### 果物消費量と鉄道会社の株価
 
-- 例1：我が社（カナダ国鉄）の株価を上げたい
+- 例1：我が社[（カナダ国鉄）]{.small}の株価を上げたい
    - **解決策** $\Rightarrow$ アメリカ人に新鮮な果物を無料で提供する
-- 例2：USの肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい
+- 例2：我が国[（アメリカ）]{.small}の肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい
    - **解決策** $\Rightarrow$ カナダ国鉄の株を爆買いする
 
 #### 政治学者とスーパーマーケット
 
-- 例：我が社（Whole Foods）に対する顧客満足度を高めたい
+- 例：我が社[（Whole Foods）]{.small}に対する顧客満足度を高めたい
    - **解決策** $\Rightarrow$ 政治学者をDCに送り込む
 
 <br/>
@@ -271,7 +271,7 @@ tibble(inc_b = rep(c("低", "中", "高"), each = 20)) |>
    - 特定の変数の値が一致するケースに限定すること
    - 例）**男性（女性）における**ゲームプレイ時間と身長の関係
 
-> *"Conditioning is the soul of statistics"*[（[Blitzstein and Hwang 2019](https://amzn.asia/d/ch0qXO7), p.46）]{.small}
+> *"Conditioning is the soul of statistics"* [[@blitzstein-hwang-2019, p. 46]]{.small}
 
 - 因果推論のための比較の方法
    - A：1日ゲームプレイ時間が0分の男性の身長
@@ -409,7 +409,7 @@ tibble(x = c("履修した\n(Aさん)", "履修しなかった\n(Bさん)", "履
 :::
 
 ::: {.column width=50%}
-どの比較が適切か[^compare-3]
+どの比較が適切か
 
 |比較|因果効果の推定値|
 |:---|---:|
@@ -540,9 +540,9 @@ tibble(Time   = c("0分\n（宋の弟）", "3時間\n（宋）"),
 ## 表記法
 
 - $i$：個体の固有番号（1, 2, 3, ..., $n$）
-- $D_i$：個体$i$の処置有無（0、または1）
+- $D_i$：個体$i$の[処置変数]{.strong}（0、または1）
    - 処置を受けた個体の集合を[処置群]{.strong}[^treatment][（treatment group）]{.small}、受けなかった個体の集合を[統制群]{.strong}[^control][（control group）]{.small}と呼ぶ
-- $Y_i$：個体$i$の結果変数（応答変数）
+- $Y_i$：個体$i$の[結果変数]{.strong}（応答変数）
    - $Y_i(D_i = 1) = Y_i(1)$：個体$i$が処置を受けた場合の結果変数
    - $Y_i(D_i = 0) = Y_i(0)$：個体$i$が処置を受けなかった場合の結果変数
 
@@ -567,7 +567,7 @@ tibble(Time   = c("0分\n（宋の弟）", "3時間\n（宋）"),
 
 ## 因果効果の定義
 
-[個体レベルにおける処置効果]{.alert}（individual treatment effect; [ITE]{.strong}）
+[個体レベルにおける処置効果]{.alert}[（individual treatment effect; [ITE]{.strong}）]{.small}
 
 - 全く同じ時点、かつ同じ個体における$Y_i(1)$と$Y_i(0)$の差分
 
@@ -584,30 +584,30 @@ $$
 |5|1|295|395|100|
 |6|1|248|248|0|
 
-## 平均処置効果
+## 平均処置効果（1）
 
-[平均処置効果]{.alert}（average treatment effect; [ATE]{.strong}）：[ITE]{.hl_blue}の平均
+[平均処置効果]{.alert}[（average treatment effect; [ATE]{.strong}）]{.small}：[ITE]{.hl_blue}の平均
 
 $$
-\textsf{ATE} = \frac{1}{n} \sum_i^n \bigl( \textcolor{royalblue}{Y_i (1) - Y_i (0)} \bigr) = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]
+\textcolor{red}{\textsf{ATE}} = \frac{1}{n} \sum_i^n \bigl( \textcolor{royalblue}{Y_i (1) - Y_i (0)} \bigr) = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]
 $$
 
 |$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
 |---:|---:|------:|------:|------:|
-|1|0|344|444|$\textsf{ITE}_1$ = &nbsp;[100]{.hl_red}|
-|2|0|455|505|$\textsf{ITE}_2$ = &nbsp;&nbsp;&nbsp;[50]{.hl_red}|
-|3|0|479|379|$\textsf{ITE}_3$ = [-100]{.hl_red}|
-|4|1|404|554|$\textsf{ITE}_4$ = &nbsp;[150]{.hl_red}|
-|5|1|295|395|$\textsf{ITE}_5$ = &nbsp;[100]{.hl_red}|
-|6|1|248|248|$\textsf{ITE}_6$ = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]{.hl_red}|
+|1|0|344|444|**ITE**<sub>1</sub> = &nbsp;[100]{.hl_red}|
+|2|0|455|505|**ITE**<sub>2</sub> = &nbsp;[50]{.hl_red}|
+|3|0|479|379|**ITE**<sub>3</sub> = &nbsp;[-100]{.hl_red}|
+|4|1|404|554|**ITE**<sub>4</sub> = &nbsp;[150]{.hl_red}|
+|5|1|295|395|**ITE**<sub>5</sub> = &nbsp;[100]{.hl_red}|
+|6|1|248|248|**ITE**<sub>6</sub> = &nbsp;[0]{.hl_red}|
 |平均||370.8|420.8|[50]{.strong}|
 
-## 平均処置効果
+## 平均処置効果（2）
 
-[平均処置効果]{.alert}（average treatment effect; [ATE]{.strong}）：[$Y_i(1)$の平均値 - $Y_i(0)$の平均値]{.hl_blue}
+[平均処置効果]{.alert}[（average treatment effect; [ATE]{.strong}）]{.small}：[$Y_i(1)$の平均値 - $Y_i(0)$の平均値]{.hl_blue}
 
 $$
-\textsf{ATE} = \frac{1}{n} \sum_i^n \bigl( Y_i (1) - Y_i (0) \bigr) = \textcolor{royalblue}{\mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]}
+\textcolor{red}{\textsf{ATE}} = \frac{1}{n} \sum_i^n \bigl( Y_i (1) - Y_i (0) \bigr) = \textcolor{royalblue}{\mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]}
 $$
 
 |$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
@@ -619,6 +619,40 @@ $$
 |5|1|295|395|100|
 |6|1|248|248|0|
 |平均||$\mathbb{E}[Y_i(0)]$ = [370.8]{.hl_red}|$\mathbb{E}[Y_i(1)]$ = [420.8]{.hl_red}|[50]{.strong}|
+
+## 参考：処置群における平均処置効果（ATT）
+
+統計的因果推論ではATTが推定対象となるケースも多い^[詳細は割愛するが、今後必要に応じて適宜解説する。]
+
+- [**ATT**]{.alert}[（Average Treatment Effect **on the Treated**; 処置群におけるATE）]{.small}
+   - $\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 1] = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]$
+- ATEはATTとATCの加重平均
+
+: ATTの例
+
+|$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
+|---:|---:|---:|---:|---:|
+|4|1|404|554|150|
+|5|1|295|395|100|
+|6|1|248|248|0|
+|平均||||[**83.3**]{.alert}|
+
+## 参考：統制群における平均処置効果（ATC）
+
+統計的因果推論ではATTが推定対象となるケースも多い^[詳細は割愛するが、今後、必要に応じて適宜解説する。]
+
+- [**ATC**]{.alert}[（Average Treatment Effect **on the Controlled**; 統制群におけるATE）]{.small}
+   - $\mathbb{E}[Y_i(1) | D_i = 0] - \mathbb{E}[Y_i(0) | D_i = 0] = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]$
+- ATEはATTとATCの加重平均
+
+: ATCの例
+
+|$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
+|---:|---:|---:|---:|---:|
+|1|0|344|444|100|
+|2|0|455|505|50|
+|3|0|479|379|-100|
+|平均||||[**16.7**]{.alert}|
 
 ## 因果推論の根本問題[（fundamental problem of causal inference）]{.small}
 
@@ -638,21 +672,26 @@ $$
 
 ## 因果推論の根本問題と事実・反事実
 
-- $Y_i(0 | D_i = 0)$：統制群の個体$i$が処置を受けなかった場合の$Y_i$ $\rightarrow$ 事実
+||$Y_i(0)$|$Y_i(1)$|
+|:---|:---:|:---:|
+|$D_i = 0$|1. [$Y_i(0|D_i = 0)$]{.hl_blue}|2. [$Y_i(1|D_i = 0)$]{.hl_red}|
+|$D_i = 1$|3. [$Y_i(0|D_i = 1)$]{.hl_red}|4. [$Y_i(1|D_i = 1)$]{.hl_blue}|
+
+1. $Y_i(0 | D_i = 0)$：統制群の個体$i$が処置を受けなかった場合の$Y_i$ $\rightarrow$ [**事実**]{.hl_blue}
    - 統制群における$Y_i(0)$は観察可能 $\leadsto$ $\mathbb{E}[Y_i(0 | D_i = 0)]$も計算可能
-- $Y_i(0 | D_i = 1)$：処置群の個体$i$が処置を受けなかった場合の$Y_i$ $\rightarrow$ 反事実
-   - 処置群における$Y_i(0)$は観察不可能 $\leadsto$ $\mathbb{E}[Y_i(0 | D_i = 1)]$も計算**不**可能
-- $Y_i(1 | D_i = 0)$：統制群の個体$i$が処置を受けた場合の$Y_i$ $\rightarrow$ 反事実
-   - 統制群における$Y_i(1)$は観察不可能 $\leadsto$ $\mathbb{E}[Y_i(1 | D_i = 0)]$も計算**不**可能
-- $Y_i(1 | D_i = 1)$：処置群の個体$i$が処置を受けた場合の$Y_i$ $\rightarrow$ 事実
+1. $Y_i(1 | D_i = 0)$：統制群の個体$i$が処置を受けた場合の$Y_i$ $\rightarrow$ [**反事実**]{.hl_red}
+   - 統制群における$Y_i(1)$は観察不可能 $\leadsto$ $\mathbb{E}[Y_i(1 | D_i = 0)]$も計算不可能
+1. $Y_i(0 | D_i = 1)$：処置群の個体$i$が処置を受けなかった場合の$Y_i$ $\rightarrow$ [**反事実**]{.hl_red}
+   - 処置群における$Y_i(0)$は観察不可能 $\leadsto$ $\mathbb{E}[Y_i(0 | D_i = 1)]$も計算不可能
+1. $Y_i(1 | D_i = 1)$：処置群の個体$i$が処置を受けた場合の$Y_i$ $\rightarrow$ [**事実**]{.hl_blue}
    - 処置群における$Y_i(1)$は観察可能 $\leadsto$ $\mathbb{E}[Y_i(1 | D_i = 1)]$も計算可能
 
 ## 因果推論の根本問題とATE
 
-[観測値の平均値の差分としてATE]{.alert}は推定**可能** 
+[観測値の平均値の差分]{.alert}は計算可能
 
 - $\mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]$でなく、$\mathbb{E}[Y_i(1 | D_i = 1)] - \mathbb{E}[Y_i(0 | D_i = 0)]$は計算可能
-   - これは信頼可能なATEか $\Rightarrow$ 
+   - これはATE? $\Rightarrow$ Maybe not...
 
 |$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
 |---:|---:|------:|------:|---:|
@@ -663,40 +702,6 @@ $$
 |5|1||395|[?]{.strong}|
 |6|1||248|[?]{.strong}|
 |平均||$\mathbb{E}[Y_i(0 | D_i = 0)]$ = 426|$\mathbb{E}[Y_i(1 | D_i = 1)]$ = 399|[-27]{.strong}|
-
-## 参考：ATT
-
-統計的因果推論ではATTが推定対象となるケースも多い^[詳細は割愛するが、今後必要に応じて適宜解説する。]
-
-- [**ATT**]{.alert}[（Average Treatment Effect **on the Treated**; 処置群におけるATE）]{.small}
-   - $\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 1] = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]$
-- ATEはATTとATCの加重平均
-
-: ATTの例
-
-|$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
-|---:|---:|---:|---:|---:|
-|4|1|404|554|150|
-|5|1|295|395|100|
-|6|1|248|248|0|
-|平均||||[**83.3**]{.alert}|
-
-## 参考：ATC
-
-統計的因果推論ではATTが推定対象となるケースも多い^[詳細は割愛するが、今後、必要に応じて適宜解説する。]
-
-- [**ATC**]{.alert}[（Average Treatment Effect **on the Controlled**; 統制群におけるATE）]{.small}
-   - $\mathbb{E}[Y_i(1) | D_i = 0] - \mathbb{E}[Y_i(0) | D_i = 0] = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]$
-- ATEはATTとATCの加重平均
-
-: ATCの例
-
-|$i$|$D_i$|$Y_i(0)$|$Y_i(1)$|$\textsf{ITE}_i$|
-|---:|---:|---:|---:|---:|
-|1|0|344|444|100|
-|2|0|455|505|50|
-|3|0|479|379|-100|
-|平均||||[**16.7**]{.alert}|
 
 ## 信頼できるATEの条件
 
@@ -713,3 +718,8 @@ $$
 <center>[内生性/外生性とは?交換可能?独立?]{.strong}</center>
 
 [^ite-ate]: ITEよりATEに興味があるかも知れないが、それでもITEの方が望ましいだろう。なぜならITEからATEは推定可能なものの、その逆は成立しないからだ。
+
+## 参考文献
+
+::: {#refs}
+:::

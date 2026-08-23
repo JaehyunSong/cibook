@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -34,8 +34,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-aefbbce9ad3b483054a3d6900c97b6af.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-4ec3ce1acf7b3c31d0bc244927a189f6.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -802,7 +821,7 @@
 <aside><div>
 <p>厳密にはグループ1には偽薬2錠、グループ2には新薬と偽薬を1錠ずつ、グループ3には新薬を2錠与えた方が望ましい。</p>
 </div><ol class="aside-footnotes"><li id="fn7"><p>ここには処置を施さないことも含まれる。</p></li></ol></aside></section><section id="実験の種類" class="slide level2"><h2>実験の種類</h2>
-<p>Hyde<span class="small">（2015）</span>による分類</p>
+<p><span class="citation" data-cites="hyde-2015">Hyde (<a href="#/参考文献" role="doc-biblioref" onclick="">2015</a>)</span> による分類</p>
 <ul>
 <li>
 <strong>フィールド</strong>実験<span class="small">（field experiment）</span>
@@ -850,13 +869,7 @@
 <td style="text-align: left;">全国・国際的</td>
 </tr>
 </tbody>
-</table>
-
-<aside><div>
-<ul>
-<li>Hyde, Susan D.. 2015. “<a href="https://doi.org/10.1146/annurev-polisci-020614-094854">Experiments in International Relations: Lab, Survey, and Field</a>.” <em>Annual Review of Political Science,</em> 18: 403-424.</li>
-</ul>
-</div></aside></section><section id="フィールド実験field-experiment" class="slide level2"><h2>フィールド実験<span class="small">（field experiment）</span>
+</table></section><section id="フィールド実験field-experiment" class="slide level2"><h2>フィールド実験<span class="small">（field experiment）</span>
 </h2>
 <p>実生活<span class="small">（学校、地域、職場、選挙など）</span>の場面で行われる実験</p>
 <div class="columns">
@@ -880,27 +893,14 @@
 </div></div>
 </section><section id="フィールド実験の例" class="slide level2"><h2>フィールド実験の例</h2>
 <ul>
-<li>問い：啓発メッセージは投票参加を促すか<span class="small">（Gerber, Green, and Larimer 2008）</span>
+<li>問い：啓発メッセージは投票参加を促すか<span class="small"><span class="citation" data-cites="gerber-green-larimer-2008 gerber-green-2012">(<a href="#/参考文献" role="doc-biblioref" onclick="">Gerber and Green 2012</a>; <a href="#/参考文献" role="doc-biblioref" onclick="">Gerber, Green, and Larimer 2008</a>)</span></span>
 </li>
 <li>統制群：処置なし</li>
 <li>処置群：<span class="alert">投票参加を促すメッセージが記載されたハガキ</span>を発送</li>
 <li>メッセージの処置効果 = 処置群の投票率 - 統制群の投票率</li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
-</figure>
-</div>
-</div>
-</div>
 
-<aside><div>
-<ul>
-<li>Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. “<a href="https://doi.org/10.1017/S000305540808009X">Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment</a>.” <em>American Political Science Review</em> 102(1): 33–48.</li>
-<li>Gerber, Alan S. and Donald P. Green. 2012. <a href="https://www.amazon.co.jp/dp/0393979954/"><em>Field Experiments</em></a>, Norton.</li>
-</ul>
-</div></aside></section><section id="実験室実験labotary-experiment" class="slide level2"><h2>実験室実験<span class="small">（labotary experiment）</span>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="4500"></section><section id="実験室実験labotary-experiment" class="slide level2"><h2>実験室実験<span class="small">（labotary experiment）</span>
 </h2>
 <p>研究者によって完全にコントロールされる環境<span class="small">（例：大学の実験室）</span>で行う実験</p>
 <div class="columns">
@@ -922,11 +922,12 @@
 </ul>
 </div></div>
 <blockquote>
-<p><em>College sophomores may not be people</em>（Hovland 1959）<sup>1</sup></p>
+<p><em>College sophomores may not be people</em> <span class="small"><span class="citation" data-cites="hovland-1959">(<a href="#/参考文献" role="doc-biblioref" onclick="">Hovland 1959</a>)</span></span></p>
 </blockquote>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>Hovland, Carl. I. 1959. “<a href="https://doi.org/10.1037/h0042210">Reconciling conflicting results derived from experimental and survey studies of attitude change</a>.” <em>American Psychologist,</em> 14(1): 8-17.</p></li></ol></aside></section><section id="実験室実験の例" class="slide level2"><h2>実験室実験の例</h2>
+</section><section id="実験室実験の例" class="slide level2"><h2>実験室実験の例</h2>
 <ul>
-<li>問い：討議は少数派への配慮が強めるか</li>
+<li>問い：討議は少数派への配慮が強めるか <span class="small"><span class="citation" data-cites="woon-jang-pronin-schiller-2023">(<a href="#/参考文献" role="doc-biblioref" onclick="">Woon et al. 2023</a>)</span></span>
+</li>
 <li>
 <strong>Step 1：</strong>全員を対象に不公平に対する嫌悪感<span class="small">（inequity aversion）</span>を測定</li>
 <li>
@@ -939,22 +940,10 @@
 <strong>Step 3：</strong>全員を対象とした5つの配分案の投票</li>
 <li>議論の因果効果 = 公平な配分案に対する「処置群の支持 - 統制群の支持」</li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
-</figure>
-</div>
-</div>
-</div>
 
-<aside><div>
-<ul>
-<li>Woon, Jonathan, Minsu Jang, Kira Pronin and Jacob Schiller. 2023. “<a href="https://doi.org/10.1017/XPS.2023.29">Discussion and Fairness in a Laboratory Voting Experiment</a>,” <em>Journal of Experimental Political Science,</em> 11(2): 224-236.</li>
-</ul>
-</div></aside></section><section id="サーベイ実験survey-experiment" class="slide level2"><h2>サーベイ実験<span class="small">（survey experiment）</span>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3900"></section><section id="サーベイ実験survey-experiment" class="slide level2"><h2>サーベイ実験<span class="small">（survey experiment）</span>
 </h2>
-<p>アンケート内に無作為に割り当てたの処置<span class="small">（例：文言の違い、シナリオの提示）</span>を埋め込み、参加者の反応を比較する実験</p>
+<p>アンケート内に無作為に割り当てたの処置<span class="small">（例：文言の違い、シナリオの提示）</span>を埋め込み、参加者の反応を比較する実験 <span class="small"><span class="citation" data-cites="song-hata-2020 hata-song-2020">(<a href="#/参考文献" role="doc-biblioref" onclick="">Song and 秦 2020</a>; <a href="#/参考文献" role="doc-biblioref" onclick="">秦 and Song 2020</a>)</span></span></p>
 <ul>
 <li>インターネットを用いたアンケートに処置を埋め込むのが一般的</li>
 </ul>
@@ -979,34 +968,16 @@
 <li>処置の「強さ」が限られ、効果量が小さくなることが多い</li>
 </ul>
 </div></div>
-
-<aside><div>
+</section><section id="サーベイ実験の例" class="slide level2"><h2>サーベイ実験の例</h2>
 <ul>
-<li>SONG Jaehyun・秦正樹. 2020. 「<a href="https://doi.org/10.11218/ojjams.35.92">オンライン・サーベイ実験の方法：理論編</a>」『理論と方法』35(1): 92-108.</li>
-<li>秦正樹・SONG Jaehyun. 2020. 「<a href="https://doi.org/10.11218/ojjams.35.109">オンライン・サーベイ実験の方法：実践編</a>」『理論と方法』35(1): 109-127.</li>
-</ul>
-</div></aside></section><section id="サーベイ実験の例" class="slide level2"><h2>サーベイ実験の例</h2>
-<ul>
-<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか<span class="small">（Asaba <em>et al.</em> 2020）</span>
+<li>問い：日米韓軍事同盟は日韓協力への支持を高めるか <span class="small"><span class="citation" data-cites="asaba-et-al-2020">(<a href="#/参考文献" role="doc-biblioref" onclick="">Asaba et al. 2020</a>)</span></span>
 </li>
 <li>統制群：米豪合同軍事演習の動画を視聴</li>
 <li>処置群：<span class="alert">日米韓同軍事演習の動画</span>を視聴</li>
 <li>動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度</li>
 </ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="4500"></p>
-</figure>
-</div>
-</div>
-</div>
 
-<aside><div>
-<ul>
-<li>Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. “<a href="https://doi.org/10.1093/irap/lcy024">38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea</a>,” <em>International Relations of the Asia-Pacific</em>, 20(2): 253-273.</li>
-</ul>
-</div></aside></section></section><section><section id="処置効果の推定" class="title-slide slide level1 center"><h1>
+<img data-src="rct_slide_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="4500"></section></section><section><section id="処置効果の推定" class="title-slide slide level1 center"><h1>
 <strong>4</strong> 処置効果の推定</h1>
 
 </section><section id="処置効果の推定-1" class="slide level2"><h2>処置効果の推定</h2>
@@ -1108,7 +1079,7 @@
 </li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn9"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li><li id="fn10"><p>または、得られた<span class="math inline">\(p\)</span>値を<span class="math inline">\(m\)</span>倍して解釈する。</p></li></ol></aside></section><section id="ボンフェローニ補正の例" class="slide level2"><h2>ボンフェローニ補正の例</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn8"><p>他にもホルム法（Holm method）、シダック補正（Šidák correction）、シェッフェ法（Scheffé’s method）、テューキー法（Tukey HSD）など様々な補正法がある。</p></li><li id="fn9"><p>または、得られた<span class="math inline">\(p\)</span>値を<span class="math inline">\(m\)</span>倍して解釈する。</p></li></ol></aside></section><section id="ボンフェローニ補正の例" class="slide level2"><h2>ボンフェローニ補正の例</h2>
 <ul>
 <li>例）<span class="math inline">\(\alpha = 0.05\)</span>、比較回数が2回の場合
 <ul>
@@ -1166,6 +1137,8 @@
 </li>
 </ul>
 </li>
+<li>交互作用を含むモデルの解釈は慎重に行うこと <span class="small"><span class="citation" data-cites="brambor-clark-golder-2006 hainmueller-mummolo-xu-2019">(<a href="#/参考文献" role="doc-biblioref" onclick="">Brambor, Clark, and Golder 2020</a>; <a href="#/参考文献" role="doc-biblioref" onclick="">Hainmueller, Mummolo, and Xu 2019</a>)</span></span>
+</li>
 </ul>
 </li>
 <li>
@@ -1181,33 +1154,21 @@
 <aside><div>
 <ul>
 <li>サブグループは<strong>予め設定した仮説に基いて選定</strong>すべきであり、<strong>多重検定</strong>の問題も考慮する必要がある。</li>
-<li>Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. “<a href="https://doi.org/10.1093/pan/mpi014">Understanding Interaction Models: Improving Empirical Analyses.</a>” <em>Political Analysis</em> 14(1): 63–82.</li>
-<li>Hainmueller, Jens, Jonathan Mummolo, and Yiqing Xu. 2020. “<a href="https://doi.org/10.1017/pan.2018.46">How Much Should We Trust Estimates from Multiplicative Interaction Models? Noticeable Errors and Simple Remedies.</a>” <em>Political Analysis,</em> 27 (2): 173–92.</li>
 </ul>
 </div></aside></section><section id="参考機械学習を用いたhteの推定" class="slide level2"><h2>参考）機械学習を用いたHTEの推定</h2>
 <ul>
-<li>Causal Forest<span class="small">（Wagner and Athey 2018; Athey <em>et al.</em> 2019; Jawadekar <em>et al.</em> 2023）</span>
+<li>Causal Forest <span class="small"><span class="citation" data-cites="wager-athey-2018 athey-tibshirani-wagner-2019 jawadekar-et-al-2023">(<a href="#/参考文献" role="doc-biblioref" onclick="">Athey, Tibshirani, and Wager 2019</a>; <a href="#/参考文献" role="doc-biblioref" onclick="">Jawadekar et al. 2023</a>; <a href="#/参考文献" role="doc-biblioref" onclick="">Wager and Athey 2018</a>)</span></span>
 </li>
-<li>Meta-learner<span class="small">（Künzel <em>et al.</em> 2019）</span>
+<li>Meta-learner <span class="small"><span class="citation" data-cites="kunzel-et-al-2019">(<a href="#/参考文献" role="doc-biblioref" onclick="">Künzel et al. 2019</a>)</span></span>
 <ul>
 <li>S-learner</li>
 <li>T-learner</li>
 <li>X-learner</li>
 </ul>
 </li>
-<li>Double/Debiased Machine Learning<span class="small">（Chernozhukov <em>et al.</em> 2018）</span>
+<li>Double/Debiased Machine Learning <span class="small"><span class="citation" data-cites="chernozhukov-et-al-2018">(<a href="#/参考文献" role="doc-biblioref" onclick="">Chernozhukov et al. 2018</a>)</span></span>
 </li>
-</ul>
-
-<aside><div>
-<ul>
-<li>Wager, Stefan, and Susan Athey. 2018. “<a href="https://doi.org/10.1080/01621459.2017.1319839">Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.</a>” <em>Journal of the American Statistical Association,</em> 113 (523): 1228–1242.</li>
-<li>Athey, Susan, Julie Tibshirani, and Stefan Wager. 2019. “<a href="https://www.jstor.org/stable/26581894">Generalized Random Forests.</a>” <em>The Annals of Statistics,</em> 47 (2): 1148–1178.</li>
-<li>Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. “<a href="https://doi.org/10.1093/aje/kwad043">Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects</a>.” <em>American Journal of Epidemiology,</em> 192(7): 1155–1165.</li>
-<li>Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. “<a href="https://doi.org/10.1073/pnas.1804597116">Metalearners for estimating heterogeneous treatment effects using machine learning</a>.” <em>Proceedings of the National Academy of Sciences of the United States of America,</em> 116(10): 4156-4165.</li>
-<li>Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. “<a href="https://doi.org/10.1111/ectj.12097">Double/Debiased Machine Learning for Treatment and Structural Parameters</a>.” <em>The Econometrics Journal,</em> 21 (1): C1–C68.</li>
-</ul>
-</div></aside></section></section><section><section id="実装時の注意点" class="title-slide slide level1 center"><h1>
+</ul></section></section><section><section id="実装時の注意点" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 実装時の注意点</h1>
 
 </section><section id="実験と研究倫理" class="slide level2"><h2>実験と研究倫理</h2>
@@ -1234,7 +1195,7 @@
 <span class="alert"><strong>研究開始前に審査を必ず受ける</strong></span>
 <ul>
 <li>
-<strong>IRB</strong>（Institutional Review Board／倫理審査委員会）</li>
+<strong>IRB</strong>（<em>Institutional Review Board</em>／倫理審査委員会）</li>
 </ul>
 </li>
 </ul>
@@ -1404,7 +1365,7 @@
 <li>給食無償化の効果：地域、学校ごとに異なる献立、配膳環境など</li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn11"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section><section id="二重盲検法" class="slide level2"><h2>二重盲検法</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn10"><p>2003年<a href="https://www.stat.go.jp/data/kouri/kouzou/index.html">消費者物価地域差指数</a>を見ると、全国平均を100とした場合、1位の東京都は104.5、47位の鹿児島県は95.9である。</p></li></ol></aside></section><section id="二重盲検法" class="slide level2"><h2>二重盲検法</h2>
 <p><span class="alert"><strong>二重盲検法</strong></span><span class="small">（double-blind）</span>：被験者も研究者も、誰がどの処置を受けたかを知らない設計</p>
 <ul>
 <li>二重盲検 &gt; 単盲検 &gt; 非盲検</li>
@@ -1460,7 +1421,7 @@
 <li>Austin, Peter C. 2011. “<a href="https://doi.org/10.1080/00273171.2011.568786">An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies</a>.” <em>Multivariate Behavioral Research,</em> 46(3): 399-424.</li>
 <li>Stuart, Elizabeth A. 2010. “<a href="https://doi.org/10.1214/09-STS313">Matching methods for causal inference: A review and a look forward</a>.” <em>Statistical science: a review journal of the Institute of Mathematical Statistics,</em> 25(1): 1-21.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn12"><p>標準化した変数<span class="math inline">\(X\)</span>を<span class="math inline">\(X_z\)</span>とする場合、<span class="math inline">\(X_z = \frac{X - \overline{X}}{s_X}\)</span>である（<span class="math inline">\(\overline{X}\)</span>は<span class="math inline">\(X\)</span>の平均値、<span class="math inline">\(s_X\)</span>は<span class="math inline">\(X\)</span>の標準偏差）。ただし、共変量が二値変数の場合は標準化をせず、単純に平均差を計算する。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
+</div><ol class="aside-footnotes"><li id="fn11"><p>標準化した変数<span class="math inline">\(X\)</span>を<span class="math inline">\(X_z\)</span>とする場合、<span class="math inline">\(X_z = \frac{X - \overline{X}}{s_X}\)</span>である（<span class="math inline">\(\overline{X}\)</span>は<span class="math inline">\(X\)</span>の平均値、<span class="math inline">\(s_X\)</span>は<span class="math inline">\(X\)</span>の標準偏差）。ただし、共変量が二値変数の場合は標準化をせず、単純に平均差を計算する。</p></li></ol></aside></section><section id="バランスチェックの例" class="slide level2"><h2>バランスチェックの例</h2>
 <p>{cobalt}パッケージ<sup>1</sup>を利用したバランスチェックの例</p>
 <ul>
 <li>左の図の場合、ほとんどの共変量がバランスしていない<span class="small">（閾値=0.1の場合）</span>
@@ -1496,13 +1457,61 @@
 </div>
 </div>
 
-
-
 <aside><div>
 <ul>
 <li>Lin, Winston. 2013. “<a href="https://doi.org/10.1214/12-AOAS583">Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique</a>.” <em>The Annals of Applied Statistics</em> 7(1): 295-318.</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn13"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section></section>
+</div><ol class="aside-footnotes"><li id="fn12"><p>{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}パッケージがより簡単に使えるが、{cobalt}の方がより汎用性が高い。それでも{<a href="https://github.com/JaehyunSong/BalanceR">BalanceR</a>}を使ってくれるなら感謝しかない。</p></li></ol></aside></section><section id="参考文献" class="slide level2 smaller scrollable"><h2>参考文献</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-asaba-et-al-2020" class="csl-entry" role="listitem">
+Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. <span>“38 Seconds Above the 38th Parallel: How Short Video Clips Produced by the US Military Can Promote Alignment Despite Antagonism Between Japan and Korea.”</span> <em>International Relations of the Asia-Pacific</em> 20: 253–73. doi:<a href="https://doi.org/10.1093/irap/lcy024">10.1093/irap/lcy024</a>.
+</div>
+<div id="ref-athey-tibshirani-wagner-2019" class="csl-entry" role="listitem">
+Athey, Susan, Julie Tibshirani, and Stefan Wager. 2019. <span>“Generalized Random Forests.”</span> <em>The Annals of Statistics</em> 47: 1148–78. doi:<a href="https://doi.org/10.1214/18-AOS1709">10.1214/18-AOS1709</a>.
+</div>
+<div id="ref-brambor-clark-golder-2006" class="csl-entry" role="listitem">
+Brambor, Thomas, William Roberts Clark, and Matt Golder. 2020. <span>“Understanding Interaction Models: Improving Empirical Analyses.”</span> <em>Political Analysis</em> 14: 63–82. doi:<a href="https://doi.org/10.1093/pan/mpi014">10.1093/pan/mpi014</a>.
+</div>
+<div id="ref-chernozhukov-et-al-2018" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“Double/Debiased Machine Learning for Treatment and Structural Parameters.”</span> <em>The Econometrics Journal</em> 14: C1–68. doi:<a href="https://doi.org/10.1111/ectj.12097">10.1111/ectj.12097</a>.
+</div>
+<div id="ref-gerber-green-2012" class="csl-entry" role="listitem">
+Gerber, Alan S., and Donald P. Green. 2012. <em>Field Experiments: Design, Analysis, and Interpretation</em>. W. W. Norton &amp; Company.
+</div>
+<div id="ref-gerber-green-larimer-2008" class="csl-entry" role="listitem">
+Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. <span>“Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment.”</span> <em>Comparative Political Studies</em> 102: 33–48. doi:<a href="https://doi.org/10.1017/S000305540808009X">10.1017/S000305540808009X</a>.
+</div>
+<div id="ref-hainmueller-mummolo-xu-2019" class="csl-entry" role="listitem">
+Hainmueller, Jens, Jonathan Mummolo, and Yiqing Xu. 2019. <span>“How Much Should We Trust Estimates from Multiplicative Interaction Models? Noticeable Errors and Simple Remedies.”</span> <em>Comparative Political Studies</em> 27: 163–92. doi:<a href="https://doi.org/10.1017/pan.2018.46">10.1017/pan.2018.46</a>.
+</div>
+<div id="ref-hovland-1959" class="csl-entry" role="listitem">
+Hovland, Carl. I. 1959. <span>“Reconciling Conflicting Results Derived from Experimental and Survey Studies of Attitude Change.”</span> <em>American Psychologist</em> 14: 8–17. doi:<a href="https://doi.org/10.1037/h0042210">10.1037/h0042210</a>.
+</div>
+<div id="ref-hyde-2015" class="csl-entry" role="listitem">
+Hyde, Susan D. 2015. <span>“Experiments in International Relations: Lab, Survey, and Field.”</span> <em>Annual Review of Political Science</em> 18: 403–24. doi:<a href="https://doi.org/10.1146/annurev-polisci-020614-094854">10.1146/annurev-polisci-020614-094854</a>.
+</div>
+<div id="ref-jawadekar-et-al-2023" class="csl-entry" role="listitem">
+Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone amd Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. <span>“Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects.”</span> <em>American Journal of Epidemiology</em> 192: 1155–65. doi:<a href="https://doi.org/10.1093/aje/kwad043">10.1093/aje/kwad043</a>.
+</div>
+<div id="ref-kunzel-et-al-2019" class="csl-entry" role="listitem">
+Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. <span>“Metalearners for Estimating Heterogeneous Treatment Effects Using Machine Learning.”</span> <em>Proceedings of the National Academy of Sciences of the United States of America</em> 116: 4156–65. doi:<a href="https://doi.org/10.1073/pnas.1804597116">10.1073/pnas.1804597116</a>.
+</div>
+<div id="ref-song-hata-2020" class="csl-entry" role="listitem">
+Song, Jaehyun, and 秦. 2020. <span>“オンライン・サーベイ実験の方法：理論編.”</span> <em>理論と方法</em> 35: 92–108. doi:<a href="https://doi.org/10.11218/ojjams.35.92">10.11218/ojjams.35.92</a>.
+</div>
+<div id="ref-wager-athey-2018" class="csl-entry" role="listitem">
+Wager, Stefan, and Susan Athey. 2018. <span>“Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.”</span> <em>Journal of the American Statistical Association</em> 113: 1228–42. doi:<a href="https://doi.org/10.1080/01621459.2017.1319839">10.1080/01621459.2017.1319839</a>.
+</div>
+<div id="ref-woon-jang-pronin-schiller-2023" class="csl-entry" role="listitem">
+Woon, Jonathan, Minsu Jang, Kira Pronin, and Jacob Schiller. 2023. <span>“Discussion and Fairness in a Laboratory Voting Experiment.”</span> <em>Journal of Experimental Political Science</em> 11: 224–36. doi:<a href="https://doi.org/10.1017/XPS.2023.29">10.1017/XPS.2023.29</a>.
+</div>
+<div id="ref-hata-song-2020" class="csl-entry" role="listitem">
+秦, and Jaehyun Song. 2020. <span>“オンライン・サーベイ実験の方法：実線編.”</span> <em>理論と方法</em> 35: 109–27. doi:<a href="https://doi.org/10.11218/ojjams.35.109">10.11218/ojjams.35.109</a>.
+</div>
+</div>
+
+
+</section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1758,12 +1767,12 @@
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "コピーしました");
+          button.setAttribute("title", "Copied!");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "コピーしました");
+            button.setAttribute("data-bs-title", "Copied!");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

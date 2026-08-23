@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -34,8 +34,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-aefbbce9ad3b483054a3d6900c97b6af.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-4ec3ce1acf7b3c31d0bc244927a189f6.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -156,14 +175,14 @@
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="figs/did/eVote1.jpg"></p>
+<figure><p><img data-src="figs/did/eVote1.jpg" height="400"></p>
 <figcaption>我々が考えている電子投票</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="figs/did/eVote2.jpg"></p>
-<figcaption>現在の電子投票</figcaption></figure>
+<figure><p><img data-src="figs/did/eVote2.jpg" height="400"></p>
+<figcaption>現実</figcaption></figure>
 </div>
 </div>
 </div>
@@ -245,11 +264,11 @@
 <tr class="odd">
 <td style="text-align: center;">統制（<span class="math inline">\(D_i = 0\)</span>）</td>
 <td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]\)</span></td>
-<td style="text-align: center;"><span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">処置（<span class="math inline">\(D_i = 1\)</span>）</td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></td>
+<td style="text-align: center;"><span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></span></td>
 <td style="text-align: center;"><span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span></td>
 </tr>
 </tbody>
@@ -257,12 +276,20 @@
 <p><span class="math display">\[
 \textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
 \]</span></p>
-<h4 id="群間比較cross-sectional-design">
-<strong>群間比較</strong>（Cross-sectional design）</h4>
+<h4 id="前後比較before-and-after-design">
+<strong>前後比較</strong>（Before-and-after design）</h4>
 <ul>
-<li>私たちにできる計算：<span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span> - <span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></span>
+<li>私たちにできる計算：<span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span> - <span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></span>
+<ul>
+<li>
+<span class="hl_red">2004年の東山区の投票率</span> - <span class="hl_blue">2000年の東山区の投票率</span>
 </li>
-<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]\)</span> = <span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span>
+</ul>
+</li>
+<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]\)</span> = <span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span>
+<ul>
+<li>2004年の北区の投票率 = 2000年の東山区の投票率</li>
+</ul>
 </li>
 </ul></section><section id="つの推定方法2" class="slide level2"><h2>2つの推定方法（2）</h2>
 <table class="caption-top">
@@ -280,11 +307,11 @@
 <tr class="odd">
 <td style="text-align: center;">統制（<span class="math inline">\(D_i = 0\)</span>）</td>
 <td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></td>
+<td style="text-align: center;"><span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">処置（<span class="math inline">\(D_i = 1\)</span>）</td>
-<td style="text-align: center;"><span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></td>
 <td style="text-align: center;"><span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span></td>
 </tr>
 </tbody>
@@ -292,12 +319,20 @@
 <p><span class="math display">\[
 \textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
 \]</span></p>
-<h4 id="前後比較before-and-after-design">
-<strong>前後比較</strong>（Before-and-after design）</h4>
+<h4 id="群間比較cross-sectional-design">
+<strong>群間比較</strong>（Cross-sectional design）</h4>
 <ul>
-<li>私たちにできる計算：<span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span> - <span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span></span>
+<li>私たちにできる計算：<span class="hl_red"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]\)</span></span> - <span class="hl_blue"><span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span></span>
+<ul>
+<li>
+<span class="hl_red">2004年の東山区の投票率</span> - <span class="hl_blue">2004年の北区の投票率</span>
 </li>
-<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]\)</span> = <span class="math inline">\(\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]\)</span>
+</ul>
+</li>
+<li>ATTが推定可能となる仮定：<span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]\)</span> = <span class="math inline">\(\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]\)</span>
+<ul>
+<li>電子投票を導入しなかった場合の2004年の東山区の投票率 = 2004年の北区の投票率</li>
+</ul>
 </li>
 </ul></section><section id="前後-群間比較" class="slide level2"><h2>前後 + 群間比較</h2>
 <ul>
@@ -366,7 +401,7 @@
 <li>ある時点における処置群と統制群の差異のみを分析（<span class="math inline">\(\times\)</span>）</li>
 </ul>
 </li>
-<li>推定量はATEでなく、<span class="strong">ATT</span>
+<li>推定量はATEでなく、主に<span class="strong">ATT</span>
 </li>
 <li>
 <span class="strong">パネルデータ</span>（panel data）が必要</li>
@@ -563,7 +598,7 @@
 <strong>2</strong> 仮定</h1>
 
 </section><section id="並行トレンドの仮定" class="slide level2"><h2>並行トレンドの仮定</h2>
-<p><span class="alert"><strong>平均トレンドの仮定</strong></span>（parallel trend assumption）</p>
+<p><span class="alert"><strong>平均トレンドの仮定</strong></span><span class="small">（parallel trend assumption）</span></p>
 <ul>
 <li>処置が行われなかった場合の潜在的な結果の傾向は、処置群と統制群の間で同じであること</li>
 <li>この仮定が満たされる場合、<span class="alert"><strong>統制群のトレンドを処置群の反事実として使える</strong></span>。</li>
@@ -572,10 +607,10 @@
 \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 1] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 1]}_{\textsf{(A)}} = \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 0] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 0]}_{\textsf{(B)}}
 \]</span></p>
 <ul>
-<li>（A）：処置群がもし処置を受けなかった場合の変化量（反事実）</li>
-<li>（B）：統制群における変化量（観察可能）</li>
+<li>（A）：処置群がもし処置を受けなかった場合の変化量（反事実 = 観察不可能）</li>
+<li>（B）：統制群における変化量（事実 = 観察可能）</li>
 <li>
-<span class="math inline">\(\Rightarrow\)</span> 「統制群の変化量」=「処置群が処置を受けなかった場合の潜在的結果」</li>
+<span class="math inline">\(\Rightarrow\)</span> 「統制群の変化量」=「処置群が処置を受けなかった場合の変化量」</li>
 </ul></section><section id="仮定が満たされる場合" class="slide level2"><h2>仮定が満たされる場合</h2>
 <ul>
 <li>処置を受けるまでは東山区と北区の投票率のトレンドが平行
@@ -597,7 +632,7 @@
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="可視化による確認" class="slide level2"><h2>可視化による確認</h2>
 <ul>
 <li>長期間であるほど、統制群の個体が多いほど確認しやすい</li>
-<li>人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠（<em>suggestive evidence</em>）に過ぎない</li>
+<li>人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠<span class="small">（<em>suggestive evidence</em>）</span>に過ぎない</li>
 <li>プラセボテストで並行トレンドの仮定が<span class="alert">満たされていない</span>ことは検知可能（後述）</li>
 </ul>
 
@@ -699,17 +734,17 @@ y_{it} = 48.7 + 6.2 (D_i \times P_t) - 3.1 D_{i} - 8.3 P_{t} + \varepsilon_{it}
 </div></div>
 </section><section id="did回帰の仕組み" class="slide level2"><h2>DID回帰の仕組み</h2>
 <p><span class="math display">\[
-\hat{y}_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t}
+\widehat{y}_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t}
 \]</span></p>
 <ul>
-<li>処置群の差分：<span class="math inline">\(\hat{y}_{it}(D_i = 1, P_t = 1) − \hat{y}_{it}(D_i = 1, P_t = 0)\)</span>
+<li>処置群の差分：<span class="math inline">\(\widehat{y}_{it}(D_i = 1, P_t = 1) − \widehat{y}_{it}(D_i = 1, P_t = 0)\)</span>
 <ul>
-<li><span class="math inline">\(\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\hat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\hat{y}_{it}(D_i = 1, P_t = 0)}\)</span></li>
+<li><span class="math inline">\(\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\widehat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\widehat{y}_{it}(D_i = 1, P_t = 0)}\)</span></li>
 </ul>
 </li>
-<li>統制群の差分：<span class="math inline">\(\hat{y}_{it}(D_i = 0, P_t = 1) − \hat{y}_{it}(D_0 = 0, P_t = 0)\)</span>
+<li>統制群の差分：<span class="math inline">\(\widehat{y}_{it}(D_i = 0, P_t = 1) − \widehat{y}_{it}(D_0 = 0, P_t = 0)\)</span>
 <ul>
-<li><span class="math inline">\(\gamma = \underbrace{(\alpha + \gamma)}_{\hat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\hat{y}_{it}(D_i = 0, P_t = 0)}\)</span></li>
+<li><span class="math inline">\(\gamma = \underbrace{(\alpha + \gamma)}_{\widehat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\widehat{y}_{it}(D_i = 0, P_t = 0)}\)</span></li>
 </ul>
 </li>
 <li>差分の差分：<span class="math inline">\(\delta = (\delta + \gamma) - (\gamma)\)</span>
@@ -734,13 +769,14 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \varepsilon_{it}
 </ul>
 </li>
 <li>
-<span class="math inline">\(\delta\)</span>：処置効果（ATT）
+<span class="math inline">\(\delta\)</span>：処置効果<span class="small">（ATT）</span>
 <ul>
 <li>全処置群において処置を受けるタイミングが同じ場合のみ</li>
 <li>処置のタイミングが異なる場合、<span class="math inline">\(\delta\)</span>はATEでも、ATTでもない</li>
 </ul>
 </li>
-<li>注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。</li>
+<li>注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される <span class="small"><span class="citation" data-cites="bertrand-et-al-2004">(<a href="#/参考文献" role="doc-biblioref" onclick="">Bertrand, Duflo, and Mullainathan 2004</a>)</span></span>
+</li>
 </ul></section><section id="系列相関と標準誤差" class="slide level2"><h2>系列相関と標準誤差</h2>
 <ul>
 <li>2期間より長いパネルデータを分析する場合、結果変数は個体内で強い相関を持つ
@@ -756,23 +792,35 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \varepsilon_{it}
 <li>一つ一つのの観測値が独立とは言えなくなる</li>
 </ul>
 </li>
-<li>似たような観測が多くなるため、有効なサンプルサイズ（Effective Sample Size[ESS]）は実際よりも小さい</li>
+<li>似たような観測が多くなるため、有効サンプルサイズ<span class="small">（effective sample size）</span>は実際よりも小さい</li>
 </ul>
 </li>
-<li>系列相関が存在する場合、従来の標準誤差（<code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>等）は過小評価される
+<li>系列相関が存在する場合、従来の標準誤差<span class="small">（<code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>等）</span>は過小評価される
 <ul>
 <li>
-<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>個体でクラスター化した頑健な標準誤差</strong></span>（cluster-robust standard error）</li>
-<li>その他）ブロック・ブートストラップ / データを処置前後の2期に集約</li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="alert"><strong>個体でクラスター化した頑健な標準誤差</strong></span><span class="small">（cluster-robust standard error）</span>
+</li>
+<li>その他の方法）ブロック・ブートストラップ / データを処置前後の2期に集約</li>
 </ul>
 </li>
-</ul>
-
-<aside><div>
-<p>参考）Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “<a href="https://doi.org/10.1162/003355304772839588">How Much Should We Trust Differences-in-Differences Estimates?</a>” <em>The Quarterly Journal of Economics,</em> 119 (1): 249–275.</p>
-</div></aside></section><section id="系列相関の例" class="slide level2"><h2>系列相関の例</h2>
-
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1950"></section><section id="その他のモデル" class="slide level2"><h2>その他のモデル</h2>
+</ul></section><section id="系列相関の例" class="slide level2"><h2>系列相関の例</h2>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-13-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section><section id="その他のモデル" class="slide level2"><h2>その他のモデル</h2>
 <ul>
 <li>トレンド変数を含むモデル</li>
 </ul>
@@ -785,6 +833,12 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\gamma_
 <p><span class="math display">\[
 y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_{it}} + \varepsilon_{it}
 \]</span></p>
+<ul>
+<li>トレンド変数と共変量を含むモデル</li>
+</ul>
+<p><span class="math display">\[
+y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\gamma_i t} + \textcolor{red}{\eta X_{it}} + \varepsilon_{it}
+\]</span></p>
 </section><section id="トレンド変数" class="slide level2"><h2>トレンド変数</h2>
 <p><span class="alert"><strong>トレンド変数と個体ダミー変数の交差項</strong></span>を投入</p>
 <ul>
@@ -795,23 +849,23 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="ivxtlznbsv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ivxtlznbsv table {
+<div id="vbijjqhank" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vbijjqhank table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ivxtlznbsv thead, #ivxtlznbsv tbody, #ivxtlznbsv tfoot, #ivxtlznbsv tr, #ivxtlznbsv td, #ivxtlznbsv th {
+#vbijjqhank thead, #vbijjqhank tbody, #vbijjqhank tfoot, #vbijjqhank tr, #vbijjqhank td, #vbijjqhank th {
   border-style: none;
 }
 
-#ivxtlznbsv p {
+#vbijjqhank p {
   margin: 0;
   padding: 0;
 }
 
-#ivxtlznbsv .gt_table {
+#vbijjqhank .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -837,12 +891,12 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-left-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_caption {
+#vbijjqhank .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ivxtlznbsv .gt_title {
+#vbijjqhank .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -854,7 +908,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-width: 0;
 }
 
-#ivxtlznbsv .gt_subtitle {
+#vbijjqhank .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -866,7 +920,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-width: 0;
 }
 
-#ivxtlznbsv .gt_heading {
+#vbijjqhank .gt_heading {
   background-color: rgba(255, 255, 255, 0);
   text-align: center;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -878,13 +932,13 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_bottom_border {
+#vbijjqhank .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_col_headings {
+#vbijjqhank .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -899,7 +953,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_col_heading {
+#vbijjqhank .gt_col_heading {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -919,7 +973,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#ivxtlznbsv .gt_column_spanner_outer {
+#vbijjqhank .gt_column_spanner_outer {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -931,15 +985,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 4px;
 }
 
-#ivxtlznbsv .gt_column_spanner_outer:first-child {
+#vbijjqhank .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ivxtlznbsv .gt_column_spanner_outer:last-child {
+#vbijjqhank .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ivxtlznbsv .gt_column_spanner {
+#vbijjqhank .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -951,11 +1005,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   width: 100%;
 }
 
-#ivxtlznbsv .gt_spanner_row {
+#vbijjqhank .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ivxtlznbsv .gt_group_heading {
+#vbijjqhank .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -981,7 +1035,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   text-align: left;
 }
 
-#ivxtlznbsv .gt_empty_group_heading {
+#vbijjqhank .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
@@ -996,15 +1050,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: middle;
 }
 
-#ivxtlznbsv .gt_from_md > :first-child {
+#vbijjqhank .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ivxtlznbsv .gt_from_md > :last-child {
+#vbijjqhank .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ivxtlznbsv .gt_row {
+#vbijjqhank .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1023,7 +1077,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   overflow-x: hidden;
 }
 
-#ivxtlznbsv .gt_stub {
+#vbijjqhank .gt_stub {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1036,7 +1090,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#ivxtlznbsv .gt_stub_row_group {
+#vbijjqhank .gt_stub_row_group {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -1050,15 +1104,15 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   vertical-align: top;
 }
 
-#ivxtlznbsv .gt_row_group_first td {
+#vbijjqhank .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ivxtlznbsv .gt_row_group_first th {
+#vbijjqhank .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ivxtlznbsv .gt_summary_row {
+#vbijjqhank .gt_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -1068,16 +1122,16 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#ivxtlznbsv .gt_first_summary_row {
+#vbijjqhank .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_first_summary_row.thick {
+#vbijjqhank .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ivxtlznbsv .gt_last_summary_row {
+#vbijjqhank .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1087,7 +1141,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_grand_summary_row {
+#vbijjqhank .gt_grand_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -1097,7 +1151,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#ivxtlznbsv .gt_first_grand_summary_row {
+#vbijjqhank .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1107,7 +1161,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-top-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_last_grand_summary_row_top {
+#vbijjqhank .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1117,11 +1171,11 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_striped {
+#vbijjqhank .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ivxtlznbsv .gt_table_body {
+#vbijjqhank .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1130,7 +1184,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-bottom-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_footnotes {
+#vbijjqhank .gt_footnotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -1144,7 +1198,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_footnote {
+#vbijjqhank .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1153,7 +1207,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#ivxtlznbsv .gt_sourcenotes {
+#vbijjqhank .gt_sourcenotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -1167,7 +1221,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   border-right-color: #D3D3D3;
 }
 
-#ivxtlznbsv .gt_sourcenote {
+#vbijjqhank .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1175,72 +1229,72 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
   padding-right: 5px;
 }
 
-#ivxtlznbsv .gt_left {
+#vbijjqhank .gt_left {
   text-align: left;
 }
 
-#ivxtlznbsv .gt_center {
+#vbijjqhank .gt_center {
   text-align: center;
 }
 
-#ivxtlznbsv .gt_right {
+#vbijjqhank .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ivxtlznbsv .gt_font_normal {
+#vbijjqhank .gt_font_normal {
   font-weight: normal;
 }
 
-#ivxtlznbsv .gt_font_bold {
+#vbijjqhank .gt_font_bold {
   font-weight: bold;
 }
 
-#ivxtlznbsv .gt_font_italic {
+#vbijjqhank .gt_font_italic {
   font-style: italic;
 }
 
-#ivxtlznbsv .gt_super {
+#vbijjqhank .gt_super {
   font-size: 65%;
 }
 
-#ivxtlznbsv .gt_footnote_marks {
+#vbijjqhank .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ivxtlznbsv .gt_asterisk {
+#vbijjqhank .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ivxtlznbsv .gt_indent_1 {
+#vbijjqhank .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ivxtlznbsv .gt_indent_2 {
+#vbijjqhank .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ivxtlznbsv .gt_indent_3 {
+#vbijjqhank .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ivxtlznbsv .gt_indent_4 {
+#vbijjqhank .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ivxtlznbsv .gt_indent_5 {
+#vbijjqhank .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ivxtlznbsv .katex-display {
+#vbijjqhank .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ivxtlznbsv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vbijjqhank div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1419,7 +1473,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="共変量の投入" class="slide level2"><h2>共変量の投入</h2>
 <ul>
-<li>時間と共に変化する交絡要因（time-varying confounder）の投入
+<li>時間と共に変化する交絡要因<span class="small">（time-varying confounder）</span>の投入
 <ul>
 <li>適切な共変量を投入すると<span class="alert"><strong>条件付き</strong>並行トレンドの仮定</span>が成立</li>
 </ul>
@@ -1432,7 +1486,8 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 
 </section><section id="パネルデータの確認" class="slide level2"><h2>パネルデータの確認</h2>
 <ul>
-<li>個体 <span class="math inline">\(\times\)</span> 時間 <span class="math inline">\(\times\)</span> 処置有無の可視化（以下は{panelView}パッケージを使用した例）</li>
+<li>個体 <span class="math inline">\(\times\)</span> 時間 <span class="math inline">\(\times\)</span> 処置有無の可視化<span class="small">（以下は{panelView}パッケージを使用した例）</span>
+</li>
 </ul>
 
 <img data-src="did_slide_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="推定-1" class="slide level2"><h2>推定</h2>
@@ -1458,21 +1513,18 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <li>トレンド変数や共変量の係数は付録などに</li>
 </ul>
 </li>
-</ul></section><section id="garcía-montoya-et-al.-2022" class="slide level2"><h2>García-Montoya <em>et al.</em> (2022)</h2>
+</ul></section><section id="処置効果の可視化の例" class="slide level2"><h2>処置効果の可視化の例</h2>
+<ul>
+<li>
+<span class="citation" data-cites="garcia-montoya-et-al-2022">García-Montoya, Arjona, and Lacombe (<a href="#/参考文献" role="doc-biblioref" onclick="">2022</a>)</span> の例
 <ul>
 <li>3種類の処置変数 <span class="math inline">\(\times\)</span> 4つのモデル <!-- Neighborは隣のcountyでshootingがあったかを表す -->
 </li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="figs/did/García-Montoya_et_al_2022.png" class="quarto-figure quarto-figure-center" width="800"></p>
-</figure>
-</div>
-
-<aside><div>
-<ul>
-<li>García-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. “<a href="https://doi.org/10.1017/S0003055421001179">Violence and Voting in the United States: How School Shootings Affect Elections</a>.” <em>American Political Science Review,</em> 116(3): 807–826.</li>
+</li>
 </ul>
-</div></aside></section><section id="イベントスタディ" class="slide level2"><h2>イベント・スタディ</h2>
+
+<img data-src="figs/did/García-Montoya_et_al_2022.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section><section id="イベントスタディ" class="slide level2"><h2>イベント・スタディ</h2>
 <p>特定のできごと<span class="small">（政策の導入、法改正、災害など）</span>が起きた（または直前の）タイミングを基準とし、その「前」と「後」の各時点における効果の動的な変化を追跡・可視化する分析手法</p>
 <ul>
 <li>
@@ -1482,9 +1534,9 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 </ul>
 <ol type="1">
 <li>
-<strong>Step 1</strong>：処置群が各時点において処置を受けたとするダミー変数を作成
+<strong>Step 1</strong>：処置群が各時点において処置を受けたとするダミー変数を作成 <a href="#/sec-event-study-data"><span class="button">例</span></a>
 <ul>
-<li>統制群の場合、すべて0（次頁）</li>
+<li>統制群の場合、すべて0</li>
 </ul>
 </li>
 <li>
@@ -1501,7 +1553,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <em>t</em> = 2がベースラインであるため、<strong><em>D</em></strong><sub>2</sub>はモデルに投入しない</li>
 </ul>
 </li>
-</ol></section><section id="イベントスタディのイメージデータ" class="slide level2"><h2>イベント・スタディのイメージ（データ）</h2>
+</ol></section><section id="sec-event-study-data" class="slide level2"><h2>イベント・スタディのためのデータ</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <table class="caption-top">
@@ -1708,7 +1760,7 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 </tbody>
 </table>
 </div></div>
-</section><section id="イベントスタディのイメージ可視化" class="slide level2 nostretch"><h2>イベント・スタディのイメージ（可視化）</h2>
+</section><section id="イベントスタディの可視化" class="slide level2"><h2>イベント・スタディの可視化</h2>
 <p>2000年をベースライン（<span class="math inline">\(\widehat{\sf{ATT}}\)</span> = 0）にしたイベント・スタディ</p>
 <ul>
 <li>ベースライン以前の処置効果の推定値が0であることが理想</li>
@@ -1717,31 +1769,26 @@ y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_
 <p><span class="math display">\[
 y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D_{\sf{1996}, it} + \delta D_{\sf{2004}, it} + \delta D_{\sf{2008}, it} + \gamma_i + \lambda_t + \varepsilon_{it}
 \]</span></p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="1000"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="プラセボテスト" class="slide level2"><h2>プラセボテスト</h2>
+
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1000"></section><section id="プラセボテスト" class="slide level2"><h2>プラセボテスト</h2>
 <p>並行トレンドの仮定が<span class="strong">満たされていない</span>ことは確認するための検定<sup>1</sup></p>
 <ul>
-<li><p>タイミングをずらす：本来は何もないはずの時期に効果が見られないか</p></li>
-<li><p>対象をずらす：本来は影響がないはずのグループに効果が見られないか</p></li>
-<li><p><i class="bi bi-emoji-sunglasses"></i>客観的な数値<span class="small">（係数や <em>p</em> 値）</span>で仮定の妥当性を示すことが可能</p></li>
-<li><p><i class="bi bi-emoji-tear"></i><span class="math inline">\(n\)</span>が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性</p></li>
-<li><p><i class="bi bi-emoji-tear"></i>逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性</p></li>
-</ul>
-
-<aside><div>
+<li>プラセボのタイプ <span class="small"><span class="citation" data-cites="gruber-hungerman-2008">(<a href="#/参考文献" role="doc-biblioref" onclick="">Gruber and Hungerman 2008</a>)</span></span>
 <ul>
-<li>Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. “How Much Should We Trust Differences-in-Differences Estimates?” <em>The Quarterly Journal of Economics,</em> 119 (1) pp.&nbsp;249-275.</li>
-<li>Gruber, Jonathan and Daniel M. Hungerman. 2008. “The Effect of the Blue Laws on Religious and Secular Activity” <em>The Quarterly Journal of Economics,</em> 123 (2) pp.&nbsp;711-744.</li>
-<li>Card, David, Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania” <em>The American Economic Review,</em> 84 (4) pp.&nbsp;772-793.</li>
+<li>タイミングをずらす：処置前の時期に効果が見られないか</li>
+<li>対象をずらす：本来は影響がないはずのグループに効果が見られないか</li>
+<li>タイミングと対象を組み合わせ</li>
 </ul>
-</div><ol class="aside-footnotes"><li id="fn2"><p>並行トレンドの仮定の確認以外にも、処置以外の未観測ショックの影響や推定結果が単なる確率的な偶然ではないと示すためにも使われる。</p></li></ol></aside></section><section id="時間のプラセボテスト" class="slide level2"><h2>時間のプラセボテスト</h2>
+</li>
+<li>プラセボテストの回数
+<ul>
+<li>1回：任意のプラセボで実施</li>
+<li>複数回：様々なプラセボを作成し、実施 <span class="small"><span class="citation" data-cites="bertrand-et-al-2004">(<a href="#/参考文献" role="doc-biblioref" onclick="">Bertrand, Duflo, and Mullainathan 2004</a>)</span></span>
+</li>
+</ul>
+</li>
+<li>因果推論におけるプラセボテスト全般に関しては <span class="citation" data-cites="eggers-et-al-2024">Eggers, Tuñón, and Dafoe (<a href="#/参考文献" role="doc-biblioref" onclick="">2024</a>)</span> を参照</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn2"><p>並行トレンドの仮定の確認以外にも、処置以外の未観測ショックの影響や推定結果が単なる確率的な偶然ではないと示すためにも使われる。</p></li></ol></aside></section><section id="時間のプラセボテスト" class="slide level2"><h2>時間のプラセボテスト</h2>
 <ol type="1">
 <li>
 <strong>Step1</strong>：処置前のデータのみ抽出する</li>
@@ -1762,42 +1809,42 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_fp99cvmjzdbkr5dc178x = TinyTable.createTableFunctions("tinytable_fp99cvmjzdbkr5dc178x");
+      const tableFns_gl5xrgym57q16sol10lr = TinyTable.createTableFunctions("tinytable_gl5xrgym57q16sol10lr");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_y410garlzbef5wwur1h7',}, 
-          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_vsvxgsj4pzv5fiydsm3y',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_8r39efnfby8hlrw8y9vp',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_v778la44wbgvp4ncvtnt',}, 
-          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_nqvhb0bjz7a2jsmxljmp',}, 
-          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_q310x1ckz2094ka2gdv9',}, 
-          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_z81lwfypa6ptaah2vw25',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_1j92nz7giraz6j416er8',}, 
+          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_mvuiqrbecqik6xc61ol5',}, 
+          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_hy0r8983ij9b3e449vvg',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_sjwgw771aayo1z8ub98h',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_564pncz5sc387o68v2kb',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_qfi1auc2ukfq0ooseq9r',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_hfyachdavng2i6u2r58a',}, 
+          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_8lglln268vrlzsrmqx17',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_omrm18pg78dzin3w8qo0',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_fp99cvmjzdbkr5dc178x.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_gl5xrgym57q16sol10lr.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_y410garlzbef5wwur1h7, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_y410garlzbef5wwur1h7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_vsvxgsj4pzv5fiydsm3y, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_vsvxgsj4pzv5fiydsm3y { text-align: center }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_8r39efnfby8hlrw8y9vp, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_8r39efnfby8hlrw8y9vp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_v778la44wbgvp4ncvtnt, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_v778la44wbgvp4ncvtnt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_nqvhb0bjz7a2jsmxljmp, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_nqvhb0bjz7a2jsmxljmp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_q310x1ckz2094ka2gdv9, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_q310x1ckz2094ka2gdv9 { text-align: left }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_z81lwfypa6ptaah2vw25, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_z81lwfypa6ptaah2vw25 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_fp99cvmjzdbkr5dc178x td.tinytable_css_1j92nz7giraz6j416er8, #tinytable_fp99cvmjzdbkr5dc178x th.tinytable_css_1j92nz7giraz6j416er8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_mvuiqrbecqik6xc61ol5, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_mvuiqrbecqik6xc61ol5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_hy0r8983ij9b3e449vvg, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_hy0r8983ij9b3e449vvg { text-align: center }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_sjwgw771aayo1z8ub98h, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_sjwgw771aayo1z8ub98h {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_564pncz5sc387o68v2kb, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_564pncz5sc387o68v2kb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_qfi1auc2ukfq0ooseq9r, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_qfi1auc2ukfq0ooseq9r {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_hfyachdavng2i6u2r58a, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_hfyachdavng2i6u2r58a { text-align: left }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_8lglln268vrlzsrmqx17, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_8lglln268vrlzsrmqx17 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gl5xrgym57q16sol10lr td.tinytable_css_omrm18pg78dzin3w8qo0, #tinytable_gl5xrgym57q16sol10lr th.tinytable_css_omrm18pg78dzin3w8qo0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_fp99cvmjzdbkr5dc178x" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_gl5xrgym57q16sol10lr" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
                 <th scope="col" data-row="0" data-col="2">通常のデータ</th>
@@ -1855,42 +1902,42 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_zm2a6p327l4hb1s992mf = TinyTable.createTableFunctions("tinytable_zm2a6p327l4hb1s992mf");
+      const tableFns_hwvg98u2xbkndfjn414b = TinyTable.createTableFunctions("tinytable_hwvg98u2xbkndfjn414b");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_htn5tt8p3pc7fnxnu0i6',}, 
-          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_31vdqqkejqerx1tr2v7p',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_5lptdh8kpd4mks2e2lu3',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_mp65djj9ok2dicif0cwz',}, 
-          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_kjuur14xbhx7fv7tw2mb',}, 
-          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_9eswq3sh2dw5c7uosdzb',}, 
-          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_5dtu1k1t3xlel6i5adyn',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_wcmevjlx94meudt697bb',}, 
+          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_72jko2lwi6vex5l57qit',}, 
+          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_jg1s5prea2xdd9ol72r9',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_2bziyln07dtxfb8ra43p',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_jlpb36koux012a196rfh',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_pva7k9sm9qdxhyq0w0qo',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_s8dsg70kcgmtr3uinwr8',}, 
+          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_7a72u4dms5l4mugzil07',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_zxgcbavp7qaedylyfig2',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_zm2a6p327l4hb1s992mf.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_hwvg98u2xbkndfjn414b.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_htn5tt8p3pc7fnxnu0i6, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_htn5tt8p3pc7fnxnu0i6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_31vdqqkejqerx1tr2v7p, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_31vdqqkejqerx1tr2v7p { text-align: center }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_5lptdh8kpd4mks2e2lu3, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_5lptdh8kpd4mks2e2lu3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_mp65djj9ok2dicif0cwz, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_mp65djj9ok2dicif0cwz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_kjuur14xbhx7fv7tw2mb, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_kjuur14xbhx7fv7tw2mb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_9eswq3sh2dw5c7uosdzb, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_9eswq3sh2dw5c7uosdzb { text-align: left }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_5dtu1k1t3xlel6i5adyn, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_5dtu1k1t3xlel6i5adyn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_zm2a6p327l4hb1s992mf td.tinytable_css_wcmevjlx94meudt697bb, #tinytable_zm2a6p327l4hb1s992mf th.tinytable_css_wcmevjlx94meudt697bb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_72jko2lwi6vex5l57qit, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_72jko2lwi6vex5l57qit {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_jg1s5prea2xdd9ol72r9, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_jg1s5prea2xdd9ol72r9 { text-align: center }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_2bziyln07dtxfb8ra43p, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_2bziyln07dtxfb8ra43p {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_jlpb36koux012a196rfh, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_jlpb36koux012a196rfh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_pva7k9sm9qdxhyq0w0qo, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_pva7k9sm9qdxhyq0w0qo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_s8dsg70kcgmtr3uinwr8, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_s8dsg70kcgmtr3uinwr8 { text-align: left }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_7a72u4dms5l4mugzil07, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_7a72u4dms5l4mugzil07 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hwvg98u2xbkndfjn414b td.tinytable_css_zxgcbavp7qaedylyfig2, #tinytable_hwvg98u2xbkndfjn414b th.tinytable_css_zxgcbavp7qaedylyfig2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_zm2a6p327l4hb1s992mf" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_hwvg98u2xbkndfjn414b" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
                 <th scope="col" data-row="0" data-col="2">通常のデータ</th>
@@ -1924,6 +1971,96 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
+</section><section id="タイミング-times-対象のプラセボテスト" class="slide level2"><h2>タイミング <span class="math inline">\(\times\)</span> 対象のプラセボテスト</h2>
+<ol type="1">
+<li>
+<strong>Step1</strong>：実際の処置群をデータから除外し、処置前のデータのみ抽出する</li>
+<li>
+<strong>Step2</strong>：任意の対象が任意の時期に処置が行われたと仮定し、再コーディングする
+<ul>
+<li>例）<strong>北区が2000年</strong>に電子投票を導入したかのように修正する（実際は東山区 <span class="math inline">\(\times\)</span> 2004年）</li>
+</ul>
+</li>
+<li>
+<strong>Step3</strong>：DID推定</li>
+<li>
+<strong>Step4</strong>：処置効果が統計的有意に0でない場合、並行トレンドが満たされていないと判断</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_h9rutj9sjqcrxrhriu4p = TinyTable.createTableFunctions("tinytable_h9rutj9sjqcrxrhriu4p");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 } ], css_id: 'tinytable_css_iktw4r17ti1ku6y85l65',}, 
+          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '2', j: 3 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_lph5ix8v37xyvqnay0ok',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '1', j: 3 } ], css_id: 'tinytable_css_bstlo9jmjez2lsqyc5o6',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_agnqat5xr6epx9bldms9',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_fe4jxw9bhp270lkbj68n',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_w148j7pqxb0kcpc0ho84',}, 
+          { positions: [ { i: '1', j: 1 } ], css_id: 'tinytable_css_dhz1ybvr85xn6hcdblgp',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ace7yzimztcsuhys1ubt',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_h9rutj9sjqcrxrhriu4p.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_iktw4r17ti1ku6y85l65, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_iktw4r17ti1ku6y85l65 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_lph5ix8v37xyvqnay0ok, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_lph5ix8v37xyvqnay0ok { text-align: center }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_bstlo9jmjez2lsqyc5o6, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_bstlo9jmjez2lsqyc5o6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_agnqat5xr6epx9bldms9, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_agnqat5xr6epx9bldms9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_fe4jxw9bhp270lkbj68n, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_fe4jxw9bhp270lkbj68n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_w148j7pqxb0kcpc0ho84, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_w148j7pqxb0kcpc0ho84 { text-align: left }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_dhz1ybvr85xn6hcdblgp, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_dhz1ybvr85xn6hcdblgp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_h9rutj9sjqcrxrhriu4p td.tinytable_css_ace7yzimztcsuhys1ubt, #tinytable_h9rutj9sjqcrxrhriu4p th.tinytable_css_ace7yzimztcsuhys1ubt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+<div class="container">
+      <table class="tinytable" id="tinytable_h9rutj9sjqcrxrhriu4p" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">通常のデータ</th>
+                <th scope="col" data-row="0" data-col="3">プラセボ</th>
+              </tr></thead>
+<tfoot><tr><td colspan="3">注：カッコ内は標準誤差</td></tr></tfoot>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">eVote</td>
+                  <td data-row="1" data-col="2">0.046(0.010)***</td>
+                  <td data-row="1" data-col="3">-0.003(0.011)</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">Num.Obs.</td>
+                  <td data-row="2" data-col="2">50</td>
+                  <td data-row="2" data-col="3">36</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">区固定効果</td>
+                  <td data-row="3" data-col="2">Yes</td>
+                  <td data-row="3" data-col="3">Yes</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">年固定効果</td>
+                  <td data-row="4" data-col="2">Yes</td>
+                  <td data-row="4" data-col="3">Yes</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
 </section><section id="処置の段階的導入staggered-adoption" class="slide level2"><h2>処置の段階的導入（Staggered Adoption）<!--- スタガードなデータへの対処 --->
 </h2>
 <ul>
@@ -1933,27 +2070,19 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 </li>
 </ul>
 </li>
-<li>この状況下における伝統的なTWFEの推定値は<strong>深刻なバイアス</strong>を含む<span class="small">（Goodman-Bacon 2021）</span>
+<li>この状況下における伝統的なTWFEの推定値は<strong>深刻なバイアス</strong>を含む <span class="small"><span class="citation" data-cites="goodman-bacon-2021">(<a href="#/参考文献" role="doc-biblioref" onclick="">Goodman-Bacon 2021</a>)</span></span>
 <ul>
 <li>この場合、TWFEの推定値はATEでも、ATTでもない</li>
 </ul>
 </li>
 <li>段階的導入への対処
 <ul>
-<li>Sun &amp; Abraham補正<span class="small">（Sun and Abraham 2021）</span>
+<li>Sun &amp; Abraham補正 <span class="small"><span class="citation" data-cites="sun-abraham-2021">(<a href="#/参考文献" role="doc-biblioref" onclick="">Sun and Abraham 2021</a>)</span></span>
 </li>
-<li>反事実予測アプローチ<span class="small">（Liu <em>et al.</em> 2024）</span><sup>1</sup>など</li>
+<li>反事実予測アプローチ <span class="small"><span class="citation" data-cites="liu-wang-xu-2024">(<a href="#/参考文献" role="doc-biblioref" onclick="">Liu, Wang, and Xu 2024</a>)</span></span><sup>1</sup>など</li>
 </ul>
 </li>
-</ul>
-
-<aside><div>
-<ul>
-<li>Goodman-Bacon, Andrew. (2021). “<a href="https://doi.org/10.1016/j.jeconom.2021.03.014">Difference-in-differences with variation in treatment timing.</a>” <em>Journal of Econometrics</em>, 225(2), 254–277.</li>
-<li>Sun, L., &amp; Abraham, S. (2021). “Estimating dynamic treatment effects in event studies with heterogeneous treatment effects.” Journal of Econometrics, 225(2), 175–199.</li>
-<li>Liu, L., Wang, Y., &amp; Xu, Y. (2024). “A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science, 68(1), 160–176.</li>
-</ul>
-</div><ol class="aside-footnotes"><li id="fn3"><p>処置が0に戻るような逆転可能な処置（Reversible treatments / Switching treatments）でも使用可能</p></li></ol></aside></section><section id="段階的導入の例" class="slide level2"><h2>段階的導入の例</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>処置が0に戻るような反転可能な処置（reversible treatments / switching treatments）でも使用可能</p></li></ol></aside></section><section id="段階的導入の例" class="slide level2"><h2>段階的導入の例</h2>
 <ul>
 <li>例）女性参政権
 <ul>
@@ -1967,8 +2096,8 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 </li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section><section id="処置の反転の例" class="slide level2"><h2>処置の反転の例</h2>
-<p>処置の反転<span class="small">（Treatment Reversal）</span>：処置状態が0 <span class="math inline">\(\rightarrow\)</span> 1 <span class="math inline">\(\rightarrow\)</span> 0のように変化するケース</p>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section><section id="反転可能な処置の例" class="slide level2"><h2>反転可能な処置の例</h2>
+<p>処置の反転<span class="small">（treatment reversal）</span>：処置状態が0 <span class="math inline">\(\rightarrow\)</span> 1 <span class="math inline">\(\rightarrow\)</span> 0のように変化するケース</p>
 <ul>
 <li>例）京都府の電子投票：東山区（2004〜2012年）、上京区（2008〜2012年）
 <ul>
@@ -1977,42 +2106,36 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 </li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section></section><section><section id="番外編scm" class="title-slide slide level1 center"><h1>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3000"></section></section><section><section id="番外編scm" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 番外編：SCM</h1>
 
 </section><section id="合成コントロール法" class="slide level2"><h2>合成コントロール法</h2>
-<p><span class="alert"><strong>Synthetic Control Method</strong></span>（SCM）</p>
+<p><span class="strong"><strong>Synthetic Control Method</strong></span></p>
 <ul>
-<li>合成コントロール法、または合成制御法と訳される（SCMともよく呼ばれる）</li>
+<li>合成コントロール法、または合成制御法と訳される（<span class="strong">SCM</span>ともよく呼ばれる）</li>
 <li>統制群を合成することで処置群の潜在的結果を作り上げる手法
 <ul>
 <li>処置群と並行トレンドを満たす架空の統制群を作り上げる</li>
-<li>Abadie, Diamond, and Hainmueller（2010, 2015）によって提案され、Xu（2017）が一般化SCMを提案</li>
+<li>
+<span class="citation" data-cites="abadie-alexis-hainmueller-2010">Abadie, Diamond, and Hainmueller (<a href="#/参考文献" role="doc-biblioref" onclick="">2010</a>)</span> と <span class="citation" data-cites="abadie-alexis-hainmueller-2015">Abadie, Diamond, and Hainmueller (<a href="#/参考文献" role="doc-biblioref" onclick="">2015</a>)</span> によって提案され、 <span class="citation" data-cites="xu-2017">Xu (<a href="#/参考文献" role="doc-biblioref" onclick="">2017</a>)</span> が一般化SCM<span class="small">（generalized synthetic control method）</span>を提案</li>
 </ul>
 </li>
-</ul>
-
-<aside><div>
-<ul>
-<li>Abadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2010. “Synthetic control methods for comparative case studies: Estimating the effect of California’s tobacco control program.” <em>Journal of the American Statistical Association,</em> 105(490): 493–505.</li>
-<li>Abadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2015. “Comparative politics and the synthetic control method.” <em>American Journal of Political Science,</em> 59(2): 495–510.</li>
-<li>Xu, Yiqing. 2017. “Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models.” <em>Political Analysis</em>, 25 (1): 57–76.</li>
-</ul>
-</div></aside></section><section id="並行トレンドは" class="slide level2"><h2>並行トレンドは?</h2>
+<li>Rの{synth}および{fect}<sup>1</sup>パッケージで実装可能</li>
+</ul><aside><ol class="aside-footnotes"><li id="fn4"><p>{gsynth}というパッケージもあるが、今は{fect}と統合されている。2026年8月現在、CRANから入手可能な{gsynth}は{fect}のラッパー（wrapper）パッケージだ。</p></li></ol></aside></section><section id="並行トレンドは" class="slide level2"><h2>並行トレンドは?</h2>
 <ul>
 <li>どうみても平行トレンドの仮定が満たされているとは言い難い。</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-26-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
+<figure><p><img data-src="did_slide_files/figure-revealjs/unnamed-chunk-27-2.png" class="quarto-figure quarto-figure-center" width="1500"></p>
 </figure>
 </div>
 </div>
@@ -2023,7 +2146,7 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 <li>一つ一つの線は西ドイツと平行でないかも知れないが、重み付けで合成すれば西ドイツのトレンドを追従するトレンドが作れそう。</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="統制群と処置群" class="slide level2"><h2>統制群と処置群</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="統制群と処置群" class="slide level2"><h2>統制群と処置群</h2>
 
 <!---
 ## 統制群の合成
@@ -2038,16 +2161,16 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 :::
 
 --->
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="合成された架空の西ドイツ" class="slide level2"><h2>合成された架空の西ドイツ</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="合成された架空の西ドイツ" class="slide level2"><h2>合成された架空の西ドイツ</h2>
 <p>統一（1990年）までのトレンドが類似（しているように見える）</p>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="比較" class="slide level2"><h2>比較</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="比較" class="slide level2"><h2>比較</h2>
 <p>統一するまでのトレンドがほぼ一致</p>
 <ul>
 <li>架空の西ドイツは西ドイツの反事実（統一しなかった西ドイツ）として適切</li>
 </ul>
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="因果効果は" class="slide level2"><h2>因果効果は?</h2>
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center r-stretch" width="2100"></section><section id="因果効果は" class="slide level2"><h2>因果効果は?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -2649,9 +2772,42 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
 <li>各時点におけるATT</li>
 </ul>
 
+<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1500"></section><section id="参考文献" class="slide level2 smaller scrollable"><h2>参考文献</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abadie-alexis-hainmueller-2010" class="csl-entry" role="listitem">
+Abadie, Alberto, Alexis Diamond, and Jens Hainmueller. 2010. <span>“Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program.”</span> <em>Journal of the American Statistical Association</em> 105: 493–505. doi:<a href="https://doi.org/10.1198/jasa.2009.ap08746">10.1198/jasa.2009.ap08746</a>.
+</div>
+<div id="ref-abadie-alexis-hainmueller-2015" class="csl-entry" role="listitem">
+Abadie, Alberto, Alexis Diamond, and Jens Hainmueller. 2015. <span>“Comparative Politics and the Synthetic Control Method.”</span> <em>Journal of the American Statistical Association</em> 59: 495–510. doi:<a href="https://doi.org/10.1111/ajps.12116">10.1111/ajps.12116</a>.
+</div>
+<div id="ref-bertrand-et-al-2004" class="csl-entry" role="listitem">
+Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. <span>“How Much Should We Trust Differences-in-Differences Estimates?”</span> <em>The Quarterly Journal of Economics</em> 119: 249–75. doi:<a href="https://doi.org/10.1162/003355304772839588">10.1162/003355304772839588</a>.
+</div>
+<div id="ref-eggers-et-al-2024" class="csl-entry" role="listitem">
+Eggers, Andrew C., Guadalupe Tuñón, and Allan Dafoe. 2024. <span>“Placebo Tests for Causal Inference.”</span> <em>American Journal of Political Science</em> 68: 1106–21. doi:<a href="https://doi.org/10.1111/ajps.12818">10.1111/ajps.12818</a>.
+</div>
+<div id="ref-garcia-montoya-et-al-2022" class="csl-entry" role="listitem">
+García-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. <span>“Violence and Voting in the United States: How School Shootings Affect Elections.”</span> <em>American Political Science Review</em> 116: 807–26. doi:<a href="https://doi.org/10.1017/S0003055421001179">10.1017/S0003055421001179</a>.
+</div>
+<div id="ref-goodman-bacon-2021" class="csl-entry" role="listitem">
+Goodman-Bacon, Andrew. 2021. <span>“Difference-in-Differences with Variation in Treatment Timing.”</span> <em>Journal of Econometrics</em> 225: 254–77. doi:<a href="https://doi.org/10.1016/j.jeconom.2021.03.014">10.1016/j.jeconom.2021.03.014</a>.
+</div>
+<div id="ref-gruber-hungerman-2008" class="csl-entry" role="listitem">
+Gruber, Jonathan, and Daniel M. Hungerman. 2008. <span>“The Church Versus the Mall: What Happens When Religion Faces Increased Secular Competition?”</span> <em>The Quarterly Journal of Economics</em> 123: 831–62. doi:<a href="https://doi.org/10.1162/qjec.2008.123.2.831">10.1162/qjec.2008.123.2.831</a>.
+</div>
+<div id="ref-liu-wang-xu-2024" class="csl-entry" role="listitem">
+Liu, Licheng, Ye Wang, and Yiging Xu. 2024. <span>“A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.”</span> <em>American Journal of Political Science</em> 68: 160–76. doi:<a href="https://doi.org/10.1111/ajps.12723">10.1111/ajps.12723</a>.
+</div>
+<div id="ref-sun-abraham-2021" class="csl-entry" role="listitem">
+Sun, Liyang, and Sarah Abraham. 2021. <span>“Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects.”</span> <em>Journal of Econometrics</em> 225: 175–99. doi:<a href="https://doi.org/10.1016/j.jeconom.2020.09.006">10.1016/j.jeconom.2020.09.006</a>.
+</div>
+<div id="ref-xu-2017" class="csl-entry" role="listitem">
+Xu, Yiqing. 2017. <span>“Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models.”</span> <em>Political Analysis</em> 25: 57–76. doi:<a href="https://doi.org/10.1017/pan.2016.2">10.1017/pan.2016.2</a>.
+</div>
+</div>
 
 
-<img data-src="did_slide_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1500"></section></section>
+</section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -2907,12 +3063,12 @@ y_{it} = \alpha + \delta D_{\sf{1989}, it} + \delta D_{\sf{1993}, it} + \delta D
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "コピーしました");
+          button.setAttribute("title", "Copied!");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "コピーしました");
+            button.setAttribute("data-bs-title", "Copied!");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

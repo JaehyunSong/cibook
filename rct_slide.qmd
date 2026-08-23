@@ -693,7 +693,7 @@ ggplot() +
 
 ## 実験の種類
 
-Hyde[（2015）]{.small}による分類
+@hyde-2015 による分類
 
 - **フィールド**実験[（field experiment）]{.small}
 - **実験室**実験[（laboratory experiment）]{.small}
@@ -706,10 +706,6 @@ Hyde[（2015）]{.small}による分類
 |実験室実験|高|低〜中|低〜高|高|大学生など|
 |フィールド実験|低〜中|高|高|中|一般市民など|
 |サーベイ実験|中〜高|中|中〜高|中|全国・国際的|
-
-:::: {.aside}
-- Hyde, Susan D.. 2015. "[Experiments in International Relations: Lab, Survey, and Field](https://doi.org/10.1146/annurev-polisci-020614-094854)." *Annual Review of Political Science,* 18: 403-424.
-::::
 
 ## フィールド実験[（field experiment）]{.small}
 
@@ -735,7 +731,7 @@ Hyde[（2015）]{.small}による分類
 
 ## フィールド実験の例
 
-- 問い：啓発メッセージは投票参加を促すか[（Gerber, Green, and Larimer 2008）]{.small}
+- 問い：啓発メッセージは投票参加を促すか[[@gerber-green-larimer-2008; @gerber-green-2012]]{.small}
 - 統制群：処置なし
 - 処置群：[投票参加を促すメッセージが記載されたハガキ]{.alert}を発送
 - メッセージの処置効果 = 処置群の投票率 - 統制群の投票率
@@ -776,10 +772,6 @@ tibble(x = c(6:11, 6:11,
   theme_void()
 ```
 
-:::: {.aside}
-- Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. "[Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment](https://doi.org/10.1017/S000305540808009X)." *American Political Science Review* 102(1): 33–48.
-- Gerber, Alan S. and Donald P. Green. 2012. [*Field Experiments*](https://www.amazon.co.jp/dp/0393979954/), Norton.
-::::
 
 ## 実験室実験[（labotary experiment）]{.small}
 
@@ -803,11 +795,11 @@ tibble(x = c(6:11, 6:11,
 :::
 ::::
 
-> *College sophomores may not be people*（Hovland 1959）^[Hovland, Carl. I. 1959. "[Reconciling conflicting results derived from experimental and survey studies of attitude change](https://doi.org/10.1037/h0042210)." *American Psychologist,* 14(1): 8-17.]
+> *College sophomores may not be people* [[@hovland-1959]]{.small}
 
 ## 実験室実験の例
 
-- 問い：討議は少数派への配慮が強めるか
+- 問い：討議は少数派への配慮が強めるか [[@woon-jang-pronin-schiller-2023]]{.small}
 - **Step 1：**全員を対象に不公平に対する嫌悪感[（inequity aversion）]{.small}を測定
 - **Step 2：**公平な配分案 vs. 多数派優遇の不公平配分案の投票
    - 処置群のみ[グループ内のコミュニケーション（議論）]{.alert}を許可
@@ -815,7 +807,7 @@ tibble(x = c(6:11, 6:11,
 - 議論の因果効果 = 公平な配分案に対する「処置群の支持 - 統制群の支持」
 
 ```{r}
-#| fig-width: 15
+#| fig-width: 13
 #| fig-height: 2.5
 ggplot() +
   geom_circle(aes(x0 = -3, y0 =  0, r = 2), fill = "purple") +
@@ -849,16 +841,12 @@ ggplot() +
   annotate("text", x = 8, y = 4, label = "Step 2", size = 5) +
   annotate("text", x = 13, y = 4, label = "Step 3", size = 5) +
   coord_fixed() +
-  theme_void()
+  theme_void(base_family = "HiraginoSans-W6")
 ```
-
-:::: {.aside}
-- Woon, Jonathan, Minsu Jang, Kira Pronin and Jacob Schiller. 2023. "[Discussion and Fairness in a Laboratory Voting Experiment](https://doi.org/10.1017/XPS.2023.29)," *Journal of Experimental Political Science,* 11(2): 224-236.
-::::
 
 ## サーベイ実験[（survey experiment）]{.small}
 
-アンケート内に無作為に割り当てたの処置[（例：文言の違い、シナリオの提示）]{.small}を埋め込み、参加者の反応を比較する実験
+アンケート内に無作為に割り当てたの処置[（例：文言の違い、シナリオの提示）]{.small}を埋め込み、参加者の反応を比較する実験 [[@song-hata-2020; @hata-song-2020]]{.small}
 
 - インターネットを用いたアンケートに処置を埋め込むのが一般的
 
@@ -881,14 +869,9 @@ ggplot() +
 :::
 ::::
 
-:::: {.aside}
-- SONG Jaehyun・秦正樹. 2020. 「[オンライン・サーベイ実験の方法：理論編](https://doi.org/10.11218/ojjams.35.92)」『理論と方法』35(1): 92-108.
-- 秦正樹・SONG Jaehyun. 2020. 「[オンライン・サーベイ実験の方法：実践編](https://doi.org/10.11218/ojjams.35.109)」『理論と方法』35(1): 109-127.
-::::
-
 ## サーベイ実験の例
 
-- 問い：日米韓軍事同盟は日韓協力への支持を高めるか[（Asaba *et al.* 2020）]{.small}
+- 問い：日米韓軍事同盟は日韓協力への支持を高めるか [[@asaba-et-al-2020]]{.small}
 - 統制群：米豪合同軍事演習の動画を視聴
 - 処置群：[日米韓同軍事演習の動画]{.alert}を視聴
 - 動画の処置効果 = 処置群の日韓協力への支持度 - 統制群の日韓協力への支持度
@@ -929,12 +912,8 @@ tibble(x = c(6:11, 6:11,
   annotate("label", x = 15, y = 5, label = "🇯🇵♥🇺🇸♥🇰🇷", size = 7, fill = "white") +
   guides(color = "none") +
   coord_cartesian(xlim = c(-5, 22.5)) +
-  theme_void()
+  theme_void(base_family = "HiraginoSans-W4")
 ```
-
-:::: {.aside}
-- Asaba, Yuki, Kyu S Hahn, Seulgi Jang, Tetsuro Kobayashi, and Atsushi Tago. 2020. "[38 seconds above the 38th parallel: how short video clips produced by the US military can promote alignment despite antagonism between Japan and Korea](https://doi.org/10.1093/irap/lcy024)," *International Relations of the Asia-Pacific*, 20(2): 253-273.
-::::
 
 # **4** 処置効果の推定
 
@@ -1023,32 +1002,23 @@ tibble(x = c(6:11, 6:11,
 - [**交互作用項**]{.alert}による推定
    - 例：$Y_i = \alpha + \tau T_i + \beta X_i + \delta (T_i \cdot X_i) + \varepsilon_i$
       - $\tau + \delta X_i$：$X_i = x$における処置効果[（限界効果 [marginal effect]）]{.small}
+   - 交互作用を含むモデルの解釈は慎重に行うこと [[@brambor-clark-golder-2006; @hainmueller-mummolo-xu-2019]]{.small}
 - [**サブグループごと**]{.alert}の推定
    - 年齢・性別・所得などで層別化してATEを推定
    - $\mathbb{E}[Y(1)−Y(0)|X=x]$：$X = x$における平均処置効果
 
 :::: {.aside}
 - サブグループは**予め設定した仮説に基いて選定**すべきであり、**多重検定**の問題も考慮する必要がある。
-- Brambor, Thomas, William Roberts Clark, and Matt Golder. 2006. "[Understanding Interaction Models: Improving Empirical Analyses.](https://doi.org/10.1093/pan/mpi014)" *Political Analysis* 14(1): 63–82.
-- Hainmueller, Jens, Jonathan Mummolo, and Yiqing Xu. 2020. "[How Much Should We Trust Estimates from Multiplicative Interaction Models? Noticeable Errors and Simple Remedies.](https://doi.org/10.1017/pan.2018.46)" *Political Analysis,* 27 (2): 173–92.
 ::::
 
 ## 参考）機械学習を用いたHTEの推定
 
-- Causal Forest[（Wagner and Athey 2018; Athey *et al.* 2019; Jawadekar *et al.* 2023）]{.small}
-- Meta-learner[（Künzel *et al.* 2019）]{.small}
+- Causal Forest [[@wager-athey-2018; @athey-tibshirani-wagner-2019; @jawadekar-et-al-2023]]{.small}
+- Meta-learner [[@kunzel-et-al-2019]]{.small}
    - S-learner
    - T-learner
    - X-learner
-- Double/Debiased Machine Learning[（Chernozhukov *et al.* 2018）]{.small}
-   
-:::: {.aside}
-- Wager, Stefan, and Susan Athey. 2018. "[Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.](https://doi.org/10.1080/01621459.2017.1319839)" *Journal of the American Statistical Association,* 113 (523): 1228–1242.
-- Athey, Susan, Julie Tibshirani, and Stefan Wager. 2019. "[Generalized Random Forests.](https://www.jstor.org/stable/26581894)" *The Annals of Statistics,* 47 (2): 1148–1178.
-- Jawadekar, Neal, Katrina Kezios, Michelle C Odden, Jeanette A Stingone, Sebastian Calonico, Kara Rudolph, and Adina Zeki Al Hazzouri. 2023. "[Practical Guide to Honest Causal Forests for Identifying Heterogeneous Treatment Effects](https://doi.org/10.1093/aje/kwad043)." *American Journal of Epidemiology,* 192(7): 1155–1165.
-- Künzel, Sören R., Jasjeet S. Sekhon, Peter J. Bickel, and Bin Yu. 2019. "[Metalearners for estimating heterogeneous treatment effects using machine learning](https://doi.org/10.1073/pnas.1804597116)." *Proceedings of the National Academy of Sciences of the United States of America,* 116(10): 4156-4165.
-- Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. "[Double/Debiased Machine Learning for Treatment and Structural Parameters](https://doi.org/10.1111/ectj.12097)." *The Econometrics Journal,* 21 (1): C1–C68.
-::::
+- Double/Debiased Machine Learning [[@chernozhukov-et-al-2018]]{.small}
 
 # **5** 実装時の注意点
 
@@ -1063,7 +1033,7 @@ tibble(x = c(6:11, 6:11,
    - [**インフォームド・コンセント**]{.alert}（説明と同意）の取得は必須
       - 説明責任、理解、自由意志の保障、途中中止基準の明示など
    - [**研究開始前に審査を必ず受ける**]{.alert}
-      - **IRB**（Institutional Review Board／倫理審査委員会）
+      - **IRB**（*Institutional Review Board*／倫理審査委員会）
 
 ## 研究倫理違反の例（1）
 
@@ -1278,3 +1248,8 @@ lalonde |>
 :::: {.aside}
 - Lin, Winston. 2013. "[Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman's Critique](https://doi.org/10.1214/12-AOAS583)." *The Annals of Applied Statistics* 7(1): 295-318.
 ::::
+
+## 参考文献
+
+::: {#refs}
+:::

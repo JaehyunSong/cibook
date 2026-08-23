@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -34,8 +34,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-aefbbce9ad3b483054a3d6900c97b6af.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-4ec3ce1acf7b3c31d0bc244927a189f6.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -148,7 +167,7 @@
 
 </section><section id="比例性と投票参加" class="slide level2"><h2>比例性と投票参加</h2>
 <ul>
-<li>合理的有権者の投票参加モデル（<a href="https://doi.org/10.2307/1953324">Riker and Ordeshook 1968</a>）
+<li>合理的有権者の投票参加モデル<span class="citation" data-cites="riker-ordeshook-1968">(<a href="#/参考文献" role="doc-biblioref" onclick="">Riker and Ordeshook 1968</a>)</span>
 <ul>
 <li>
 <span class="math inline">\(R = P \cdot B - C + D\)</span>（<span class="math inline">\(R \leq 0\)</span>の場合、棄権）</li>
@@ -198,11 +217,11 @@
 <ul>
 <li>人口3500人未満のコミューン：多数代表制（大選挙区制）</li>
 <li>人口3500人以上のコミューン：比例代表制（プレミアム付）</li>
-<li>以下は架空のデータ（実際の研究成果は<a href="https://doi.org/10.1177/0010414014534199">Eggers[2014]</a>等を参照<sup>3</sup>）</li>
+<li>以下は架空のデータ（実際の研究成果は <span class="citation" data-cites="eggers-2015">Eggers (<a href="#/参考文献" role="doc-biblioref" onclick="">2015</a>)</span> 等を参照）</li>
 </ul>
 </li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
 <div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
 <p>&nbsp;</p>
@@ -227,7 +246,7 @@
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>フランスにおける基礎自治体の最小単位であり、2025年現在、約35,000コミューンが存在する。</p></li><li id="fn2"><p>2013年の法改正により閾値が1000人へ引き下げ（2014年選挙から適用）</p></li><li id="fn3"><p>Eggers, Andrew C.. 2014. “<a href="https://doi.org/10.1177/0010414014534199">Proportionality and Turnout: Evidence From French Municipalities</a>.” <em>Comparative Political Studies,</em> 48(2): 135-167.</p></li></ol></aside></section><section id="内生性は" class="slide level2"><h2>内生性は?</h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>フランスにおける基礎自治体の最小単位であり、2025年現在、約35,000コミューンが存在する。</p></li><li id="fn2"><p>2013年の法改正により閾値が1000人へ引き下げ（2014年選挙から適用）</p></li></ol></aside></section><section id="内生性は" class="slide level2"><h2>内生性は?</h2>
 <p>交絡要因の存在により、群間の単純比較では信頼できる処置効果の推定が不可能</p>
 <ul>
 <li>バックドア経路が存在（D <span class="math inline">\(\leftarrow\)</span> R <span class="math inline">\(\rightarrow\)</span> W <span class="math inline">\(\rightarrow\)</span> Y）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -276,7 +295,7 @@
 <li>
 <strong>R</strong>egression <strong>D</strong>iscontinuity <strong>D</strong>esign（<span class="alert"><strong>RDD</strong></span>）
 <ul>
-<li>参考：<a href="https://doi.org/10.1037/h0044319">Thistlethwaite and Campbell（1960）</a>
+<li>参考：<span class="citation" data-cites="thistlewaite-campbell-1960">Thistlewaite and Campbell (<a href="#/参考文献" role="doc-biblioref" onclick="">1960</a>)</span>
 </li>
 </ul>
 </li>
@@ -429,11 +448,11 @@ D_i = \begin{cases}
 </li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn4"><p>なぜこうなるのかが分からない場合は、本講義の履修よりも先に交互作用の解釈について勉強すること。交互作用の解釈に関する解説は<a href="https://doi.org/10.1093/pan/mpi014">Brambor（2006）</a>が詳しい。まだ読んだことない人にもおすすめできる論文だ。</p></li></ol></aside></section><section id="中心化の前後比較" class="slide level2"><h2>中心化の前後比較</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>なぜこうなるのかが分からない場合は、本講義の履修よりも先に交互作用の解釈について勉強すること。交互作用の解釈に関する解説は<a href="https://doi.org/10.1093/pan/mpi014">Brambor（2006）</a>が詳しい。まだ読んだことない人にもおすすめできる論文だ。</p></li></ol></aside></section><section id="中心化の前後比較" class="slide level2"><h2>中心化の前後比較</h2>
 <p><span class="math display">\[
 \widehat{Y_i} = \alpha + \rho D_i + \beta R_i + \gamma D_i \cdot R_i
 \]</span></p>
-<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
 <div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
 <p>&nbsp;</p>
@@ -565,7 +584,7 @@ D_i = \begin{cases}
 </ul>
 </li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
 <div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
 <p>&nbsp;</p>
@@ -593,7 +612,7 @@ D_i = \begin{cases}
 
 <aside><div>
 <p>注：Carpenter and Dobkin（2009）のデータを元に宋が作成</p>
-</div><ol class="aside-footnotes"><li id="fn5"><p>長方形（rectangular）カーネル関数とも呼ばれる。</p></li></ol></aside></section><section id="バンド幅" class="slide level2"><h2>バンド幅</h2>
+</div><ol class="aside-footnotes"><li id="fn4"><p>長方形（rectangular）カーネル関数とも呼ばれる。</p></li></ol></aside></section><section id="バンド幅" class="slide level2"><h2>バンド幅</h2>
 <ul>
 <li>最適なバンド幅を決めるたった一つのルールは存在しない
 <ul>
@@ -619,12 +638,12 @@ D_i = \begin{cases}
 </li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn6"><p>ただし、現在最も幅広く使われている{rdrobust}パッケージは<a href="https://doi.org/10.3982/ECTA11757">Calonico et al.（2014）</a>が提唱する通称、「CCTバンド幅」である。</p></li></ol></aside></section><section id="局所回帰分析" class="slide level2"><h2>局所回帰分析</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn5"><p>ただし、現在最も幅広く使われている{rdrobust}パッケージは<a href="https://doi.org/10.3982/ECTA11757">Calonico et al.（2014）</a>が提唱する通称、「CCTバンド幅」である。</p></li></ol></aside></section><section id="局所回帰分析" class="slide level2"><h2>局所回帰分析</h2>
 <p>ハンド幅内の個体のみを用いたパラメトリック推定法<span class="small">（<a href="https://doi.org/10.1111/1468-0262.00183">Hahn, Todd, and van der Klaauw 2001</a>）</span></p>
 <ul>
 <li>「線形+交差項」か「二次多項式+交差項」で十分な場合が多い</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout="[[30,-5,30,-5,30]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[30,-5,30,-5,30]]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -717,7 +736,7 @@ D_i = \begin{cases}
 </li>
 <li>方法2：割当変数の<strong>区間</strong>と結果変数の<strong>平均値</strong>の散布図（右）</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout="[[-5,40,-10,40,-5]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[-5,40,-10,40,-5]]">
 <div class="quarto-layout-row">
 <div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: center;">
 <p>&nbsp;</p>
@@ -802,7 +821,7 @@ D_i = \begin{cases}
 </div>
 </div>
 </div><div class="column" style="width:65%;">
-<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -821,7 +840,7 @@ D_i = \begin{cases}
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-panel" data-layout="[[45,-10,45]]" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout="[[45,-10,45]]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 45.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -858,7 +877,7 @@ D_i = \begin{cases}
 <figure><p><img data-src="figs/rdd/balance_check.png" style="width:40.0%"></p>
 <figcaption>出典：<a href="https://doi.org/10.1162/0033553041502153">Lee, Moretti, and Butler（2004）</a></figcaption></figure>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn7"><p>連続性が満たされても、割当変数と共変量の関係が右上がり・右下がりの関係の場合、SMDが大きくからだ。</p></li></ol></aside></section><section id="密度検定" class="slide level2"><h2>密度検定</h2>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>連続性が満たされても、割当変数と共変量の関係が右上がり・右下がりの関係の場合、SMDが大きくからだ。</p></li></ol></aside></section><section id="密度検定" class="slide level2"><h2>密度検定</h2>
 <p><span class="alert">閾値周辺における割当変数の連続性</span>の確認</p>
 <ul>
 <li>
@@ -867,9 +886,25 @@ D_i = \begin{cases}
 </li>
 </ul>
 
+<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-43-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section><section id="中断時系列デザイン" class="slide level2"><h2>中断時系列デザイン</h2>
+<p>中断時系列デザイン（Interrupted Time Series; ITS）</p>
+</section><section id="地理的回帰不連続デザイン" class="slide level2"><h2>地理的回帰不連続デザイン</h2>
+<p>地理的回帰不連続デザイン（Geographic RDD; GRD）</p>
+</section><section id="参考文献" class="slide level2 smaller scrollable"><h2>参考文献</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-eggers-2015" class="csl-entry" role="listitem">
+Eggers, Andrew C. 2015. <span>“Proportionality and Turnout: Evidence from French Municipalities: Evidence from French Municipalities.”</span> <em>Comparative Political Studies</em> 48: 135–67. doi:<a href="https://doi.org/10.1177/0010414014534199">10.1177/0010414014534199</a>.
+</div>
+<div id="ref-riker-ordeshook-1968" class="csl-entry" role="listitem">
+Riker, William H., and Peter C. Ordeshook. 1968. <span>“A Theory of the Calculus of Voting.”</span> <em>American Political Science Review</em> 62: 25–42. doi:<a href="https://doi.org/10.2307/1953324">10.2307/1953324</a>.
+</div>
+<div id="ref-thistlewaite-campbell-1960" class="csl-entry" role="listitem">
+Thistlewaite, Donald L., and Donald T. Campbell. 1960. <span>“Regression-Discontinuity Analysis: An Alternative to the Ex Post Facto Experiment.”</span> <em>Journal of Educational Psychology</em> 51: 309–17. doi:<a href="https://doi.org/10.1037/h0044319">10.1037/h0044319</a>.
+</div>
+</div>
 
 
-<img data-src="rdd_slide_files/figure-revealjs/unnamed-chunk-43-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section></section>
+</section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1125,12 +1160,12 @@ D_i = \begin{cases}
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "コピーしました");
+          button.setAttribute("title", "Copied!");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "コピーしました");
+            button.setAttribute("data-bs-title", "Copied!");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

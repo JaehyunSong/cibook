@@ -47,9 +47,9 @@ germany <- germany |>
 - タッチパネル式投票（投票所に足を運ぶ必要はある）
 
 ::: {layout-ncol=2}
-![我々が考えている電子投票](figs/did/eVote1.jpg){fig-align="center"}
+![我々が考えている電子投票](figs/did/eVote1.jpg){fig-align="center" height=400px}
 
-![現在の電子投票](figs/did/eVote2.jpg){fig-align="center"}
+![現実](figs/did/eVote2.jpg){fig-align="center" height=400px}
 :::
 
 [^first-evote]: 日本における電子投票の初導入事例は2002年の岡山県新見市（首長・市議会選挙）
@@ -75,6 +75,7 @@ eVote |>
   scale_x_continuous(breaks = 4:5,
                      labels = c(2000, 2004)) +
   coord_cartesian(ylim = c(0.35, 0.5)) +
+  theme_jay() +
   theme(legend.position.inside = c(0.8, 1))
 ```
 
@@ -169,7 +170,7 @@ dagify(Y ~ D + e,
 
 ```{r}
 #| fig-width: 7
-#| fig-height: 3.5
+#| fig-height: 4
 eVote |> 
   filter(year == 2004) |> 
   arrange(desc(turnout)) |> 
@@ -180,13 +181,13 @@ eVote |>
   ggplot(aes(x = Ward_J)) +
   geom_col(aes(y = turnout, fill = eVote), color = "black") +
   geom_text(aes(y = 0, label = sprintf("%.1f", turnout)), 
-            color = "white", vjust = -0.5) +
+            color = "white", vjust = -0.5, size = 5) +
   geom_hline(yintercept = 39.0, linewidth = 1, color = "tomato") +
-  annotate("label", x = "伏見", y = 39.0, 
-           label = "東山区を除く平均値：39.0",
-           hjust = 0.9, vjust = -0.15) +
-  labs(x = "区", y = "投票率（%）", caption = "注：今後の議論を単純化するために上京区はデータから除外した。") +
+  annotate("text", x = "伏見", y = 39.0, label = "東山区を除く平均値：39.0",
+           hjust = 0.9, vjust = -0.25, size = 4) +
+  labs(x = "行政区", y = "投票率（%）", caption = "注：今後の議論を単純化するために上京区はデータから除外した。") +
   scale_fill_manual(values = c("0" = "gray70", "1" = "gray30")) +
+  theme_jay() +
   theme(legend.position = "none")
 ```
 
@@ -246,22 +247,6 @@ dagify(Y ~ D + e,
 
 ||処置前（Pre）|処置後（Post）|
 |:---:|:---:|:---:|
-|統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|[$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}|
-|処置（$D_i = 1$）|$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$|[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red}|
-
-$$
-\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
-$$
-
-#### **群間比較**（Cross-sectional design）
-
-- 私たちにできる計算：[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red} - [$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}
-- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]$ = $\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$
-
-## 2つの推定方法（2）
-
-||処置前（Pre）|処置後（Post）|
-|:---:|:---:|:---:|
 |統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$|
 |処置（$D_i = 1$）|[$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$]{.hl_blue}|[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red}|
 
@@ -272,7 +257,27 @@ $$
 #### **前後比較**（Before-and-after design）
 
 - 私たちにできる計算：[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red} - [$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$]{.hl_blue}
+   - [2004年の東山区の投票率]{.hl_red} - [2000年の東山区の投票率]{.hl_blue}
 - ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]$ = $\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$
+   - 2004年の北区の投票率 = 2000年の東山区の投票率
+
+## 2つの推定方法（2）
+
+||処置前（Pre）|処置後（Post）|
+|:---:|:---:|:---:|
+|統制（$D_i = 0$）|$\mathbb{E}[Y_{i, \textsf{pre}}^0|D_i = 0]$|[$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}|
+|処置（$D_i = 1$）|$\mathbb{E}[Y_{i, \textsf{pre}}^1|D_i = 1]$|[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red}|
+
+$$
+\textsf{ATT} = \mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1] - \underbrace{\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]}_{\scriptstyle \textsf{counterfactual}}
+$$
+
+#### **群間比較**（Cross-sectional design）
+
+- 私たちにできる計算：[$\mathbb{E}[Y_{i, \textsf{post}}^1|D_i = 1]$]{.hl_red} - [$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$]{.hl_blue}
+   - [2004年の東山区の投票率]{.hl_red} - [2004年の北区の投票率]{.hl_blue}
+- ATTが推定可能となる仮定：$\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 1]$ = $\mathbb{E}[Y_{i, \textsf{post}}^0|D_i = 0]$
+   - 電子投票を導入しなかった場合の2004年の東山区の投票率 = 2004年の北区の投票率
 
 ## 前後 + 群間比較
 
@@ -294,6 +299,7 @@ eVote |>
   scale_x_continuous(breaks = 4:5,
                      labels = c(2000, 2004)) +
   coord_cartesian(ylim = c(0.35, 0.5)) +
+  theme_jay() +
   theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
         legend.justification.top = "left",
         legend.justification.left = "top",
@@ -332,6 +338,7 @@ eVote |>
   scale_x_continuous(breaks = 4:5,
                      labels = c(2000, 2004)) +
   coord_cartesian(xlim = c(4, 5.05), ylim = c(0.35, 0.5)) +
+  theme_jay() +
   theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
         legend.justification.top = "left",
         legend.justification.left = "top",
@@ -374,7 +381,7 @@ $$
 - 時間を通じた結果変数の変化の差を、処置群と統制群の間で比較
    - 時系列データを使って対象の経時的変化のみを分析（$\times$）
    - ある時点における処置群と統制群の差異のみを分析（$\times$）
-- 推定量はATEでなく、[ATT]{.strong}
+- 推定量はATEでなく、主に[ATT]{.strong}
 - [パネルデータ]{.strong}（panel data）が必要
 
 ## パネルデータ
@@ -444,7 +451,7 @@ $$
 
 ## 並行トレンドの仮定
 
-[**平均トレンドの仮定**]{.alert}（parallel trend assumption）
+[**平均トレンドの仮定**]{.alert}[（parallel trend assumption）]{.small}
 
 - 処置が行われなかった場合の潜在的な結果の傾向は、処置群と統制群の間で同じであること
 - この仮定が満たされる場合、[**統制群のトレンドを処置群の反事実として使える**]{.alert}。
@@ -453,9 +460,9 @@ $$
 \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 1] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 1]}_{\textsf{(A)}} = \underbrace{\mathbb{E}[Y^0_{i, \textsf{post}}|D_i = 0] - \mathbb{E}[Y^0_{i, \textsf{pre}}|D_i = 0]}_{\textsf{(B)}}
 $$
 
-- （A）：処置群がもし処置を受けなかった場合の変化量（反事実）
-- （B）：統制群における変化量（観察可能）
-- $\Rightarrow$ 「統制群の変化量」=「処置群が処置を受けなかった場合の潜在的結果」
+- （A）：処置群がもし処置を受けなかった場合の変化量（反事実 = 観察不可能）
+- （B）：統制群における変化量（事実 = 観察可能）
+- $\Rightarrow$ 「統制群の変化量」=「処置群が処置を受けなかった場合の変化量」
 
 ## 仮定が満たされる場合
 
@@ -480,8 +487,9 @@ eVote |>
   labs(x = "年", y = "投票率", color = "行政区") +
   guides(color = guide_legend(position = "inside")) +
   scale_x_continuous(breaks = 2:5,
-                     labels = c(1993, 1996, 2000, 2004)) +
+                     labels = c(1993, 1996, 2000, "2004\n（処置）")) +
   coord_cartesian(ylim = c(0.4, 0.5)) +
+  theme_jay() +
   theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
         legend.justification.top = "left",
         legend.justification.left = "top",
@@ -515,8 +523,9 @@ eVote |>
   guides(color = guide_legend(position = "inside")) +
   labs(x = "年", y = "投票率", color = "行政区") +
   scale_x_continuous(breaks = 2:5,
-                     labels = c(1993, 1996, 2000, 2004)) +
+                     labels = c(1993, 1996, 2000, "2004\n（処置）")) +
   coord_cartesian(ylim = c(0.4, 0.5)) +
+  theme_jay() +
   theme(legend.margin = margin(0, 0, 0, 0), # turned off for alignment
         legend.justification.top = "left",
         legend.justification.left = "top",
@@ -530,7 +539,7 @@ eVote |>
 ## 可視化による確認
 
 - 長期間であるほど、統制群の個体が多いほど確認しやすい
-- 人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠（*suggestive evidence*）に過ぎない
+- 人為的な解釈が必要であり、並行トレンドの仮定に対する示唆的根拠[（*suggestive evidence*）]{.small}に過ぎない
 - プラセボテストで並行トレンドの仮定が[満たされていない]{.alert}ことは検知可能（後述）
 
 ```{r}
@@ -551,9 +560,10 @@ eVote |>
                                 "統制群" = "gray70")) +
   scale_alpha_manual(values = c("処置群（東山区）" = 1,
                                 "統制群" = 0.5)) +
-  scale_x_continuous(breaks = 1:5,
-                     labels = c(1989, 1993, 1996, 2000, 2004)) +
+  scale_x_continuous(breaks = 2:5,
+                     labels = c(1993, 1996, 2000, "2004\n（処置）")) +
   coord_cartesian(ylim = c(0.35, 0.5)) +
+  theme_jay() +
   theme(legend.margin = margin(0, 0, 0, 0),
         legend.justification.top = "left",
         legend.justification.left = "top",
@@ -611,13 +621,13 @@ $$
 ## DID回帰の仕組み
 
 $$
-\hat{y}_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t}
+\widehat{y}_{it} = \alpha + \delta (D_i \times P_t) + \beta D_{i} + \gamma P_{t}
 $$
 
-- 処置群の差分：$\hat{y}_{it}(D_i = 1, P_t = 1) − \hat{y}_{it}(D_i = 1, P_t = 0)$
-   - $\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\hat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\hat{y}_{it}(D_i = 1, P_t = 0)}$
-- 統制群の差分：$\hat{y}_{it}(D_i = 0, P_t = 1) − \hat{y}_{it}(D_0 = 0, P_t = 0)$
-   - $\gamma = \underbrace{(\alpha + \gamma)}_{\hat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\hat{y}_{it}(D_i = 0, P_t = 0)}$
+- 処置群の差分：$\widehat{y}_{it}(D_i = 1, P_t = 1) − \widehat{y}_{it}(D_i = 1, P_t = 0)$
+   - $\delta + \gamma = \underbrace{(\alpha + \delta + \beta + \gamma)}_{\widehat{y}_{it}(D_i = 1, P_t = 0)} - \underbrace{(\alpha + \beta)}_{\widehat{y}_{it}(D_i = 1, P_t = 0)}$
+- 統制群の差分：$\widehat{y}_{it}(D_i = 0, P_t = 1) − \widehat{y}_{it}(D_0 = 0, P_t = 0)$
+   - $\gamma = \underbrace{(\alpha + \gamma)}_{\widehat{y}_{it}(D_i = 0, P_t = 1)} - \underbrace{(\alpha)}_{\widehat{y}_{it}(D_i = 0, P_t = 0)}$
 - 差分の差分：$\delta = (\delta + \gamma) - (\gamma)$
    - $\Rightarrow \delta$：[**処置効果**]{.alert}
 
@@ -632,10 +642,10 @@ $$
 - 個体と時間の固定効果モデル
    - $\gamma_i$：個体のダミー変数
    - $\lambda_t$：時間のダミー変数
-- $\delta$：処置効果（ATT）
+- $\delta$：処置効果[（ATT）]{.small}
    - 全処置群において処置を受けるタイミングが同じ場合のみ
    - 処置のタイミングが異なる場合、$\delta$はATEでも、ATTでもない
-- 注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される。
+- 注意）3期以上のデータの場合、系列相関により標準誤差が過小評価される [[@bertrand-et-al-2004]]{.small}
 
 ## 系列相関と標準誤差
 
@@ -644,27 +654,36 @@ $$
 - 例）2004年の東山区の投票率は、2000年の東山区の投票率と強い相関関係があり、2000年の東山区の投票率は、1996年の東山区の投票率と強い相関関係があり、...
    - 投票率が高いところは、これからも高い可能性が高い（逆も同じ）
       - 一つ一つのの観測値が独立とは言えなくなる
-   - 似たような観測が多くなるため、有効なサンプルサイズ（Effective Sample Size[ESS]）は実際よりも小さい
-- 系列相関が存在する場合、従来の標準誤差（`lm()`等）は過小評価される
-   - $\Rightarrow$ [**個体でクラスター化した頑健な標準誤差**]{.alert}（cluster-robust standard error）
-   - その他）ブロック・ブートストラップ / データを処置前後の2期に集約
-
-:::: {.aside}
-参考）Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. "[How Much Should We Trust Differences-in-Differences Estimates?](https://doi.org/10.1162/003355304772839588)" *The Quarterly Journal of Economics,* 119 (1): 249–275.
-::::
+   - 似たような観測が多くなるため、有効サンプルサイズ[（effective sample size）]{.small}は実際よりも小さい
+- 系列相関が存在する場合、従来の標準誤差[（`lm()`等）]{.small}は過小評価される
+   - $\Rightarrow$ [**個体でクラスター化した頑健な標準誤差**]{.alert}[（cluster-robust standard error）]{.small}
+   - その他の方法）ブロック・ブートストラップ / データを処置前後の2期に集約
 
 ## 系列相関の例
 
 ```{r}
-#| fig-width: 6.5
+#| layout-ncol: 2
+#| fig-width: 5
 #| fig-height: 5
 eVote |> 
   select(Ward_J, year, turnout) |> 
   mutate(Ward_J = str_remove(Ward_J, "区")) |> 
   pivot_wider(names_from = "year", values_from = "turnout") |> 
-  ggplot() +
-  geom_text(aes(x = `1996`, y = `2000`, label = Ward_J)) +
-  labs(x = "1996年の投票率", y = "2000年の投票率")
+  ggplot(aes(x = `1993`, y = `1996`)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_text(aes(label = Ward_J)) +
+  labs(x = "1993年の投票率", y = "1996年の投票率") +
+  theme_jay()
+
+eVote |> 
+  select(Ward_J, year, turnout) |> 
+  mutate(Ward_J = str_remove(Ward_J, "区")) |> 
+  pivot_wider(names_from = "year", values_from = "turnout") |> 
+  ggplot(aes(x = `1996`, y = `2000`)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_text(aes(label = Ward_J)) +
+  labs(x = "1996年の投票率", y = "2000年の投票率") +
+  theme_jay()
 ```
 
 ## その他のモデル
@@ -679,6 +698,12 @@ $$
 
 $$
 y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\eta X_{it}} + \varepsilon_{it}
+$$
+
+- トレンド変数と共変量を含むモデル
+
+$$
+y_{it} = \alpha + \delta D_{it} + \gamma_i + \lambda_t + \textcolor{red}{\gamma_i t} + \textcolor{red}{\eta X_{it}} + \varepsilon_{it}
 $$
 
 ## トレンド変数
@@ -867,7 +892,7 @@ dagify(Y1 ~ D1 + X,
 
 ## 共変量の投入
 
-- 時間と共に変化する交絡要因（time-varying confounder）の投入
+- 時間と共に変化する交絡要因[（time-varying confounder）]{.small}の投入
    - 適切な共変量を投入すると[**条件付き**並行トレンドの仮定]{.alert}が成立
 - トレンド変数と共変量、両方投入しても良い
 
@@ -933,7 +958,7 @@ dagify(Y1 ~ D1 + X1,
 
 ## パネルデータの確認
 
-- 個体 $\times$ 時間 $\times$ 処置有無の可視化（以下は{panelView}パッケージを使用した例）
+- 個体 $\times$ 時間 $\times$ 処置有無の可視化[（以下は{panelView}パッケージを使用した例）]{.small}
 
 ```{r}
 #| include: false
@@ -974,15 +999,12 @@ panel_plt +
    - 固定効果はデータによっては数百個の変数にもなるため
    - トレンド変数や共変量の係数は付録などに
 
-## García-Montoya *et al.* (2022)
+## 処置効果の可視化の例
 
-- 3種類の処置変数 $\times$ 4つのモデル <!-- Neighborは隣のcountyでshootingがあったかを表す -->
+- @garcia-montoya-et-al-2022 の例
+   - 3種類の処置変数 $\times$ 4つのモデル <!-- Neighborは隣のcountyでshootingがあったかを表す -->
 
 ![](figs/did/García-Montoya_et_al_2022.png){width=800px fig-align="center"}
-
-:::: {.aside}
-- García-Montoya, Laura, Ana Arjona, and Matthew Lacombe. 2022. "[Violence and Voting in the United States: How School Shootings Affect Elections](https://doi.org/10.1017/S0003055421001179)." *American Political Science Review,* 116(3): 807–826.
-::::
 
 ## イベント・スタディ
 
@@ -991,15 +1013,15 @@ panel_plt +
 - **目的1**：頑健性の確認、並行トレンドの仮定の確認
 - **目的2**：政策研究の場合、政策が導入されてからいつ効果が発生するかも検証可能
 
-1. **Step 1**：処置群が各時点において処置を受けたとするダミー変数を作成
-   - 統制群の場合、すべて0（次頁）
+1. **Step 1**：処置群が各時点において処置を受けたとするダミー変数を作成 [[例]{.button}](#sec-event-study-data)
+   - 統制群の場合、すべて0
 1. **Step 2**：時間のベースラインを決める（通常、処置が行われる直前を基準とする）
    - 次頁の例の場合、 *t* = 2がベースライン
 1. **Step 3**：ベースラインを除く処置ダミー変数と個体・時間の固定効果を投入したモデルを推定
    - 次頁の例の場合、 ***D***<sub>1</sub>、***D***<sub>3</sub>、***D***<sub>4</sub>に *i* と *t* の固定効果を加えたモデルを推定
    - *t* = 2がベースラインであるため、***D***<sub>2</sub>はモデルに投入しない
 
-## イベント・スタディのイメージ（データ）
+## イベント・スタディのためのデータ {#sec-event-study-data}
 
 :::: {.columns}
 ::: {.column width=30%}
@@ -1033,7 +1055,7 @@ panel_plt +
 :::
 ::::
 
-## イベント・スタディのイメージ（可視化） {.nostretch}
+## イベント・スタディの可視化
 
 2000年をベースライン（$\widehat{\sf{ATT}}$ = 0）にしたイベント・スタディ
 
@@ -1077,18 +1099,14 @@ eVote |>
 
 並行トレンドの仮定が[満たされていない]{.strong}ことは確認するための検定^[並行トレンドの仮定の確認以外にも、処置以外の未観測ショックの影響や推定結果が単なる確率的な偶然ではないと示すためにも使われる。]
 
-- タイミングをずらす：本来は何もないはずの時期に効果が見られないか
-- 対象をずらす：本来は影響がないはずのグループに効果が見られないか
-
-- <i class="bi bi-emoji-sunglasses"></i>客観的な数値[（係数や *p* 値）]{.small}で仮定の妥当性を示すことが可能
-- <i class="bi bi-emoji-tear"></i>$n$が小さいと、実際には差があっても統計的に有意にならず「差がない」と誤って判断してしまう可能性
-- <i class="bi bi-emoji-tear"></i>逆にサンプルサイズが非常に大きいと、実質的には無視できるほど小さな差でも統計的に有意になってしまう可能性
-
-:::: {.aside}
-- Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. "How Much Should We Trust Differences-in-Differences Estimates?" *The Quarterly Journal of Economics,* 119 (1) pp. 249-275.
-- Gruber, Jonathan and Daniel M. Hungerman. 2008. "The Effect of the Blue Laws on Religious and Secular Activity" *The Quarterly Journal of Economics,* 123 (2) pp. 711-744.
-- Card, David, Alan B. Krueger. 1994. "Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania" *The American Economic Review,* 84 (4) pp. 772-793.
-::::
+- プラセボのタイプ [[@gruber-hungerman-2008]]{.small}
+   - タイミングをずらす：処置前の時期に効果が見られないか
+   - 対象をずらす：本来は影響がないはずのグループに効果が見られないか
+   - タイミングと対象を組み合わせ
+- プラセボテストの回数
+   - 1回：任意のプラセボで実施
+   - 複数回：様々なプラセボを作成し、実施 [[@bertrand-et-al-2004]]{.small}
+- 因果推論におけるプラセボテスト全般に関しては @eggers-et-al-2024 を参照
 
 ## 時間のプラセボテスト
 
@@ -1148,21 +1166,40 @@ list("通常のデータ" = placebo_fit1,
                notes    = "注：カッコ内は標準誤差")
 ```
 
+## タイミング $\times$ 対象のプラセボテスト
+
+1. **Step1**：実際の処置群をデータから除外し、処置前のデータのみ抽出する
+1. **Step2**：任意の対象が任意の時期に処置が行われたと仮定し、再コーディングする
+   - 例）**北区が2000年**に電子投票を導入したかのように修正する（実際は東山区 $\times$ 2004年）
+1. **Step3**：DID推定
+1. **Step4**：処置効果が統計的有意に0でない場合、並行トレンドが満たされていないと判断
+
+```{r}
+placebo_fit4 <- eVote |> 
+  filter(year <= 2000 & WardID != 5 & WardID != 2) |> 
+  mutate(eVote = if_else(year == 2000 & Ward_J == "北区", 1, 0)) |> 
+  feols(turnout ~ eVote | Ward_J + year, data = _) 
+
+list("通常のデータ" = placebo_fit1,
+     "プラセボ"     = placebo_fit4) |> 
+  modelsummary(estimate  = "{estimate}({std.error}){stars}",
+               statistic = NULL,
+               gof_map  = c("nobs"),
+               add_rows = tibble(term     = c("区固定効果", "年固定効果"),
+                                 placebo_fit1 = c("Yes", "Yes"),
+                                 placebo_fit2 = c("Yes", "Yes")),
+               notes    = "注：カッコ内は標準誤差")
+```
+
 ## 処置の段階的導入（Staggered Adoption）<!--- スタガードなデータへの対処 --->
 
 - パネルデータにおいて、個々のユニット[（自治体、企業、個人など）]{.small}がそれぞれ異なるタイミングで処置（政策介入や新制度導入など）を受ける状態
    - 一度処置を受けると分析期間中は処置状態が継続する[（処置の撤回がない）]{.small}
-- この状況下における伝統的なTWFEの推定値は**深刻なバイアス**を含む[（Goodman-Bacon 2021）]{.small}
+- この状況下における伝統的なTWFEの推定値は**深刻なバイアス**を含む [[@goodman-bacon-2021]]{.small}
    - この場合、TWFEの推定値はATEでも、ATTでもない
 - 段階的導入への対処
-   - Sun & Abraham補正[（Sun and Abraham 2021）]{.small}
-   - 反事実予測アプローチ[（Liu *et al.* 2024）]{.small}^[処置が0に戻るような逆転可能な処置（Reversible treatments / Switching treatments）でも使用可能]など
-
-:::: {.aside}
-- Goodman-Bacon, Andrew. (2021). "[Difference-in-differences with variation in treatment timing.](https://doi.org/10.1016/j.jeconom.2021.03.014)" *Journal of Econometrics*, 225(2), 254–277.
-- Sun, L., & Abraham, S. (2021). "Estimating dynamic treatment effects in event studies with heterogeneous treatment effects." Journal of Econometrics, 225(2), 175–199.
-- Liu, L., Wang, Y., & Xu, Y. (2024). "A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data." American Journal of Political Science, 68(1), 160–176.
-::::
+   - Sun & Abraham補正 [[@sun-abraham-2021]]{.small}
+   - 反事実予測アプローチ [[@liu-wang-xu-2024]]{.small}^[処置が0に戻るような反転可能な処置（reversible treatments / switching treatments）でも使用可能]など
 
 ## 段階的導入の例
 
@@ -1227,9 +1264,9 @@ df_all |>
   )
 ```
 
-## 処置の反転の例
+## 反転可能な処置の例
 
-処置の反転[（Treatment Reversal）]{.small}：処置状態が0 $\rightarrow$ 1 $\rightarrow$ 0のように変化するケース
+処置の反転[（treatment reversal）]{.small}：処置状態が0 $\rightarrow$ 1 $\rightarrow$ 0のように変化するケース
 
 - 例）京都府の電子投票：東山区（2004〜2012年）、上京区（2008〜2012年）
    - 段階的導入 & 処置反転の例
@@ -1294,18 +1331,15 @@ df_all |>
 
 ## 合成コントロール法
 
-[**Synthetic Control Method**]{.alert}（SCM）
+[**Synthetic Control Method**]{.strong}
 
-- 合成コントロール法、または合成制御法と訳される（SCMともよく呼ばれる）
+- 合成コントロール法、または合成制御法と訳される（[SCM]{.strong}ともよく呼ばれる）
 - 統制群を合成することで処置群の潜在的結果を作り上げる手法
    - 処置群と並行トレンドを満たす架空の統制群を作り上げる
-   - Abadie, Diamond, and Hainmueller（2010, 2015）によって提案され、Xu（2017）が一般化SCMを提案
+   - @abadie-alexis-hainmueller-2010 と @abadie-alexis-hainmueller-2015 によって提案され、 @xu-2017 が一般化SCM[（generalized synthetic control method）]{.small}を提案
+- Rの{synth}および{fect}[^gsynth]パッケージで実装可能
 
-:::: {.aside}
-- Abadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2010. "Synthetic control methods for comparative case studies: Estimating the effect of California's tobacco control program." *Journal of the American Statistical Association,* 105(490): 493–505.
-- Abadie, Alberto, Diamond, Alexis, and Hainmueller, Jens. 2015. "Comparative politics and the synthetic control method." *American Journal of Political Science,* 59(2): 495–510.
-- Xu, Yiqing. 2017. "Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models." *Political Analysis*, 25 (1): 57–76.
-::::
+[^gsynth]: {gsynth}というパッケージもあるが、今は{fect}と統合されている。2026年8月現在、CRANから入手可能な{gsynth}は{fect}のラッパー（wrapper）パッケージだ。
 
 ## 並行トレンドは?
 
@@ -1530,3 +1564,8 @@ estimand(synth_fit) |>
   geom_line(linewidth = 1) +
   labs(x = "年", y = "ATT（米ドル）")
 ```
+
+## 参考文献
+
+::: {#refs}
+:::

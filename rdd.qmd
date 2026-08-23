@@ -9,6 +9,8 @@ metadata-files:
   - "_style/exercise.yml"
 ---
 
+{{< include _common_exercise.qmd >}}
+
 {{< revealjs file="rdd_slide.html" width="1300px" height="900px" class="ratio ratio-16x9" full-screen-link="true">}}
 
 # セットアップ
@@ -386,9 +388,9 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5, span = 0.25) +
-   labs(x = "割当変数", y = "結果変数", title = "span = 0.25の場合") +
+   labs(x = "割当変数", y = "結果変数", subtitle = "span = 0.25の場合") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
-   theme_classic()
+   theme_jay(size = 12)
 
 df |> 
    filter(iwm >= -0.5 & iwm <= 0.5) |> 
@@ -398,9 +400,9 @@ df |>
                     binwidth = 0.04, boundary = 0,
                     size = 3, shape = 21, color = "black", fill = "gray") +
    geom_smooth(aes(group = treat), method = "loess", color = "black", linewidth = 0.5, span = 1.5) +
-   labs(x = "割当変数", y = "結果変数", title = "span = 1.5の場合") +
+   labs(x = "割当変数", y = "結果変数", subtitle = "span = 1.5の場合") +
    coord_cartesian(ylim = c(-0.05, 0.25)) +
-   theme_classic()
+   theme_jay(size = 12)
 ```
 ::::
 
@@ -688,6 +690,14 @@ dc_test(df$iwm, cutpoint = 0)
 #| eval: false
 dens_test <- dc_test(df$iwm, cutpoint = 0, plot = FALSE, ext.out = TRUE)
 ```
+
+:::: {.callout-note title="二項検定によるチェック" collapse=true}
+<!---
+　二項検定（Binomial tests）も密度分布に代わるもう一つの検定手法だ。まずは、統制群の個体が20個になる範囲と、その範囲内の処置群の個体数を求める。もし、密度の分布が一様であれば、2つの個体数は同じになるだろう。
+
+　ここでの範囲は0.448だが、これはrvが-0.448から0の間に20の個体が、0から0.448の間に24の個体があるということを意味する。もし、強制変数の操作が行われなかったのであれば、処置群の割合はちょうど0.5（50%）になるはずである。右のP>|T|列は、𝑝 =0.5を帰無仮説とした二項検定における𝑝値である。もし、この値が𝛼を下回ると、閾値周辺において何らかの操作が行われた可能性があることを示唆する。2行目は1行目の幅を2倍に、3行目は1行目の幅を3倍に、…したものである。いずれも𝑝値は0.05以上であり、強制変数の操作が行われたとは言えない。
+--->
+::::
 
 　`密度検定のオブジェクト$data`で散布図用のデータセットが抽出できる。
 

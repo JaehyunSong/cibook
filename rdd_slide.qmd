@@ -39,7 +39,7 @@ senate <- rdrobust_RDsenate
 
 ## 比例性と投票参加
 
-- 合理的有権者の投票参加モデル（[Riker and Ordeshook 1968](https://doi.org/10.2307/1953324)）
+- 合理的有権者の投票参加モデル[@riker-ordeshook-1968]
    - $R = P \cdot B - C + D$（$R \leq 0$の場合、棄権）
    - 有権者は自分の持つ一票の価値（$P$）が低いと、棄権しやすい。
 - 比例性が高い = 自分の一票が議席に変換される確率が高い = 死票が少ない
@@ -48,7 +48,7 @@ senate <- rdrobust_RDsenate
 ```{r}
 #| fig-width: 8
 #| fig-height: 4
-read_csv("_data_slide//rdd/ElectoralSystem_Turnout.csv") |> 
+read_csv("_data_slide/rdd/ElectoralSystem_Turnout.csv") |> 
   filter(!is.na(System) & System != "Not applicable") |> 
   mutate(System = recode(System, 
                          "PR"     = "比例代表制（79）",
@@ -139,7 +139,7 @@ read_csv("data/rdd/ElectoralSystem_Turnout.csv") |>
 - コミューン[^commune]（*commune*）議会選挙（1982〜2013[^reform]）
    - 人口3500人未満のコミューン：多数代表制（大選挙区制）
    - 人口3500人以上のコミューン：比例代表制（プレミアム付）
-   - 以下は架空のデータ（実際の研究成果は[Eggers[2014]](https://doi.org/10.1177/0010414014534199)等を参照^[Eggers, Andrew C.. 2014. "[Proportionality and Turnout: Evidence From French Municipalities](https://doi.org/10.1177/0010414014534199)." *Comparative Political Studies,* 48(2): 135-167.]）
+   - 以下は架空のデータ（実際の研究成果は @eggers-2015 等を参照）
 
 ```{r}
 #| layout: [[-5, 40, -10, 40, -5]]
@@ -300,7 +300,7 @@ ggarrange(fig1, fig2)
 ## 回帰不連続デザイン
 
 - **R**egression **D**iscontinuity **D**esign（[**RDD**]{.alert}）
-   - 参考：[Thistlethwaite and Campbell（1960）](https://doi.org/10.1037/h0044319)
+   - 参考：@thistlewaite-campbell-1960
 - 観測された共変量の値が（制度等によって決められた）閾値のいずれかの側にあるかによって、処置の割り当てが決まる。
    - 「観測された共変量」は[**割当変数**]{.alert}（Running variable）、または**強制変数**（Forcing variable）と呼ばれる。
    - 割当変数（$R_i$）の値が閾値（$c$）を超えた個体を「処置群（$D_i = 1$）」と呼ぶケースが多い。
@@ -1726,3 +1726,16 @@ rdd_density$Estplot +
     legend.box.background = element_rect(fill = "transparent", color = NA)  #transparent legend panel
   )
 ```
+
+## 中断時系列デザイン
+
+中断時系列デザイン（Interrupted Time Series; ITS）
+
+## 地理的回帰不連続デザイン
+
+地理的回帰不連続デザイン（Geographic RDD; GRD）
+
+## 参考文献
+
+::: {#refs}
+:::

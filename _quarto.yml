@@ -31,8 +31,8 @@ website:
         href: reg.qmd
       - text: "7/ 傾向スコア"
         href: ps.qmd
-      - text: "8/ 自然実験"
-        href: naturalexperiment.qmd
+      - text: "8/ 準実験と自然実験"
+        href: qene.qmd
       - text: "9/ 差分の差分法"
         href: did.qmd
       - text: "10/ 回帰不連続デザイン"
@@ -41,8 +41,10 @@ website:
         href: iv.qmd
       - section: "資料"
         contents:
-          - text: "12/マッチング"
+          - text: "マッチング"
             href: matching.qmd
+          - text: "参考文献"
+            href: references.qmd
           - text: "私たちのR"
             href: https://www.jaysong.net/RBook
             target: _blank
@@ -68,5 +70,8 @@ format:
     number-sections: true
     toc-depth: 3
     link-external-newwindow: true
+
+bibliography: references.bib
+csl: _style/apsa.csl #apsa-nissya.csl
 
 freeze: auto

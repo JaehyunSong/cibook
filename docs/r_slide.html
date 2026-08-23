@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -101,7 +101,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-aefbbce9ad3b483054a3d6900c97b6af.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-4ec3ce1acf7b3c31d0bc244927a189f6.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -262,7 +262,7 @@
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>)</span>
 <span id="cb1-2"><a aria-label="2"></a><span class="fu">print</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a aria-label="3"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="パイプ演算子の例2" class="slide level2"><h2>パイプ演算子の例（2）</h2>
 
@@ -272,7 +272,7 @@
 <span id="cb2-3"><a aria-label="3"></a>x <span class="sc">|&gt;</span> </span>
 <span id="cb2-4"><a aria-label="4"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb2-5"><a aria-label="5"></a>  <span class="fu">print</span>()</span>
-<span id="cb2-6"><a aria-label="6"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a aria-label="6"></a><span class="do">## [1] 6.25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="列の整理" class="slide level2"><h2>列の整理</h2>
 <ul>
@@ -832,7 +832,7 @@
 <span><span class="co">## 3     3      1    24    NA</span></span>
 <span><span class="co">## 4     4      1    NA    NA</span></span>
 <span><span class="co">## 5     5      0    24     5</span></span>
-<span><span class="co">## 6     6     NA    39     4</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">## 6     6     NA    39     4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </section><section id="欠損値を含む行の削除" class="slide level2"><h2>欠損値を含む行の削除</h2>
@@ -1007,7 +1007,7 @@
 </section><section id="t検定" class="slide level2"><h2>t検定</h2>
 </section><section id="分散分析" class="slide level2"><h2>分散分析</h2>
 </section><section id="線形回帰モデル" class="slide level2"><h2>線形回帰モデル</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">lm</span>(formula, data, weights)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">lm</span>(formula, data, weights)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>
 <code>formula</code>：<code>結果変数 ~ 説明変数1 + 説明変数2 + ...</code>
@@ -1023,11 +1023,11 @@
 <code>weights</code>：重み付け回帰分析の場合、重み変数の列名</li>
 </ul></section><section id="多重比較の補正" class="slide level2"><h2>多重比較の補正</h2>
 </section><section id="処置効果" class="slide level2"><h2>処置効果</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">lm</span>(結果変数 <span class="sc">~</span> 処置変数 <span class="sc">+</span> 統制変数1 <span class="sc">+</span> 統制変数2 <span class="sc">+</span> ..., <span class="at">data =</span> データフレーム名)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">lm</span>(結果変数 <span class="sc">~</span> 処置変数 <span class="sc">+</span> 統制変数1 <span class="sc">+</span> 統制変数2 <span class="sc">+</span> ..., <span class="at">data =</span> データフレーム名)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="予測値" class="slide level2"><h2>予測値</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">predictions</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">predictions</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="限界効果" class="slide level2"><h2>限界効果</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">slopes</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">slopes</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section><section><section id="可視化-1" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 可視化</h1>
 
@@ -1314,12 +1314,12 @@
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "コピーしました");
+          button.setAttribute("title", "Copied!");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "コピーしました");
+            button.setAttribute("data-bs-title", "Copied!");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

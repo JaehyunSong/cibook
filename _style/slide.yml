@@ -1,6 +1,6 @@
 title: "社会科学における因果推論"
 author: "宋財泫（関西大学）"
-lang: ja
+lang: en
 knitr: 
   opts_chunk: 
     dev: ragg_png

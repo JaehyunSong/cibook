@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -101,7 +101,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-aefbbce9ad3b483054a3d6900c97b6af.css">
+<link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-4ec3ce1acf7b3c31d0bc244927a189f6.css">
 <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -997,7 +997,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>統制群と処置群のサポートが同じ</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1017,7 +1017,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>左：ATT推定可　／　右：ATC推定可</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1037,7 +1037,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <ul>
 <li>右の例の場合、ATO（後述）は推定可能</li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -1588,7 +1588,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <div class="columns">
 <div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##    treat     y stratum  weight
 ## 1      0  2752       3 1.00000
@@ -1615,7 +1615,7 @@ e_i(X) = \mbox{Pr}(D_i = 1 | X = x) = f(\alpha + X^{\prime}\beta)
 <span><span class="co">## 1     0 6984.198</span></span>
 <span><span class="co">## 2     1 6334.135</span></span>
 <span><span class="fl">6334.135</span> <span class="op">-</span> <span class="fl">6984.198</span> <span class="co"># 処置効果の点推定値</span></span>
-<span><span class="co">## [1] -650.063</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">## [1] -650.063</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>線形回帰分析による推定を推奨（後述）</li>
@@ -1802,7 +1802,7 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 <div class="columns">
 <div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span>, n <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##    treat     y      ps weight
 ## 1      0  2752 0.05913 1.0628
@@ -1829,7 +1829,7 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 <span><span class="co">## 1     0 6422.869</span></span>
 <span><span class="co">## 2     1 6647.559</span></span>
 <span><span class="fl">6647.559</span> <span class="op">-</span> <span class="fl">6422.869</span> <span class="co"># 処置効果の点推定値</span></span>
-<span><span class="co">## [1] 224.69</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">## [1] 224.69</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>線形回帰分析による推定を推奨（後述）</li>
@@ -1846,7 +1846,7 @@ w_i^{\tiny\mbox{ATO}} = D_i (1 - e_i(X)) + (1 - D_i) e_i(X)
 </ul>
 </li>
 </ul>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="4">
+<div class="cell quarto-layout-panel" data-layout-ncol="4" data-layout-align="center">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -2330,12 +2330,12 @@ $$
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "コピーしました");
+          button.setAttribute("title", "Copied!");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "コピーしました");
+            button.setAttribute("data-bs-title", "Copied!");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",
