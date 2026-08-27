@@ -358,7 +358,7 @@ $right-arrow: "\2981";
 // ------------------------------------------
 // 4. Third-party & Output Specific (印刷・その他プラグイン)
 // ------------------------------------------
-.gt_table, .gt_row, .gt_col_heading {
+.gt_table, .gt_row, .gt_col_heading, .gt_center, .gt_columns_top_border, .gt_column_spanner_outer {
   background-color: $background !important;
 }
 
