@@ -907,11 +907,11 @@
     "text": "これまでの内容\n\n因果関係と因果推論（潜在的結果枠組み）\n内生性（セレクションバイアス）\nランダム化比較試験（RCT）\n回帰分析\n傾向スコア（層化・重み付け）\n\n今回の内容\n「実際のデータでどうやって”ランダム化”に近い状況を見つけるか」\nこれから学ぶ手法（DID・RDD・IV・合成統制法）は、すべて自然実験の「発見」から始まる"
   },
   {
-    "objectID": "qene_slide.html#復習rctはなぜ強力か",
-    "href": "qene_slide.html#復習rctはなぜ強力か",
+    "objectID": "qene_slide.html#復習因果推論の王道としてのrct",
+    "href": "qene_slide.html#復習因果推論の王道としてのrct",
     "title": "社会科学における因果推論",
-    "section": "復習：RCTはなぜ強力か",
-    "text": "復習：RCTはなぜ強力か\n\n処置（介入）をランダムに割り当てることで、観察されない交絡因子も含めて処置群と統制群が平均的に同質になる\n内生性（セレクションバイアス）に対する（理論上）根本的な解決策\n\nしかし現実には…\n\n倫理的に実行できない（例：喫煙をランダムに割り当てる）\n\n費用・時間がかかりすぎる\n政策はすでに実施されてしまっている（介入前に戻れない）\n\n社会実験自体が政治的・制度的に不可能なことが多い"
+    "section": "復習：因果推論の王道としてのRCT",
+    "text": "復習：因果推論の王道としてのRCT\n\n処置（介入）の無作為割り当て \\(\\leadsto\\) 観察されない交絡因子も含めて処置群と統制群が同質に\n\n内生性（セレクションバイアス）に対する（理論上）根本的な解決策\n\nしかし現実には…\n\n倫理的に実行できない（例：喫煙をランダムに割り当てる）\n\n費用・時間がかかりすぎる\nすでに実施された政策の評価には不向き（介入前に戻れない）\n\n\n\n 研究者が介入せず、観察のみから得られたデータ（観察データ）を使った因果推論が必要"
   },
   {
     "objectID": "qene_slide.html#復習観察データの限界",
@@ -949,25 +949,25 @@
     "text": "自然実験の基本アイデア\n社会や自然そのものがコインを投げてくれている状況\n\n\n\n\n\n\n\n\n\n\n\n\nRCT\n\n研究者がコインを投げ、宋さんの授業を強制的に履修するグループと強制的に履修させないグループを分け、比較\n\nR = コイン投げの結果\n\n\n自然実験\n\n履修登録（対面）日に公共交通機関の遅延等により履修できなかった人と履修できた人を比較1 2\n\n\nR = 公共交通機関の遅延有無\n\n\n\n\nこのような事態が発生したら何かしらの救済措置はあるだろう（そもそも2026年現在、対面のみの履修登録はあり得ない）「履修の意思のある人の中」で履修できた人とできなかった人の比較になるので、厳密にいえば推定対象（estimand）は局所平均処置効果（local ATE; LATE）になる。"
   },
   {
-    "objectID": "qene_slide.html#これまでの手法との違い①内生性への対処法",
-    "href": "qene_slide.html#これまでの手法との違い①内生性への対処法",
+    "objectID": "qene_slide.html#内生性への対処法",
+    "href": "qene_slide.html#内生性への対処法",
     "title": "社会科学における因果推論",
-    "section": "これまでの手法との違い①：内生性への対処法",
-    "text": "これまでの手法との違い①：内生性への対処法\n\n\n\n\n\n\n\n手法\n内生性への対処\n観察されない交絡因子\n\n\n\nRCT\n研究者が処置をランダムに割り当て\n均質\n\n\n共変量調整\n観察された共変量を統制\n\n対処できない（未観測の交絡は残る）\n\n\n自然実験\n社会に既に存在する外生的変動を利用\n処置がas-if randomなら平均的に均衡\n\n\n\n\n回帰分析や傾向スコア法は「observables（観察可能な変数）」の調整にとどまる\n自然実験は、観察できない交絡因子も含めてバイアスを除去できる可能性がある点でRCTに近い"
+    "section": "内生性への対処法",
+    "text": "内生性への対処法\n\n\n\n\n\n\n\n手法\n内生性への対処\n観察されない交絡因子\n\n\n\nRCT\n研究者が処置をランダムに割り当て\n均質\n\n\n共変量調整\n観察された共変量を統制\n未観測の交絡は残る\n\n\n自然実験\n社会に既に存在する外生的ショックを利用\n処置がas-if randomなら平均的に均衡\n\n\n\n\n回帰分析や傾向スコア法は観察可能な/観察済み変数の調整にとどまる\n自然実験は観察できない交絡因子も含めてバイアスを除去できる可能性\n\n適切なケースであれば、RCTに近い"
   },
   {
-    "objectID": "qene_slide.html#これまでの手法との違い②識別の根拠と仮定",
-    "href": "qene_slide.html#これまでの手法との違い②識別の根拠と仮定",
+    "objectID": "qene_slide.html#識別の根拠と仮定",
+    "href": "qene_slide.html#識別の根拠と仮定",
     "title": "社会科学における因果推論",
-    "section": "これまでの手法との違い②：識別の根拠と仮定",
-    "text": "これまでの手法との違い②：識別の根拠と仮定\n\n\n\n\n\n\n\n手法\n識別の根拠\n主な仮定\n\n\n\nRCT\n研究者による無作為割り当て\n独立性（交換可能性・無視可能性）\n\n\n共変量調整\n「観察された変数を統制すれば処置群と統制群は比較可能」という仮定\n条件付き（平均）独立\n\n\n自然実験\n「外生的な出来事による割り当ては、あたかもランダムである」という仮定\nas-if random\n\n\n\n\n共変量調整は「観察された変数さえ揃えれば大丈夫」という強い・検証しづらい仮定に依存する\n自然実験の”as-if random”も仮定であり自明ではない → プラセボ検定・balance test等での間接的な検証が必要（後述）"
+    "section": "識別の根拠と仮定",
+    "text": "識別の根拠と仮定\n\n\n\n\n\n\n手法\n識別の根拠\n\n\n\nRCT\n研究者による無作為割り当てで独立性（交換可能性・無視可能性）が達成\n\n\n共変量調整\n「観察された変数を統制すれば処置群と統制群は比較可能」という仮定（条件付き独立）\n\n\n\n自然実験\n「外生的な出来事による割り当ては、あたかもランダム（as-if random）である」という仮定\n\n\n\n\n共変量調整は「観察された変数さえ揃えれば大丈夫」という非常に強い・検証できない仮定に依存\n自然実験の “as-if random” も仮定であり自明ではない\n\n\n\\(\\Rightarrow\\) プラセボ検定・バランスチェック等を用いた間接的な検証が必要"
   },
   {
-    "objectID": "qene_slide.html#これまでの手法との違い③実行可能性とトレードオフ",
-    "href": "qene_slide.html#これまでの手法との違い③実行可能性とトレードオフ",
+    "objectID": "qene_slide.html#実行可能性とトレードオフ",
+    "href": "qene_slide.html#実行可能性とトレードオフ",
     "title": "社会科学における因果推論",
-    "section": "これまでの手法との違い③：実行可能性とトレードオフ",
-    "text": "これまでの手法との違い③：実行可能性とトレードオフ\n\n\n\n\n\n\n\n\n手法\n実行可能性\n長所\n短所\n\n\n\nRCT\n低い（コスト・倫理・時間の制約）\n高い内的妥当性\n実施できる場面が限られる\n\n\n共変量調整\n高い（既存データがあればすぐ実行可）\nデータの入手・実行が容易\n未観測の交絡に脆弱非常に強い仮定\n\n\n自然実験\n中程度（適切な「出来事」を見つける必要）\n未観測交絡にも対応でき、実データで検証可能\n都合の良い自然実験が常に存在するとは限らない外的妥当性が限定的なことも\n\n\n\n\n自然実験は、RCTの「内的妥当性の高さ」と、共変量調整の「実データで実行できる現実性」の中間\n適切な状況さえ見つかれば実験に準ずる強力な因果推論の手法"
+    "section": "実行可能性とトレードオフ",
+    "text": "実行可能性とトレードオフ\n\n\n\n\n\n\n\n\n手法\n実行可能性\n長所\n短所\n\n\n\nRCT\n低い（コスト・倫理・時間の制約）\n\n高い内的妥当性\n実施できる場面が限られる\n\n\n共変量調整\n高い（データがあればすぐ実行可）\n\nデータの入手・実行が容易\n未観測の交絡に脆弱非常に強い仮定\n\n\n自然実験\n中程度（適切な出来事を見つける必要）\n\n未観測交絡にも対応でき、実データで検証可能\n都合の良い自然実験が常に存在するとは限らない外的妥当性が限定的なことも1\n\n\n\n\n\n自然実験：RCTの「内的妥当性の高さ」 + 共変量調整の「実データで実行できる現実性」\n\n\n適切な状況さえ見つかれば実験に準ずる強力な因果推論の手法\n\n\n得られた処置効果が一部の集団、タイミングのみに限定され、局所処置効果が得られるケースが多い。"
   },
   {
     "objectID": "qene_slide.html#自然実験の主な発生源",
@@ -984,11 +984,18 @@
     "text": "準実験と自然実験\nほぼ同義に使われることも多いが、準実験 &gt; 自然実験\n\n\n準実験（quasi-experiment）：研究者が処置を割り当てないが、何らかの構造（ルール・閾値・タイミングのズレなど）によって処置群・統制群が識別できる研究デザイン全般を指す広い概念\n\n自然実験（natural experiment）：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事（災害、抽選、政策変更のタイミングなど）を処置として使用"
   },
   {
-    "objectID": "qene_slide.html#例1ジョンスノウのコレラ研究1854年",
-    "href": "qene_slide.html#例1ジョンスノウのコレラ研究1854年",
+    "objectID": "qene_slide.html#例史上初の自然実験",
+    "href": "qene_slide.html#例史上初の自然実験",
     "title": "社会科学における因果推論",
-    "section": "例1：ジョン・スノウのコレラ研究（1854年）",
-    "text": "例1：ジョン・スノウのコレラ研究（1854年）\nSnow (1855) ：史上初の自然実験の一つ\n\nLambeth社の取水口移転によるコレラ死亡率の減少（1.107% \\(\\rightarrow\\) 0.253%）\n家庭がどちらの会社と契約するかは、コレラへの感染リスクとは無関係（as-if random）\n\n水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能\nLambeth社契約世帯とS&V社契約世帯は比較可能\n\n\n\nLambeth社とS&V社の違いは? \\(\\Rightarrow\\) 取水口（上流 vs. 下流）\n\n\n\\(\\leadsto\\) コレラの原因は水?!\n\n\n\n\n\n\n\n\n\n\n水道事業者\n      \n        コレラによる死亡率（%）\n      \n      増減（pp）\n    \n\n1949\n      1954\n    \n\n\n\nLambeth\n1.107\n0.253\n−0.854\n\n\nSouthwark and Vauxhall\n0.786\n1.117\n0.331\n\n\n両方\n1.221\n0.998\n−0.223"
+    "section": "例：史上初の自然実験",
+    "text": "例：史上初の自然実験\n\nLambeth社の取水口移転によるコレラ死亡率の減少（1.107% \\(\\rightarrow\\) 0.253%）\n家庭がどちらの会社と契約するかは、コレラへの感染リスクとは無関係（as-if random）\n\n水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能\nLambeth社契約世帯とS&V社契約世帯は比較可能\n\n\n\nLambeth社とS&V社の違いは? \\(\\Rightarrow\\) 取水口の位置（上流 vs. 下流）\n\n\n\\(\\leadsto\\) コレラの原因は空気（miasma）じゃなくて水?! (Snow 1855)\n\n\n\n\n\n\n\n\n\n\n\n水道事業者\n      \n        コレラによる死亡率（%）\n      \n      増減（pp）\n    \n\n1949\n      1954\n    \n\n\n\nLambeth\n1.107\n0.253\n−0.854\n\n\nSouthwark and Vauxhall\n0.786\n1.117\n0.331\n\n\n両方\n1.221\n0.998\n−0.223"
+  },
+  {
+    "objectID": "qene_slide.html#snow1855の研究",
+    "href": "qene_slide.html#snow1855の研究",
+    "title": "社会科学における因果推論",
+    "section": "Snow（1855）の研究",
+    "text": "Snow（1855）の研究\n\n\n\n\n\n出典：John Snow Archive and Research Companion"
   },
   {
     "objectID": "qene_slide.html#例2ベトナム戦争の徴兵くじangrist-1990",
@@ -998,18 +1005,18 @@
     "text": "例2：ベトナム戦争の徴兵くじ（Angrist, 1990） \n\nRQ：軍役経験は、その後の生涯賃金にどう影響するか\n\n米国は1970年代、誕生日に基づく抽選（くじ）で徴兵順位を決定\n誕生日は本人の能力や将来の所得とは無関係 \\(\\rightarrow\\) as-if random\n\n\n\\(\\rightarrow\\) くじの番号を操作変数（instrumental variable; IV）として利用"
   },
   {
-    "objectID": "qene_slide.html#例3マリエルボートリフトcard-1990",
-    "href": "qene_slide.html#例3マリエルボートリフトcard-1990",
+    "objectID": "qene_slide.html#例2マリエル難民事件",
+    "href": "qene_slide.html#例2マリエル難民事件",
     "title": "社会科学における因果推論",
-    "section": "例3：マリエル・ボートリフト（Card, 1990）\n",
-    "text": "例3：マリエル・ボートリフト（Card, 1990）\n\nRQ：移民の急増は、既存住民の賃金・雇用にどう影響するか\n\n1980年、キューバのマリエル港からの出国が突然自由化\n数か月でマイアミの労働力人口が 約7%急増（移民の大量流入）\n移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象\n\n\n\\(\\rightarrow\\) マイアミを「処置群」、類似都市を「統制群」として比較"
+    "section": "例2：マリエル難民事件\n",
+    "text": "例2：マリエル難民事件\n\nCard (1990)\nRQ：移民の急増は、既存住民の賃金・雇用にどう影響するか\n\n1980年、キューバのマリエル港からの出国が突然自由化\n数か月でマイアミの労働力人口が 約7%急増（移民の大量流入）\n移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象\n\n\n\\(\\rightarrow\\) マイアミを「処置群」、類似都市を「統制群」として比較"
   },
   {
-    "objectID": "qene_slide.html#例4出生月と教育年数angrist-krueger-1991",
-    "href": "qene_slide.html#例4出生月と教育年数angrist-krueger-1991",
+    "objectID": "qene_slide.html#例4教育年数の賃金",
+    "href": "qene_slide.html#例4教育年数の賃金",
     "title": "社会科学における因果推論",
-    "section": "例4：出生月と教育年数（Angrist & Krueger, 1991）",
-    "text": "例4：出生月と教育年数（Angrist & Krueger, 1991）\nRQ：教育年数は将来の賃金にどう影響するか？\n\n米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学\n一方、義務教育は「16歳になるまで」で退学可能\n\n\n\\(\\rightarrow\\) 早生まれの子ほど、法律上は短い年数で義務教育を終えられる\n\n\n\n出生月（＝誕生日）は本人の能力とは無関係 \\(\\rightarrow\\) as-if random な教育年数の変動\n\n\n\\(\\rightarrow\\) 出生月を教育年数の操作変数として利用"
+    "section": "例4：教育年数の賃金 \n",
+    "text": "例4：教育年数の賃金 \n\nAngrist and Krueger (1991)\nRQ：教育年数は将来の賃金にどう影響するか？\n\n米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学\n一方、義務教育は「16歳になるまで」で退学可能\n\n\n\\(\\rightarrow\\) 早生まれの子ほど、法律上は短い年数で義務教育を終えられる\n\n\n\n出生月（= 誕生日）は本人の能力とは無関係 \\(\\rightarrow\\) as-if random な教育年数\n\n\n\\(\\rightarrow\\) 出生月を教育年数の操作変数として利用"
   },
   {
     "objectID": "qene_slide.html#例5ニュージャージー州の最低賃金card-krueger-1994",
@@ -1059,6 +1066,13 @@
     "title": "社会科学における因果推論",
     "section": "操作変数法",
     "text": "操作変数法\n操作変数法（instrumental variable; IV）\n\n操作変数：処置に影響を与えるが、結果には直接影響しない外生\n\n「除外制約」の妥当性が操作変数法の重要論点\n\n\n主に2段階回帰（Two-Stage Least Squares; 2SLS）を利用して処置効果を推定\n例）教育年数と賃金(Angrist and Krueger 1991)、メディア接触と民主主義への評価(Kern and Hainmueller 2017)\n\n\nここに図は無理か"
+  },
+  {
+    "objectID": "qene_slide.html#参考文献",
+    "href": "qene_slide.html#参考文献",
+    "title": "社会科学における因果推論",
+    "section": "参考文献",
+    "text": "参考文献\n\n\nAngrist, Joshua D., and Alan B. Krueger. 1991. “Does Compulsory School Attendance Affect Schooling and Earnings?” The Quarterly Journal of Economics 106: 979–1014. doi:10.2307/2937954.\n\n\nCard, David. 1990. “The Impact of the Mariel Boatlift on the Miami Labor Market.” Industrial and Labor Relations Review 43: 245–57. doi:10.1177/001979399004300205.\n\n\nCarpenter, Christopher, and Carlos Dobkin. 2009. “The Effect of Alcohol Consumption on Mortality: Regression Discontinuity Evidence from the Minimum Drinking Age.” American Economic Journal: Applied Economics 1: 164–82. doi:10.1257/app.1.1.164.\n\n\nKern, Holger Lutz, and Jens Hainmueller. 2017. “Opium for the Masses: How Foreign Media Can Stabilize Authoritarian Regimes.” Political Analysis 17: 377–99. doi:10.1093/pan/mpp017.\n\n\nLee, David S. 2008. “Randomized Experiments from Non-Random Selection in u.s. House Elections.” Journal of Econometrics 142: 675–97. doi:10.1016/j.jeconom.2007.05.004.\n\n\nSnow, John. 1855. On the Mode of Communication of Cholera. Second. John Churchill."
   },
   {
     "objectID": "ps_slide.html#因果推論の基本枠組み-rubin-causal-model",
@@ -1565,225 +1579,225 @@
     "objectID": "ci_slide.html#因果関係",
     "href": "ci_slide.html#因果関係",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "因果関係：原因（X）と結果（Y）の関係\n\nXがYを引き起こした\n\n例）\\(\\bigcirc \\bigcirc\\)の当選（X）が戦争（Y）を引き起こした\n\nXが増えたから、Yも増えた\n\n例）食事量（X）を増やしたから、体重（Y）も増えた\n\nXが小さくなったから、Yは大きくなった\n\n例）金利（X）が下がったから、株価（Y）が上がった\n\nXが高くなったから、Yは少なくなった\n\n例）ストレス（X）が溜まったから、髪の毛（Y）が減った"
+    "section": "因果関係",
+    "text": "因果関係\n因果関係：原因（X）と結果（Y）の関係\n\nXがYを引き起こした\n\n例）\\(\\bigcirc \\bigcirc\\)の当選（X）が戦争（Y）を引き起こした\n\n\nXが増えたから、Yも増えた\n\n例）食事量（X）を増やしたから、体重（Y）も増えた\n\n\nXが小さくなったから、Yは大きくなった\n\n例）金利（X）が下がったから、株価（Y）が上がった\n\n\nXが高くなったから、Yは少なくなった\n\n例）ストレス（X）が溜まったから、髪の毛（Y）が減った"
   },
   {
     "objectID": "ci_slide.html#果物消費量と鉄道会社の株価",
     "href": "ci_slide.html#果物消費量と鉄道会社の株価",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "アメリカにおける1世帯当たりと年間果物消費量とカナダ国鉄の株価の関係\n\n\\(\\rho\\) = 0.986（p &lt; 0.001）"
+    "section": "果物消費量と鉄道会社の株価",
+    "text": "果物消費量と鉄道会社の株価\nアメリカにおける1世帯当たりと年間果物消費量とカナダ国鉄の株価の関係\n\n\n\\(\\rho\\) = 0.986（p &lt; 0.001）"
   },
   {
     "objectID": "ci_slide.html#政治学者とスーパーマーケット",
     "href": "ci_slide.html#政治学者とスーパーマーケット",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "ワシントンDC内の政治学者数とWhole Foodsに対する顧客満足度の関係\n\n\\(\\rho\\) = 0.856（p &lt; 0.001）"
+    "section": "政治学者とスーパーマーケット",
+    "text": "政治学者とスーパーマーケット\nワシントンDC内の政治学者数とWhole Foodsに対する顧客満足度の関係\n\n\n\\(\\rho\\) = 0.856（p &lt; 0.001）"
   },
   {
     "objectID": "ci_slide.html#政策的含意",
     "href": "ci_slide.html#政策的含意",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "例1：我が社（カナダ国鉄）の株価を上げたい\n\n解決策 \\(\\Rightarrow\\) アメリカ人に新鮮な果物を無料で提供する\n\n例2：我が国（アメリカ）の肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい\n\n解決策 \\(\\Rightarrow\\) カナダ国鉄の株を爆買いする\n\n\n\n\n\n\n例：我が社（Whole Foods）に対する顧客満足度を高めたい\n\n解決策 \\(\\Rightarrow\\) 政治学者をDCに送り込む\n\n\n\n\n本当にこれで良いのか"
+    "section": "政策的含意",
+    "text": "政策的含意\n果物消費量と鉄道会社の株価\n\n例1：我が社（カナダ国鉄）の株価を上げたい\n\n\n解決策 \\(\\Rightarrow\\) アメリカ人に新鮮な果物を無料で提供する\n\n\n例2：我が国（アメリカ）の肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい\n\n\n解決策 \\(\\Rightarrow\\) カナダ国鉄の株を爆買いする\n\n\n\n政治学者とスーパーマーケット\n\n例：我が社（Whole Foods）に対する顧客満足度を高めたい\n\n\n解決策 \\(\\Rightarrow\\) 政治学者をDCに送り込む\n\n\n\n\n\n本当にこれで良いのか"
   },
   {
     "objectID": "ci_slide.html#様々な可能性",
     "href": "ci_slide.html#様々な可能性",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "XがYの間に相関関係が存在する場合、XとYの間には因果関係が存在するのか\n\n\n\n\n\n\nXがYの原因\n\n\n\n\n\n\n\nYがXの原因\n\n\n\n\n\n\n\nXとYが互いに影響し合う（互恵関係）\n\n\n\n\n\n\n\n\n\n\n\nXがYの原因（Zを経由）\n\n\n\n\n\n\n\nXがYは無関係（共通要因からの影響）\n\n\n\n\n\n\n\nXがYは無関係（たまたまの相関）"
+    "section": "様々な可能性",
+    "text": "様々な可能性\nXがYの間に相関関係が存在する場合、XとYの間には因果関係が存在するのか\n\n\n\n\n\nXがYの原因\n\n\n\n\n\nYがXの原因\n\n\n\n\n\nXとYが互いに影響し合う（互恵関係）\n\n\n\n\n\n\n\n\n\nXがYの原因（Zを経由）\n\n\n\n\n\nXがYは無関係（共通要因からの影響）\n\n\n\n\n\nXがYは無関係（たまたまの相関）"
   },
   {
     "objectID": "ci_slide.html#相関は因果の十分条件か",
     "href": "ci_slide.html#相関は因果の十分条件か",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "ゲームオタクほど身長が伸びる?"
+    "section": "相関は因果の十分条件か",
+    "text": "相関は因果の十分条件か\nゲームオタクほど身長が伸びる?"
   },
   {
     "objectID": "ci_slide.html#相関は因果の十分条件かno",
     "href": "ci_slide.html#相関は因果の十分条件かno",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "性別で条件付けると因果効果は確認されない"
+    "section": "相関は因果の十分条件か：No!",
+    "text": "相関は因果の十分条件か：No!\n性別で条件付けると因果効果は確認されない"
   },
   {
     "objectID": "ci_slide.html#相関は因果の必要条件か",
     "href": "ci_slide.html#相関は因果の必要条件か",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "職業訓練を受けても年収は上がらない?"
+    "section": "相関は因果の必要条件か",
+    "text": "相関は因果の必要条件か\n職業訓練を受けても年収は上がらない?"
   },
   {
     "objectID": "ci_slide.html#相関は因果の必要条件かno",
     "href": "ci_slide.html#相関は因果の必要条件かno",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "訓練前の年収で条件付けると正の効果が確認できる"
+    "section": "相関は因果の必要条件か：No!",
+    "text": "相関は因果の必要条件か：No!\n訓練前の年収で条件付けると正の効果が確認できる"
   },
   {
     "objectID": "ci_slide.html#相関関係と因果関係",
     "href": "ci_slide.html#相関関係と因果関係",
     "title": "社会科学における因果推論",
-    "section": "",
-    "text": "相関は因果の必要条件でも、十分条件でも、必要十分条件でもない\n\n信頼できる因果推論のためには適切な条件付けに基づく比較が不可欠\n条件付け（conditioning） / 統制（control） \n\n特定の変数の値が一致するケースに限定すること\n例）男性（女性）におけるゲームプレイ時間と身長の関係\n\n\n\n“Conditioning is the soul of statistics” (Blitzstein and Hwang 2019, 46)\n\n\n因果推論のための比較の方法\n\nA：1日ゲームプレイ時間が0分の男性の身長\nB：1日ゲームプレイ時間が300分の男性の身長\nAとBを比較する = 因果推論? \\(\\leftarrow\\) Yes! But, …"
+    "section": "相関関係と因果関係",
+    "text": "相関関係と因果関係\n相関は因果の必要条件でも、十分条件でも、必要十分条件でもない\n\n信頼できる因果推論のためには適切な条件付けに基づく比較が不可欠\n\n条件付け（conditioning） / 統制（control） \n\n特定の変数の値が一致するケースに限定すること\n例）男性（女性）におけるゲームプレイ時間と身長の関係\n\n\n\n\n“Conditioning is the soul of statistics” (Blitzstein and Hwang 2019, 46)\n\n\n因果推論のための比較の方法\n\nA：1日ゲームプレイ時間が0分の男性の身長\nB：1日ゲームプレイ時間が300分の男性の身長\nAとBを比較する = 因果推論? \\(\\leftarrow\\) Yes! But, …"
   },
   {
     "objectID": "ci_slide.html#因果推論スキルと年収",
     "href": "ci_slide.html#因果推論スキルと年収",
     "title": "社会科学における因果推論",
-    "section": "2.1 因果推論スキルと年収",
-    "text": "2.1 因果推論スキルと年収\n問い：因果推論スキルを身につければ年収が上がるか\n\n原因：因果推論スキルの有無\n\n例）宋さんの授業を履修したかどうか\n\n結果：年収\n\n例）卒業3年後の年収"
+    "section": "因果推論スキルと年収",
+    "text": "因果推論スキルと年収\n問い：因果推論スキルを身につければ年収が上がるか\n\n原因：因果推論スキルの有無\n\n例）宋さんの授業を履修したかどうか\n\n\n結果：年収\n\n例）卒業3年後の年収"
   },
   {
     "objectID": "ci_slide.html#宋に任せてください",
     "href": "ci_slide.html#宋に任せてください",
     "title": "社会科学における因果推論",
-    "section": "2.2 宋に任せてください",
-    "text": "2.2 宋に任せてください\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったBの比較\n\n508 - 358 = 150\n宋さんの授業には150万円の価値がある?\n\\(\\Rightarrow\\) 宋さんの給与を2倍にすべき\n\\(\\Rightarrow\\) 宋さんにノーベル賞を授与すべき\n\n\n\n\n\n\n※ 個人の感想であり効果・効能を保証するものではありません。"
+    "section": "宋に任せてください",
+    "text": "宋に任せてください\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったBの比較\n\n508 - 358 = 150\n宋さんの授業には150万円の価値がある?\n\n\\(\\Rightarrow\\) 宋さんの給与を2倍にすべき\n\n\\(\\Rightarrow\\) 宋さんにノーベル賞を授与すべき\n\n\n\n\n\n\n※ 個人の感想であり効果・効能を保証するものではありません。"
   },
   {
     "objectID": "ci_slide.html#本当に任せても良いのか",
     "href": "ci_slide.html#本当に任せても良いのか",
     "title": "社会科学における因果推論",
-    "section": "2.3 本当に任せても良いのか",
-    "text": "2.3 本当に任せても良いのか\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったCの比較\n\n508 - 608 = -100\n宋さんの授業は邪悪な授業?\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんの給与を2倍にすべき\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんにノーベル賞を授与すべき\n\n\n\n\n\n\n\n宋さんは悪くない"
+    "section": "本当に任せても良いのか",
+    "text": "本当に任せても良いのか\n宋さんの授業を履修すれば年収は上がるか\n\n\n\n\n\n\n\n\n\n\n\n\n宋さんの授業を履修したAと履修しなかったCの比較\n\n508 - 608 = -100\n宋さんの授業は邪悪な授業?\n\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんの給与を2倍にすべき\n\n\\(\\Rightarrow\\) これから頑張ってもらうために、宋さんにノーベル賞を授与すべき\n\n\n\n\n\n\n\n宋さんは悪くない"
   },
   {
     "objectID": "ci_slide.html#何と何を比較するか",
     "href": "ci_slide.html#何と何を比較するか",
     "title": "社会科学における因果推論",
-    "section": "2.4 何と何を比較するか",
-    "text": "2.4 何と何を比較するか\n比較対象によって因果効果の推定値が異なる\n\n\n\n\n\n\n\n\n\n\n\n\nどの比較が適切か\n\n\n\n比較\n因果効果の推定値\n\n\n\n\nA vs. B\n150万円1\n\n\nA vs. C\n-100万円2\n\n\n\n\n平均を取って25万円?"
+    "section": "何と何を比較するか",
+    "text": "何と何を比較するか\n比較対象によって因果効果の推定値が異なる\n\n\n\n\n\n\n\n\n\n\n\nどの比較が適切か\n\n\n比較\n因果効果の推定値\n\n\n\nA vs. B\n150万円1\n\n\n\nA vs. C\n-100万円2\n\n\n\n\n\n平均を取って25万円?\n\n\n多分、この結果が正しいこんなはずがない"
   },
   {
     "objectID": "ci_slide.html#なぜaさんは宋さんの授業を履修したか",
     "href": "ci_slide.html#なぜaさんは宋さんの授業を履修したか",
     "title": "社会科学における因果推論",
-    "section": "2.5 なぜAさんは宋さんの授業を履修したか",
-    "text": "2.5 なぜAさんは宋さんの授業を履修したか\nなぜAさんは宋さんの授業を履修しようと思ったのか\n\n理由1：宋さんのファンだから\n理由2：宋さんがイケメンだから目の保養のために\n理由3：この授業を履修すると年収が上がると思ったから\n理由4：この授業を履修するように指導教員に脅迫されたから\n理由5：気になる子が履修しているから\n理由6：ノーベル因果推論賞を狙っているから\n理由7：因果推論分からんやつにマウント取りたりから\n\n\n\n\\(\\Rightarrow\\) すべて正しいと思われるが3、ここでは年収に関連する理由3に注目"
+    "section": "なぜAさんは宋さんの授業を履修したか",
+    "text": "なぜAさんは宋さんの授業を履修したか\nなぜAさんは宋さんの授業を履修しようと思ったのか\n\n理由1：宋さんのファンだから\n理由2：宋さんがイケメンだから目の保養のために\n理由3：この授業を履修すると年収が上がると思ったから\n\n理由4：この授業を履修するように指導教員に脅迫されたから\n理由5：気になる子が履修しているから\n理由6：ノーベル因果推論賞を狙っているから\n理由7：因果推論分からんやつにマウント取りたりから\n\n\n\n\n\\(\\Rightarrow\\) すべて正しいと思われるが1、ここでは年収に関連する理由3に注目\nただし、理由4を除く"
   },
   {
     "objectID": "ci_slide.html#aさんの意思決定",
     "href": "ci_slide.html#aさんの意思決定",
     "title": "社会科学における因果推論",
-    "section": "2.6 Aさんの意思決定",
-    "text": "2.6 Aさんの意思決定\n理由3：この授業を履修すると年収が上がると思ったから\n\n宋さんの授業を履修したら…\n\n宋さんの授業を履修しなかった場合に比べ、年収が上がるはず!\n\n宋さんの授業を履修しなかったら…\n\n宋さんの授業を履修した場合に比べ、年収が下がるはず!\n\n\n\n\nAさんは「履修をした場合の自分」と「履修をしなかった場合の自分」を比較し、履修を決定\n\n\\(\\Rightarrow\\) Aさんはすでに履修してしまったので、Aさんの適切な比較対象は「履修をしなかった場合のAさん」"
+    "section": "Aさんの意思決定",
+    "text": "Aさんの意思決定\n理由3：この授業を履修すると年収が上がると思ったから\n\n宋さんの授業を履修したら…\n\n宋さんの授業を履修しなかった場合に比べ、年収が上がるはず!\n\n\n宋さんの授業を履修しなかったら…\n\n宋さんの授業を履修した場合に比べ、年収が下がるはず!\n\n\n\n\n\nAさんは「履修をした場合の自分」と「履修をしなかった場合の自分」を比較し、履修を決定\n\n\n\\(\\Rightarrow\\) Aさんはすでに履修してしまったので、Aさんの適切な比較対象は「履修をしなかった場合のAさん」"
   },
   {
     "objectID": "ci_slide.html#例啓発活動と投票率",
     "href": "ci_slide.html#例啓発活動と投票率",
     "title": "社会科学における因果推論",
-    "section": "2.7 例）啓発活動と投票率",
-    "text": "2.7 例）啓発活動と投票率\n啓発活動は投票率を上げるか\n\n\n\n\n\n\n\n\n\n\n\n\n\n啓発活動によって投票率が10%p\\(\\downarrow\\)?\nB市の適切な比較対象は?\n\nA市?\n啓発活動をしなかった場合のB市?"
+    "section": "例）啓発活動と投票率",
+    "text": "例）啓発活動と投票率\n啓発活動は投票率を上げるか\n\n\n\n\n\n\n\n\n\n\n\n\n啓発活動によって投票率が10%p\\(\\downarrow\\)?\nB市の適切な比較対象は?\n\nA市?\n\n啓発活動をしなかった場合のB市?"
   },
   {
     "objectID": "ci_slide.html#b市の意思決定",
     "href": "ci_slide.html#b市の意思決定",
     "title": "社会科学における因果推論",
-    "section": "2.8 B市の意思決定",
-    "text": "2.8 B市の意思決定\nなぜB市は予算を使ってまで啓発活動をしようと思ったのか\n\n理由1：啓発活動をすれば投票率が上がると思ったから\n理由2：元々の投票率が低すぎて何かしようと思ったから\n\\(\\Rightarrow\\) 啓発活動をしたら何もしなかった場合に比べ、投票率が上がるはず!\n\n\n\nB市は「啓発活動をした場合のB市」と「啓発活動をしなかった場合のB市」を比較し、啓発活動の実施有無を決定\n\n\\(\\Rightarrow\\) B市の適切な比較対象は「啓発活動をしなかった場合のB市」"
+    "section": "B市の意思決定",
+    "text": "B市の意思決定\nなぜB市は予算を使ってまで啓発活動をしようと思ったのか\n\n理由1：啓発活動をすれば投票率が上がると思ったから\n理由2：元々の投票率が低すぎて何かしようと思ったから\n\n\\(\\Rightarrow\\) 啓発活動をしたら何もしなかった場合に比べ、投票率が上がるはず!\n\n\n\n\nB市は「啓発活動をした場合のB市」と「啓発活動をしなかった場合のB市」を比較し、啓発活動の実施有無を決定\n\n\n\\(\\Rightarrow\\) B市の適切な比較対象は「啓発活動をしなかった場合のB市」"
   },
   {
     "objectID": "ci_slide.html#例ゲームのプレイ時間と身長",
     "href": "ci_slide.html#例ゲームのプレイ時間と身長",
     "title": "社会科学における因果推論",
-    "section": "2.9 例）ゲームのプレイ時間と身長",
-    "text": "2.9 例）ゲームのプレイ時間と身長\n因果推論における理想の比較対象は「もし\\(\\bigcirc \\bigcirc\\)したら/しなかったら…」\n\n\n\n\n\n\n\n\n\n\n\n\n\n1日のゲームプレイ時間が3時間伸びると身長が9cm縮む?\n宋の弟は宋の適切な比較対象か\n\n幼少期の親の経済力\n健康志向の程度\n…\n\n宋の適切な比較対象は「ゲームを全くプレイしない宋4」"
+    "section": "例）ゲームのプレイ時間と身長",
+    "text": "例）ゲームのプレイ時間と身長\n因果推論における理想の比較対象は「もし\\(\\bigcirc \\bigcirc\\)したら/しなかったら…」\n\n\n\n\n\n\n\n\n\n\n\n\n1日のゲームプレイ時間が3時間伸びると身長が9cm縮む?\n宋の弟は宋の適切な比較対象か\n\n幼少期の親の経済力\n健康志向の程度\n…\n\n\n宋の適切な比較対象は「ゲームを全くプレイしない宋1」\n\n\n宋の弟も宋だが、ここでの宋はあなたが知っているその宋だ。"
   },
   {
     "objectID": "ci_slide.html#潜在的結果枠組みpotential-outcome-framework",
     "href": "ci_slide.html#潜在的結果枠組みpotential-outcome-framework",
     "title": "社会科学における因果推論",
-    "section": "3.1 潜在的結果枠組み（Potential outcome framework）",
-    "text": "3.1 潜在的結果枠組み（Potential outcome framework）\n因果効果を潜在的結果間の差分として捉える考え方\n\n2種類の潜在的結果\n\n事実（factual）\n反事実（counterfactual）\n\n因果効果 = 事実と反事実の差分"
+    "section": "潜在的結果枠組み（Potential outcome framework）\n",
+    "text": "潜在的結果枠組み（Potential outcome framework）\n\n因果効果を潜在的結果間の差分として捉える考え方\n\n2種類の潜在的結果\n\n\n事実（factual）\n\n\n反事実（counterfactual）\n\n\n\n因果効果 = 事実と反事実の差分"
   },
   {
     "objectID": "ci_slide.html#表記法",
     "href": "ci_slide.html#表記法",
     "title": "社会科学における因果推論",
-    "section": "3.2 表記法",
-    "text": "3.2 表記法\n\n\\(i\\)：個体の固有番号（1, 2, 3, …, \\(n\\)）\n\\(D_i\\)：個体\\(i\\)の処置変数（0、または1）\n\n処置を受けた個体の集合を処置群5（treatment group）、受けなかった個体の集合を統制群6（control group）と呼ぶ\n\n\\(Y_i\\)：個体\\(i\\)の結果変数（応答変数）\n\n\\(Y_i(D_i = 1) = Y_i(1)\\)：個体\\(i\\)が処置を受けた場合の結果変数\n\\(Y_i(D_i = 0) = Y_i(0)\\)：個体\\(i\\)が処置を受けなかった場合の結果変数"
+    "section": "表記法",
+    "text": "表記法\n\n\n\\(i\\)：個体の固有番号（1, 2, 3, …, \\(n\\)）\n\n\\(D_i\\)：個体\\(i\\)の処置変数（0、または1）\n\n処置を受けた個体の集合を処置群1（treatment group）、受けなかった個体の集合を統制群2（control group）と呼ぶ\n\n\n\n\\(Y_i\\)：個体\\(i\\)の結果変数（応答変数）\n\n\n\\(Y_i(D_i = 1) = Y_i(1)\\)：個体\\(i\\)が処置を受けた場合の結果変数\n\n\\(Y_i(D_i = 0) = Y_i(0)\\)：個体\\(i\\)が処置を受けなかった場合の結果変数\n\n\n「処置」は介入、刺激、曝露（exposure）などとも呼ばれる。対照群とも呼ばれる。"
   },
   {
     "objectID": "ci_slide.html#潜在的結果potential-outcome",
     "href": "ci_slide.html#潜在的結果potential-outcome",
     "title": "社会科学における因果推論",
-    "section": "3.3 潜在的結果（potential outcome）",
-    "text": "3.3 潜在的結果（potential outcome）\n特定の固定が処置を受けた/受けなかった場合の結果変数の値\n\n\\(D_i = 0\\)の場合：\\(Y_i (0)\\)は事実、\\(Y_i (1)\\)が反事実\n\\(D_i = 1\\)の場合：\\(Y_i (0)\\)が反事実、\\(Y_i (1)\\)は事実\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\n\n\n\n1\n0\n344\n444\n\n\n2\n0\n455\n505\n\n\n3\n0\n479\n379\n\n\n4\n1\n404\n554\n\n\n5\n1\n295\n395\n\n\n6\n1\n298\n248"
+    "section": "潜在的結果（potential outcome）\n",
+    "text": "潜在的結果（potential outcome）\n\n特定の固定が処置を受けた/受けなかった場合の結果変数の値\n\n\n\\(D_i = 0\\)の場合：\\(Y_i (0)\\)は事実、\\(Y_i (1)\\)が反事実\n\n\n\\(D_i = 1\\)の場合：\\(Y_i (0)\\)が反事実、\\(Y_i (1)\\)は事実\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\n\n\n1\n0\n344\n444\n\n\n2\n0\n455\n505\n\n\n3\n0\n479\n379\n\n\n4\n1\n404\n554\n\n\n5\n1\n295\n395\n\n\n6\n1\n298\n248"
   },
   {
     "objectID": "ci_slide.html#因果効果の定義",
     "href": "ci_slide.html#因果効果の定義",
     "title": "社会科学における因果推論",
-    "section": "3.4 因果効果の定義",
-    "text": "3.4 因果効果の定義\n個体レベルにおける処置効果（individual treatment effect; ITE）\n\n全く同じ時点、かつ同じ個体における\\(Y_i(1)\\)と\\(Y_i(0)\\)の差分\n\n\\[\n\\textsf{ITE}_i = Y_i (1) - Y_i (0)\n\\]\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0"
+    "section": "因果効果の定義",
+    "text": "因果効果の定義\n個体レベルにおける処置効果（individual treatment effect; ITE）\n\n全く同じ時点、かつ同じ個体における\\(Y_i(1)\\)と\\(Y_i(0)\\)の差分\n\n\\[\n\\textsf{ITE}_i = Y_i (1) - Y_i (0)\n\\]\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0"
   },
   {
     "objectID": "ci_slide.html#平均処置効果1",
     "href": "ci_slide.html#平均処置効果1",
     "title": "社会科学における因果推論",
-    "section": "3.5 平均処置効果（1）",
-    "text": "3.5 平均処置効果（1）\n平均処置効果（average treatment effect; ATE）：ITEの平均\n\\[\n\\textcolor{red}{\\textsf{ATE}} = \\frac{1}{n} \\sum_i^n \\bigl( \\textcolor{royalblue}{Y_i (1) - Y_i (0)} \\bigr) = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\n\\]\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\nITE1 =  100\n\n\n2\n0\n455\n505\nITE2 =  50\n\n\n3\n0\n479\n379\nITE3 =  -100\n\n\n4\n1\n404\n554\nITE4 =  150\n\n\n5\n1\n295\n395\nITE5 =  100\n\n\n6\n1\n248\n248\nITE6 =  0\n\n\n平均\n\n370.8\n420.8\n50"
+    "section": "平均処置効果（1）",
+    "text": "平均処置効果（1）\n平均処置効果（average treatment effect; ATE）：ITEの平均\n\\[\n\\textcolor{red}{\\textsf{ATE}} = \\frac{1}{n} \\sum_i^n \\bigl( \\textcolor{royalblue}{Y_i (1) - Y_i (0)} \\bigr) = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\n\\]\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n444\n\nITE1 =  100\n\n\n\n2\n0\n455\n505\n\nITE2 =  50\n\n\n\n3\n0\n479\n379\n\nITE3 =  -100\n\n\n\n4\n1\n404\n554\n\nITE4 =  150\n\n\n\n5\n1\n295\n395\n\nITE5 =  100\n\n\n\n6\n1\n248\n248\n\nITE6 =  0\n\n\n\n平均\n\n370.8\n420.8\n50"
   },
   {
     "objectID": "ci_slide.html#平均処置効果2",
     "href": "ci_slide.html#平均処置効果2",
     "title": "社会科学における因果推論",
-    "section": "3.6 平均処置効果（2）",
-    "text": "3.6 平均処置効果（2）\n平均処置効果（average treatment effect; ATE）：\\(Y_i(1)\\)の平均値 - \\(Y_i(0)\\)の平均値\n\\[\n\\textcolor{red}{\\textsf{ATE}} = \\frac{1}{n} \\sum_i^n \\bigl( Y_i (1) - Y_i (0) \\bigr) = \\textcolor{royalblue}{\\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]}\n\\]\n\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n\\(\\mathbb{E}[Y_i(0)]\\) = 370.8\n\\(\\mathbb{E}[Y_i(1)]\\) = 420.8\n50"
+    "section": "平均処置効果（2）",
+    "text": "平均処置効果（2）\n平均処置効果（average treatment effect; ATE）：\\(Y_i(1)\\)の平均値 - \\(Y_i(0)\\)の平均値\n\\[\n\\textcolor{red}{\\textsf{ATE}} = \\frac{1}{n} \\sum_i^n \\bigl( Y_i (1) - Y_i (0) \\bigr) = \\textcolor{royalblue}{\\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]}\n\\]\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n\n\\(\\mathbb{E}[Y_i(0)]\\) = 370.8\n\n\n\\(\\mathbb{E}[Y_i(1)]\\) = 420.8\n\n50"
   },
   {
     "objectID": "ci_slide.html#参考処置群における平均処置効果att",
     "href": "ci_slide.html#参考処置群における平均処置効果att",
     "title": "社会科学における因果推論",
-    "section": "3.7 参考：処置群における平均処置効果（ATT）",
-    "text": "3.7 参考：処置群における平均処置効果（ATT）\n統計的因果推論ではATTが推定対象となるケースも多い7\n\nATT（Average Treatment Effect on the Treated; 処置群におけるATE）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 1] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\\)\n\nATEはATTとATCの加重平均\n\n\nATTの例\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n\n\n83.3"
+    "section": "参考：処置群における平均処置効果（ATT）",
+    "text": "参考：処置群における平均処置効果（ATT）\n統計的因果推論ではATTが推定対象となるケースも多い1\n\n\nATT（Average Treatment Effect on the Treated; 処置群におけるATE）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 1] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\\)\n\n\nATEはATTとATCの加重平均\n\n\nATTの例\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n4\n1\n404\n554\n150\n\n\n5\n1\n295\n395\n100\n\n\n6\n1\n248\n248\n0\n\n\n平均\n\n\n\n83.3\n\n\n詳細は割愛するが、今後必要に応じて適宜解説する。"
   },
   {
     "objectID": "ci_slide.html#参考統制群における平均処置効果atc",
     "href": "ci_slide.html#参考統制群における平均処置効果atc",
     "title": "社会科学における因果推論",
-    "section": "3.8 参考：統制群における平均処置効果（ATC）",
-    "text": "3.8 参考：統制群における平均処置効果（ATC）\n統計的因果推論ではATTが推定対象となるケースも多い8\n\nATC（Average Treatment Effect on the Controlled; 統制群におけるATE）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 0] - \\mathbb{E}[Y_i(0) | D_i = 0] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]\\)\n\nATEはATTとATCの加重平均\n\n\nATCの例\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n平均\n\n\n\n16.7"
+    "section": "参考：統制群における平均処置効果（ATC）",
+    "text": "参考：統制群における平均処置効果（ATC）\n統計的因果推論ではATTが推定対象となるケースも多い1\n\n\nATC（Average Treatment Effect on the Controlled; 統制群におけるATE）\n\n\\(\\mathbb{E}[Y_i(1) | D_i = 0] - \\mathbb{E}[Y_i(0) | D_i = 0] = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 0]\\)\n\n\nATEはATTとATCの加重平均\n\n\nATCの例\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n444\n100\n\n\n2\n0\n455\n505\n50\n\n\n3\n0\n479\n379\n-100\n\n\n平均\n\n\n\n16.7\n\n\n詳細は割愛するが、今後、必要に応じて適宜解説する。"
   },
   {
     "objectID": "ci_slide.html#因果推論の根本問題fundamental-problem-of-causal-inference",
     "href": "ci_slide.html#因果推論の根本問題fundamental-problem-of-causal-inference",
     "title": "社会科学における因果推論",
-    "section": "3.9 因果推論の根本問題（fundamental problem of causal inference）",
-    "text": "3.9 因果推論の根本問題（fundamental problem of causal inference）\n反事実は観察できないため、ITEの推定は不可能\n\n\\(\\leadsto\\) ITEの平均値としてのATEは推定不可能\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n\n\n?"
+    "section": "因果推論の根本問題（fundamental problem of causal inference）\n",
+    "text": "因果推論の根本問題（fundamental problem of causal inference）\n\n反事実は観察できないため、ITEの推定は不可能\n\n\n\\(\\leadsto\\) ITEの平均値としてのATEは推定不可能\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n\n\n?"
   },
   {
     "objectID": "ci_slide.html#因果推論の根本問題と事実反事実",
     "href": "ci_slide.html#因果推論の根本問題と事実反事実",
     "title": "社会科学における因果推論",
-    "section": "3.10 因果推論の根本問題と事実・反事実",
-    "text": "3.10 因果推論の根本問題と事実・反事実\n\n\n\n\n\n\n\n\n\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\n\n\n\n\\(D_i = 0\\)\n1. \\(Y_i(0|D_i = 0)\\)\n2. \\(Y_i(1|D_i = 0)\\)\n\n\n\\(D_i = 1\\)\n3. \\(Y_i(0|D_i = 1)\\)\n4. \\(Y_i(1|D_i = 1)\\)\n\n\n\n\n\\(Y_i(0 | D_i = 0)\\)：統制群の個体\\(i\\)が処置を受けなかった場合の\\(Y_i\\) \\(\\rightarrow\\) 事実\n\n統制群における\\(Y_i(0)\\)は観察可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(0 | D_i = 0)]\\)も計算可能\n\n\\(Y_i(1 | D_i = 0)\\)：統制群の個体\\(i\\)が処置を受けた場合の\\(Y_i\\) \\(\\rightarrow\\) 反事実\n\n統制群における\\(Y_i(1)\\)は観察不可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(1 | D_i = 0)]\\)も計算不可能\n\n\\(Y_i(0 | D_i = 1)\\)：処置群の個体\\(i\\)が処置を受けなかった場合の\\(Y_i\\) \\(\\rightarrow\\) 反事実\n\n処置群における\\(Y_i(0)\\)は観察不可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(0 | D_i = 1)]\\)も計算不可能\n\n\\(Y_i(1 | D_i = 1)\\)：処置群の個体\\(i\\)が処置を受けた場合の\\(Y_i\\) \\(\\rightarrow\\) 事実\n\n処置群における\\(Y_i(1)\\)は観察可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(1 | D_i = 1)]\\)も計算可能"
+    "section": "因果推論の根本問題と事実・反事実",
+    "text": "因果推論の根本問題と事実・反事実\n\n\n\n\n\n\n\n\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\n\n\n\\(D_i = 0\\)\n1. \\(Y_i(0|D_i = 0)\\)\n\n2. \\(Y_i(1|D_i = 0)\\)\n\n\n\n\\(D_i = 1\\)\n3. \\(Y_i(0|D_i = 1)\\)\n\n4. \\(Y_i(1|D_i = 1)\\)\n\n\n\n\n\n\n\\(Y_i(0 | D_i = 0)\\)：統制群の個体\\(i\\)が処置を受けなかった場合の\\(Y_i\\) \\(\\rightarrow\\) 事実\n\n統制群における\\(Y_i(0)\\)は観察可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(0 | D_i = 0)]\\)も計算可能\n\n\n\n\\(Y_i(1 | D_i = 0)\\)：統制群の個体\\(i\\)が処置を受けた場合の\\(Y_i\\) \\(\\rightarrow\\) 反事実\n\n統制群における\\(Y_i(1)\\)は観察不可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(1 | D_i = 0)]\\)も計算不可能\n\n\n\n\\(Y_i(0 | D_i = 1)\\)：処置群の個体\\(i\\)が処置を受けなかった場合の\\(Y_i\\) \\(\\rightarrow\\) 反事実\n\n処置群における\\(Y_i(0)\\)は観察不可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(0 | D_i = 1)]\\)も計算不可能\n\n\n\n\\(Y_i(1 | D_i = 1)\\)：処置群の個体\\(i\\)が処置を受けた場合の\\(Y_i\\) \\(\\rightarrow\\) 事実\n\n処置群における\\(Y_i(1)\\)は観察可能 \\(\\leadsto\\) \\(\\mathbb{E}[Y_i(1 | D_i = 1)]\\)も計算可能"
   },
   {
     "objectID": "ci_slide.html#因果推論の根本問題とate",
     "href": "ci_slide.html#因果推論の根本問題とate",
     "title": "社会科学における因果推論",
-    "section": "3.11 因果推論の根本問題とATE",
-    "text": "3.11 因果推論の根本問題とATE\n観測値の平均値の差分は計算可能\n\n\\(\\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\\)でなく、\\(\\mathbb{E}[Y_i(1 | D_i = 1)] - \\mathbb{E}[Y_i(0 | D_i = 0)]\\)は計算可能\n\nこれはATE? \\(\\Rightarrow\\) Maybe not…\n\n\n\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n\\(\\mathbb{E}[Y_i(0 | D_i = 0)]\\) = 426\n\\(\\mathbb{E}[Y_i(1 | D_i = 1)]\\) = 399\n-27"
+    "section": "因果推論の根本問題とATE",
+    "text": "因果推論の根本問題とATE\n観測値の平均値の差分は計算可能\n\n\n\\(\\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\\)でなく、\\(\\mathbb{E}[Y_i(1 | D_i = 1)] - \\mathbb{E}[Y_i(0 | D_i = 0)]\\)は計算可能\n\nこれはATE? \\(\\Rightarrow\\) Maybe not…\n\n\n\n\n\n\n\n\n\n\n\n\n\\(i\\)\n\\(D_i\\)\n\\(Y_i(0)\\)\n\\(Y_i(1)\\)\n\\(\\textsf{ITE}_i\\)\n\n\n\n1\n0\n344\n\n?\n\n\n2\n0\n455\n\n?\n\n\n3\n0\n479\n\n?\n\n\n4\n1\n\n554\n?\n\n\n5\n1\n\n395\n?\n\n\n6\n1\n\n248\n?\n\n\n平均\n\n\n\\(\\mathbb{E}[Y_i(0 | D_i = 0)]\\) = 426\n\n\\(\\mathbb{E}[Y_i(1 | D_i = 1)]\\) = 399\n-27"
   },
   {
     "objectID": "ci_slide.html#信頼できるateの条件",
     "href": "ci_slide.html#信頼できるateの条件",
     "title": "社会科学における因果推論",
-    "section": "3.12 信頼できるATEの条件",
-    "text": "3.12 信頼できるATEの条件\n私たちが本当に知りたいのはITE9\n\n 因果推論の根本問題により、ITEは推定不可能\n 観測値の平均値の差分としてのATEは推定可能\n\nただし、この推定値が信頼できるATEとは限らない\n\nどのような場合、観測値の平均値の差分は信頼できるATEになるか\n\n\\(\\Rightarrow\\) 内生性が存在しないこと  \\(=\\) 処置変数が外生変数であること  \\(=\\) 処置群と統制群が交換可能、または（平均）独立であること\n\n\n\n\n内生性/外生性とは?交換可能?独立?"
+    "section": "信頼できるATEの条件",
+    "text": "信頼できるATEの条件\n私たちが本当に知りたいのはITE1\n\n\n 因果推論の根本問題により、ITEは推定不可能\n\n 観測値の平均値の差分としてのATEは推定可能\n\nただし、この推定値が信頼できるATEとは限らない\n\n\nどのような場合、観測値の平均値の差分は信頼できるATEになるか\n\n\n\\(\\Rightarrow\\) 内生性が存在しないこと \\(=\\) 処置変数が外生変数であること \\(=\\) 処置群と統制群が交換可能、または（平均）独立であること\n\n\n\n\n\n内生性/外生性とは?交換可能?独立?\n\nITEよりATEに興味があるかも知れないが、それでもITEの方が望ましいだろう。なぜならITEからATEは推定可能なものの、その逆は成立しないからだ。"
   },
   {
     "objectID": "ci_slide.html#参考文献",
     "href": "ci_slide.html#参考文献",
     "title": "社会科学における因果推論",
-    "section": "3.13 参考文献",
-    "text": "3.13 参考文献\n\n\nBlitzstein, Joseph K., and Jessica Hwang. 2019. Introduction to Probability, Second Edition. Second. Chapman; Hall/CRC."
+    "section": "参考文献",
+    "text": "参考文献\n\n\nBlitzstein, Joseph K., and Jessica Hwang. 2019. Introduction to Probability, Second Edition. Second. Chapman; Hall/CRC."
   },
   {
     "objectID": "did_slide.html#電子投票の導入と投票率",
@@ -2979,82 +2993,5 @@
     "title": "社会科学における因果推論",
     "section": "セレクションへの対処",
     "text": "セレクションへの対処\n\n\n無作為抽出（random sampling）\n\nサンプルセレクション・バイアス（サンプリング・バイアス）が存在する場合\n\n\n\nランダム割り当て（無作為割当; random assignment）\n\nあらゆる内生性を（理論上）完全に除去できる因果推論の王道\n\n\n\n統計的因果推論（statistical causal inference）\n\n共変量調整\n\n自然実験、疑似実験など"
-  },
-  {
-    "objectID": "ci_slide.html",
-    "href": "ci_slide.html",
-    "title": "社会科学における因果推論",
-    "section": "",
-    "text": "因果関係：原因（X）と結果（Y）の関係\n\nXがYを引き起こした\n\n例）\\(\\bigcirc \\bigcirc\\)の当選（X）が戦争（Y）を引き起こした\n\nXが増えたから、Yも増えた\n\n例）食事量（X）を増やしたから、体重（Y）も増えた\n\nXが小さくなったから、Yは大きくなった\n\n例）金利（X）が下がったから、株価（Y）が上がった\n\nXが高くなったから、Yは少なくなった\n\n例）ストレス（X）が溜まったから、髪の毛（Y）が減った\n\n\n\n\n\nアメリカにおける1世帯当たりと年間果物消費量とカナダ国鉄の株価の関係\n\n\\(\\rho\\) = 0.986（p &lt; 0.001）\n\n\n\n\n\n\n\n\n\nワシントンDC内の政治学者数とWhole Foodsに対する顧客満足度の関係\n\n\\(\\rho\\) = 0.856（p &lt; 0.001）\n\n\n\n\n\n\n\n\n\n\n\n\n例1：我が社（カナダ国鉄）の株価を上げたい\n\n解決策 \\(\\Rightarrow\\) アメリカ人に新鮮な果物を無料で提供する\n\n例2：我が国（アメリカ）の肥満率を下げるために、国民に果物をよりたくさん摂取してもらいたい\n\n解決策 \\(\\Rightarrow\\) カナダ国鉄の株を爆買いする\n\n\n\n\n\n\n例：我が社（Whole Foods）に対する顧客満足度を高めたい\n\n解決策 \\(\\Rightarrow\\) 政治学者をDCに送り込む\n\n\n\n\n本当にこれで良いのか\n\n\n\n\n\nXがYの間に相関関係が存在する場合、XとYの間には因果関係が存在するのか\n\n\n\n\n\n\nXがYの原因\n\n\n\n\n\n\n\nYがXの原因\n\n\n\n\n\n\n\nXとYが互いに影響し合う（互恵関係）\n\n\n\n\n\n\n\n\n\n\n\nXがYの原因（Zを経由）\n\n\n\n\n\n\n\nXがYは無関係（共通要因からの影響）\n\n\n\n\n\n\n\nXがYは無関係（たまたまの相関）\n\n\n\n\n\n\n\n\nゲームオタクほど身長が伸びる?\n\n\n\n\n\n\n\n\n\n\n\n\n性別で条件付けると因果効果は確認されない\n\n\n\n\n\n\n\n\n\n\n\n\n職業訓練を受けても年収は上がらない?\n\n\n\n\n\n\n\n\n\n\n\n\n訓練前の年収で条件付けると正の効果が確認できる\n\n\n\n\n\n\n\n\n\n\n\n\n相関は因果の必要条件でも、十分条件でも、必要十分条件でもない\n\n信頼できる因果推論のためには適切な条件付けに基づく比較が不可欠\n条件付け（conditioning） / 統制（control） \n\n特定の変数の値が一致するケースに限定すること\n例）男性（女性）におけるゲームプレイ時間と身長の関係\n\n\n\n“Conditioning is the soul of statistics” (Blitzstein and Hwang 2019, 46)\n\n\n因果推論のための比較の方法\n\nA：1日ゲームプレイ時間が0分の男性の身長\nB：1日ゲームプレイ時間が300分の男性の身長\nAとBを比較する = 因果推論? \\(\\leftarrow\\) Yes! But, …"
-  },
-  {
-    "objectID": "ci_slide.html#footnotes",
-    "href": "ci_slide.html#footnotes",
-    "title": "社会科学における因果推論",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\n多分、この結果が正しい↩︎\nこんなはずがない↩︎\nただし、理由4を除く↩︎\n宋の弟も宋だが、ここでの宋はあなたが知っているその宋だ。↩︎\n「処置」は介入、刺激、曝露（exposure）などとも呼ばれる。↩︎\n対照群とも呼ばれる。↩︎\n詳細は割愛するが、今後必要に応じて適宜解説する。↩︎\n詳細は割愛するが、今後、必要に応じて適宜解説する。↩︎\nITEよりATEに興味があるかも知れないが、それでもITEの方が望ましいだろう。なぜならITEからATEは推定可能なものの、その逆は成立しないからだ。↩︎"
-  },
-  {
-    "objectID": "qene_slide.html#snow1855の研究",
-    "href": "qene_slide.html#snow1855の研究",
-    "title": "社会科学における因果推論",
-    "section": "Snow（1855）の研究",
-    "text": "Snow（1855）の研究\n\n\n\n\n\n出典：John Snow Archive and Research Companion"
-  },
-  {
-    "objectID": "qene_slide.html#参考文献",
-    "href": "qene_slide.html#参考文献",
-    "title": "社会科学における因果推論",
-    "section": "参考文献",
-    "text": "参考文献\n\n\nAngrist, Joshua D., and Alan B. Krueger. 1991. “Does Compulsory School Attendance Affect Schooling and Earnings?” The Quarterly Journal of Economics 106: 979–1014. doi:10.2307/2937954.\n\n\nCard, David. 1990. “The Impact of the Mariel Boatlift on the Miami Labor Market.” Industrial and Labor Relations Review 43: 245–57. doi:10.1177/001979399004300205.\n\n\nCarpenter, Christopher, and Carlos Dobkin. 2009. “The Effect of Alcohol Consumption on Mortality: Regression Discontinuity Evidence from the Minimum Drinking Age.” American Economic Journal: Applied Economics 1: 164–82. doi:10.1257/app.1.1.164.\n\n\nKern, Holger Lutz, and Jens Hainmueller. 2017. “Opium for the Masses: How Foreign Media Can Stabilize Authoritarian Regimes.” Political Analysis 17: 377–99. doi:10.1093/pan/mpp017.\n\n\nLee, David S. 2008. “Randomized Experiments from Non-Random Selection in u.s. House Elections.” Journal of Econometrics 142: 675–97. doi:10.1016/j.jeconom.2007.05.004.\n\n\nSnow, John. 1855. On the Mode of Communication of Cholera. Second. John Churchill."
-  },
-  {
-    "objectID": "qene_slide.html#例史上初の自然実験",
-    "href": "qene_slide.html#例史上初の自然実験",
-    "title": "社会科学における因果推論",
-    "section": "例：史上初の自然実験",
-    "text": "例：史上初の自然実験\n\nLambeth社の取水口移転によるコレラ死亡率の減少（1.107% \\(\\rightarrow\\) 0.253%）\n家庭がどちらの会社と契約するかは、コレラへの感染リスクとは無関係（as-if random）\n\n水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能\nLambeth社契約世帯とS&V社契約世帯は比較可能\n\n\n\nLambeth社とS&V社の違いは? \\(\\Rightarrow\\) 取水口の位置（上流 vs. 下流）\n\n\n\\(\\leadsto\\) コレラの原因は空気（miasma）じゃなくて水?! (Snow 1855)\n\n\n\n\n\n\n\n\n\n\n\n水道事業者\n      \n        コレラによる死亡率（%）\n      \n      増減（pp）\n    \n\n1949\n      1954\n    \n\n\n\nLambeth\n1.107\n0.253\n−0.854\n\n\nSouthwark and Vauxhall\n0.786\n1.117\n0.331\n\n\n両方\n1.221\n0.998\n−0.223"
-  },
-  {
-    "objectID": "qene_slide.html#復習因果推論の王道としてのrct",
-    "href": "qene_slide.html#復習因果推論の王道としてのrct",
-    "title": "社会科学における因果推論",
-    "section": "復習：因果推論の王道としてのRCT",
-    "text": "復習：因果推論の王道としてのRCT\n\n処置（介入）の無作為割り当て \\(\\leadsto\\) 観察されない交絡因子も含めて処置群と統制群が同質に\n\n内生性（セレクションバイアス）に対する（理論上）根本的な解決策\n\nしかし現実には…\n\n倫理的に実行できない（例：喫煙をランダムに割り当てる）\n\n費用・時間がかかりすぎる\nすでに実施された政策の評価には不向き（介入前に戻れない）\n\n\n\n 研究者が介入せず、観察のみから得られたデータ（観察データ）を使った因果推論が必要"
-  },
-  {
-    "objectID": "qene_slide.html#内生性への対処法",
-    "href": "qene_slide.html#内生性への対処法",
-    "title": "社会科学における因果推論",
-    "section": "内生性への対処法",
-    "text": "内生性への対処法\n\n\n\n\n\n\n\n手法\n内生性への対処\n観察されない交絡因子\n\n\n\nRCT\n研究者が処置をランダムに割り当て\n均質\n\n\n共変量調整\n観察された共変量を統制\n未観測の交絡は残る\n\n\n自然実験\n社会に既に存在する外生的ショックを利用\n処置がas-if randomなら平均的に均衡\n\n\n\n\n回帰分析や傾向スコア法は観察可能な/観察済み変数の調整にとどまる\n自然実験は観察できない交絡因子も含めてバイアスを除去できる可能性\n\n適切なケースであれば、RCTに近い"
-  },
-  {
-    "objectID": "qene_slide.html#識別の根拠と仮定",
-    "href": "qene_slide.html#識別の根拠と仮定",
-    "title": "社会科学における因果推論",
-    "section": "識別の根拠と仮定",
-    "text": "識別の根拠と仮定\n\n\n\n\n\n\n手法\n識別の根拠\n\n\n\nRCT\n研究者による無作為割り当てで独立性（交換可能性・無視可能性）が達成\n\n\n共変量調整\n「観察された変数を統制すれば処置群と統制群は比較可能」という仮定（条件付き独立）\n\n\n\n自然実験\n「外生的な出来事による割り当ては、あたかもランダム（as-if random）である」という仮定\n\n\n\n\n共変量調整は「観察された変数さえ揃えれば大丈夫」という非常に強い・検証できない仮定に依存\n自然実験の “as-if random” も仮定であり自明ではない\n\n\n\\(\\Rightarrow\\) プラセボ検定・バランスチェック等を用いた間接的な検証が必要"
-  },
-  {
-    "objectID": "qene_slide.html#実行可能性とトレードオフ",
-    "href": "qene_slide.html#実行可能性とトレードオフ",
-    "title": "社会科学における因果推論",
-    "section": "実行可能性とトレードオフ",
-    "text": "実行可能性とトレードオフ\n\n\n\n\n\n\n\n\n手法\n実行可能性\n長所\n短所\n\n\n\nRCT\n低い（コスト・倫理・時間の制約）\n\n高い内的妥当性\n実施できる場面が限られる\n\n\n共変量調整\n高い（データがあればすぐ実行可）\n\nデータの入手・実行が容易\n未観測の交絡に脆弱非常に強い仮定\n\n\n自然実験\n中程度（適切な出来事を見つける必要）\n\n未観測交絡にも対応でき、実データで検証可能\n都合の良い自然実験が常に存在するとは限らない外的妥当性が限定的なことも1\n\n\n\n\n\n自然実験：RCTの「内的妥当性の高さ」 + 共変量調整の「実データで実行できる現実性」\n\n\n適切な状況さえ見つかれば実験に準ずる強力な因果推論の手法\n\n\n得られた処置効果が一部の集団、タイミングのみに限定され、局所処置効果が得られるケースが多い。"
-  },
-  {
-    "objectID": "qene_slide.html#例2マリエル難民事件",
-    "href": "qene_slide.html#例2マリエル難民事件",
-    "title": "社会科学における因果推論",
-    "section": "例2：マリエル難民事件\n",
-    "text": "例2：マリエル難民事件\n\nCard (1990)\nRQ：移民の急増は、既存住民の賃金・雇用にどう影響するか\n\n1980年、キューバのマリエル港からの出国が突然自由化\n数か月でマイアミの労働力人口が 約7%急増（移民の大量流入）\n移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象\n\n\n\\(\\rightarrow\\) マイアミを「処置群」、類似都市を「統制群」として比較"
-  },
-  {
-    "objectID": "qene_slide.html#例4教育年数の賃金",
-    "href": "qene_slide.html#例4教育年数の賃金",
-    "title": "社会科学における因果推論",
-    "section": "例4：教育年数の賃金 \n",
-    "text": "例4：教育年数の賃金 \n\nAngrist and Krueger (1991)\nRQ：教育年数は将来の賃金にどう影響するか？\n\n米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学\n一方、義務教育は「16歳になるまで」で退学可能\n\n\n\\(\\rightarrow\\) 早生まれの子ほど、法律上は短い年数で義務教育を終えられる\n\n\n\n出生月（= 誕生日）は本人の能力とは無関係 \\(\\rightarrow\\) as-if random な教育年数\n\n\n\\(\\rightarrow\\) 出生月を教育年数の操作変数として利用"
   }
 ]
