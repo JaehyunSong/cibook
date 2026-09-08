@@ -19,13 +19,13 @@ metadata-files:
 pacman::p_load(
   tidyverse,     # Rの必須パッケージ
   ggbeeswarm,    # ビースウォーム図の作成
-  broom,         # 推定結果をdata.frameい
+  broom,         # 推定結果を data.frame に
   modelsummary,  # 推定結果の比較 / 記述統計表の作成
   MatchIt,       # 層化を使った処置効果の推定
   WeightIt,      # 重み付けを使った処置効果の推定
   cobalt,        # バランスチェック用
   estimatr,      # 頑健な標準誤差を計算
-  marginaleffects# G-computation
+  marginaleffects# G-computation 用
 )
 ```
 

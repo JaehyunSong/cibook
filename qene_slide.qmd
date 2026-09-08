@@ -1,9 +1,9 @@
 ---
-subtitle: "8/ 自然実験（ドラフト作成中）"
+subtitle: "8/ 自然実験と自然実験（ドラフト）"
 modified-date: today
 format: 
   revealjs:
-    footer: "自然実験"
+    footer: "自然実験と自然実験"
 metadata-files: 
   - "_style/slide.yml"
 ---
@@ -13,7 +13,8 @@ metadata-files:
 pacman::p_load(tidyverse,
                gt,
                ggdag, 
-               dagitty)
+               dagitty,
+               ggokabeito)
 ```
 
 {{< include _common.qmd >}}
@@ -67,7 +68,7 @@ pacman::p_load(tidyverse,
 ## 因果推論の本質：比較可能な集団の比較
 
 - 因果効果とは本来、**同じ対象**が「処置を受けた場合」と「受けなかった場合」の結果の差
-   - [因果効果 = 同一個体における潜在的結果の差]{.strong}
+   - （平均）[因果効果 = 同一個体における潜在的結果の差]{.strong}（の平均値）
 - しかし同一個体について両方を同時に観察することはできない[（因果推論の根本問題）]{.small}
    - 集団レベルでも同じ：集団の全員が処置を受けると、その集団が処置を受けなかった場合の潜在的結果は観察不可能
 - $\Rightarrow$ 処置（統制）群と[比較可能な「別の」集団]{.strong}を用意し、その差を処置効果の代わりに使う
@@ -90,12 +91,12 @@ pacman::p_load(tidyverse,
 
 ## 自然実験とは何か
 
-> 研究者が意図的に処置を割り当てるのではなく、**法律の変更・制度の違い・自然災害・偶然の出来事**などによって、あたかもランダムに割り当てられたかのような処置が生じている状況
-
-キーワード：**"as-if random"（あたかもランダムであるかのような）処置**
+研究者が意図的に処置を割り当てるのではなく、**法律の変更・制度の違い・自然災害・偶然の出来事**などによって、[あたかもランダムに]{.strong}[（*as-if-random*）]{.small}[割り当てられたかのような処置]{.strong}が生じている状況
 
 - 処置を受けるかどうかが、個人の意思や能力とは無関係な外生的要因で決まる
 - 研究者は介入を通じて実験を「作る」のではなく、社会の中にすでに存在する実験を「**発見**」
+
+> *I define a natural experiment as a research study where the treatment assignment mechanism (i) [is neither designed nor implemented by the researcher]{.strong}, (ii) [is unknown to the researcher]{.strong}, and (iii) [is probabilistic by virtue of depending on an external factor]{.strong}.* [[@titiunik_2021]]{.small}
 
 ## 自然実験の基本アイデア
 
@@ -106,7 +107,7 @@ pacman::p_load(tidyverse,
 ```{r}
 #| fig-width: 5
 #| fig-height: 5
-#| out-width: 500px
+#| out-width: 650px
 dagify(Y ~ D + X + e,
        D ~ R,
        exposure = "D",
@@ -185,7 +186,7 @@ dagify(Y ~ D + X + e,
 
 [^ne-external-validity]: 得られた処置効果が一部の集団、タイミングのみに限定され、**局所**処置効果が得られるケースが多い。
 
-## 自然実験の主な発生源
+## 自然実験の発生源の例
 
 | 発生源 | 例 |
 |---|---|
@@ -200,21 +201,28 @@ dagify(Y ~ D + X + e,
 
 ## 準実験と自然実験
 
-ほぼ同義に使われることも多いが、準実験 > 自然実験
+同義に使われることも多いが、準実験 $\in$ 自然実験^[2つを排他的な概念だと考える見方もある。]
 
-- [準実験]{.strong}[（quasi-experiment）]{.small}：研究者が処置を割り当てないが、何らかの構造[（ルール・閾値・タイミングのズレなど）]{.small}によって処置群・統制群が識別できる研究デザイン全般を指す広い概念
-- [自然実験]{.strong}[（natural experiment）]{.small}：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事[（災害、抽選、政策変更のタイミングなど）]{.small}を処置として使用
+- 共通点：研究者が介入しなかった処置が存在し、群間比較可能な状況を見つける&作り上げる
+   - [準実験]{.strong}[（quasi-experiment）]{.small}：研究者が処置を割り当てないが、何らかの構造[（ルール・閾値・タイミングのズレなど）]{.small}によって処置群・統制群が識別できる研究デザイン全般を指す広い概念
+   - [自然実験]{.strong}[（natural experiment）]{.small}：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事[（災害、抽選、政策変更のタイミングなど）]{.small}を処置として使用
+- 同じ分析手法でも処置の割り当てメカニズムによって自然実験か否かが決まる
+
+|分析手法|処置|準実験か|自然実験か|
+|:---|:---:|:---:|:---:|
+|差分の差分法|政策|$\bigcirc$|$\times$|
+|差分の差分法|災害|$\bigcirc$|$\bigcirc$|
 
 # **4** 事例
 
-## 例：史上初の自然実験
+## 自然実験のはじまり
 
-- Lambeth社の取水口移転によるコレラ死亡率の減少（1.107% $\rightarrow$ 0.253%）
+- Lambeth社の取水口移転によるコレラ死亡率の減少（約1.107% $\rightarrow$ 約0.253%）
 - 家庭がどちらの会社と契約するかは、**コレラへの感染リスクとは無関係**（*as-if random*）
    - 水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能
    - Lambeth社契約世帯とS&V社契約世帯は[比較可能]{.strong}
 - Lambeth社とS&V社の違いは? $\Rightarrow$ 取水口の位置（上流 vs. 下流）
-   - $\leadsto$ コレラの原因は空気[（miasma）]{.small}じゃなくて水?! [@snow-1855]
+   - $\leadsto$ コレラの原因は空気[（miasma）]{.small}じゃなくて水?! [[@snow-1855]]{.small}
 
 ```{r}
 tibble(company = rep(c("Lambeth", "Southwark and Vauxhall", "両方"), each = 2),
@@ -228,7 +236,7 @@ tibble(company = rep(c("Lambeth", "Southwark and Vauxhall", "両方"), each = 2)
               values_from = prop) |> 
   mutate(diff = `1954` - `1949`) |> 
   gt() |> 
-  cols_label(company = "水道事業者", diff = "増減（pp）") |> 
+  cols_label(company = "水道事業者", diff = "増減（pp）", "1949" = "1949年", "1954" = "1954年") |> 
   cols_align(columns = company, align = "left") |> 
   fmt_number(-company, decimals = 3) |> 
   tab_spanner(columns = 2:3, label = "コレラによる死亡率（%）") |> 
@@ -262,69 +270,133 @@ tibble(company = rep(c("Lambeth", "S&V", "両方"), each = 2),
   geom_line(linewidth = 1) +
   geom_point(size = 3) +
   labs(x = "年", y = "コレラによる死亡率（%）", color = "水道事業者") +
+  scale_color_okabe_ito() +
   theme_jay() +
   theme(legend.position = "bottom")
 ```
 :::
 ::::
 
-## 例2：ベトナム戦争の徴兵くじ（Angrist, 1990）  <!--- IV --->
+## ベトナム戦争の徴兵くじ  <!--- IV --->
 
-**RQ**：軍役経験は、その後の生涯賃金にどう影響するか
+**RQ**：軍役経験は、その後の生涯賃金にどう影響するか[[@angrist-1990]]{.small}
 
-- 米国は1970年代、誕生日に基づく**抽選（くじ）**で徴兵順位を決定
+:::: {.columns}
+::: {.column width=70%}
+- 1970年代、誕生日に基づく**抽選（くじ）**で徴兵順位を決定
 - 誕生日は本人の能力や将来の所得とは無関係 $\rightarrow$ *as-if random*
    - $\rightarrow$ くじの番号を**操作変数**[（instrumental variable; IV）]{.small}として利用
+- 結果：白人において約15%の損失
+:::
 
-## 例2：マリエル難民事件<!--- DID --->
+::: {.column width=30%}
+![出典：Wikipedia](figs/qene/Draft_Lottery_1972.jpg){align="center"}
+:::
+::::
 
-@card-1990
+## マリエル難民事件 <!--- DID --->
 
-**RQ**：移民の急増は、既存住民の賃金・雇用にどう影響するか
+**RQ**：移民の急増は、既存住民の賃金・雇用にどう影響するか [[@card-1990]]{.small}
 
 - 1980年、キューバのマリエル港からの出国が突然自由化
-- 数か月でマイアミの労働力人口が **約7%急増**（移民の大量流入）
-- 移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象
-   - $\rightarrow$ マイアミを「処置群」、類似都市を「統制群」として比較
+   - 数か月でマイアミの労働力人口が **約7%急増**（移民の大量流入）
+   - 米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象
+   - $\rightarrow$ マイアミを「処置群」、その他マイアミに類似した都市を「統制群」として比較
+- 競合相手であるマイアミ内の低熟練労働者の賃金、失業率との因果関係は見つからず
 
-## 例4：教育年数の賃金 <!--- IV --->
+![出典：Wikipedia](figs/qene/marielboatlift.jpg){align="center"}
 
-@angrist-krueger-1991
+## 教育年数の賃金 <!--- IV --->
 
-**RQ**：教育年数は将来の賃金にどう影響するか？
+**RQ**：教育年数は将来の賃金にどう影響するか [[@angrist-krueger-1991]]{.small}
 
 - 米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学
-- 一方、義務教育は「16歳になるまで」で退学可能
+- 一方、義務教育は「16歳になるまで」で、16歳になったら自主退学が可能に
    - $\rightarrow$ **早生まれの子ほど、法律上は短い年数で義務教育を終えられる**
 - 出生月[（= 誕生日）]{.small}は本人の能力とは無関係 $\rightarrow$ *as-if random* な教育年数
    - $\rightarrow$ 出生月を教育年数の**操作変数**として利用
 
-## 例5：ニュージャージー州の最低賃金（Card & Krueger, 1994）
+```{r}
+#| fig-width: 12
+#| fig-height: 3
+tibble(age_a = rep(6:17, each = 12),
+       age_b = c(rep(5, 11), rep(6:16, each = 12), 17)) |> 
+  mutate(t = 1:n()) |> 
+  pivot_longer(cols = -t) |> 
+  mutate(taigaku = (value >= 16),
+         value = factor(value,
+                        levels = 5:17,
+                        labels = str_c(5:17, "歳")),
+         name  = factor(name, levels = c("age_b", "age_a"))) |>
+  ggplot() +
+  geom_bar(aes(y = name, group = value, fill = taigaku), 
+           color = "black", linewidth = 0.25, width = 0.5) +
+  geom_vline(xintercept = seq(136, 0, by = -12), linetype = "dashed") +
+  annotate("text", x = seq(130, 0, by = -12), y = 2.65, 
+           label = str_c(1:11, "年生")) +
+  labs(x = "年月日", y = NULL, fill = NULL) +
+  guides(color = "none") +
+  scale_y_discrete(labels = c("age_a" = "2014年1月1日生まれ",
+                              "age_b" = "2014年12月1日生まれ")) +
+  scale_x_reverse(breaks = c(136, 24),
+                  labels = c("2020/09/01\n(入学)", "2030/01/01")) +
+  scale_color_manual(values = c("TRUE" = "black", "FALSE" = "transparent")) +
+  scale_fill_brewer(palette = "Set1", direction = -1,
+                    labels = c("TRUE" = "退学可能", "FALSE" = "退学不可（義務教育）")) +
+  theme_jay() +
+  coord_cartesian(ylim = c(1, 3)) +
+  theme(legend.position = "bottom")
+```
 
-- 1992年、NJ州のみが最低賃金を引き上げ、隣接するPA州は据え置き
-- 地理的に隣接し経済状況が似た2州のうち、**制度変更のタイミングが偶然ズレた**
-- NJ＝処置群、PA＝統制群として、引き上げ前後のファストフード店の雇用者数を比較
-- 最低賃金引き上げ後もNJの雇用は減少せず、通説（雇用への負の影響）に反する結果に
+## 選挙における現職効果
+
+**RQ**：選挙において現職は新人よりどれほど有利か [[@lee-2008]]{.small}
 
 # **5** 自然実験の評価と注意点
 
 ## 「良い自然実験」の条件
 
+@dunning-2012 の議論
+
+- 処置割り当てメカニズムが研究者によって設計・実施されたもの<ruby>ではない<rt>・・・・</rt></ruby>こと
+- 割り当てが本当に「ランダムに近い」と言えるだけの妥当性があること
+   - 単に「ランダムっぽい」だけでなく、理論的・制度的根拠に基づく正当化が必要
+- 処置群と統制群の間で、処置前の観察可能・不可能な要因に体系的な差がないこと
+
+<!---
 1. **外生性（Exogeneity）**：処置の割り当てが、結果に影響しうる他の要因と無関係であること
 2. **無視できる操作可能性**：個人が処置の有無を自らの意思で選べない、または選びにくいこと
 3. **十分なばらつき**：処置群・統制群の両方に十分な観測数があること
 4. **関連する結果への明確な経路**：処置が結果に影響するメカニズムが説明できること（IVの場合は「除外制約」）
 
 $\rightarrow$ これらが崩れると、せっかくの自然実験も再びバイアスの問題に逆戻りする
+--->
 
 ## 自然実験の落とし穴・注意点
+
+*as-if random* な処置の割り当てが群間の比較可能性を保証するわけではない
+
+> *A less often noted but crucial issue with natural experiments is that the treatment and control groups researchers want to use may not be comparable even if one assumes random assignment.* [[@sekhon-titiunik-2012]]{.small}
+
+- 自然実験における処置は偶発的に生じるものであり、群間比較可能性を<ruby>研究者が直接設計<rt>・・・・・・・・</rt></ruby>するRCTとは異なり、研究者はどの群と比べるかを<ruby>後から<rt>・・・</rt></ruby>決めることしかできない
+- 自然実験にも群間の比較可能性を保証するための様々な仮定[（並行トレンドの仮定、潜在的結果の連続性、除外制約など）]{.small}が要求される
+- $\Rightarrow$ 自然実験は発見したら終わりではなく、[妥当性の検証が不可欠]{.strong}
+
+<!---
+チェックすべき2つの問い
+
+1. 処置群と統制群の割り当てが *as-if random* か
+1. 保証されていないなら、ランダム化が本当に保証する比較は何か? それは知りたい効果とどう関係するか
+
+実務的な対処法
+- プラシーボテスト:真の効果がゼロと分かっている状況で、想定する比較が本当にゼロを回復できるか確認
+- 共変量調整/マッチング:as-if randomness が疑わしい場合、観察可能な特性で比較可能性を担保
+- 「内的妥当性」と「実質的関連性」のトレードオフを常に意識する
 
 - **見せかけの外生性**：実は処置群になった人々が何らかの形で「選ばれている」ケースがある（例：制度変更前から異なるトレンドがあった）
 - **並行トレンドの仮定**：処置がなければ処置群と統制群は同じ経路を辿っていたはずという仮定（DIDで重要）
 - **SUTVA違反**：処置群の変化が統制群に波及する（一般均衡効果、スピルオーバー）
 - **外的妥当性の限界**：特定の集団・時期・状況でのみ成り立つ結果かもしれない（LATE の解釈問題、IVの回で詳述）
-
-> 自然実験は「発見したら終わり」ではなく、[妥当性の検証[（プラセボテスト、事前トレンドの確認など）]{.small}が不可欠]{.strong}
 
 # **6** 次回以降について
 
@@ -358,7 +430,7 @@ $\rightarrow$ これらが崩れると、せっかくの自然実験も再びバ
 
 [回帰不連続デザイン]{.strong}（regression discontinuity design; [RDD]{.strong}）
 
-- 何らかの[閾値によって処置の有無が決まる状況]{.small}を利用
+- 何らかの[閾値によって処置の有無が決まる状況]{.strong}を利用
    - [カットオフ付近の個体]{.strong}は *as-if random* に処置の有無が決まるため、ほぼ同質
    - 通常、現職は新人より政治家としての高い能力・質を持つが、前回の選挙で接戦だった現職と新人は政治家としての能力・質がほぼ同じ
 - 例）現職効果[[@lee-2008]]{.small}、法定年齢制限[[@carpenter-dobkin-2009]]{.small}
@@ -385,6 +457,8 @@ $\rightarrow$ これらが崩れると、せっかくの自然実験も再びバ
 - 自然実験とは、社会の制度・偶然の出来事によって生じる **as-if randomなショック**を利用する研究デザイン
 - RCTが実施できない場面でも、内生性の問題に対処できる可能性
    - ただし「本当に外生的なショックか」を疑い、検証する姿勢が不可欠
+--->
+
 
 ## 参考文献
 

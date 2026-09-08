@@ -152,7 +152,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center"><h1 class="title">社会科学における因果推論</h1>
-  <p class="subtitle">8/ 自然実験（ドラフト作成中）</p>
+  <p class="subtitle">8/ 自然実験と自然実験（ドラフト）</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -215,7 +215,7 @@
 <ul>
 <li>因果効果とは本来、<strong>同じ対象</strong>が「処置を受けた場合」と「受けなかった場合」の結果の差
 <ul>
-<li><span class="strong">因果効果 = 同一個体における潜在的結果の差</span></li>
+<li>（平均）<span class="strong">因果効果 = 同一個体における潜在的結果の差</span>（の平均値）</li>
 </ul>
 </li>
 <li>しかし同一個体について両方を同時に観察することはできない<span class="small">（因果推論の根本問題）</span>
@@ -269,21 +269,22 @@
 <strong>3</strong> 自然実験の基礎概念</h1>
 
 </section><section id="自然実験とは何か" class="slide level2"><h2>自然実験とは何か</h2>
-<blockquote>
-<p>研究者が意図的に処置を割り当てるのではなく、<strong>法律の変更・制度の違い・自然災害・偶然の出来事</strong>などによって、あたかもランダムに割り当てられたかのような処置が生じている状況</p>
-</blockquote>
-<p>キーワード：<strong>“as-if random”（あたかもランダムであるかのような）処置</strong></p>
+<p>研究者が意図的に処置を割り当てるのではなく、<strong>法律の変更・制度の違い・自然災害・偶然の出来事</strong>などによって、<span class="strong">あたかもランダムに</span><span class="small">（<em>as-if-random</em>）</span><span class="strong">割り当てられたかのような処置</span>が生じている状況</p>
 <ul>
 <li>処置を受けるかどうかが、個人の意思や能力とは無関係な外生的要因で決まる</li>
 <li>研究者は介入を通じて実験を「作る」のではなく、社会の中にすでに存在する実験を「<strong>発見</strong>」</li>
-</ul></section><section id="自然実験の基本アイデア" class="slide level2"><h2>自然実験の基本アイデア</h2>
+</ul>
+<blockquote>
+<p><em>I define a natural experiment as a research study where the treatment assignment mechanism (i) <span class="strong">is neither designed nor implemented by the researcher</span>, (ii) <span class="strong">is unknown to the researcher</span>, and (iii) <span class="strong">is probabilistic by virtue of depending on an external factor</span>.</em> <span class="small"><span class="citation" data-cites="titiunik_2021">(<a href="#/参考文献" role="doc-biblioref" onclick="">Titiunik 2021</a>)</span></span></p>
+</blockquote>
+</section><section id="自然実験の基本アイデア" class="slide level2"><h2>自然実験の基本アイデア</h2>
 <p>社会や自然そのものがコインを投げてくれている状況</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="qene_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="500"></p>
+<figure><p><img data-src="qene_slide_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="650"></p>
 </figure>
 </div>
 </div>
@@ -424,7 +425,7 @@
 <strong>適切な状況さえ見つかれば</strong>実験に準ずる強力な因果推論の手法</li>
 </ul>
 </li>
-</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>得られた処置効果が一部の集団、タイミングのみに限定され、<strong>局所</strong>処置効果が得られるケースが多い。</p></li></ol></aside></section><section id="自然実験の主な発生源" class="slide level2"><h2>自然実験の主な発生源</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>得られた処置効果が一部の集団、タイミングのみに限定され、<strong>局所</strong>処置効果が得られるケースが多い。</p></li></ol></aside></section><section id="自然実験の発生源の例" class="slide level2"><h2>自然実験の発生源の例</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 35%">
@@ -461,18 +462,45 @@
 </tr>
 </tbody>
 </table></section><section id="準実験と自然実験" class="slide level2"><h2>準実験と自然実験</h2>
-<p>ほぼ同義に使われることも多いが、準実験 &gt; 自然実験</p>
+<p>同義に使われることも多いが、準実験 <span class="math inline">\(\in\)</span> 自然実験<sup>1</sup></p>
+<ul>
+<li>共通点：研究者が介入しなかった処置が存在し、群間比較可能な状況を見つける&amp;作り上げる
 <ul>
 <li>
 <span class="strong">準実験</span><span class="small">（quasi-experiment）</span>：研究者が処置を割り当てないが、何らかの構造<span class="small">（ルール・閾値・タイミングのズレなど）</span>によって処置群・統制群が識別できる研究デザイン全般を指す広い概念</li>
 <li>
 <span class="strong">自然実験</span><span class="small">（natural experiment）</span>：研究者が全く関与しない、自然や社会に元々存在する外生的な出来事<span class="small">（災害、抽選、政策変更のタイミングなど）</span>を処置として使用</li>
-</ul></section></section><section><section id="事例" class="title-slide slide level1 center"><h1>
+</ul>
+</li>
+<li>同じ分析手法でも処置の割り当てメカニズムによって自然実験か否かが決まる</li>
+</ul>
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: left;">分析手法</th>
+<th style="text-align: center;">処置</th>
+<th style="text-align: center;">準実験か</th>
+<th style="text-align: center;">自然実験か</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">差分の差分法</td>
+<td style="text-align: center;">政策</td>
+<td style="text-align: center;"><span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">差分の差分法</td>
+<td style="text-align: center;">災害</td>
+<td style="text-align: center;"><span class="math inline">\(\bigcirc\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\bigcirc\)</span></td>
+</tr>
+</tbody>
+</table><aside><ol class="aside-footnotes"><li id="fn4"><p>2つを排他的な概念だと考える見方もある。</p></li></ol></aside></section></section><section><section id="事例" class="title-slide slide level1 center"><h1>
 <strong>4</strong> 事例</h1>
 
-</section><section id="例史上初の自然実験" class="slide level2"><h2>例：史上初の自然実験</h2>
+</section><section id="自然実験のはじまり" class="slide level2"><h2>自然実験のはじまり</h2>
 <ul>
-<li>Lambeth社の取水口移転によるコレラ死亡率の減少（1.107% <span class="math inline">\(\rightarrow\)</span> 0.253%）</li>
+<li>Lambeth社の取水口移転によるコレラ死亡率の減少（約1.107% <span class="math inline">\(\rightarrow\)</span> 約0.253%）</li>
 <li>家庭がどちらの会社と契約するかは、<strong>コレラへの感染リスクとは無関係</strong>（<em>as-if random</em>）
 <ul>
 <li>水道会社の違いという「制度的な偶然」が、あたかもランダム割り当てのように機能</li>
@@ -483,30 +511,30 @@
 <li>Lambeth社とS&amp;V社の違いは? <span class="math inline">\(\Rightarrow\)</span> 取水口の位置（上流 vs.&nbsp;下流）
 <ul>
 <li>
-<span class="math inline">\(\leadsto\)</span> コレラの原因は空気<span class="small">（miasma）</span>じゃなくて水?! <span class="citation" data-cites="snow-1855">(<a href="#/参考文献" role="doc-biblioref" onclick="">Snow 1855</a>)</span>
+<span class="math inline">\(\leadsto\)</span> コレラの原因は空気<span class="small">（miasma）</span>じゃなくて水?! <span class="small"><span class="citation" data-cites="snow-1855">(<a href="#/参考文献" role="doc-biblioref" onclick="">Snow 1855</a>)</span></span>
 </li>
 </ul>
 </li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="szschsylet" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#szschsylet table {
+<div id="unyiazcvcz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#unyiazcvcz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#szschsylet thead, #szschsylet tbody, #szschsylet tfoot, #szschsylet tr, #szschsylet td, #szschsylet th {
+#unyiazcvcz thead, #unyiazcvcz tbody, #unyiazcvcz tfoot, #unyiazcvcz tr, #unyiazcvcz td, #unyiazcvcz th {
   border-style: none;
 }
 
-#szschsylet p {
+#unyiazcvcz p {
   margin: 0;
   padding: 0;
 }
 
-#szschsylet .gt_table {
+#unyiazcvcz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -532,12 +560,12 @@
   border-left-color: #D3D3D3;
 }
 
-#szschsylet .gt_caption {
+#unyiazcvcz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#szschsylet .gt_title {
+#unyiazcvcz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -549,7 +577,7 @@
   border-bottom-width: 0;
 }
 
-#szschsylet .gt_subtitle {
+#unyiazcvcz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -561,7 +589,7 @@
   border-top-width: 0;
 }
 
-#szschsylet .gt_heading {
+#unyiazcvcz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -573,13 +601,13 @@
   border-right-color: #D3D3D3;
 }
 
-#szschsylet .gt_bottom_border {
+#unyiazcvcz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#szschsylet .gt_col_headings {
+#unyiazcvcz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -594,7 +622,7 @@
   border-right-color: #D3D3D3;
 }
 
-#szschsylet .gt_col_heading {
+#unyiazcvcz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -614,7 +642,7 @@
   overflow-x: hidden;
 }
 
-#szschsylet .gt_column_spanner_outer {
+#unyiazcvcz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -626,15 +654,15 @@
   padding-right: 4px;
 }
 
-#szschsylet .gt_column_spanner_outer:first-child {
+#unyiazcvcz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#szschsylet .gt_column_spanner_outer:last-child {
+#unyiazcvcz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#szschsylet .gt_column_spanner {
+#unyiazcvcz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -646,11 +674,11 @@
   width: 100%;
 }
 
-#szschsylet .gt_spanner_row {
+#unyiazcvcz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#szschsylet .gt_group_heading {
+#unyiazcvcz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -676,7 +704,7 @@
   text-align: left;
 }
 
-#szschsylet .gt_empty_group_heading {
+#unyiazcvcz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -691,15 +719,15 @@
   vertical-align: middle;
 }
 
-#szschsylet .gt_from_md > :first-child {
+#unyiazcvcz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#szschsylet .gt_from_md > :last-child {
+#unyiazcvcz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#szschsylet .gt_row {
+#unyiazcvcz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -718,7 +746,7 @@
   overflow-x: hidden;
 }
 
-#szschsylet .gt_stub {
+#unyiazcvcz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -731,7 +759,7 @@
   padding-right: 5px;
 }
 
-#szschsylet .gt_stub_row_group {
+#unyiazcvcz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -745,15 +773,15 @@
   vertical-align: top;
 }
 
-#szschsylet .gt_row_group_first td {
+#unyiazcvcz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#szschsylet .gt_row_group_first th {
+#unyiazcvcz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#szschsylet .gt_summary_row {
+#unyiazcvcz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -763,16 +791,16 @@
   padding-right: 5px;
 }
 
-#szschsylet .gt_first_summary_row {
+#unyiazcvcz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#szschsylet .gt_first_summary_row.thick {
+#unyiazcvcz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#szschsylet .gt_last_summary_row {
+#unyiazcvcz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -782,7 +810,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#szschsylet .gt_grand_summary_row {
+#unyiazcvcz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -792,7 +820,7 @@
   padding-right: 5px;
 }
 
-#szschsylet .gt_first_grand_summary_row {
+#unyiazcvcz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -802,7 +830,7 @@
   border-top-color: #D3D3D3;
 }
 
-#szschsylet .gt_last_grand_summary_row_top {
+#unyiazcvcz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -812,11 +840,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#szschsylet .gt_striped {
+#unyiazcvcz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#szschsylet .gt_table_body {
+#unyiazcvcz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -825,7 +853,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#szschsylet .gt_footnotes {
+#unyiazcvcz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -839,7 +867,7 @@
   border-right-color: #D3D3D3;
 }
 
-#szschsylet .gt_footnote {
+#unyiazcvcz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -848,7 +876,7 @@
   padding-right: 5px;
 }
 
-#szschsylet .gt_sourcenotes {
+#unyiazcvcz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -862,7 +890,7 @@
   border-right-color: #D3D3D3;
 }
 
-#szschsylet .gt_sourcenote {
+#unyiazcvcz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -870,72 +898,72 @@
   padding-right: 5px;
 }
 
-#szschsylet .gt_left {
+#unyiazcvcz .gt_left {
   text-align: left;
 }
 
-#szschsylet .gt_center {
+#unyiazcvcz .gt_center {
   text-align: center;
 }
 
-#szschsylet .gt_right {
+#unyiazcvcz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#szschsylet .gt_font_normal {
+#unyiazcvcz .gt_font_normal {
   font-weight: normal;
 }
 
-#szschsylet .gt_font_bold {
+#unyiazcvcz .gt_font_bold {
   font-weight: bold;
 }
 
-#szschsylet .gt_font_italic {
+#unyiazcvcz .gt_font_italic {
   font-style: italic;
 }
 
-#szschsylet .gt_super {
+#unyiazcvcz .gt_super {
   font-size: 65%;
 }
 
-#szschsylet .gt_footnote_marks {
+#unyiazcvcz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#szschsylet .gt_asterisk {
+#unyiazcvcz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#szschsylet .gt_indent_1 {
+#unyiazcvcz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#szschsylet .gt_indent_2 {
+#unyiazcvcz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#szschsylet .gt_indent_3 {
+#unyiazcvcz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#szschsylet .gt_indent_4 {
+#unyiazcvcz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#szschsylet .gt_indent_5 {
+#unyiazcvcz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#szschsylet .katex-display {
+#unyiazcvcz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#szschsylet div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#unyiazcvcz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -949,8 +977,8 @@
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="diff">増減（pp）</th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="a1949">1949</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="a1954">1954</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="a1949">1949年</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="a1954">1954年</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -1000,37 +1028,48 @@
 </div>
 </div>
 </div></div>
-</section><section id="例2ベトナム戦争の徴兵くじangrist-1990" class="slide level2"><h2>例2：ベトナム戦争の徴兵くじ（Angrist, 1990） <!--- IV --->
+</section><section id="ベトナム戦争の徴兵くじ" class="slide level2"><h2>ベトナム戦争の徴兵くじ <!--- IV --->
 </h2>
-<p><strong>RQ</strong>：軍役経験は、その後の生涯賃金にどう影響するか</p>
+<p><strong>RQ</strong>：軍役経験は、その後の生涯賃金にどう影響するか<span class="small"><span class="citation" data-cites="angrist-1990">(<a href="#/参考文献" role="doc-biblioref" onclick="">Angrist 1990</a>)</span></span></p>
+<div class="columns">
+<div class="column" style="width:70%;">
 <ul>
-<li>米国は1970年代、誕生日に基づく<strong>抽選（くじ）</strong>で徴兵順位を決定</li>
+<li>1970年代、誕生日に基づく<strong>抽選（くじ）</strong>で徴兵順位を決定</li>
 <li>誕生日は本人の能力や将来の所得とは無関係 <span class="math inline">\(\rightarrow\)</span> <em>as-if random</em>
 <ul>
 <li>
 <span class="math inline">\(\rightarrow\)</span> くじの番号を<strong>操作変数</strong><span class="small">（instrumental variable; IV）</span>として利用</li>
 </ul>
 </li>
-</ul></section><section id="例2マリエル難民事件" class="slide level2"><h2>例2：マリエル難民事件<!--- DID --->
+<li>結果：白人において約15%の損失</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="figs/qene/Draft_Lottery_1972.jpg" data-align="center"></p>
+<figcaption>出典：Wikipedia</figcaption></figure>
+</div>
+</div></div>
+</section><section id="マリエル難民事件" class="slide level2"><h2>マリエル難民事件 <!--- DID --->
 </h2>
-<p><span class="citation" data-cites="card-1990">Card (<a href="#/参考文献" role="doc-biblioref" onclick="">1990</a>)</span></p>
-<p><strong>RQ</strong>：移民の急増は、既存住民の賃金・雇用にどう影響するか</p>
+<p><strong>RQ</strong>：移民の急増は、既存住民の賃金・雇用にどう影響するか <span class="small"><span class="citation" data-cites="card-1990">(<a href="#/参考文献" role="doc-biblioref" onclick="">Card 1990</a>)</span></span></p>
 <ul>
-<li>1980年、キューバのマリエル港からの出国が突然自由化</li>
+<li>1980年、キューバのマリエル港からの出国が突然自由化
+<ul>
 <li>数か月でマイアミの労働力人口が <strong>約7%急増</strong>（移民の大量流入）</li>
-<li>移民の流入は米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象
-<ul>
+<li>米国側の労働市場の状況とは無関係な、キューバ国内の政治的事情による突発的事象</li>
 <li>
-<span class="math inline">\(\rightarrow\)</span> マイアミを「処置群」、類似都市を「統制群」として比較</li>
+<span class="math inline">\(\rightarrow\)</span> マイアミを「処置群」、その他マイアミに類似した都市を「統制群」として比較</li>
 </ul>
 </li>
-</ul></section><section id="例4教育年数の賃金" class="slide level2"><h2>例4：教育年数の賃金 <!--- IV --->
+<li>競合相手であるマイアミ内の低熟練労働者の賃金、失業率との因果関係は見つからず</li>
+</ul>
+
+<img data-src="figs/qene/marielboatlift.jpg" data-align="center" class="r-stretch quarto-figure-center"><p class="caption">出典：Wikipedia</p></section><section id="教育年数の賃金" class="slide level2"><h2>教育年数の賃金 <!--- IV --->
 </h2>
-<p><span class="citation" data-cites="angrist-krueger-1991">Angrist and Krueger (<a href="#/参考文献" role="doc-biblioref" onclick="">1991</a>)</span></p>
-<p><strong>RQ</strong>：教育年数は将来の賃金にどう影響するか？</p>
+<p><strong>RQ</strong>：教育年数は将来の賃金にどう影響するか <span class="small"><span class="citation" data-cites="angrist-krueger-1991">(<a href="#/参考文献" role="doc-biblioref" onclick="">Angrist and Krueger 1991</a>)</span></span></p>
 <ul>
 <li>米国の就学制度：多くの州で「その年の特定の月までに満6歳」であれば入学</li>
-<li>一方、義務教育は「16歳になるまで」で退学可能
+<li>一方、義務教育は「16歳になるまで」で、16歳になったら自主退学が可能に
 <ul>
 <li>
 <span class="math inline">\(\rightarrow\)</span> <strong>早生まれの子ほど、法律上は短い年数で義務教育を終えられる</strong>
@@ -1043,166 +1082,143 @@
 <span class="math inline">\(\rightarrow\)</span> 出生月を教育年数の<strong>操作変数</strong>として利用</li>
 </ul>
 </li>
-</ul></section><section id="例5ニュージャージー州の最低賃金card-krueger-1994" class="slide level2"><h2>例5：ニュージャージー州の最低賃金（Card &amp; Krueger, 1994）</h2>
-<ul>
-<li>1992年、NJ州のみが最低賃金を引き上げ、隣接するPA州は据え置き</li>
-<li>地理的に隣接し経済状況が似た2州のうち、<strong>制度変更のタイミングが偶然ズレた</strong>
-</li>
-<li>NJ＝処置群、PA＝統制群として、引き上げ前後のファストフード店の雇用者数を比較</li>
-<li>最低賃金引き上げ後もNJの雇用は減少せず、通説（雇用への負の影響）に反する結果に</li>
-</ul></section></section><section><section id="自然実験の評価と注意点" class="title-slide slide level1 center"><h1>
+</ul>
+
+<img data-src="qene_slide_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="3600"></section><section id="選挙における現職効果" class="slide level2"><h2>選挙における現職効果</h2>
+<p><strong>RQ</strong>：選挙において現職は新人よりどれほど有利か <span class="small"><span class="citation" data-cites="lee-2008">(<a href="#/参考文献" role="doc-biblioref" onclick="">Lee 2008</a>)</span></span></p>
+</section></section><section><section id="自然実験の評価と注意点" class="title-slide slide level1 center"><h1>
 <strong>5</strong> 自然実験の評価と注意点</h1>
 
 </section><section id="良い自然実験の条件" class="slide level2"><h2>「良い自然実験」の条件</h2>
-<ol type="1">
-<li>
-<strong>外生性（Exogeneity）</strong>：処置の割り当てが、結果に影響しうる他の要因と無関係であること</li>
-<li>
-<strong>無視できる操作可能性</strong>：個人が処置の有無を自らの意思で選べない、または選びにくいこと</li>
-<li>
-<strong>十分なばらつき</strong>：処置群・統制群の両方に十分な観測数があること</li>
-<li>
-<strong>関連する結果への明確な経路</strong>：処置が結果に影響するメカニズムが説明できること（IVの場合は「除外制約」）</li>
-</ol>
-<p><span class="math inline">\(\rightarrow\)</span> これらが崩れると、せっかくの自然実験も再びバイアスの問題に逆戻りする</p>
-</section><section id="自然実験の落とし穴注意点" class="slide level2"><h2>自然実験の落とし穴・注意点</h2>
+<p><span class="citation" data-cites="dunning-2012">Dunning (<a href="#/参考文献" role="doc-biblioref" onclick="">2012</a>)</span> の議論</p>
 <ul>
-<li>
-<strong>見せかけの外生性</strong>：実は処置群になった人々が何らかの形で「選ばれている」ケースがある（例：制度変更前から異なるトレンドがあった）</li>
-<li>
-<strong>並行トレンドの仮定</strong>：処置がなければ処置群と統制群は同じ経路を辿っていたはずという仮定（DIDで重要）</li>
-<li>
-<strong>SUTVA違反</strong>：処置群の変化が統制群に波及する（一般均衡効果、スピルオーバー）</li>
-<li>
-<strong>外的妥当性の限界</strong>：特定の集団・時期・状況でのみ成り立つ結果かもしれない（LATE の解釈問題、IVの回で詳述）</li>
+<li>処置割り当てメカニズムが研究者によって設計・実施されたもの<ruby>ではない<rt>・・・・</rt></ruby>こと</li>
+<li>割り当てが本当に「ランダムに近い」と言えるだけの妥当性があること
+<ul>
+<li>単に「ランダムっぽい」だけでなく、理論的・制度的根拠に基づく正当化が必要</li>
 </ul>
-<blockquote>
-<p>自然実験は「発見したら終わり」ではなく、<span class="strong">妥当性の検証<span class="small">（プラセボテスト、事前トレンドの確認など）</span>が不可欠</span></p>
-</blockquote>
-</section></section><section><section id="次回以降について" class="title-slide slide level1 center"><h1>
-<strong>6</strong> 次回以降について</h1>
+</li>
+<li>処置群と統制群の間で、処置前の観察可能・不可能な要因に体系的な差がないこと</li>
+</ul>
+<!---
+1. **外生性（Exogeneity）**：処置の割り当てが、結果に影響しうる他の要因と無関係であること
+2. **無視できる操作可能性**：個人が処置の有無を自らの意思で選べない、または選びにくいこと
+3. **十分なばらつき**：処置群・統制群の両方に十分な観測数があること
+4. **関連する結果への明確な経路**：処置が結果に影響するメカニズムが説明できること（IVの場合は「除外制約」）
 
-</section><section id="自然実験からどう分析するか" class="slide level2"><h2>自然実験からどう分析するか？</h2>
-<p>自然実験で得られる「処置のタイプ」によって、使うべき分析手法が変わる</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead><tr class="header">
-<th>処置のタイプ</th>
-<th>例</th>
-<th>分析手法</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>処置群・統制群 + 前後比較</td>
-<td>NJ vs PA 最低賃金</td>
-<td><strong>差分の差分法</strong></td>
-</tr>
-<tr class="even">
-<td>単一・少数の処置群と多数の統制群候補</td>
-<td>特定地域のみの政策導入</td>
-<td><strong>合成統制法</strong></td>
-</tr>
-<tr class="odd">
-<td>閾値による割り当て</td>
-<td>試験の合格点、年齢制限</td>
-<td><strong>回帰不連続デザイン</strong></td>
-</tr>
-<tr class="even">
-<td>処置に影響するが結果に直接影響しない外生変数</td>
-<td>徴兵くじ、出生月</td>
-<td><strong>操作変数法</strong></td>
-</tr>
-</tbody>
-</table></section><section id="差分の差分法" class="slide level2"><h2>差分の差分法</h2>
-<p><span class="strong">差分の差分法</span>（difference in differences; <span class="strong">DID/DD/Diff-in-Diff</span>）</p>
+$\rightarrow$ これらが崩れると、せっかくの自然実験も再びバイアスの問題に逆戻りする
+---></section><section id="自然実験の落とし穴注意点" class="slide level2"><h2>自然実験の落とし穴・注意点</h2>
+<p><em>as-if random</em> な処置の割り当てが群間の比較可能性を保証するわけではない</p>
+<blockquote>
+<p><em>A less often noted but crucial issue with natural experiments is that the treatment and control groups researchers want to use may not be comparable even if one assumes random assignment.</em> <span class="small"><span class="citation" data-cites="sekhon-titiunik-2012">(<a href="#/参考文献" role="doc-biblioref" onclick="">Sekhon and Titiunik 2012</a>)</span></span></p>
+</blockquote>
 <ul>
-<li>処置群と統制群の<span class="strong">処置前後の変化量</span>を比較する</li>
+<li>自然実験における処置は偶発的に生じるものであり、群間比較可能性を<ruby>研究者が直接設計<rt>・・・・・・・・</rt></ruby>するRCTとは異なり、研究者はどの群と比べるかを<ruby>後から<rt>・・・</rt></ruby>決めることしかできない</li>
+<li>自然実験にも群間の比較可能性を保証するための様々な仮定<span class="small">（並行トレンドの仮定、潜在的結果の連続性、除外制約など）</span>が要求される</li>
 <li>
-<span class="strong">並行トレンドの仮定</span>がカギ</li>
-<li>応用として<strong>合成統制法</strong><span class="small">（synthetic control method）</span>、CausalImapct</li>
-<li>例）マリエル難民事件<span class="small"><span class="citation" data-cites="card-1990">(<a href="#/参考文献" role="doc-biblioref" onclick="">Card 1990</a>)</span></span>、NJ vs.&nbsp;PAの最低賃金<span class="small"></span>等</li>
-</ul>
-<aside class="notes"><p>何かの図を入れる</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside></section><section id="回帰不連続デザイン" class="slide level2"><h2>回帰不連続デザイン</h2>
-<p><span class="strong">回帰不連続デザイン</span>（regression discontinuity design; <span class="strong">RDD</span>）</p>
-<ul>
-<li>何らかの<span class="small">閾値によって処置の有無が決まる状況</span>を利用
-<ul>
-<li>
-<span class="strong">カットオフ付近の個体</span>は <em>as-if random</em> に処置の有無が決まるため、ほぼ同質</li>
-<li>通常、現職は新人より政治家としての高い能力・質を持つが、前回の選挙で接戦だった現職と新人は政治家としての能力・質がほぼ同じ</li>
-</ul>
-</li>
-<li>例）現職効果<span class="small"><span class="citation" data-cites="lee-2008">(<a href="#/参考文献" role="doc-biblioref" onclick="">Lee 2008</a>)</span></span>、法定年齢制限<span class="small"><span class="citation" data-cites="carpenter-dobkin-2009">(<a href="#/参考文献" role="doc-biblioref" onclick="">Carpenter and Dobkin 2009</a>)</span></span>
+<span class="math inline">\(\Rightarrow\)</span> 自然実験は発見したら終わりではなく、<span class="strong">妥当性の検証が不可欠</span>
 </li>
 </ul>
-<aside class="notes"><p>何かの図を入れる</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside></section><section id="操作変数法" class="slide level2"><h2>操作変数法</h2>
-<p><span class="strong">操作変数法</span>（instrumental variable; <span class="strong">IV</span>）</p>
-<ul>
-<li>操作変数：<strong>処置に影響を与えるが、結果には直接影響しない外生</strong>
-<ul>
-<li>「<span class="strong">除外制約</span>」の妥当性が操作変数法の重要論点</li>
-</ul>
-</li>
-<li>主に<span class="strong">2段階回帰</span><span class="small">（Two-Stage Least Squares; <span class="strong">2SLS</span>）</span>を利用して処置効果を推定</li>
-<li>例）教育年数と賃金<span class="small"><span class="citation" data-cites="angrist-krueger-1991">(<a href="#/参考文献" role="doc-biblioref" onclick="">Angrist and Krueger 1991</a>)</span></span>、メディア接触と民主主義への評価<span class="small"><span class="citation" data-cites="kern-hainmueller-2017">(<a href="#/参考文献" role="doc-biblioref" onclick="">Kern and Hainmueller 2017</a>)</span></span>
-</li>
-</ul>
-<aside class="notes"><p>ここに図は無理か</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside></section><section id="参考文献" class="slide level2 smaller scrollable"><h2>参考文献</h2>
+<!---
+チェックすべき2つの問い
+
+1. 処置群と統制群の割り当てが *as-if random* か
+1. 保証されていないなら、ランダム化が本当に保証する比較は何か? それは知りたい効果とどう関係するか
+
+実務的な対処法
+- プラシーボテスト:真の効果がゼロと分かっている状況で、想定する比較が本当にゼロを回復できるか確認
+- 共変量調整/マッチング:as-if randomness が疑わしい場合、観察可能な特性で比較可能性を担保
+- 「内的妥当性」と「実質的関連性」のトレードオフを常に意識する
+
+- **見せかけの外生性**：実は処置群になった人々が何らかの形で「選ばれている」ケースがある（例：制度変更前から異なるトレンドがあった）
+- **並行トレンドの仮定**：処置がなければ処置群と統制群は同じ経路を辿っていたはずという仮定（DIDで重要）
+- **SUTVA違反**：処置群の変化が統制群に波及する（一般均衡効果、スピルオーバー）
+- **外的妥当性の限界**：特定の集団・時期・状況でのみ成り立つ結果かもしれない（LATE の解釈問題、IVの回で詳述）
+
+# **6** 次回以降について
+
+## 自然実験からどう分析するか？
+
+自然実験で得られる「処置のタイプ」によって、使うべき分析手法が変わる
+
+| 処置のタイプ | 例 | 分析手法 |
+|---|---|---|
+| 処置群・統制群 + 前後比較 | NJ vs PA 最低賃金 | **差分の差分法** |
+| 単一・少数の処置群と多数の統制群候補 | 特定地域のみの政策導入 | **合成統制法** |
+| 閾値による割り当て | 試験の合格点、年齢制限 | **回帰不連続デザイン** |
+| 処置に影響するが結果に直接影響しない外生変数 | 徴兵くじ、出生月 | **操作変数法** |
+
+: {tbl-colwidths="[50,25,25]"}
+
+## 差分の差分法
+
+[差分の差分法]{.strong}（difference in differences; [DID/DD/Diff-in-Diff]{.strong}）
+
+- 処置群と統制群の[処置前後の変化量]{.strong}を比較する
+- [並行トレンドの仮定]{.strong}がカギ
+- 応用として**合成統制法**[（synthetic control method）]{.small}、CausalImapct
+- 例）マリエル難民事件[[@card-1990]]{.small}、NJ vs. PAの最低賃金[]{.small}等
+
+:::: {.notes}
+何かの図を入れる
+::::
+
+## 回帰不連続デザイン
+
+[回帰不連続デザイン]{.strong}（regression discontinuity design; [RDD]{.strong}）
+
+- 何らかの[閾値によって処置の有無が決まる状況]{.strong}を利用
+   - [カットオフ付近の個体]{.strong}は *as-if random* に処置の有無が決まるため、ほぼ同質
+   - 通常、現職は新人より政治家としての高い能力・質を持つが、前回の選挙で接戦だった現職と新人は政治家としての能力・質がほぼ同じ
+- 例）現職効果[[@lee-2008]]{.small}、法定年齢制限[[@carpenter-dobkin-2009]]{.small}
+
+:::: {.notes}
+何かの図を入れる
+::::
+
+## 操作変数法
+
+[操作変数法]{.strong}（instrumental variable; [IV]{.strong}）
+
+- 操作変数：**処置に影響を与えるが、結果には直接影響しない外生**
+   - 「[除外制約]{.strong}」の妥当性が操作変数法の重要論点
+- 主に[2段階回帰]{.strong}[（Two-Stage Least Squares; [2SLS]{.strong}）]{.small}を利用して処置効果を推定
+- 例）教育年数と賃金[[@angrist-krueger-1991]]{.small}、メディア接触と民主主義への評価[[@kern-hainmueller-2017]]{.small}
+
+:::: {.notes}
+ここに図は無理か
+::::
+
+## まとめ {visibility="hidden"}
+
+- 自然実験とは、社会の制度・偶然の出来事によって生じる **as-if randomなショック**を利用する研究デザイン
+- RCTが実施できない場面でも、内生性の問題に対処できる可能性
+   - ただし「本当に外生的なショックか」を疑い、検証する姿勢が不可欠
+---></section><section id="参考文献" class="slide level2 smaller scrollable"><h2>参考文献</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-angrist-1990" class="csl-entry" role="listitem">
+Angrist, Joshua D. 1990. <span>“Lifetime Earnings and the Vietnam Era Draft Lottery: Evidence from Social Security Administrative Records.”</span> <em>American Economic Review</em> 80(3): 313–36. <a href="https://www.jstor.org/stable/2006669">https://www.jstor.org/stable/2006669</a>.
+</div>
 <div id="ref-angrist-krueger-1991" class="csl-entry" role="listitem">
 Angrist, Joshua D., and Alan B. Krueger. 1991. <span>“Does Compulsory School Attendance Affect Schooling and Earnings?”</span> <em>The Quarterly Journal of Economics</em> 106: 979–1014. doi:<a href="https://doi.org/10.2307/2937954">10.2307/2937954</a>.
 </div>
 <div id="ref-card-1990" class="csl-entry" role="listitem">
 Card, David. 1990. <span>“The Impact of the Mariel Boatlift on the Miami Labor Market.”</span> <em>Industrial and Labor Relations Review</em> 43: 245–57. doi:<a href="https://doi.org/10.1177/001979399004300205">10.1177/001979399004300205</a>.
 </div>
-<div id="ref-carpenter-dobkin-2009" class="csl-entry" role="listitem">
-Carpenter, Christopher, and Carlos Dobkin. 2009. <span>“The Effect of Alcohol Consumption on Mortality: Regression Discontinuity Evidence from the Minimum Drinking Age.”</span> <em>American Economic Journal: Applied Economics</em> 1: 164–82. doi:<a href="https://doi.org/10.1257/app.1.1.164">10.1257/app.1.1.164</a>.
-</div>
-<div id="ref-kern-hainmueller-2017" class="csl-entry" role="listitem">
-Kern, Holger Lutz, and Jens Hainmueller. 2017. <span>“Opium for the Masses: How Foreign Media Can Stabilize Authoritarian Regimes.”</span> <em>Political Analysis</em> 17: 377–99. doi:<a href="https://doi.org/10.1093/pan/mpp017">10.1093/pan/mpp017</a>.
+<div id="ref-dunning-2012" class="csl-entry" role="listitem">
+Dunning, Thad. 2012. <em>Natural Experiments in the Social Sciences: A Design-Based Approach</em>. Cambridge University Press.
 </div>
 <div id="ref-lee-2008" class="csl-entry" role="listitem">
 Lee, David S. 2008. <span>“Randomized Experiments from Non-Random Selection in u.s. House Elections.”</span> <em>Journal of Econometrics</em> 142: 675–97. doi:<a href="https://doi.org/10.1016/j.jeconom.2007.05.004">10.1016/j.jeconom.2007.05.004</a>.
 </div>
+<div id="ref-sekhon-titiunik-2012" class="csl-entry" role="listitem">
+Sekhon, Jasjeet S., and Rocío Titiunik. 2012. <span>“When Natural Experiments Are Neither Natural nor Experiments.”</span> <em>American Political Science Review</em> 106: 35–57. doi:<a href="https://doi.org/10.1017/S0003055411000542">10.1017/S0003055411000542</a>.
+</div>
 <div id="ref-snow-1855" class="csl-entry" role="listitem">
 Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>. Second. John Churchill.
+</div>
+<div id="ref-titiunik_2021" class="csl-entry" role="listitem">
+Titiunik, Rocío. 2021. <span>“Natural Experiments.”</span> In <em>Advances in Experimental Political Science</em>, eds. James N. Druckman and Donald P.Editors Green. Cambridge University Press, 103–29.
 </div>
 </div>
 
@@ -1211,7 +1227,7 @@ Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>. Second. John
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>自然実験</p>
+<p>自然実験と自然実験</p>
 </div>
 </div></div>
 
